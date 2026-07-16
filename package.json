@@ -1,0 +1,21 @@
+{
+  "name": "linguafile",
+  "version": "1.0.0",
+  "description": "Upload, translate, and download files between English, Arabic, German, and Spanish",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "docx": "^9.5.0",
+    "express": "^5.1.0",
+    "google-translate-api-x": "^10.7.2",
+    "mammoth": "^1.9.0",
+    "multer": "^2.0.1"
+  }
+}

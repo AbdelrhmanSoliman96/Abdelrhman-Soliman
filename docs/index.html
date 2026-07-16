@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LinguaFile — Translate Files Online</title>
+    <meta
+      name="description"
+      content="Upload a file, translate it with Google Translate between English, Arabic, German, and Spanish, then download it."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="atmosphere" aria-hidden="true"></div>
+    <div class="orb orb-a" aria-hidden="true"></div>
+    <div class="orb orb-b" aria-hidden="true"></div>
+
+    <main class="shell">
+      <header class="brand-block">
+        <p class="brand">LinguaFile</p>
+        <h1>Translate files in four languages</h1>
+        <p class="lede">
+          Upload a file in English, Arabic, German, or Spanish. Google Translate converts it — then download the result.
+        </p>
+      </header>
+
+      <section class="workspace" aria-label="Translate a file">
+        <form id="translate-form" class="panel" novalidate>
+          <label class="dropzone" id="dropzone" for="file-input">
+            <input
+              id="file-input"
+              name="file"
+              type="file"
+              accept=".txt,.md,.csv,.json,.srt,.html,.htm,.xml,.log,.docx,text/plain"
+              required
+            />
+            <span class="dropzone-icon" aria-hidden="true">↑</span>
+            <span class="dropzone-title">Drop a file here or browse</span>
+            <span class="dropzone-hint">TXT, MD, CSV, JSON, SRT, HTML, XML, LOG, DOCX · up to 5 MB</span>
+            <span class="file-chip" id="file-chip" hidden></span>
+          </label>
+
+          <div class="lang-row">
+            <label class="field">
+              <span>From</span>
+              <select id="source-lang" name="sourceLang" required>
+                <option value="en">English</option>
+                <option value="ar">Arabic</option>
+                <option value="de">German</option>
+                <option value="es">Spanish</option>
+              </select>
+            </label>
+
+            <button type="button" class="swap" id="swap-langs" aria-label="Swap languages" title="Swap languages">
+              ⇄
+            </button>
+
+            <label class="field">
+              <span>To</span>
+              <select id="target-lang" name="targetLang" required>
+                <option value="ar">Arabic</option>
+                <option value="en">English</option>
+                <option value="de">German</option>
+                <option value="es">Spanish</option>
+              </select>
+            </label>
+          </div>
+
+          <button type="submit" class="cta" id="submit-btn">
+            <span class="cta-label">Translate &amp; download</span>
+            <span class="cta-spinner" aria-hidden="true"></span>
+          </button>
+
+          <p class="status" id="status" role="status" aria-live="polite"></p>
+        </form>
+
+        <aside class="result" id="result" hidden>
+          <h2>Ready to download</h2>
+          <p class="result-meta" id="result-meta"></p>
+          <pre class="preview" id="preview"></pre>
+          <a class="download" id="download-link" href="#">Download translated file</a>
+        </aside>
+      </section>
+
+      <ol class="howto">
+        <li><strong>1</strong> Upload your file</li>
+        <li><strong>2</strong> Choose languages</li>
+        <li><strong>3</strong> Download the translation</li>
+      </ol>
+    </main>
+
+    <footer class="foot">
+      <p>Powered by Google Translate · English · العربية · Deutsch · Español</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.9.0/mammoth.browser.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
