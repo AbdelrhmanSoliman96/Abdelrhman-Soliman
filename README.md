@@ -2,40 +2,33 @@
 
 Translate files between **English**, **Arabic**, **German**, and **Spanish** using Google Translate.
 
-Upload a file → choose languages → download the translated file.
+**Use it online:** https://abdelrhmansoliman96.github.io/Abdelrhman-Soliman/
 
-## Features
+## How to use
 
-- Simple drag-and-drop upload
-- Bidirectional translation across EN / AR / DE / ES
-- Supported formats: TXT, MD, CSV, JSON, SRT, HTML, XML, LOG, DOCX
-- Arabic preview uses right-to-left layout
-- Files up to 5 MB
+1. Open the website
+2. Upload your file (drag & drop or browse)
+3. Choose **From** and **To** languages
+4. Click **Translate & download**
+5. Download the translated file
 
-## Quick start
+## Supported
+
+- Languages: English, Arabic, German, Spanish
+- Formats: TXT, MD, CSV, JSON, SRT, HTML, XML, LOG, DOCX
+- Max size: 5 MB
+
+## Run locally (optional)
 
 ```bash
 npm install
 npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
-
-For local development with auto-reload:
-
-```bash
-npm run dev
-```
-
-## How it works
-
-1. Upload a supported file
-2. Pick source and target languages
-3. The server extracts text and translates it with Google Translate
-4. Download the translated file
+Open http://localhost:3000
 
 ## Notes
 
-- Translation uses the Google Translate service via `google-translate-api-x`
-- DOCX files are converted to plain paragraphs in the output DOCX
+- Translation runs in your browser with Google Translate
+- DOCX files are read as text; the download is saved as `.txt`
 - Complex formatting, images, and tables are not preserved
