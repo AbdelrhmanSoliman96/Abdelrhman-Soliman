@@ -1,0 +1,6 @@
+# ملفات مشتقّة يعيد توليدها خط البناء
+fonts.css
+plex.css
+kufi.css
+parts/charts.json
+__pycache__/
