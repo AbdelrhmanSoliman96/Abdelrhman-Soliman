@@ -7,7 +7,8 @@ Personal Website
 
 دراسة جدوى متكاملة مُعدّة للتقديم على الجهات المانحة (منطقة الرياض · ريال سعودي).
 
-- **الوثيقة:** [`dirasat-jadwa-markaz-tamkeen.html`](dirasat-jadwa-markaz-tamkeen.html) — ١٩ فصلًا · ٤٠ جدولًا · ٢١ شكلًا · قابلة للطباعة على A4.
+- **الوثيقة (HTML):** [`dirasat-jadwa-markaz-tamkeen.html`](dirasat-jadwa-markaz-tamkeen.html) — ١٩ فصلًا · ٤٠ جدولًا · ٢١ شكلًا · قابلة للطباعة على A4.
+- **الوثيقة (Word):** [`dirasat-jadwa-markaz-tamkeen.docx`](dirasat-jadwa-markaz-tamkeen.docx) — النسخة نفسها بتنسيق عربي كامل من اليمين لليسار، جاهزة للتحرير والتسليم.
 - **النموذج المالي وخط البناء:** [`namoodaj/`](namoodaj/) — النموذج قابل للتحديث، وتُعاد الجداول والرسوم توليدًا منه.
 
 تغطي الدراسة: الملخص التنفيذي، المنهجية، دراسة الاحتياج، أصحاب المصلحة، نظرية التغيير والإطار
