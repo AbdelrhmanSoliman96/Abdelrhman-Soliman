@@ -1,6 +1,6 @@
 # StartPad — Lovable Prompts (Round 13)
 
-Three prompts: token migration, component rollout, and social assets.
+Four prompts: token migration, component rollout, social assets, and the font pipeline.
 
 Extracted from the brand guidelines PDF you uploaded. (The Google Drive folder is blocked by this environment's network policy, so everything below comes from the PDF itself — if the folder holds additional rules, send them and I'll fold them in.)
 
@@ -8,7 +8,20 @@ Extracted from the brand guidelines PDF you uploaded. (The Google Drive folder i
 
 ## What the guidelines contain
 
-**Typeface: Zain** — `Zain-Black` and `Zain-Regular` are the only real families embedded. Zain is open-source, on Google Fonts, and **covers both Arabic and Latin in one family**. That quietly solves a problem flagged three rounds ago: you needed a separate Arabic font, and now you don't. One family, both scripts, consistent letterforms across the whole product.
+**Two typefaces: Satoshi for Latin, Zain for Arabic.** The PDF only embedded Zain, so my first read of this was wrong — the font packages settle it. Verified from the font binaries:
+
+| | Satoshi | Zain |
+|---|---|---|
+| Latin A–Z a–z | 100% | 100% |
+| Latin Extended-A | 89.8% | 7.8% |
+| **Arabic (U+0600–06FF)** | **0%** | 42.6% |
+| Arabic Presentation Forms-B | 0% | 61.8% |
+| Arabic-Indic digits | 0% | 100% |
+| Styles supplied | 10 (incl. italics) | 8 |
+| Shaping tables (GSUB/GPOS) | present | present |
+| Licence | **ITF / Fontshare — proprietary** | SIL OFL 1.1 |
+
+Satoshi has no Arabic at all, and its geometric letterforms match the new `STARTPAD` wordmark. Zain has the Arabic and the Arabic-Indic digits. So it's a bilingual pairing, not one family doing both.
 
 **Palette**, by frequency of use in the document:
 
@@ -126,23 +139,51 @@ SEMANTIC TOKENS — map roles, so components never reference raw brand colours:
   into service as "success" — a brand colour doing double duty as a state
   colour is how the previous green ended up meaning eleven different things.
 
-TYPOGRAPHY — Zain, from Google Fonts:
+TYPOGRAPHY — two self-hosted families, resolved automatically by script.
 
-    @import url('https://fonts.googleapis.com/css2?family=Zain:wght@200;300;400;700;800;900&display=swap');
+  Satoshi carries Latin. Zain carries Arabic. Satoshi contains ZERO Arabic
+  glyphs, so an Arabic page set in Satoshi renders as empty boxes.
 
-    --font-display: 'Zain', system-ui, sans-serif;   /* headings, weight 900 */
-    --font-body:    'Zain', system-ui, sans-serif;   /* body, weight 400 */
+  Do NOT branch fonts per locale in components. Use ONE family name and let
+  unicode-range pick the right file per character — this also handles mixed
+  strings (an English product name inside an Arabic sentence) correctly, with
+  no conditional logic anywhere:
 
-  - Zain covers BOTH Arabic and Latin. Remove any separate Arabic font stack —
-    IBM Plex Sans Arabic, Noto Sans Arabic, Cairo — and use Zain for both
-    locales. This is a real simplification; take it.
-  - Preload the two weights actually used. Set font-display: swap.
-  - Arabic still needs its own size and line-height scale (~1.1x size,
-    ~1.2x leading) even in the same family — Arabic letterforms need more
-    vertical room.
-  - The wordmark is now ALL CAPS with wide tracking ("STARTPAD", not
-    "StartPad"). That is the LOGO only. Do not apply caps-and-tracking to
-    headings; it is a lockup treatment, not a type style.
+    /* Latin → Satoshi */
+    @font-face {
+      font-family: 'StartPad Sans';
+      src: url('/fonts/Satoshi-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+      unicode-range: U+0000-05FF, U+2000-206F, U+20A0-20CF, U+2100-214F;
+    }
+    /* Arabic → Zain */
+    @font-face {
+      font-family: 'StartPad Sans';
+      src: url('/fonts/Zain-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+      unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF,
+                     U+FB50-FDFF, U+FE70-FEFF;
+    }
+    /* repeat both blocks for every weight used */
+
+    --font-display: 'StartPad Sans', system-ui, sans-serif;
+    --font-body:    'StartPad Sans', system-ui, sans-serif;
+
+  USE ONLY WEIGHTS BOTH FAMILIES HAVE. Satoshi ships Light 300, Regular 400,
+  Medium 500, Bold 700, Black 900. Zain ships ExtraLight 200, Light 300,
+  Regular 400, Bold 700, ExtraBold 800, Black 900 — it has NO 500. If the UI
+  uses Medium, Arabic will synthesise or snap to another weight and look
+  visibly different from the English.
+    Permitted weights: 300, 400, 700, 900. Do not use 500.
+
+  - Remove every previous Arabic stack — IBM Plex Sans Arabic, Noto Sans
+    Arabic, Cairo. Zain replaces all of them.
+  - Arabic still needs its own size and leading scale (~1.1x size, ~1.2x
+    line-height) — set it on [lang="ar"], not in the font declaration.
+  - Satoshi is NOT on Google Fonts and Zain must match it, so BOTH are
+    self-hosted. Do not load either from a CDN.
+  - The wordmark is ALL CAPS with wide tracking ("STARTPAD"). That is the LOGO
+    lockup only — do not apply caps-and-tracking to headings.
 
 DARK MODE
   Ink #0B0D10 becomes the page ground, paper and surface invert to dark greys,
@@ -342,8 +383,81 @@ CURRENT CHANNELS: Instagram, TikTok, X, LinkedIn (per the site footer).
 
 ---
 
+---
+---
+
+## PROMPT D — Build the Font Pipeline
+
+```text
+TASK: Prepare and self-host both font families. The supplied packages are
+desktop formats — shipping them to the browser as-is would be a mistake.
+
+WHAT WAS SUPPLIED
+  Zain      8 TTF files   (SIL OFL 1.1, OFL.txt included)
+  Satoshi  10 OTF files   (Indian Type Foundry / Fontshare, NO licence file)
+  2.0 MB total, no WOFF2.
+
+1. CONVERT TO WOFF2 — required, not optional.
+   TTF and OTF on the web are roughly 2x the size of WOFF2 and are not the web
+   format. Your audience is mobile-first on 4G in MENA; this is the single
+   biggest performance item in the rebrand.
+     woff2_compress Satoshi-Regular.otf   → Satoshi-Regular.woff2
+   Convert only the weights actually used: 300, 400, 700, 900 for each family,
+   plus italics only if the design genuinely uses them. Eight files, not
+   eighteen.
+
+2. SUBSET.
+   Satoshi: keep Latin, Latin Extended-A, punctuation, currency symbols.
+   Zain: keep Arabic, Arabic Presentation Forms-B, Arabic-Indic digits, and
+   basic Latin (Arabic pages still contain Latin product names and URLs).
+   Drop unused blocks. Subsetting plus WOFF2 should take the total web payload
+   from ~2 MB to roughly 150-250 KB across all weights.
+
+   CAUTION: do not over-subset Zain. Arabic shaping needs the GSUB and GPOS
+   tables and the full set of contextual forms — a naive subset that strips
+   them produces disconnected letterforms, which is the classic broken-Arabic
+   bug. Use a subsetter with layout-feature awareness (pyftsubset with
+   --layout-features='*') and verify visually afterwards.
+
+3. PRELOAD only the two files needed for first paint — Satoshi Regular and
+   Satoshi Black — with <link rel="preload" as="font" crossorigin>. Do not
+   preload the Arabic files on an English page; unicode-range already prevents
+   them downloading.
+
+4. LICENSING — resolve before launch.
+   Zain is SIL OFL 1.1. Ship OFL.txt alongside the font files in the deployed
+   asset directory. That is a condition of the licence.
+
+   Satoshi is NOT open source. Its embedded licence reads: "This Font Software
+   is protected under domestic and international trademark and copyright law."
+   It comes from Indian Type Foundry via Fontshare, whose terms permit free
+   personal and commercial use including web embedding — but:
+     - No licence file was included in the package. Download the Fontshare
+       licence from fontshare.com/terms and keep it with the fonts.
+     - Confirm self-hosting and web embedding are covered for commercial use
+       before shipping, and keep a dated copy of the terms you relied on.
+     - Satoshi cannot be redistributed the way an OFL font can, so do not
+       commit it to a public repository without checking that first.
+   Flag this to whoever owns legal. It is a five-minute check now and an
+   awkward one later.
+
+5. VERIFY, in the browser, not just in the build:
+     - An English page renders in Satoshi
+     - An Arabic page renders in Zain, correctly SHAPED and CONNECTED
+     - A mixed string ("StartPad — منصة رواد الأعمال") renders each script in
+       its own family, on one line, with correct bidirectional order
+     - Arabic-Indic digits render if you use them
+     - No FOIT: text is visible during load via font-display: swap
+     - Network panel: only the needed files download per locale
+     - Total font payload under 300 KB
+
+  Report the final file list, per-file sizes, and the total.
+```
+
+---
+
 ## Two things worth confirming
 
 **Is the AI Tools purple header staying?** It was already outside the old system, and the new brand has its own indigo `#3418E0`. Simplest path is to fold that page into the new tokens and drop the bespoke gradient — otherwise you have two unrelated purples.
 
-**Zain's weight range.** The guidelines use Black (900) and Regular (400). Google Fonts also offers 200/300/700/800. Decide now whether the product uses just those two weights or a fuller scale — deciding later means retrofitting every heading.
+**Weight scale.** Satoshi and Zain overlap on 300 / 400 / 700 / 900 only — Zain has no Medium 500. Decide now whether the UI lives inside those four weights, because adding 500 later means Arabic silently diverges from English on every screen that uses it.
