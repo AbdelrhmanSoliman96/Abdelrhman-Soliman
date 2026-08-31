@@ -8,45 +8,29 @@
   @font-face { font-family:'Zain';    src:url('fonts/Zain-Black.ttf') format('truetype');      font-weight:900; }
   @font-face { font-family:'Zain';    src:url('fonts/Zain-Regular.ttf') format('truetype');    font-weight:400; }
 
-  :root{
-    --lime:#CBF24A; --ink:#0B0D10; --grey400:#A5A9AF; --grey500:#8A8F98; --white:#FFF;
-  }
+  :root{ --lime:#CBF24A; --ink:#0B0D10; --grey400:#A5A9AF; --grey500:#8A8F98; --white:#FFF; }
   *{margin:0;padding:0;box-sizing:border-box}
   body{background:#333}
 
-  .stage{
-    position:relative; overflow:hidden; background:var(--ink);
-    font-family:'Satoshi',system-ui,sans-serif; color:var(--white);
-  }
-  .sweep{
-    position:absolute; inset:0;
-    background:
-      radial-gradient(130% 200% at 90% 120%,
-        rgba(203,242,74,.32) 0%,
-        rgba(76,232,133,.21) 20%,
-        rgba(6,220,197,.15) 38%,
-        rgba(31,143,250,.12) 56%,
-        rgba(52,24,224,.15) 74%,
-        rgba(11,13,16,0) 92%);
-  }
-  .rule{
-    position:absolute; left:0; right:0; bottom:0; height:4px;
-    background:linear-gradient(90deg,#3418E0,#2B6BFF,#12B2F5,#06DCC5,#4CE885,#CBF24A);
-  }
-  .grid{
-    position:absolute; inset:0; opacity:.045;
-    background-image:linear-gradient(#FFF 1px,transparent 1px),
-                     linear-gradient(90deg,#FFF 1px,transparent 1px);
-  }
+  .stage{ position:relative; overflow:hidden; background:var(--ink);
+          font-family:'Satoshi',system-ui,sans-serif; color:var(--white); }
+  .sweep{ position:absolute; inset:0;
+    background:radial-gradient(130% 200% at 90% 120%,
+      rgba(203,242,74,.32) 0%, rgba(76,232,133,.21) 20%, rgba(6,220,197,.15) 38%,
+      rgba(31,143,250,.12) 56%, rgba(52,24,224,.15) 74%, rgba(11,13,16,0) 92%); }
+  .rule{ position:absolute; left:0; right:0; bottom:0; height:4px;
+    background:linear-gradient(90deg,#3418E0,#2B6BFF,#12B2F5,#06DCC5,#4CE885,#CBF24A); }
+  .grid{ position:absolute; inset:0; opacity:.045;
+    background-image:linear-gradient(#FFF 1px,transparent 1px),linear-gradient(90deg,#FFF 1px,transparent 1px); }
+
   .kicker{ font-weight:700; color:var(--lime); text-transform:uppercase; letter-spacing:.2em; }
   .head{ font-weight:900; letter-spacing:-.025em; line-height:1.04; white-space:nowrap; }
   .head .hl{ color:var(--lime); }
   .sub{ font-weight:500; color:var(--grey400); }
   .chip{ display:inline-block; background:var(--lime); color:var(--ink); font-weight:900; border-radius:999px; }
-  .wordmark{ font-weight:900; letter-spacing:.2em; line-height:1; }
-  .mark{ display:grid; place-items:center; background:var(--lime); color:var(--ink); font-weight:900; border-radius:16px; flex:none; }
+  img.lockup, img.mark{ display:block; }
 
-  /* ========== A · COMPANY BANNER 1128x191 ========== */
+  /* A · COMPANY COVER 1128x191 — logo overlay sits lower-left, keep it clear */
   #a{ width:1128px; height:191px; }
   #a .grid{ background-size:38px 38px; }
   #a .content{ position:absolute; left:272px; top:50%; transform:translateY(-50%); }
@@ -54,35 +38,36 @@
   #a .head{ font-size:40px; }
   #a .sub{ font-size:16px; margin-top:12px; }
 
-  /* ========== B · COMPANY BANNER, WORDMARK 1128x191 ========== */
+  /* B · COMPANY COVER, LOCKUP RIGHT 1128x191 */
   #b{ width:1128px; height:191px; }
   #b .grid{ background-size:38px 38px; }
-  #b .content{
-    position:absolute; left:272px; right:56px; top:50%; transform:translateY(-50%);
-    display:flex; align-items:center; justify-content:space-between; gap:48px;
-  }
-  #b .head{ font-size:33px; }
-  #b .sub{ font-size:15px; margin-top:9px; }
-  #b .right{ text-align:right; flex:none; }
-  #b .wordmark{ font-size:25px; }
-  #b .tag{ font-size:11px; color:var(--grey500); font-weight:500; letter-spacing:.16em; margin-top:10px; text-transform:uppercase; }
+  #b .content{ position:absolute; left:272px; top:50%; transform:translateY(-50%); }
+  #b .head{ font-size:34px; }
+  #b .sub{ font-size:15px; margin-top:10px; }
+  #b img.lockup{ position:absolute; right:56px; top:50%; transform:translateY(-50%); width:270px; }
 
-  /* ========== C · PROFILE BACKGROUND 1584x396 ========== */
+  /* C · PROFILE BACKGROUND 1584x396 — profile photo sits lower-left */
   #c{ width:1584px; height:396px; }
   #c .grid{ background-size:56px 56px; }
-  #c .lockup{ position:absolute; left:88px; top:56px; display:flex; align-items:center; gap:24px; }
-  #c .mark{ width:84px; height:84px; font-size:40px; }
-  #c .wordmark{ font-size:38px; }
+  #c img.lockup{ position:absolute; left:88px; top:56px; width:400px; }
   #c .content{ position:absolute; left:560px; top:50%; transform:translateY(-50%); }
   #c .kicker{ font-size:14px; margin-bottom:14px; }
   #c .head{ font-size:48px; }
   #c .sub{ font-size:20px; margin-top:14px; }
   #c .chipwrap{ position:absolute; left:560px; bottom:56px; }
   #c .chip{ font-size:17px; padding:12px 24px; }
+
+  /* D · MARK-LED COMPANY COVER 1128x191 */
+  #d{ width:1128px; height:191px; }
+  #d .grid{ background-size:38px 38px; }
+  #d img.mark{ position:absolute; left:272px; top:50%; transform:translateY(-50%); height:96px; }
+  #d .content{ position:absolute; left:412px; top:50%; transform:translateY(-50%); }
+  #d .kicker{ font-size:12px; margin-bottom:10px; }
+  #d .head{ font-size:36px; }
+  #d .sub{ font-size:15px; margin-top:10px; }
 </style></head>
 <body>
 
-<!-- A -->
 <div class="stage" id="a">
   <div class="sweep"></div><div class="grid"></div>
   <div class="content">
@@ -93,35 +78,36 @@
   <div class="rule"></div>
 </div>
 
-<!-- B -->
 <div class="stage" id="b">
   <div class="sweep"></div><div class="grid"></div>
   <div class="content">
-    <div>
-      <div class="head">From idea to <span class="hl">launched startup</span></div>
-      <div class="sub">15 guided missions · AI feedback · MENA mentors</div>
-    </div>
-    <div class="right">
-      <div class="wordmark">STARTPAD</div>
-      <div class="tag">Structure today, scale tomorrow</div>
-    </div>
+    <div class="head">From idea to <span class="hl">launched startup</span></div>
+    <div class="sub">15 guided missions · AI feedback · MENA mentors</div>
   </div>
+  <img class="lockup" src="startpad_lockup_reversed.png" alt="">
   <div class="rule"></div>
 </div>
 
-<!-- C -->
 <div class="stage" id="c">
   <div class="sweep"></div><div class="grid"></div>
-  <div class="lockup">
-    <div class="mark">◆</div>
-    <div class="wordmark">STARTPAD</div>
-  </div>
+  <img class="lockup" src="startpad_lockup_reversed.png" alt="">
   <div class="content">
     <div class="kicker">Built in Cairo · For MENA founders</div>
     <div class="head">From idea to <span class="hl">launched startup</span></div>
     <div class="sub">15 guided missions · AI-evaluated feedback · Real mentors</div>
   </div>
   <div class="chipwrap"><span class="chip">startpad.me</span></div>
+  <div class="rule"></div>
+</div>
+
+<div class="stage" id="d">
+  <div class="sweep"></div><div class="grid"></div>
+  <img class="mark" src="startpad_mark.png" alt="">
+  <div class="content">
+    <div class="kicker">Built in Cairo · For MENA founders</div>
+    <div class="head">From idea to <span class="hl">launched startup</span></div>
+    <div class="sub">15 guided missions · AI feedback · Real mentors</div>
+  </div>
   <div class="rule"></div>
 </div>
 
