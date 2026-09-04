@@ -68,6 +68,11 @@ python3 scripts/build_csv.py      output/seed
 python3 scripts/build_artifact.py output/startpad_mission_atlas.html
 ```
 
+All four outputs are byte-reproducible: rebuilding from unchanged sources produces
+identical files, so a rebuild never shows up as a spurious diff. `.xlsx` and `.docx` are
+ZIP containers that would otherwise bake wall-clock time into every entry and into
+`docProps/core.xml`; `scripts/_determinism.py` pins both.
+
 ## Link verification — read before publishing resources
 
 Every resource URL was returned by a **live web search** during compilation; none were written

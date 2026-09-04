@@ -15,6 +15,7 @@ from startpad.missions import ALWAYS_AVAILABLE, MAPPING, MISSIONS  # noqa: E402
 from startpad.resources import BY_MISSION, FOUNDATION, FUNDRAISING  # noqa: E402
 from startpad.tools import TOOL_BY_NAME  # noqa: E402
 from scripts.build_xlsx import FINDINGS  # noqa: E402
+from scripts._determinism import FIXED_TIMESTAMP, normalize_zip  # noqa: E402
 
 INK = RGBColor(0x1F, 0x29, 0x33)
 GREEN = RGBColor(0x0F, 0x5C, 0x4B)
@@ -434,7 +435,13 @@ def build(out_path):
         r2 = p2.add_run(rec)
         r2.font.size = Pt(9.5)
 
+    cp = doc.core_properties
+    cp.created = FIXED_TIMESTAMP
+    cp.modified = FIXED_TIMESTAMP
+    cp.last_modified_by = ""
+    cp.revision = 1
     doc.save(out_path)
+    normalize_zip(out_path)
     return out_path
 
 

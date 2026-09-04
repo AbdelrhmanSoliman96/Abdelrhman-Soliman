@@ -11,6 +11,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from startpad.missions import ALWAYS_AVAILABLE, MAPPING, MISSIONS  # noqa: E402
 from startpad.resources import BY_MISSION, FOUNDATION, FUNDRAISING  # noqa: E402
 from startpad.tools import CATEGORY_ORDER, TOOL_BY_NAME, TOOLS  # noqa: E402
+from scripts._determinism import FIXED_TIMESTAMP, normalize_zip  # noqa: E402
 
 INK = "1F2933"
 ACCENT = "0F5C4B"
@@ -523,7 +524,10 @@ def build(out_path):
     sheet_toolkit(wb)
     sheet_resources(wb)
     sheet_gaps(wb, FINDINGS)
+    wb.properties.created = FIXED_TIMESTAMP
+    wb.properties.modified = FIXED_TIMESTAMP
     wb.save(out_path)
+    normalize_zip(out_path)
     return out_path
 
 
