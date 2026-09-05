@@ -3,3 +3,7 @@ __pycache__/
 node_modules/
 package-lock.json
 package.json
+output/scout/run_log.csv
+output/scout/state.json
+output/scout/discovered_programs.csv
+output/scout/new_programs.csv

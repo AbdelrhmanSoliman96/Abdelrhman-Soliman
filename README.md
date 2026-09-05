@@ -94,3 +94,65 @@ python3 scripts/check_links.py
 - `Startpad — Tool Library (123 tools, Functional Categories).xlsx`
 - `Startpad — Pitch Deck & One-Pager Template.docx`
 - `startpaduserjourney.pdf` — the end-to-end user journey
+
+---
+
+# MENA Startup Programme Scout
+
+A second deliverable in this repo: a scrape-ready registry of the organisations running
+startup programmes across **Egypt, the GCC and the wider MENA region** (Israel excluded
+per scoping).
+
+**88 programme rows · 79 unique entities · 17 markets · 112 URLs queued for scraping**
+
+## Deliverables
+
+| File | What it is |
+|---|---|
+| `output/MENA_Startup_Programs_Scout.xlsx` | 6 sheets: READ ME FIRST, PROGRAMS, ENTITIES, **SCRAPE_CONFIG**, VOCAB, COVERAGE & GAPS. Dropdown validation on the controlled-vocabulary columns so hand-added rows stay machine-readable. |
+| `output/scout/programs.csv` | The same programme table as flat CSV. |
+| `scripts/scout_scraper.py` | Reads SCRAPE_CONFIG and reports programmes, flagging anything new. |
+
+## How the automation works
+
+`SCRAPE_CONFIG` is the machine-readable half of the workbook. The scraper reads it, visits
+each enabled URL, and **auto-discovers** content rather than relying on hand-written CSS
+selectors — which would have been written blind and would silently break:
+
+1. **RSS / Atom** — declared `<link rel=alternate>`, or a guessed `/feed`, `/rss`, `/atom.xml`
+2. **sitemap.xml** — filtered to programme-looking paths (one level of index expansion)
+3. **JSON-LD** — schema.org `Event` / `Course` / `NewsArticle` / `ItemList`
+4. **HTML heuristic** — repeated link structures matching programme wording, English *and* Arabic
+
+The tier that fired is recorded per row, so you can see how each source was read. If a site
+later publishes a feed, it is picked up automatically with no code change.
+
+`state.json` holds a fingerprint of every item ever seen, so anything new lands in
+`output/scout/new_programs.csv`. **Add a row to SCRAPE_CONFIG and the next run picks it up.**
+
+Politeness is built in: robots.txt honoured per host, one request at a time with a delay,
+a real User-Agent, and a cap on items per source.
+
+```bash
+pip install requests beautifulsoup4 lxml openpyxl
+python3 scripts/build_scout_xlsx.py output/MENA_Startup_Programs_Scout.xlsx
+python3 scripts/scout_scraper.py --verify-only     # resolve every URL, record status
+python3 scripts/scout_scraper.py                   # full discovery pass
+python3 scripts/scout_scraper.py --since-last      # only what is new
+python3 scripts/scout_scraper.py --country Egypt --priority 1
+```
+
+## Verification status — read before relying on a row
+
+Every URL came from a **live web search**. None were written from memory. But the compiling
+environment's egress proxy blocked *every* outbound request (verified against flat6labs.com,
+magnitt.com, wamda.com, itida.gov.eg, hub71.com, oasis500.com, sheraa.ae, startupqatar.qa),
+so **no page was ever opened**.
+
+The `confidence` column records how firm each row is — `high` 46, `medium` 17, `low` 25.
+`low` means the entity was named in prose only and the URL is a plausible guess. Run
+`--verify-only` from a normal network first; it writes an `http_status` back for every source.
+
+The scraper's four parser tiers were tested offline against fixtures (JSON-LD extraction,
+HTML heuristic including Arabic, noise exclusion, fingerprint stability) and the error path
+was exercised by the blocked network — failures log per source rather than aborting the run.
