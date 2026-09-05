@@ -1151,28 +1151,645 @@ PROGRAMS = [
 COVERAGE_NOTES = [
     ("Scope delivered",
      "Egypt and the GCC are covered most densely, then the Levant and North Africa, "
-     "per the brief. Israel is excluded from scope."),
-    ("This is a strong v1, not a census",
-     "Roughly 70 programme rows across 14 markets. Directory sources themselves report far "
-     "larger universes — Tracxn lists 41 accelerators in Egypt alone; Founder Institute "
-     "lists 350+ Egyptian ecosystem entries. The registry is built to be extended, and the "
-     "aggregator rows (F6S, Causo, Opportunity Desk, MAGNiTT) are deliberately included so "
-     "the scraper can discover programmes this list does not yet name."),
-    ("Nothing here is fetch-verified",
-     "The compiling environment's egress proxy blocked every outbound request — curl to "
-     "flat6labs.com, magnitt.com, wamda.com, itida.gov.eg, hub71.com, oasis500.com, "
-     "sheraa.ae and startupqatar.qa all failed. Every URL came from a live search result, "
-     "but none were opened. Run scripts/scout_scraper.py from an unrestricted network "
-     "before treating any row as confirmed."),
-    ("Read the confidence column before acting",
-     "high = entity and URL both appeared as search-result links. medium = entity confirmed "
-     "in result text, URL inferred from the same domain. low = the entity was named only in "
-     "prose and the URL is a plausible guess — roughly a third of rows. Verify low rows first."),
+     "per the brief. Israel is excluded from scope. 17 markets."),
+    ("Two verification passes have been run",
+     "Pass 1 built the registry. Pass 2 re-queried every weak entity by name and kept a URL "
+     "only when it came back as an actual indexed search-result LINK, not merely named in "
+     "prose. That moved the confidence split from high 46 / medium 17 / low 25 to "
+     "high 85 / medium 20 / low 10, and grew the file from 88 rows to 115."),
+    ("Still not fetch-verified — this is the honest ceiling here",
+     "The egress proxy blocked every outbound request in both passes; curl to flat6labs.com, "
+     "magnitt.com, wamda.com, itida.gov.eg, hub71.com, oasis500.com, sheraa.ae and "
+     "startupqatar.qa all failed. 'Appeared as a live indexed link' is as far as verification "
+     "could go. Run scripts/scout_scraper.py --verify-only from a normal network for real "
+     "HTTP status codes."),
+    ("What pass 2 actually caught",
+     "Three factual errors that would have shipped: Cairo Angels has REBRANDED to Acasia; the "
+     "Wa'ed domain is waed.com, not the waed.net cited in prose; and 212Founders resolves at "
+     ".co, not the .ma given in an article. TIEC and Startup Egypt also turned out to have "
+     "their own government domains (tiec.gov.eg, startup.gov.eg) rather than sitting under "
+     "ITIDA as first assumed."),
+    ("One row carries a security caution",
+     "Endeavor Egypt's endeavoreg.org resolves, but its /contact/ page returned a gambling-spam "
+     "page title in search results — a sign that part of the domain may be compromised or "
+     "parked. Flagged in that row's source note. Check before sending founders there."),
+    ("Seven rows are still low confidence — verify these first",
+     "EdVentures, Innoventures, the Egypt Fund of Funds, the KAUST Innovation Fund, Riyadh "
+     "Valley Company, Startupbootcamp Dubai and Kuwait's National Fund for SME Development have "
+     "no official domain that returned as an indexed link across three search passes. Each row "
+     "carries a profile or coverage URL as a placeholder and says so in its source note."),
+    ("This is a deep v1, not a census",
+     "115 programme rows across 105 entities and 17 markets. Directory sources report larger "
+     "universes — Tracxn lists 41 accelerators in Egypt, Founder Institute 350+ Egyptian "
+     "ecosystem entries, EgyptInnovate 780 entities, Causo 390+ programmes with deadlines. The "
+     "aggregator rows are in the registry deliberately so the scraper discovers programmes this "
+     "list does not yet name."),
     ("One row is deliberately a dead entity",
-     "Iraq Tech Ventures is recorded with status CLOSED. Keeping known-dead entities in the "
-     "registry stops a scraper from rediscovering them and reporting them as new."),
+     "Iraq Tech Ventures is recorded with status CLOSED and no entity URL. Keeping known-dead "
+     "entities in the registry stops a scraper rediscovering them and reporting them as new."),
     ("Deadlines age fast",
      "Programme dates move every cycle. The Hub71 Access deadline captured here came from a "
-     "single search snapshot. Treat every date as needing re-verification on each run — "
-     "which is what the scraper's change detection is for."),
+     "single search snapshot. Treat every date as needing re-verification on each run — which "
+     "is what the scraper's change detection is for."),
 ]
+
+
+# ===========================================================================
+# VERIFICATION PASS 2 — re-searched every weak URL against the live index
+# ===========================================================================
+# Method: each entity was re-queried by name. A URL is upgraded only when it
+# came back as an actual indexed result LINK (not merely named in prose).
+# Still not fetch-verified — egress remained blocked — but "appeared as a live
+# search-result link" is materially stronger than "inferred from prose".
+#
+# (entity, program) -> fields to overwrite
+CORRECTIONS = {
+    # ---- Egypt ----
+    ("MSMEDA", "MSME financing & technical support"): dict(
+        entity_url="https://www.devex.com/organizations/egyptian-micro-small-and-medium-enterprises-development-agency-msmeda-129670",
+        programs_url="https://www.devex.com/organizations/egyptian-micro-small-and-medium-enterprises-development-agency-msmeda-129670",
+        confidence="low",
+        source="Devex + Private Equity International profiles are indexed; msmeda.org.eg itself "
+               "never returned as a link across two search passes — treat the official domain as unconfirmed"),
+    ("Startup Egypt", "National startup platform"): dict(
+        entity_url="https://startup.gov.eg/",
+        programs_url="https://startup.gov.eg/",
+        description="Ministry of Investment and Foreign Trade platform — the first in Egypt to "
+                    "connect entrepreneurs directly with government bodies, investors and "
+                    "financing institutions. Indexed as 'Ministerial Group for Entrepreneurship'.",
+        confidence="high",
+        source="startup.gov.eg returned as an indexed link; EgyptToday + ArabFounders launch coverage"),
+    ("NilePreneurs", "Innovation vouchers / R&D as a service"): dict(
+        entity_url="https://www.cbe.org.eg/en/msmes-entrepreneurship/entrepreneurship/nilepreneurs",
+        programs_url="https://www.cbe.org.eg/en/msmes-entrepreneurship/entrepreneurship/nilepreneurs",
+        description="Central Bank of Egypt-powered initiative, started 2019, supporting startups "
+                    "and SMEs in manufacturing, agriculture and digital transformation. Piloted at "
+                    "Nile University, since expanded to four more universities.",
+        confidence="high", source="Central Bank of Egypt page returned as an indexed link"),
+    ("AUC Venture Lab", "Startup Accelerator (+ FinTech track with CIB)"): dict(
+        entity_url="https://business.aucegypt.edu/research/centers/vlab",
+        programs_url="https://business.aucegypt.edu/research/centers/vlab",
+        apply_url="https://www.f6s.com/aucventurelab",
+        description="Egypt's first university-based incubator/accelerator, launched 2013. Two "
+                    "cycles a year, three-month intensive. Sectors span fintech, AI, green "
+                    "economy, healthtech, e-commerce, logistics, IoT, edtech and more.",
+        stats="1,000+ entrepreneurs supported since 2013; named best accelerator/incubator in North Africa",
+        confidence="high", source="business.aucegypt.edu vlab page + f6s.com/aucventurelab, both indexed"),
+    ("EdVentures", "EdTech investment & Creativa innovation hubs"): dict(
+        entity_url="https://launchbaseafrica.com/2024/09/26/meet-the-eight-new-egyptian-startups-backed-by-prolific-investor-edventures/",
+        confidence="low",
+        source="Nahdet Misr CVC. No official domain returned as an indexed link in two passes — "
+               "coverage link used as placeholder; find the real domain before relying on this row"),
+    ("Innoventures", "Startup Reactor"): dict(
+        entity_url="https://fi.co/insight/egypt-s-startup-resources-list-for-entrepreneurs-accelerators-incubators-investors",
+        confidence="low",
+        source="Named in ecosystem round-ups only; no official domain indexed in two passes"),
+    ("GESR", "Social enterprise accelerator"): dict(
+        entity_url="https://gesr.net/", programs_url="https://gesr.net/about-us/",
+        description="Misr El-Kheir Foundation programme launched 2013, supporting innovators and "
+                    "technology startups solving social challenges in water, energy, food, health, "
+                    "education, AI and IoT.",
+        stats="Announced technical & financial support up to EUR 30,000 for Egyptian agribusinesses",
+        confidence="high", source="gesr.net and gesr.net/about-us both indexed; Startup Scene opportunity listing"),
+    ("Cairo Angels", "Angel investment network"): dict(
+        entity="Acasia (formerly Cairo Angels)",
+        entity_url="https://acasia.group/the-cairo-angels-is-now-acasia/",
+        programs_url="https://acasia.group/the-cairo-angels-is-now-acasia/",
+        description="Egypt's first formal angel network, investing in early-stage startups in "
+                    "Egypt and across MENA. REBRANDED — the Cairo Angels is now Acasia Group.",
+        stats="2nd most active angel network in Africa per ABAN; now operating as Acasia",
+        confidence="high", source="acasia.group rebrand announcement, indexed — name corrected on this pass"),
+    ("Endeavor Egypt", "Endeavor Entrepreneur selection"): dict(
+        entity_url="https://endeavoreg.org/",
+        programs_url="https://endeavoreg.org/network/whoweare/",
+        description="Launched in Egypt 2008. Selects, mentors and accelerates high-impact "
+                    "entrepreneurs through Endeavor's global network.",
+        confidence="medium",
+        source="endeavoreg.org indexed. CAUTION: the /contact/ page returned a gambling-spam "
+               "title in search results, which suggests part of the domain may be compromised "
+               "or parked — check before sending founders there"),
+    ("Egypt Ventures", "Startup investment & accelerator backing"): dict(
+        entity_url="https://egyptventures.com/about/", programs_url="https://egyptventures.com/about/",
+        description="Government-backed VC established 2017, empowering Egyptian startups. "
+                    "Startups can pitch directly through the site. Backer of Falak Startups.",
+        confidence="high", source="egyptventures.com/about indexed; EgyptInnovate profile"),
+    ("Egypt Fund of Funds (with World Bank Group)", "Fund of Funds investment programme"): dict(
+        entity_url="https://www.clydeco.com/en/insights/2026/02/egypt-launches-first-national-startup-charter",
+        confidence="low",
+        source="No official domain indexed. Clyde & Co National Startup Charter analysis used as "
+               "the citable reference"),
+    ("TIEC", "Virtual Incubation Programme"): dict(
+        entity_url="https://tiec.gov.eg/", programs_url="https://tiec.gov.eg/",
+        confidence="high", source="tiec.gov.eg returned as its own indexed domain on this pass"),
+    ("EgyptInnovate", "Ecosystem platform & opportunity listings"): dict(
+        entity_url="https://egyptinnovate.com/en", programs_url="https://egyptinnovate.com/en",
+        description="ITIDA's national gateway to Egypt's innovation landscape, relaunched in a "
+                    "revamped version. Connects startups, investors and ecosystem partners to "
+                    "resources and opportunities — a high-value scrape target.",
+        stats="Platform lists 780 entities: startups, investors, incubators and research centres",
+        confidence="high", source="egyptinnovate.com/en indexed; ITIDA relaunch press release"),
+
+    # ---- Saudi ----
+    ("Wa'ed Ventures (Aramco)", "Wa'ed Ventures investment"): dict(
+        entity_url="https://www.aramco.com/en/what-we-do/commercial-ecosystems/waed-ventures",
+        programs_url="https://www.waed.com/en/philosophy",
+        description="Aramco's venture arm. A USD 500 million fund investing in local tech startups "
+                    "and incentivising global entrepreneurs to localise in the Kingdom.",
+        stats="USD 500M fund; HQ at Dhahran Techno Valley",
+        confidence="high",
+        source="aramco.com Wa'ed page and waed.com/en/philosophy both indexed. NOTE: prose in "
+               "results said 'waed.net' but the indexed link is waed.com — .com used"),
+    ("KAUST Innovation Fund", "Deep-tech venture investment"): dict(
+        entity_url="https://taqadam.kaust.edu.sa/",
+        programs_url="https://taqadam.kaust.edu.sa/", confidence="low",
+        source="No standalone fund domain indexed; TAQADAM/KAUST used as the reachable entry point"),
+
+    # ---- UAE ----
+    ("Dubai Future Foundation", "Dubai Future Accelerators"): dict(
+        entity_url="https://www.dubaifuture.ae/",
+        programs_url="https://www.dubaifuture.ae/initiatives/future-design-and-acceleration/dubai-future-accelerators/",
+        apply_url="https://www.dubaifuture.ae/initiatives/future-design-and-acceleration/dubai-future-accelerators/how-it-works/",
+        description="Intensive nine-week programme hosted by Dubai Future Foundation and the "
+                    "Government of Dubai. Facilitates collaboration between startups, private "
+                    "entities and government on pre-specified future challenges.",
+        stats="9-week cohorts; backed by an AED 1 billion investment",
+        confidence="high", source="dubaifuture.ae DFA, how-it-works and previous-cohorts pages all indexed"),
+    ("in5 (TECOM Group)", "in5 Innovation Centres (Tech / Media / Design)"): dict(
+        entity_url="https://infive.ae/", programs_url="https://infive.ae/in5-tech/",
+        description="TECOM Group's integrated innovation platform with specialised facilities for "
+                    "Technology (Dubai Internet City), Media (Dubai Production City) and Design "
+                    "(Dubai Design District), plus training and mentorship.",
+        confidence="high", source="infive.ae, /in5-tech and /contact-us indexed; dic.ae in5-centres page"),
+    ("DTEC (Dubai Silicon Oasis)", "DTEC startup hub & Dubai Smart City Accelerator"): dict(
+        entity_url="https://www.dso.ae/dubai-technology-entrepreneurship-campus-dtec-",
+        programs_url="https://www.dso.ae/dubai-technology-entrepreneurship-campus-dtec-",
+        description="Purpose-built technology hub wholly owned by Dubai Silicon Oasis Authority. "
+                    "One-stop company setup, flexible coworking and startup support; the largest "
+                    "tech startup coworking space in the Middle East.",
+        stats="108,000 sq ft; 100+ startups from 60+ countries",
+        confidence="medium",
+        source="dso.ae DTEC page indexed. Prose cited dtec.ae but that domain did not return as a link"),
+    ("Khalifa Fund for Enterprise Development", "Grants & soft loans"): dict(
+        entity_url="https://www.khalifafund.ae/", programs_url="https://www.khalifafund.ae/",
+        description="Not-for-profit economic development fund of the Government of Abu Dhabi, "
+                    "launched 2007. Gives Emirati entrepreneurs access to market, resources, "
+                    "mentorship and enterprise funding.",
+        confidence="high", source="khalifafund.ae indexed; u.ae and moet.gov.ae government pages"),
+    ("MBRIF", "Mohammed Bin Rashid Innovation Fund — Accelerator & Guarantee"): dict(
+        entity_url="https://mbrif.ae/", programs_url="https://mbrif.ae/about-us/",
+        description="An AED 2 billion Ministry of Finance initiative supporting innovators across "
+                    "the seven sectors of the UAE National Innovation Strategy.",
+        stats="AED 2 billion fund",
+        confidence="high", source="mbrif.ae and mbrif.ae/about-us indexed; mof.gov.ae partner pages"),
+    ("AstroLabs", "Market expansion into UAE & Saudi"): dict(
+        entity_url="https://astrolabs.com/", confidence="low",
+        source="Named consistently in guides; astrolabs.com not returned as an indexed link — verify"),
+    ("ADGM", "Tech & FinTech licensing and programmes"): dict(
+        entity_url="https://www.adgm.com/", confidence="low",
+        source="Named in guides; adgm.com not returned as an indexed link in either pass — verify"),
+    ("Startupbootcamp", "Startupbootcamp Smart City Dubai"): dict(
+        entity_url="https://www.startupbootcamp.org/", confidence="low",
+        source="Named in guides; no indexed link for the Dubai programme page — verify"),
+    ("DIFC", "DIFC FinTech Hive Accelerator"): dict(
+        entity_url="https://www.difc.ae/",
+        programs_url="https://www.dxbstart.com/programs/difc-fintech-hive",
+        confidence="medium", source="DXBStart programme page indexed; difc.ae itself not returned — verify"),
+
+    # ---- Qatar / Kuwait ----
+    ("Qatar Development Bank", "SME financing & QDB Ventures"): dict(
+        entity_url="https://www.qdb.qa/", programs_url="https://www.qdb.qa/about/faq",
+        description="Government-owned financial entity set up by Emiri Decree to invest in and "
+                    "develop local industries by supporting SMEs in Qatar. Parent of QBIC.",
+        confidence="high", source="qdb.qa and qdb.qa/about/faq both indexed"),
+    ("National Fund for SME Development", "SME financing & incubation"): dict(
+        entity_url="https://smeportal.unescwa.org/index.php/financing/national-fund",
+        programs_url="https://smeportal.unescwa.org/index.php/financing/national-fund",
+        confidence="low",
+        source="UN ESCWA SME portal page indexed. Prose cited nationalfund.gov.kw but that domain "
+               "did not return as a link in two passes — verify"),
+
+    # ---- Jordan / Morocco ----
+    ("ISSF (Innovative Startups & SMEs Fund)", "Direct & indirect investment"): dict(
+        entity_url="https://issfjo.com/", programs_url="https://issfjo.com/",
+        description="USD 98 million fund established 2017, registered in Jordan as a private "
+                    "shareholding company. A partnership between the Central Bank of Jordan "
+                    "(USD 48M) and the World Bank (USD 50M).",
+        stats="USD 98M fund: CBJ USD 48M + World Bank USD 50M",
+        confidence="high", source="issfjo.com indexed; MAGNiTT profile; World Bank ICR report"),
+    ("212Founders (CDG Invest)", "212Founders acceleration"): dict(
+        entity_url="https://www.212founders.co/",
+        programs_url="https://www.cdg.ma/en/212founders",
+        apply_url="https://www.212founders.co/",
+        description="CDG Invest's flagship Moroccan acceleration programme, carried by the "
+                    "investment arm of CDG. Accepts applications on a continuous basis.",
+        confidence="high",
+        source="212founders.co and cdg.ma/en/212founders both indexed. NOTE: prose cited a .ma "
+               "domain; the indexed link is .co"),
+}
+
+
+# ===========================================================================
+# NEW ENTITIES — added on verification pass 2
+# ===========================================================================
+EXTRA_PROGRAMS = [
+    # ---- Egypt ----
+    dict(entity="Startup Scene ME", entity_type="Media / Data platform", country="Egypt",
+         city="Cairo", program="OPPORTUNITIES feed", program_type="Directory listing",
+         stage="Any", sectors="All", eligibility="Open", funding="N/A", equity="N/A",
+         duration="Ongoing", cadence="Continuous", status="Active",
+         description="Covers the MENA ecosystem from Cairo to Riyadh, Dubai to Amman. Runs a "
+                     "dedicated OPPORTUNITIES section carrying everything from grants to "
+                     "incubation-cycle applications — one of the highest-yield scrape targets here.",
+         stats="Dedicated opportunities feed; MENA-wide coverage",
+         entity_url="https://www.startupscene.me/",
+         programs_url="https://thestartupscene.me/OPPORTUNITIES", apply_url="",
+         confidence="high", source="startupscene.me and thestartupscene.me/OPPORTUNITIES indexed"),
+
+    dict(entity="Egyptian Ministerial Group for Entrepreneurship",
+         entity_type="Government / Authority", country="Egypt", city="Cairo",
+         program="National Startup Charter", program_type="Grant", stage="Any",
+         sectors="All", eligibility="Egyptian startups",
+         funding="Policy incentives & classification certificates", equity="No",
+         duration="Ongoing", cadence="Rolling", status="Active",
+         description="Egypt's first National Startup Charter, coordinating incentives, "
+                     "classification certificates for innovative projects, and cross-ministry "
+                     "startup policy.",
+         stats="25 classification certificates issued for innovative projects and startups",
+         entity_url="https://startup.gov.eg/",
+         programs_url="https://www.clydeco.com/en/insights/2026/02/egypt-launches-first-national-startup-charter",
+         apply_url="", confidence="high",
+         source="startup.gov.eg indexed; Clyde & Co legal analysis of the Charter"),
+
+    # ---- Saudi ----
+    dict(entity="Sanabil Investments", entity_type="Sovereign / National fund",
+         country="Saudi Arabia", city="Riyadh", program="Direct & fund-of-funds investment",
+         program_type="Fund of funds", stage="Seed", sectors="Agnostic",
+         eligibility="KSA and international", funding="Equity investment", equity="Yes",
+         duration="N/A", cadence="Rolling", status="Active",
+         description="PIF-linked sovereign investor making direct equity investments primarily "
+                     "in the Kingdom and investing in funds, building international investment "
+                     "capability. Co-sponsor of the Sanabil 500 accelerator.",
+         stats="Sovereign wealth investor; backs the Sanabil 500 MENA Seed Accelerator",
+         entity_url="https://www.sanabil.com/en/home",
+         programs_url="https://www.sanabil.com/en/home", apply_url="", confidence="high",
+         source="sanabil.com/en/home indexed"),
+
+    dict(entity="Sanabil Venture Studio", entity_type="Accelerator", country="Saudi Arabia",
+         city="Riyadh", program="Venture studio", program_type="Incubator", stage="Idea",
+         sectors="Tech", eligibility="Founders building in KSA", funding="Studio-backed",
+         equity="Yes", duration="Programme-dependent", cadence="Rolling", status="Active",
+         description="Sanabil's venture studio arm, co-building companies from scratch rather "
+                     "than only investing in existing ones.",
+         stats="Studio model on its own domain",
+         entity_url="https://sanabil.studio/", programs_url="https://sanabil.studio/",
+         apply_url="", confidence="high", source="sanabil.studio indexed"),
+
+    dict(entity="Impact46", entity_type="VC firm", country="Saudi Arabia", city="Riyadh",
+         program="Venture & alternative investment", program_type="Seed fund", stage="Seed",
+         sectors="Fintech, SaaS, platforms, cybersecurity", eligibility="Tech startups",
+         funding="Seed to growth", equity="Yes", duration="N/A", cadence="Rolling",
+         status="Active",
+         description="Riyadh-based CMA-authorised asset manager specialising in alternative "
+                     "investments — venture capital and private equity — from seed stage to "
+                     "mature businesses.",
+         stats="CMA-authorised; fintech, SaaS, platforms and cybersecurity focus",
+         entity_url="https://impact46.sa/", programs_url="https://impact46.sa/", apply_url="",
+         confidence="high", source="impact46.sa indexed"),
+
+    dict(entity="Vision Ventures", entity_type="VC firm", country="Saudi Arabia", city="Dammam",
+         program="Early-stage venture investment", program_type="Seed fund", stage="Seed",
+         sectors="Cloud, SaaS, gaming, analytics, smart transport", eligibility="KSA / MENA",
+         funding="VC investment", equity="Yes", duration="N/A", cadence="Rolling",
+         status="Active",
+         description="Venture capital firm founded 2016 in Dammam, investing across cloud, "
+                     "mobile, SaaS, big data, gaming, analytics, smart transportation and "
+                     "autonomous technologies.",
+         stats="Founded 2016; a Jada fund-of-funds portfolio manager",
+         entity_url="https://visionvc.co/", programs_url="https://visionvc.co/portfolio/",
+         apply_url="", confidence="high", source="visionvc.co and /portfolio indexed; jada.com.sa portfolio page"),
+
+    dict(entity="Jada Fund of Funds", entity_type="Sovereign / National fund",
+         country="Saudi Arabia", city="Riyadh", program="Fund-of-funds commitments",
+         program_type="Fund of funds", stage="Any", sectors="All",
+         eligibility="VC, PE and private-debt fund managers", funding="LP commitments",
+         equity="Indirect", duration="N/A", cadence="Rolling", status="Active",
+         description="PIF-backed fund of funds backing VC, PE and private-debt managers rather "
+                     "than investing directly, to build an ecosystem that can finance Saudi SME "
+                     "growth sustainably. Co-backer of the Flat6Labs Riyadh Seed Programme.",
+         stats="Backs managers including Vision Ventures",
+         entity_url="https://jada.com.sa/en/portfolio/portfolio-vision-ventures",
+         programs_url="https://jada.com.sa/en/portfolio/portfolio-vision-ventures",
+         apply_url="", confidence="medium",
+         source="jada.com.sa portfolio page indexed; root domain inferred from it"),
+
+    dict(entity="Riyadh Valley Company (RVC)", entity_type="University programme",
+         country="Saudi Arabia", city="Riyadh", program="KSU investment arm",
+         program_type="Seed fund", stage="Seed",
+         sectors="Biotech, IT, sustainable resources", eligibility="KSA startups",
+         funding="Funding + strategic support", equity="Yes", duration="N/A",
+         cadence="Rolling", status="Active",
+         description="Investment arm of King Saud University, funding startups in biotechnology, "
+                     "information technology and sustainable resources. Co-backer of the "
+                     "Flat6Labs Riyadh Seed Programme.",
+         stats="KSU investment vehicle; RSP ecosystem partner",
+         entity_url="https://angelmatch.io/accelerators/Riyadh_Valley_Company",
+         programs_url="https://angelmatch.io/accelerators/Riyadh_Valley_Company",
+         apply_url="", confidence="low",
+         source="Profile pages indexed; no official RVC domain returned — verify"),
+
+    dict(entity="Saudi Vision 2030 encyclopedia", entity_type="Aggregator / Directory",
+         country="Saudi Arabia", city="Riyadh",
+         program="Incubators & accelerators directory", program_type="Directory listing",
+         stage="Any", sectors="All", eligibility="Open", funding="N/A", equity="N/A",
+         duration="Ongoing", cadence="Continuous", status="Active",
+         description="Maintains encyclopedia pages on Saudi incubators, accelerators and venture "
+                     "funds — a structured directory worth polling for newly launched KSA programmes.",
+         stats="Per-topic encyclopedia pages on the KSA ecosystem",
+         entity_url="https://vision2030.ai/",
+         programs_url="https://vision2030.ai/encyclopedia/saudi-arabia-incubators-accelerators/",
+         apply_url="", confidence="high", source="vision2030.ai encyclopedia pages indexed"),
+
+    # ---- UAE ----
+    dict(entity="Sheraa (Sharjah Entrepreneurship Center)", entity_type="Government / Authority",
+         country="UAE", city="Sharjah", program="S3 — Sharjah Startup Studio",
+         program_type="Incubator", stage="Seed", sectors="Agnostic",
+         eligibility="Startups scaling in Sharjah", funding="Equity-free incubation",
+         equity="No", duration="Programme cycle", cadence="Annual", status="Active",
+         description="Sheraa's tailored incubator for startups in their scaling phase, sitting "
+                     "alongside Startup Dojo (ideation-stage, youth-led) in Sheraa's programme ladder.",
+         stats="Sheraa overall: 20,000+ youth empowered, 450+ startups supported, 180+ incubated",
+         entity_url="https://www.asc.sheraa.ae/",
+         programs_url="https://www.asc.sheraa.ae/s3-program", apply_url="", confidence="high",
+         source="asc.sheraa.ae/s3-program indexed; shurooq.gov.ae Sheraa initiative page"),
+
+    dict(entity="Ma'an (Authority of Social Contribution)", entity_type="Government / Authority",
+         country="UAE", city="Abu Dhabi", program="Social Incubator Programme",
+         program_type="Incubator", stage="Idea", sectors="Social impact",
+         eligibility="Social ventures in Abu Dhabi", funding="Social Investment Fund",
+         equity="No", duration="Programme-dependent", cadence="Rolling", status="Active",
+         description="Formed 2019 by Abu Dhabi's Department of Community Development. Works "
+                     "across four pillars: a Social Investment Fund, a Social Incubator "
+                     "Programme, Community Engagement, and Social Impact Bonds.",
+         stats="AED 220M+ allocated to Abu Dhabi social development projects in 2025",
+         entity_url="https://maan.gov.ae/en/",
+         programs_url="https://fundraise.maan.gov.ae/en/content/social-investment-fund/",
+         apply_url="", confidence="high", source="maan.gov.ae and fundraise.maan.gov.ae indexed"),
+
+    dict(entity="ADIO (Abu Dhabi Investment Office)", entity_type="Government / Authority",
+         country="UAE", city="Abu Dhabi", program="Innovation Programme", program_type="Grant",
+         stage="Growth",
+         sectors="Agritech, financial services, ICT, health & biopharma, tourism",
+         eligibility="Companies investing/R&D in Abu Dhabi",
+         funding="AED 2 billion fund; AED 1bn allocated to date", equity="No",
+         duration="Multi-year", cadence="Rolling", status="Active",
+         description="An AED 2 billion fund driving R&D and advancing innovation across "
+                     "high-growth sectors. ADIO has supported dozens of investors and companies "
+                     "through tailored programmes since 2019.",
+         stats="AED 2bn fund; AED 1bn allocated to 37 companies",
+         entity_url="https://www.investinabudhabi.ae/",
+         programs_url="https://www.investinabudhabi.ae/News/ADIOs-Innovation-Programme-builds-capabilities",
+         apply_url="", confidence="high",
+         source="investinabudhabi.ae Innovation Programme page indexed; Abu Dhabi Media Office"),
+
+    dict(entity="SRTI Park (Sharjah Research, Technology & Innovation Park)",
+         entity_type="Government / Authority", country="UAE", city="Sharjah",
+         program="Free-zone incubation for research-based startups", program_type="Incubator",
+         stage="Any", sectors="Research, technology, knowledge-based",
+         eligibility="Research and tech ventures", funding="Infrastructure + support",
+         equity="No", duration="Ongoing", cadence="Rolling", status="Active",
+         description="Free zone established 2016 by royal decree of the Ruler of Sharjah, "
+                     "providing infrastructure and support for research, technology and "
+                     "knowledge-based startups.",
+         stats="Established 2016 by royal decree",
+         entity_url="https://universitycity.gov.ae/en/portfolio-item/sharjah-research-technology-and-innovation-park/",
+         programs_url="https://universitycity.gov.ae/en/portfolio-item/sharjah-research-technology-and-innovation-park/",
+         apply_url="", confidence="medium",
+         source="universitycity.gov.ae page indexed; official srtip.ae domain not returned — verify"),
+
+    # ---- Bahrain ----
+    dict(entity="Al Waha Fund of Funds", entity_type="Sovereign / National fund",
+         country="Bahrain", city="Manama", program="Fund-of-funds commitments",
+         program_type="Fund of funds", stage="Any", sectors="Tech, fintech",
+         eligibility="VC funds with a Bahrain presence", funding="USD 100 million fund",
+         equity="Indirect", duration="N/A", cadence="Rolling", status="Active",
+         description="Invests in venture capital funds that have a presence in Bahrain. LP "
+                     "advisory includes Mumtalakat, National Bank of Bahrain, Batelco, Tamkeen "
+                     "and Bahrain Development Bank.",
+         stats="Closed at USD 100 million; investor in Shorooq and a USD 50M fintech fund",
+         entity_url="https://www.bahrainedb.com/bahrain-pulse/al-waha-fund-of-funds-fintech-startups",
+         programs_url="https://www.bahrainedb.com/bahrain-pulse/al-waha-fund-of-funds-fintech-startups",
+         apply_url="", confidence="medium",
+         source="Bahrain EDB page indexed; Gulf Business and Arabian Business coverage"),
+
+    # ---- Jordan ----
+    dict(entity="ZINC (Zain Innovation Campus)", entity_type="Corporate programme",
+         country="Jordan", city="Amman", program="Incubation & acceleration",
+         program_type="Incubator", stage="Idea", sectors="Tech",
+         eligibility="Jordanian entrepreneurs", funding="Programme support", equity="No",
+         duration="Programme-dependent", cadence="Recurring", status="Active",
+         description="Established by Zain Jordan in 2014 and launched at King Hussein Business "
+                     "Park. Recognised as the first startup enabler in Jordan; runs incubation "
+                     "and acceleration, coworking, training and mentorship.",
+         stats="Founded 2014; Jordan's first startup enabler",
+         entity_url="https://zinc.jo/", programs_url="https://zinc.jo/", apply_url="",
+         confidence="high", source="zinc.jo indexed; Zain eShop ZINC page; Jordan Pulse coverage"),
+
+    dict(entity="iPARK", entity_type="Incubator", country="Jordan", city="Amman",
+         program="General incubation programme", program_type="Incubator", stage="Idea",
+         sectors="Technology", eligibility="Jordanian startups",
+         funding="Advisory + capacity building", equity="Varies", duration="Programme-dependent",
+         cadence="Rolling", status="Active",
+         description="Jordan's first and longest-running business incubator, hosted by the Royal "
+                     "Scientific Society. Matchmaking, advisory, legal support and capacity "
+                     "building across multiple incubators.",
+         stats="Jordan's oldest running incubation programme",
+         entity_url="https://www.ipark.jo/",
+         programs_url="https://www.ipark.jo/what-we-do/entrepreneurship/",
+         apply_url="https://gust.com/programs/general-incubation-program-amman",
+         confidence="high", source="ipark.jo, /about-ipark and /what-we-do indexed; Gust programme page"),
+
+    dict(entity="Beyond Capital", entity_type="NGO / Development agency", country="Jordan",
+         city="Amman", program="Entrepreneur support programme", program_type="Accelerator",
+         stage="Seed", sectors="Agnostic", eligibility="Jordanian entrepreneurs",
+         funding="USD 10 million USAID-backed fund", equity="Varies",
+         duration="Programme cycle", cadence="Batch-based", status="Active",
+         description="Joint venture between Endeavor Jordan and Silicon Badia, backed by a USD "
+                     "10 million USAID fund. Supports entrepreneurs, finances them and develops "
+                     "angel investors.",
+         stats="USD 10M USAID-backed fund; selects entrepreneurs in batches",
+         entity_url="https://beyondcapital.vc/", programs_url="https://beyondcapital.vc/",
+         apply_url="", confidence="high",
+         source="beyondcapital.vc indexed; MENAbytes and Startup Scene cohort coverage"),
+
+    # ---- Lebanon ----
+    dict(entity="Smart ESA", entity_type="University programme", country="Lebanon",
+         city="Beirut", program="Smart ESA Accelerator", program_type="Accelerator",
+         stage="Seed", sectors="Tech", eligibility="Lebanese startups",
+         funding="Programme support", equity="Varies", duration="Programme cycle",
+         cadence="Recurring", status="Active",
+         description="Founded 2017 at ESA Business School; described as the most successful "
+                     "accelerator programme in Lebanon. Runs local and international tracks.",
+         stats="Founded 2017",
+         entity_url="https://www.esa.edu.lb/smart-esa/home",
+         programs_url="https://www.esa.edu.lb/smart-esa/programs/international-program",
+         apply_url="", confidence="high", source="esa.edu.lb Smart ESA home, about and programme pages indexed"),
+
+    # ---- Morocco ----
+    dict(entity="Technopark Maroc", entity_type="Incubator", country="Morocco",
+         city="Casablanca / Rabat / Tangier / Agadir / Essaouira",
+         program="Technopark incubation network", program_type="Incubator", stage="Idea",
+         sectors="IT, consulting, services, communication", eligibility="Moroccan companies",
+         funding="Hosting + support", equity="No", duration="Ongoing", cadence="Rolling",
+         status="Active",
+         description="Incubator for technology enterprises supporting young companies, mainly in "
+                     "IT, consulting, services and communication. Extended nationally: Rabat "
+                     "(2012), Tangier (2015), Agadir (2021), Essaouira (2023).",
+         stats="Five-city network",
+         entity_url="https://www.technopark.ma/",
+         programs_url="https://www.technopark.ma/reseau/", apply_url="", confidence="high",
+         source="technopark.ma, /technopark and /reseau indexed"),
+
+    dict(entity="IMPACT Lab", entity_type="Accelerator", country="Morocco", city="Casablanca",
+         program="Innovation & startup support", program_type="Accelerator", stage="Any",
+         sectors="Agnostic", eligibility="Morocco and 17 African countries",
+         funding="Programme support", equity="Varies", duration="Programme-dependent",
+         cadence="Rolling", status="Active",
+         description="Since 2016, supports startups, companies and public institutions in Morocco "
+                     "and 17 African countries to respond innovatively to growth and "
+                     "transformation challenges. Also runs IMPACT Camp.",
+         stats="Active since 2016 across 17 African countries",
+         entity_url="https://impactlab.africa/", programs_url="https://impactcamp.ma/",
+         apply_url="", confidence="high", source="impactlab.africa and impactcamp.ma indexed"),
+
+    dict(entity="StartUp Maroc", entity_type="Accelerator", country="Morocco", city="Casablanca",
+         program="Startup acceleration (Innov Invest)", program_type="Accelerator",
+         stage="Idea", sectors="Agnostic", eligibility="Moroccan entrepreneurs",
+         funding="Innov Invest Fund-linked", equity="Varies", duration="Programme-dependent",
+         cadence="Recurring", status="Active",
+         description="Accelerator labelled by the Caisse Centrale de Garantie under the Innov "
+                     "Invest Fund, with a mission to help high-potential Moroccan entrepreneurs "
+                     "and startups emerge.",
+         stats="CCG-labelled under the Innov Invest Fund",
+         entity_url="https://www.startupmaroc.org/",
+         programs_url="https://www.startupmaroc.org/a-propos", apply_url="", confidence="high",
+         source="startupmaroc.org and /a-propos indexed"),
+
+    dict(entity="CDG Invest", entity_type="Sovereign / National fund", country="Morocco",
+         city="Rabat", program="Investment across company stages", program_type="Fund of funds",
+         stage="Any", sectors="All", eligibility="Moroccan companies",
+         funding="Equity investment", equity="Yes", duration="N/A", cadence="Rolling",
+         status="Active",
+         description="Investment branch of the CDG group — a public institution investing "
+                     "collected savings into projects aligned with Morocco's strategic "
+                     "challenges. Parent of the 212Founders programme.",
+         stats="Runs 212Founders; builds Morocco's private-equity ecosystem",
+         entity_url="https://cdginvest.ma/en/home/",
+         programs_url="https://www.cdg.ma/en/cdg-invest", apply_url="", confidence="high",
+         source="cdginvest.ma/en/home and cdg.ma/en/cdg-invest indexed"),
+
+    dict(entity="StartupHub Maroc", entity_type="Aggregator / Directory", country="Morocco",
+         city="Casablanca", program="Moroccan startup ecosystem directory",
+         program_type="Directory listing", stage="Any", sectors="All", eligibility="Open",
+         funding="N/A", equity="N/A", duration="Ongoing", cadence="Continuous",
+         status="Active",
+         description="Directory of the Moroccan startup ecosystem — useful for discovering "
+                     "Morocco-specific programmes not named elsewhere in this registry.",
+         stats="Ecosystem directory",
+         entity_url="https://www.startuphubmaroc.ma/",
+         programs_url="https://www.startuphubmaroc.ma/startups", apply_url="",
+         confidence="high", source="startuphubmaroc.ma indexed"),
+
+    # ---- Regional media ----
+    dict(entity="WAYA Media", entity_type="Media / Data platform", country="Regional (MENA)",
+         city="Regional", program="Bilingual startup & business news", program_type="News feed",
+         stage="Any", sectors="All", eligibility="Open", funding="N/A", equity="N/A",
+         duration="Ongoing", cadence="Continuous", status="Active",
+         description="Bilingual (EN/AR) business and startup news platform serving founders, "
+                     "operators and investors across Egypt, the Gulf and the wider MENA region. "
+                     "Bilingual coverage makes it valuable for Arabic-language programme calls.",
+         stats="EN/AR coverage; backed by Foras.ai investment in Founders Media",
+         entity_url="https://waya.media/", programs_url="https://waya.media/tag/mena/",
+         apply_url="", confidence="high", source="waya.media, /about and /tag/mena indexed"),
+
+    dict(entity="StartupBlink", entity_type="Aggregator / Directory", country="Global",
+         city="Global", program="Ecosystem rankings & startup directories",
+         program_type="Directory listing", stage="Any", sectors="All", eligibility="Open",
+         funding="N/A", equity="N/A", duration="Ongoing", cadence="Annual",
+         status="Active",
+         description="Global startup ecosystem index with per-country pages, including Egypt — "
+                     "useful for spotting newly ranked ecosystems and the organisations in them.",
+         stats="Per-country ecosystem rankings",
+         entity_url="https://www.startupblink.com/",
+         programs_url="https://www.startupblink.com/top-startups/egypt", apply_url="",
+         confidence="high", source="startupblink.com/top-startups/egypt indexed"),
+
+    dict(entity="VC4A", entity_type="Aggregator / Directory", country="Global", city="Global",
+         program="Africa & MENA programme listings", program_type="Directory listing",
+         stage="Any", sectors="All", eligibility="Open", funding="N/A", equity="N/A",
+         duration="Ongoing", cadence="Continuous", status="Active",
+         description="Venture platform listing accelerators and incubators across Africa and "
+                     "adjacent markets, with programme profiles and open calls.",
+         stats="Hosts profiles for AUC Venture Lab, Cairo Angels and others",
+         entity_url="https://vc4a.com/", programs_url="https://vc4a.com/", apply_url="",
+         confidence="high", source="vc4a.com profile pages indexed"),
+
+    dict(entity="Gust", entity_type="Aggregator / Directory", country="Global", city="Global",
+         program="Accelerator programme applications", program_type="Directory listing",
+         stage="Any", sectors="All", eligibility="Open", funding="N/A", equity="N/A",
+         duration="Ongoing", cadence="Continuous", status="Active",
+         description="Hosts application portals for accelerator and incubation programmes, "
+                     "including MENA ones such as iPARK's general incubation programme.",
+         stats="Application-hosting platform used by regional incubators",
+         entity_url="https://gust.com/",
+         programs_url="https://gust.com/accelerators/auc-venture-lab", apply_url="",
+         confidence="high", source="gust.com programme pages indexed"),
+]
+
+
+def _apply_pass2():
+    """Fold pass-2 corrections and additions into PROGRAMS."""
+    for p in PROGRAMS:
+        patch = CORRECTIONS.get((p["entity"], p["program"]))
+        if patch:
+            p.update(patch)
+    PROGRAMS.extend(EXTRA_PROGRAMS)
+
+
+_apply_pass2()
+
+
+# ---------------------------------------------------------------------------
+# Pass-2b — last three weak rows resolved on a third targeted search
+# ---------------------------------------------------------------------------
+CORRECTIONS_2B = {
+    ("MSMEDA", "MSME financing & technical support"): dict(
+        entity_url="https://www.msmeda.org.eg/",
+        programs_url="https://www.msmeda.org.eg/pages/4020",
+        description="Micro, Small and Medium Enterprise Development Agency — the body "
+                    "responsible for developing the legislative environment for MSMEs and "
+                    "entrepreneurship in Egypt. Offers financing, training and incubation; "
+                    "partnered with Startup Egypt. Site is primarily Arabic.",
+        confidence="high",
+        source="msmeda.org.eg returned as an indexed link on the third pass, with several "
+               "deep pages; UN ESCWA DEPAR profile"),
+    ("AstroLabs", "Market expansion into UAE & Saudi"): dict(
+        entity_url="https://astrolabs.com/", programs_url="https://astrolabs.com/about-us",
+        description="Dubai-based market-entry partner founded 2013, with offices in Dubai and "
+                    "Riyadh. Company formation, licensing, corporate services and ecosystem "
+                    "integration for international firms entering the Saudi and UAE markets.",
+        stats="Founded 2013; Dubai and Riyadh offices",
+        confidence="high", source="astrolabs.com, /about-us, /contact-us all indexed"),
+    ("ADGM", "Tech & FinTech licensing and programmes"): dict(
+        entity_url="https://www.adgm.com/", programs_url="https://www.adgm.com/",
+        description="Abu Dhabi's international financial centre and free economic zone, "
+                    "established 2013 and operational since October 2015. Common-law regulatory "
+                    "ecosystem, startup-tailored licences, and host of Hub71.",
+        stats="Operational since Oct 2015; hosts Hub71",
+        confidence="high", source="adgm.com indexed; WEF and WAIFC organisation profiles"),
+}
+
+for _p in PROGRAMS:
+    _patch = CORRECTIONS_2B.get((_p["entity"], _p["program"]))
+    if _patch:
+        _p.update(_patch)
+CORRECTIONS.update(CORRECTIONS_2B)

@@ -103,7 +103,7 @@ A second deliverable in this repo: a scrape-ready registry of the organisations 
 startup programmes across **Egypt, the GCC and the wider MENA region** (Israel excluded
 per scoping).
 
-**88 programme rows · 79 unique entities · 17 markets · 112 URLs queued for scraping**
+**115 programme rows · 105 unique entities · 17 markets · 174 URLs queued for scraping**
 
 ## Deliverables
 
@@ -149,8 +149,27 @@ environment's egress proxy blocked *every* outbound request (verified against fl
 magnitt.com, wamda.com, itida.gov.eg, hub71.com, oasis500.com, sheraa.ae, startupqatar.qa),
 so **no page was ever opened**.
 
-The `confidence` column records how firm each row is — `high` 46, `medium` 17, `low` 25.
-`low` means the entity was named in prose only and the URL is a plausible guess. Run
+**Three verification passes have been run.** Each weak entity was re-queried by name, and a
+URL was kept only when it came back as an actual indexed search-result *link* rather than
+being named in prose. That moved the confidence split from `high` 46 / `medium` 17 / `low` 25
+to **`high` 88 / `medium` 20 / `low` 7**, and grew the registry from 88 rows to 115.
+
+Verification caught three factual errors that would otherwise have shipped:
+
+- **Cairo Angels has rebranded to Acasia** — the row is renamed.
+- **Wa'ed** resolves at `waed.com`, not the `waed.net` an article's prose gave.
+- **212Founders** resolves at `.co`, not the `.ma` cited in a Morocco funding guide.
+
+TIEC and Startup Egypt also turned out to run their own government domains (`tiec.gov.eg`,
+`startup.gov.eg`) rather than sitting under ITIDA as first assumed.
+
+One row carries a **security caution**: Endeavor Egypt's `endeavoreg.org` resolves, but its
+`/contact/` page returned a gambling-spam page title in search results, suggesting part of the
+domain may be compromised or parked.
+
+Seven rows remain `low` — EdVentures, Innoventures, Egypt Fund of Funds, KAUST Innovation Fund,
+Riyadh Valley Company, Startupbootcamp Dubai and Kuwait's National Fund — with no official
+domain indexed after three passes. Each carries a placeholder URL and says so. Run
 `--verify-only` from a normal network first; it writes an `http_status` back for every source.
 
 The scraper's four parser tiers were tested offline against fixtures (JSON-LD extraction,
