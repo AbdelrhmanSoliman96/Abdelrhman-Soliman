@@ -1,0 +1,385 @@
+<title>StartPad — Missions Redesign</title>
+<style>
+  :root{--paper:#F2F3F8;--surface:#FFFFFF;--surface-2:#EAEBF3;--ink:#14131C;--ink-soft:#4E4C60;--ink-faint:#7B7990;
+  --rule:#D9DAE6;--rule-soft:#E7E8F0;--accent:#4530E8;--accent-ink:#2E1FB0;--on-accent:#FFFFFF;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0F0E16;--surface:#191823;--surface-2:#221F30;
+  --ink:#ECEBF3;--ink-soft:#A9A7BC;--ink-faint:#7D7B92;--rule:#2E2B3D;--rule-soft:#24222F;--accent:#9A88FF;
+  --accent-ink:#C3B8FF;--on-accent:#14131C;}}
+  :root[data-theme="dark"]{--paper:#0F0E16;--surface:#191823;--surface-2:#221F30;--ink:#ECEBF3;--ink-soft:#A9A7BC;
+  --ink-faint:#7D7B92;--rule:#2E2B3D;--rule-soft:#24222F;--accent:#9A88FF;--accent-ink:#C3B8FF;--on-accent:#14131C;}
+  *{box-sizing:border-box}html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+  body{margin:0;background:var(--paper);color:var(--ink);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Arabic",Arial,sans-serif}
+  .wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem 6rem}
+  h1,h2,h3{text-wrap:balance;margin:0;line-height:1.15;letter-spacing:-.025em}
+  h1{font-size:clamp(2.1rem,5.5vw,3.2rem);font-weight:800;letter-spacing:-.04em;padding-block:3.25rem 1rem}
+  h2{font-size:clamp(1.5rem,3.2vw,2rem);font-weight:800;margin-top:3rem;padding-top:2.25rem;border-top:2px solid var(--ink)}
+  h3{font-size:1.12rem;font-weight:700;margin-top:2.5rem;color:var(--accent-ink);
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:-.01em}
+  p{margin:.85rem 0}
+  blockquote{margin:.9rem 0;padding:.2rem 0 .2rem 1rem;border-inline-start:3px solid var(--accent);color:var(--ink-soft)}
+  a{color:var(--accent);text-underline-offset:2px}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+  hr{border:0;border-top:1px solid var(--rule-soft);margin:2.5rem 0}
+  strong{font-weight:680}
+  em{color:var(--ink-soft)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--surface-2);
+  padding:.1em .35em;border-radius:2px}
+  .table-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:2px;background:var(--surface);margin:1.25rem 0}
+  table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+  th,td{text-align:start;padding:.6rem .8rem;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+  th{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-faint);font-weight:600;background:var(--surface-2)}
+  tbody tr:last-child td{border-bottom:0}
+  .prompt{border:1px solid var(--rule);border-radius:3px;background:var(--surface);overflow:hidden;margin:1rem 0 2rem}
+  .prompt>header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.6rem .9rem;
+  background:var(--surface-2);border-bottom:1px solid var(--rule)}
+  .prompt>header .label{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.7rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-faint);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .prompt>header .label b{color:var(--accent-ink);font-weight:700}
+  .copy{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+  background:transparent;border:1px solid var(--rule);color:var(--ink-soft);padding:.25rem .55rem;border-radius:2px;
+  cursor:pointer;white-space:nowrap;transition:background .15s ease,color .15s ease}
+  .copy:hover{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+  pre{margin:0;padding:1rem .9rem;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:.84rem;line-height:1.7;color:var(--ink);white-space:pre-wrap;word-wrap:break-word;background:var(--surface)}
+  pre code{background:none;padding:0;font-size:inherit}
+</style>
+<div class="wrap">
+<h1>StartPad — Missions Redesign (Round 14)</h1>
+<p>A full rework of the 15 missions' question set, plus five prompts to build it.</p>
+<p>Worked from <code>startpad15missions.docx</code>. The journey PDF wouldn't yield text (image-based), so if it contains flow rules I haven't accounted for, send them and I'll fold them in.</p>
+<hr>
+<h2>The diagnosis, in one number</h2>
+<p><strong>87 questions across 15 missions. 75 of them are blank textareas.</strong></p>
+<p>That is the whole problem. Your users aren't struggling because the questions are wrong — most are the right questions. They're struggling because every question is a blank box, and a blank box asks the founder to invent both the <em>answer</em> and the <em>format of the answer</em> at the same time.</p>
+<p>Mission 8 is the clearest case: the Business Model Canvas is a famous <strong>nine-block visual tool</strong>, and it currently renders as <strong>nine consecutive empty text areas</strong>. The canvas is the entire point of the exercise, and it's been flattened into a form.</p>
+<p>Three more structural findings:</p>
+<p><strong>The same question is asked five times.</strong> "Who is your user" appears as M1 Q3, M2 Q1, M2 Q2, M4 Q2 and M11 Q1. "What are your next steps" appears in M9, M10, M13, M14 and M15. Nothing carries forward, so each mission feels like starting over rather than building on the last.</p>
+<p><strong>Two missions have identical titles.</strong> Mission 7 and Mission 10 are both "Solution Hypothesis Test". A founder cannot tell them apart on the roadmap.</p>
+<p><strong>Two missions are matrices rendered as text fields.</strong> M3 (Importance/Frequency) and M5 (Value/Impact) are literally 2×2 matrices. Both are currently six text boxes asking the founder to type numbers between 1 and 10.</p>
+<hr>
+<h2>The principle</h2>
+<p><strong>Structure the scaffolding. Never the content.</strong></p>
+<p>A dropdown for industry doesn't tell a founder what their business is — it removes the burden of inventing a taxonomy from scratch. The thinking stays theirs. What changes is that they spend their effort on <em>the answer</em> rather than on <em>working out what shape the answer should be</em>.</p>
+<p>And your point about mixed cases is exactly right, so it's a rule: <strong>every category question is multi-select with an "Other" free-text escape.</strong> Fintech <em>and</em> healthcare is a real answer. Subscription <em>and</em> commission is a real answer. A closed single-select would force a lie.</p>
+<hr>
+<h2>The input vocabulary</h2>
+<p>Eleven types. Everything below maps to one of these.</p>
+<div class="table-scroll"><table><thead><tr><th>Type</th><th>When to use</th><th>Example</th></tr></thead><tbody><tr><td><code>chips-multi</code></td><td>A known set where combinations are real</td><td>Industry, channels, revenue models</td></tr><tr><td><code>chips-single</code></td><td>A known set where only one is true</td><td>Problem frequency, launch readiness</td></tr><tr><td><code>slider</code></td><td>A 1–10 rating</td><td>Importance, impact, PMF score</td></tr><tr><td><code>matrix</code></td><td>Two scores plotted visually</td><td>M3 and M5</td></tr><tr><td><code>canvas</code></td><td>A named visual framework</td><td>M8 Business Model Canvas</td></tr><tr><td><code>builder</code></td><td>A sentence with blanks to fill</td><td>Problem statement, value proposition</td></tr><tr><td><code>repeater</code></td><td>A list the founder adds rows to</td><td>Competitors, features, next steps</td></tr><tr><td><code>number</code></td><td>A quantity, with unit and currency</td><td>Market size, price, revenue</td></tr><tr><td><code>upload</code></td><td>File, link, or pasted text</td><td>Prototype, survey results, evidence</td></tr><tr><td><code>text</code></td><td>One short line</td><td>A name, a link</td></tr><tr><td><code>textarea</code></td><td>Genuinely open reflection</td><td>"What did you learn?"</td></tr></tbody></table></div>
+<p><strong>Every question type can carry an attachment.</strong> A founder answering "what were your test results" should be able to attach the survey export alongside their words, not instead of them.</p>
+<p><strong>Every chip list ends with "Other →"</strong> which opens a text field. No list is ever closed.</p>
+<hr>
+<h2>The 15 missions, redesigned</h2>
+<p>Legend: <strong>↩</strong> = carried forward from an earlier mission, pre-filled and editable.</p>
+<h3>Mission 1 — Problem Analysis</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Now</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td>What area are you interested in?</td><td>text</td><td><strong><code>chips-multi</code></strong> — Fintech · Healthtech · Edtech · E-commerce · Logistics · Agritech · Proptech · Food &amp; beverage · Travel · Media · Gaming · B2B software · Marketplace · Climate · Fashion · Fitness · HR · Legal · Insurance · Manufacturing · Energy · Other</td></tr><tr><td>2</td><td>Describe a problem you've observed</td><td>textarea</td><td><strong><code>builder</code></strong> — "I noticed that ___ struggle with ___ when ___" + optional detail + optional photo</td></tr><tr><td>3</td><td>Who is affected?</td><td>text</td><td><strong><code>chips-multi</code></strong> — Students · Young professionals · Small business owners · Freelancers · Parents · Farmers · Drivers · Patients · Teachers · Retailers · Other — plus one line of specifics</td></tr><tr><td>4</td><td>What solutions exist?</td><td>textarea</td><td><strong><code>repeater</code></strong> — name + link + one line on what it does</td></tr><tr><td>5</td><td>What are their limitations?</td><td>textarea</td><td><strong><code>chips-multi</code></strong> — Too expensive · Too slow · Hard to use · Not available here · Poor quality · Needs expertise · No offline · No Arabic · Other — then expand</td></tr></tbody></table></div>
+<h3>Mission 2 — Problem Definition</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td>Who is your primary user?</td><td><strong><code>builder</code></strong> — "[age range] [role] in [city/country] who [context]", each blank a chip set</td></tr><tr><td>2</td><td>Key characteristics</td><td><strong><code>chips-multi</code></strong> — income band, tech comfort, buying power, where they spend time</td></tr><tr><td>3</td><td>What problem do they face?</td><td>↩ <strong>from M1 Q2</strong>, editable — "You said this in Mission 1. Sharpen it now."</td></tr><tr><td>4</td><td>When/where does it happen?</td><td><strong><code>chips-multi</code></strong> — At work · At home · Commuting · Shopping · Studying · Online · In person · Other</td></tr><tr><td>5</td><td>How often?</td><td><strong><code>chips-single</code></strong> — Many times a day · Daily · Weekly · Monthly · A few times a year · Once</td></tr></tbody></table></div>
+<h3>Mission 3 — Importance/Frequency Matrix</h3>
+<p><strong>Replace all 7 fields with one interactive matrix.</strong></p>
+<p>Problems from M1 and M2 appear as draggable cards. The founder drags each onto a 2×2 grid, or sets two sliders and watches the card move. <code>repeater</code> to add more problems. Then <code>chips-single</code> to pick the focus problem from those plotted.</p>
+<p>The quadrants are labelled so the output teaches: <strong>Fix first</strong> (high/high) · <strong>Quick wins</strong> (low importance, high frequency) · <strong>Big bets</strong> (high importance, low frequency) · <strong>Ignore for now</strong>.</p>
+<h3>Mission 4 — Problem Statements</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td>Main problem statement</td><td><strong><code>builder</code></strong> — "[User] needs a way to [job] because [insight]. Today they [workaround], which costs them [impact]."</td></tr><tr><td>2</td><td>Who specifically?</td><td>↩ <strong>from M2 Q1</strong></td></tr><tr><td>3</td><td>What is the impact?</td><td><strong><code>number</code> + unit</strong> (money / hours / times per week) + <code>chips-multi</code> impact type + short note</td></tr><tr><td>4</td><td>How will you measure success?</td><td><strong><code>repeater</code></strong> — metric · current value · target value</td></tr></tbody></table></div>
+<h3>Mission 5 — Idea Selection</h3>
+<p><strong>Same treatment as Mission 3.</strong> A <code>repeater</code> of ideas, two sliders each (Value, Effort), plotted live on a 2×2 with quadrants labelled <strong>Do now</strong> · <strong>Plan it</strong> · <strong>Quick win</strong> · <strong>Drop</strong>. Then pick one, and one line on why.</p>
+<h3>Mission 6 — Idea Description</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td>Value proposition</td><td><strong><code>builder</code></strong> — "For [user] who [need], [name] is a [category] that [benefit]. Unlike [alternative], we [difference]."</td></tr><tr><td>2</td><td>Key features</td><td><strong><code>repeater</code></strong> — feature + the benefit it delivers (this absorbs the old Q3)</td></tr><tr><td>3</td><td>~~What benefits?~~</td><td><strong>Removed</strong> — merged into Q2. It was asking the same thing twice.</td></tr><tr><td>4</td><td>How is this different?</td><td><strong><code>chips-multi</code></strong> — Cheaper · Faster · Easier · Local · Arabic-first · Better quality · Trusted · New capability · Other + a line</td></tr><tr><td>5</td><td>What assumptions are you making?</td><td><strong><code>repeater</code></strong> — assumption + <code>chips-single</code> risk (High/Medium/Low). Feeds directly into Mission 7.</td></tr></tbody></table></div>
+<h3>Mission 7 — Solution Hypothesis Test</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td>Main hypothesis</td><td><strong><code>builder</code></strong> — "We believe [user] will [action] because [reason]. We'll know we're right if [signal]." Riskiest assumption from M6 offered as the starting point.</td></tr><tr><td>2</td><td>How will you test it?</td><td><strong><code>chips-single</code></strong> — Interviews · Survey · Landing page · Fake door · Concierge · Wizard of Oz — each with a one-line explanation of what it is</td></tr><tr><td>3</td><td>What would prove it?</td><td><strong><code>number</code></strong> threshold — "at least ___ out of ___ do ___"</td></tr><tr><td>4</td><td>Test results</td><td><strong><code>upload</code></strong> (survey export, notes, screenshots) + <strong><code>number</code></strong> actual result</td></tr><tr><td>5</td><td>What did you learn?</td><td><strong><code>textarea</code></strong> — keep open. This one should be.</td></tr></tbody></table></div>
+<h3>Mission 8 — Business Model Canvas</h3>
+<p><strong>Render the actual canvas.</strong> Nine blocks in the real BMC layout, not nine text areas. Tapping a block opens a focused editor; the canvas fills in visually as they go, with a "4 of 9 blocks" indicator.</p>
+<div class="table-scroll"><table><thead><tr><th>Block</th><th>Input</th></tr></thead><tbody><tr><td>Value Propositions</td><td>↩ from M6 Q1</td></tr><tr><td>Customer Segments</td><td>↩ from M2</td></tr><tr><td>Channels</td><td><strong><code>chips-multi</code></strong> — Own website · App store · Instagram · TikTok · WhatsApp · Resellers · Direct sales · Marketplace · Physical shop · Other</td></tr><tr><td>Customer Relationships</td><td><strong><code>chips-multi</code></strong> — Self-serve · Personal support · Community · Automated · Dedicated account · Other</td></tr><tr><td><strong>Revenue Streams</strong></td><td><strong><code>chips-multi</code></strong> — Subscription · One-time sale · Commission · Freemium · Advertising · Licensing · Marketplace fee · Usage-based · Other. <strong>Multi-select matters here</strong> — mixed models are normal, and the current single box hides that.</td></tr><tr><td>Key Resources</td><td><code>chips-multi</code> + repeater</td></tr><tr><td>Key Activities</td><td><code>repeater</code></td></tr><tr><td>Key Partnerships</td><td><strong><code>repeater</code></strong> — partner + what they provide</td></tr><tr><td>Cost Structure</td><td><strong><code>repeater</code></strong> — cost line + amount + currency, with a running monthly total</td></tr></tbody></table></div>
+<p>Export the completed canvas as a branded PDF (uses the template from Round 11).</p>
+<h3>Mission 9 — Build Prototype</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td><strong><code>chips-single</code></strong> — Paper sketch · Figma clickable · No-code app · Landing page · Slide walkthrough · Coded · Other</td></tr><tr><td>2</td><td>↩ features from M6, as checkboxes: "which made it into the prototype?"</td></tr><tr><td>3</td><td><strong><code>repeater</code></strong> — user flows, step by step</td></tr><tr><td>4</td><td><strong><code>chips-multi</code></strong> — Figma · Canva · Bubble · Webflow · Glide · FlutterFlow · Adalo · Framer · Paper · Other</td></tr><tr><td>5</td><td><strong><code>upload</code></strong> — link or file. <strong>Required.</strong></td></tr><tr><td>6</td><td><strong><code>repeater</code></strong> — three next steps, each with a date</td></tr></tbody></table></div>
+<h3>Mission 10 — Prototype Testing <em>(rename — currently duplicates Mission 7's title)</em></h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td><strong><code>number</code></strong> — how many people tested it</td></tr><tr><td>2</td><td><strong><code>chips-single</code></strong> — In person · Video call · Unmoderated · Group session</td></tr><tr><td>3</td><td><strong><code>repeater</code></strong> — findings, each tagged <code>chips-single</code>: Confirmed · Contradicted · Surprising</td></tr><tr><td>4</td><td><strong><code>upload</code></strong> notes or recordings + short summary</td></tr><tr><td>5</td><td><strong><code>repeater</code></strong> — improvements with priority chips</td></tr></tbody></table></div>
+<h3>Mission 11 — Service Selection</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td>↩ target market from M2 + <strong><code>number</code></strong> size estimate</td></tr><tr><td>2</td><td><strong><code>chips-multi</code></strong> — Instagram · TikTok · WhatsApp · X · LinkedIn · Facebook groups · Google Ads · SEO · Influencers · Events · University campus · Referral · Cold outreach · Other</td></tr><tr><td>3</td><td><strong><code>chips-single</code></strong> pricing model + <strong><code>number</code> + currency</strong> price point</td></tr><tr><td>4</td><td><strong><code>repeater</code></strong> — sales process steps</td></tr><tr><td>5</td><td><strong><code>repeater</code></strong> — launch plan with dates, rendered as a timeline</td></tr></tbody></table></div>
+<h3>Mission 12 — Market Validation</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td><strong><code>chips-multi</code></strong> — validation methods used</td></tr><tr><td>2</td><td><strong><code>repeater</code></strong> — demand indicator + value</td></tr><tr><td>3</td><td><strong><code>repeater</code></strong> — competitor table: name · link · price · one strength · one weakness</td></tr><tr><td>4</td><td><strong><code>chips-single</code></strong> response + <strong><code>number</code></strong> willingness to pay</td></tr><tr><td>5</td><td><strong><code>number</code> × 3</strong> — TAM / SAM / SOM, each with currency, plus "how did you get to this number?"</td></tr></tbody></table></div>
+<h3>Mission 13 — Build MVP</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td>↩ features from M6/M9 as checkboxes</td></tr><tr><td>2</td><td><strong><code>chips-multi</code></strong> — No-code: Bubble/Glide/Softr/Webflow · Code: React/Next/Flutter/Laravel/Django/Node · Backend: Supabase/Firebase/AWS · Other</td></tr><tr><td>3</td><td><strong><code>number</code> + unit</strong> — days or weeks</td></tr><tr><td>4</td><td><strong><code>chips-multi</code></strong> challenge types + a line</td></tr><tr><td>5</td><td><strong><code>upload</code></strong> — link to the MVP. <strong>Required.</strong></td></tr><tr><td>6</td><td><strong><code>chips-single</code></strong> — Yes / Almost / Not yet → if not, a <code>repeater</code> of blockers</td></tr></tbody></table></div>
+<h3>Mission 14 — Product-Market Fit Test</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td><strong><code>chips-single</code></strong> sentiment + short note</td></tr><tr><td>2</td><td><strong>metric grid</strong> — signups · activated · retained day 7 · retained day 30, each a number</td></tr><tr><td>3</td><td><strong><code>upload</code></strong> feedback + summary</td></tr><tr><td>4</td><td><strong><code>number</code> %</strong> retention, with a helper showing the calculation</td></tr><tr><td>5</td><td><strong>Replace the 1–10 self-rating with the Sean Ellis test.</strong> Ask users: <em>"How would you feel if you could no longer use this?"</em> — Very disappointed / Somewhat / Not disappointed. Enter the % who said very disappointed. <strong>40% is the recognised PMF threshold.</strong> A founder rating their own PMF out of 10 measures optimism; this measures fit.</td></tr><tr><td>6</td><td><strong><code>repeater</code></strong> improvements with priority</td></tr></tbody></table></div>
+<h3>Mission 15 — Go to Market</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td><strong><code>chips-multi</code></strong> launch tactics + a line</td></tr><tr><td>2</td><td><strong><code>repeater</code></strong> — campaign: channel · spend · result</td></tr><tr><td>3</td><td><strong>metric grid</strong> — launch results</td></tr><tr><td>4</td><td><strong><code>number</code></strong> users acquired</td></tr><tr><td>5</td><td><strong><code>number</code> + currency</strong> revenue</td></tr><tr><td>6</td><td><strong><code>repeater</code></strong> growth next steps with dates</td></tr></tbody></table></div>
+<hr>
+<h2>What this changes, in numbers</h2>
+<div class="table-scroll"><table><thead><tr><th></th><th>Before</th><th>After</th></tr></thead><tbody><tr><td>Blank textareas</td><td>75</td><td><strong>11</strong></td></tr><tr><td>Questions answerable by tapping</td><td>0</td><td>~40</td></tr><tr><td>Questions carried forward</td><td>0</td><td>9</td></tr><tr><td>Visual/interactive exercises</td><td>0</td><td>3 (two matrices, one canvas)</td></tr><tr><td>Duplicate questions</td><td>12</td><td>0</td></tr></tbody></table></div>
+<p>The eleven remaining textareas are the ones that <em>should</em> be open — "what did you learn", "why did you choose this". Reflection deserves a blank page. Categorisation doesn't.</p>
+<hr>
+<hr>
+<h1>The prompts</h1>
+<p>Five, in order. Paste one per message.</p>
+<h2>PROMPT A — Build the Question Type System</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT A</b> · </span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>TASK: The 15 missions currently use 87 questions, of which 75 are blank
+textareas. Before changing any mission content, build the input component
+system that the new question set needs.
+
+BUILD THESE ELEVEN INPUT TYPES as reusable components, driven by a schema so
+mission content is data, not JSX:
+
+  chips-multi   Tappable pills, multi-select, always ending with "Other →"
+                which opens a text field. Selected state uses lime background
+                with near-black text. Minimum 44px tap targets. Wraps to
+                multiple lines on mobile.
+  chips-single  Same, single selection.
+  slider        1-10, with the ends labelled in words, current value shown
+                large. Draggable and keyboard-accessible.
+  matrix        A 2x2 grid. Cards are dragged onto it, or positioned by two
+                sliders. Quadrants are labelled. See Prompt C.
+  canvas        A named-framework layout with tappable blocks. See Prompt D.
+  builder       A sentence with inline blanks. Each blank is either a chip
+                set or a short input. The finished sentence reads back as
+                prose.
+  repeater      "Add another" rows. Each row is a mini-form defined per
+                question. Rows are reorderable and deletable.
+  number        Numeric input with a unit selector, and a currency selector
+                where relevant (EGP, SAR, AED, USD).
+  upload        File, URL, or pasted text — all three accepted. Shows what
+                was attached. Existing OCR applies.
+  text          One short line.
+  textarea      Long-form. Keep the existing gate from Round 11.
+
+RULES FOR ALL TYPES
+
+1. EVERY question can carry an attachment, regardless of its type. A founder
+   answering a chip question may still want to attach a screenshot. Put a
+   quiet "Add file or link" affordance on every question.
+
+2. NO CHIP LIST IS EVER CLOSED. "Other →" is mandatory on every chips-multi
+   and chips-single, and what the founder types there is stored, so you can
+   later see which options are missing from your taxonomies.
+
+3. MULTI-SELECT IS THE DEFAULT for categories. A founder building in fintech
+   AND healthcare is not an edge case, and neither is a business running
+   subscription AND commission revenue. Only use chips-single where exactly
+   one answer can be true (frequency, readiness).
+
+4. SCHEMA-DRIVEN. Each question is a record:
+     { id, missionId, order, type, label, helpText, whyItMatters,
+       options[], allowOther, required, minWords, carriesFrom,
+       attachmentAllowed, exampleAnswerId }
+   Mission content lives in that schema. Never hardcode a question in a
+   component.
+
+5. ARABIC. Every type must work RTL and be labelled in both languages. Chip
+   labels especially — a chip set is only faster than typing if the founder
+   reads it instantly in their own language.
+
+6. MOBILE FIRST. This is where these are answered. Chips beat typing on a
+   phone, which is most of the point.</code></pre></div>
+<h2>PROMPT B — Carry Answers Forward Between Missions</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT B</b> · </span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>TASK: The same question is currently asked up to five times across the 15
+missions, because nothing carries forward.
+
+  "Who is your user"       — M1 Q3, M2 Q1, M2 Q2, M4 Q2, M11 Q1
+  "What are your features" — M6 Q2, M9 Q2, M13 Q1
+  "What did you learn"     — M7 Q5, M10 Q4, M14 Q3
+  "What are your next steps" — M9 Q6, M10 Q5, M13, M14 Q6, M15 Q6
+
+Each mission therefore feels like starting over, when it should feel like the
+last one is being built on.
+
+THE FIX
+
+1. A FOUNDER PROFILE OBJECT that accumulates across missions:
+     industry[], userSegment, userPersona, problemStatement,
+     valueProposition, features[], assumptions[], businessModel[],
+     channels[], pricing, metrics[]
+   Every mission writes into it and reads from it.
+
+2. CARRY-FORWARD FIELDS are pre-filled and editable, and clearly framed as a
+   continuation rather than a repeat:
+
+     "In Mission 1 you said the problem was:
+      [their exact words, in an editable field]
+      Sharpen it now that you know your user better."
+
+   Never show a carried field as blank. Never show it as locked.
+
+3. TRACK WHAT CHANGED. When a founder edits a carried answer, keep both
+   versions. At the end of the journey they can see how their problem
+   statement evolved from Mission 1 to Mission 4 — that is one of the most
+   satisfying things a guided product can show someone.
+
+4. THESE NINE FIELDS CARRY (see the redesign doc):
+     M2 Q3 ← M1 Q2      M4 Q2 ← M2 Q1      M8 VP ← M6 Q1
+     M8 Segments ← M2   M9 Q2 ← M6 Q2      M11 Q1 ← M2
+     M13 Q1 ← M6/M9     M3 cards ← M1/M2   M7 Q1 ← M6 Q5 (riskiest assumption)
+
+5. REMOVE THE DUPLICATE. M6 Q3 ("what benefits will users get") asks the same
+   thing as M6 Q2 ("list key features"). Merge into one repeater with a
+   feature column and a benefit column.
+
+6. RENAME MISSION 10. It is currently titled "Solution Hypothesis Test",
+   identical to Mission 7. Rename to "Prototype Testing" everywhere — the
+   roadmap, the mission page, the schema and both locale files.</code></pre></div>
+<h2>PROMPT C — Turn Missions 3 and 5 Into Real Matrices</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT C</b> · </span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>TASK: Missions 3 and 5 are 2x2 matrices being collected as text fields.
+
+Mission 3 currently asks: Problem 1 (textarea), Importance 1-10 (text),
+Frequency 1-10 (text), Problem 2 (textarea), Importance (text), Frequency
+(text), Which will you focus on (textarea). Seven fields to fill in a grid.
+
+Mission 5 is the same shape with ideas, value and impact.
+
+THE FIX — one interactive matrix component, used by both.
+
+  1. Cards come from earlier missions where possible. Mission 3 pulls the
+     problems the founder described in Missions 1 and 2. Mission 5 pulls
+     nothing — ideas are new — so it starts with a repeater.
+
+  2. "Add another" lets them add more cards. No fixed slots of two.
+
+  3. Each card is positioned EITHER by dragging it onto the grid OR by two
+     sliders — dragging on desktop, sliders on mobile where dragging is
+     fiddly. Both update the same values.
+
+  4. THE QUADRANTS ARE LABELLED, so the exercise teaches rather than just
+     collects:
+
+       Mission 3 — Importance × Frequency
+         high/high  "Fix first"
+         low imp/high freq  "Quick wins"
+         high imp/low freq  "Big bets"
+         low/low    "Ignore for now"
+
+       Mission 5 — Value × Effort
+         high value/low effort   "Do now"
+         high value/high effort  "Plan it"
+         low value/low effort    "Quick win"
+         low value/high effort   "Drop it"
+
+  5. When a card lands in a quadrant, name it back: "Fix first — this is
+     both painful and constant." That single line is the lesson.
+
+  6. The final question becomes a chips-single choosing from the cards
+     actually plotted, defaulting to whatever sits highest-right. Then one
+     short line: why this one.
+
+  7. Export the finished matrix as an image into the mission recap and the
+     PDF report.
+
+  8. Fully keyboard-accessible, and the matrix must be readable and usable at
+     390px width.</code></pre></div>
+<h2>PROMPT D — Make Mission 8 an Actual Business Model Canvas</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT D</b> · </span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>TASK: Mission 8 is the Business Model Canvas — a nine-block visual framework —
+currently rendered as nine consecutive blank textareas. The visual structure
+is the entire pedagogical point and it has been removed.
+
+THE FIX
+
+1. RENDER THE REAL CANVAS LAYOUT:
+
+     ┌──────────┬──────────┬──────────┬──────────┬──────────┐
+     │  Key     │  Key     │  Value   │ Customer │ Customer │
+     │ Partners │Activities│  Props   │Relations │ Segments │
+     │          ├──────────┤          ├──────────┤          │
+     │          │  Key     │          │ Channels │          │
+     │          │Resources │          │          │          │
+     ├──────────┴──────────┼──────────┴──────────┴──────────┤
+     │   Cost Structure    │        Revenue Streams          │
+     └─────────────────────┴─────────────────────────────────┘
+
+   On mobile this stacks vertically, in the same order, with the block name
+   and a one-line explanation on each.
+
+2. TAPPING A BLOCK opens a focused editor for that block only. The canvas
+   fills in visually behind it. Show "4 of 9 blocks complete".
+
+3. INPUT TYPE PER BLOCK — not nine identical textareas:
+
+     Value Propositions      carried from Mission 6, editable
+     Customer Segments       carried from Mission 2, editable
+     Channels                chips-multi: Own website · App store · Instagram
+                             · TikTok · WhatsApp · Resellers · Direct sales ·
+                             Marketplace · Physical shop · Other
+     Customer Relationships  chips-multi: Self-serve · Personal support ·
+                             Community · Automated · Dedicated account · Other
+     REVENUE STREAMS         chips-multi: Subscription · One-time sale ·
+                             Commission · Freemium · Advertising · Licensing ·
+                             Marketplace fee · Usage-based · Other
+                             MULTI-SELECT IS ESSENTIAL HERE. Mixed revenue
+                             models are normal and the current single box
+                             hides that entirely.
+     Key Resources           chips-multi + repeater for specifics
+     Key Activities          repeater
+     Key Partnerships        repeater: partner + what they provide
+     Cost Structure          repeater: cost line + amount + currency, with a
+                             running monthly total shown
+
+4. EACH BLOCK CARRIES A ONE-LINE EXPLANATION, because most founders meeting
+   the canvas for the first time do not know what "Key Activities" means:
+     "Key Activities — the things your business must do every week for the
+      model to work."
+
+5. EXPORT the completed canvas as an image and as a branded PDF, using the
+   document template from Round 11.
+
+6. Once a block is filled, show a short quality signal rather than a score —
+   "Revenue Streams: 2 selected, cost structure not yet filled". The rubric
+   still assesses the whole mission; this is orientation, not grading.</code></pre></div>
+<h2>PROMPT E — The Answering Experience</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT E</b> · </span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>TASK: Rebuild how a founder moves through a mission's questions. Currently
+all questions render on one long page as a stack of blank boxes, which is
+what makes the missions feel like homework.
+
+1. ONE QUESTION AT A TIME on mobile; two or three on desktop. A stepper at
+   the top shows position ("Question 3 of 5") and lets them jump. Each
+   question gets its own screen with room to breathe.
+
+2. EVERY QUESTION CARRIES THREE THINGS ABOVE THE INPUT:
+     - The question itself, in plain language
+     - "Why this matters" — one sentence, collapsible, on by default the
+       first time and collapsed thereafter
+     - An estimated time — "about 2 minutes"
+
+3. "SEE AN EXAMPLE" ON EVERY QUESTION — an anonymised real answer that scored
+   well, shown in a panel, never pre-filled into the field. Founders cannot
+   hit a standard they have not seen. This is the single highest-value
+   addition in this prompt.
+
+4. INSTANT, QUIET FEEDBACK. When an answer meets the bar, a small green tick
+   and "Ready" appears. Not a score, not a celebration — just a signal that
+   they can move on. When it does not, say what is missing in one line.
+
+5. MOMENTUM, NOT CONFETTI. After each question, a small progress movement and
+   the next question sliding in. On mission completion, something bigger.
+   Avoid celebrating trivial actions — this audience finds that patronising
+   faster than most.
+
+6. SAVE STATE VISIBLY. "Saved 2 minutes ago" near the stepper. Leaving and
+   returning restores exact position. Never lose an answer.
+
+7. SHOW THE THREAD. At the top of each mission, one line connecting it to the
+   last: "In Mission 2 you defined your user as [X]. This mission turns that
+   into a problem statement you can test."
+
+8. LET THEM SEE THE WHOLE MISSION. A "view all questions" toggle for founders
+   who want to read ahead before starting. Some people need the map first.
+
+9. ARABIC AND RTL throughout — the stepper direction, the chip wrapping, the
+   slider direction, the matrix axes.
+
+10. NEVER MORE THAN ONE PRIMARY BUTTON on screen. Currently the mission page
+    has "Resubmit for Review" in three places.</code></pre></div>
+<hr>
+<h2>Sequence</h2>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Prompt</th><th>Why here</th></tr></thead><tbody><tr><td>1</td><td>A — input components</td><td>Everything else needs these to exist</td></tr><tr><td>2</td><td>B — carry-forward + renames</td><td>Cheap, and removes 12 duplicate questions</td></tr><tr><td>3</td><td>E — the answering experience</td><td>The shell the new inputs live in</td></tr><tr><td>4</td><td>C — the two matrices</td><td>Self-contained, high visible impact</td></tr><tr><td>5</td><td>D — the canvas</td><td>The biggest single build</td></tr></tbody></table></div>
+<p>A and B could ship in a week and would already remove most of the friction your testers hit. C and D are the ones founders will talk about.</p>
+<hr>
+<h2>Two decisions for you</h2>
+<p><strong>Mission 14's PMF question.</strong> I've proposed replacing "rate your product-market fit 1–10" with the Sean Ellis test — asking <em>users</em> how disappointed they'd be to lose the product, and recording the percentage who say "very disappointed". 40% is the recognised threshold. It's a real measurement rather than founder self-assessment, but it requires the founder to actually survey users, which is more work. Your call whether Mission 14 should demand that.</p>
+<p><strong>Phase structure.</strong> Validation is currently missions 7, 10, 12 and 14 — scattered rather than contiguous, while Business Model, Strategy and Launch have one mission each. That's what produces a roadmap where phase names repeat. Worth deciding whether the phases should be re-cut into contiguous blocks before you rebuild the roadmap UI, because the two are hard to separate later.</p>
+</div>
+<script>document.querySelectorAll(".prompt").forEach(function(b){var t=b.querySelector(".copy"),p=b.querySelector("pre");
+if(!t||!p)return;t.addEventListener("click",function(){var x=p.textContent,d=function(){t.textContent="Copied";
+setTimeout(function(){t.textContent="Copy"},1600)};if(navigator.clipboard&&navigator.clipboard.writeText){
+navigator.clipboard.writeText(x).then(d,function(){t.textContent="Press \u2318C"})}else{var a=document.createElement("textarea");
+a.value=x;document.body.appendChild(a);a.select();try{document.execCommand("copy");d()}catch(e){t.textContent="Press \u2318C"}
+document.body.removeChild(a)}})});</script>
