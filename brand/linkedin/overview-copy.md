@@ -39,7 +39,7 @@ StartPad is the guided path we wished existed.
 
 HOW IT WORKS
 
-15 missions take you from a raw idea to a launched startup, across eight phases: Discovery, Analysis, Ideation, Validation, Business Model, Development, Strategy and Launch.
+15 missions take you from a raw idea to a launched startup, across five phases: Discover, Shape, Test, Model and Readiness.
 
 Each mission asks for real work — interviews, evidence, decisions. Every submission is assessed against five criteria: specificity, depth, evidence, actionability and relevance. You need 70% to pass. The feedback quotes your own answers back to you and names exactly what to fix. Resubmit as many times as it takes.
 
@@ -79,7 +79,7 @@ Written natively, not translated. Same limit applies.
 
 كيف يعمل
 
-خمس عشرة مهمة تنقلك من فكرة أولية إلى شركة ناشئة قائمة، عبر ثماني مراحل: الاكتشاف، التحليل، توليد الأفكار، التحقق، نموذج العمل، التطوير، الاستراتيجية، والإطلاق.
+خمس عشرة مهمة تنقلك من فكرة أولية إلى شركة ناشئة قائمة، عبر خمس مراحل: الاكتشاف، والتشكيل، والاختبار، وبناء النموذج، والجاهزية.
 
 كل مهمة تتطلب عملًا حقيقيًا: مقابلات، وأدلة، وقرارات. ويُقيَّم كل تسليم وفق خمسة معايير: التحديد، والعمق، والأدلة، وقابلية التنفيذ، والصلة بالموضوع. تحتاج إلى 70٪ للنجاح. تقتبس لك الملاحظات إجاباتك نفسها وتحدد بدقة ما يجب تحسينه، ويمكنك إعادة التسليم دون حد.
 
