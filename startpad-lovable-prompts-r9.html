@@ -1,0 +1,258 @@
+<title>StartPad — Closing the Six Failures</title>
+<style>
+  :root{--paper:#F2F3F8;--surface:#FFFFFF;--surface-2:#EAEBF3;--ink:#14131C;--ink-soft:#4E4C60;--ink-faint:#7B7990;
+  --rule:#D9DAE6;--rule-soft:#E7E8F0;--accent:#4530E8;--accent-ink:#2E1FB0;--on-accent:#FFFFFF;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0F0E16;--surface:#191823;--surface-2:#221F30;
+  --ink:#ECEBF3;--ink-soft:#A9A7BC;--ink-faint:#7D7B92;--rule:#2E2B3D;--rule-soft:#24222F;--accent:#9A88FF;
+  --accent-ink:#C3B8FF;--on-accent:#14131C;}}
+  :root[data-theme="dark"]{--paper:#0F0E16;--surface:#191823;--surface-2:#221F30;--ink:#ECEBF3;--ink-soft:#A9A7BC;
+  --ink-faint:#7D7B92;--rule:#2E2B3D;--rule-soft:#24222F;--accent:#9A88FF;--accent-ink:#C3B8FF;--on-accent:#14131C;}
+  *{box-sizing:border-box}html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+  body{margin:0;background:var(--paper);color:var(--ink);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Arabic",Arial,sans-serif}
+  .wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem 6rem}
+  h1,h2,h3{text-wrap:balance;margin:0;line-height:1.15;letter-spacing:-.025em}
+  h1{font-size:clamp(2.1rem,5.5vw,3.2rem);font-weight:800;letter-spacing:-.04em;padding-block:3.25rem 1rem}
+  h2{font-size:clamp(1.5rem,3.2vw,2rem);font-weight:800;margin-top:3rem;padding-top:2.25rem;border-top:2px solid var(--ink)}
+  h3{font-size:1.12rem;font-weight:700;margin-top:2.5rem;color:var(--accent-ink);
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:-.01em}
+  p{margin:.85rem 0}
+  blockquote{margin:.9rem 0;padding:.2rem 0 .2rem 1rem;border-inline-start:3px solid var(--accent);color:var(--ink-soft)}
+  a{color:var(--accent);text-underline-offset:2px}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+  hr{border:0;border-top:1px solid var(--rule-soft);margin:2.5rem 0}
+  strong{font-weight:680}
+  em{color:var(--ink-soft)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--surface-2);
+  padding:.1em .35em;border-radius:2px}
+  .table-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:2px;background:var(--surface);margin:1.25rem 0}
+  table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+  th,td{text-align:start;padding:.6rem .8rem;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+  th{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-faint);font-weight:600;background:var(--surface-2)}
+  tbody tr:last-child td{border-bottom:0}
+  .prompt{border:1px solid var(--rule);border-radius:3px;background:var(--surface);overflow:hidden;margin:1rem 0 2rem}
+  .prompt>header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.6rem .9rem;
+  background:var(--surface-2);border-bottom:1px solid var(--rule)}
+  .prompt>header .label{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.7rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-faint);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .prompt>header .label b{color:var(--accent-ink);font-weight:700}
+  .copy{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+  background:transparent;border:1px solid var(--rule);color:var(--ink-soft);padding:.25rem .55rem;border-radius:2px;
+  cursor:pointer;white-space:nowrap;transition:background .15s ease,color .15s ease}
+  .copy:hover{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+  pre{margin:0;padding:1rem .9rem;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:.79rem;line-height:1.56;color:var(--ink);white-space:pre;background:var(--surface)}
+  pre code{background:none;padding:0;font-size:inherit}
+</style>
+<div class="wrap">
+<h1>StartPad — Lovable Prompts (Round 9)</h1>
+<p>Three prompts closing the six failures from the authenticated verification pass.</p>
+<hr>
+<h2>The six failures are three problems</h2>
+<p>Read the FAIL list again and a pattern shows up. <strong>Three of the six share one root cause: a correct implementation exists, and something else was built beside it instead of using it.</strong></p>
+<div class="table-scroll"><table><thead><tr><th>Failure</th><th>Canonical version</th><th>Duplicate that shipped instead</th></tr></thead><tbody><tr><td>Auth CTAs leak on 5 pages</td><td>Auth-aware pattern on About / How-It-Works / Contact</td><td>Raw <code>navigate(PATHS.signup)</code> in KnowledgeArticlePage, 3 GuidePages, ReadinessAssessment</td></tr><tr><td>Dashboard mentoring diverges</td><td><code>MentorsSection.tsx</code> — uses the shared <code>useSessionState</code> hook</td><td><code>ActivityBand.tsx:126</code> — recomputes <code>upcoming</code> from raw dates, no badges</td></tr><tr><td>Session stat row missing</td><td><code>MentorsSection.tsx</code> — has <code>counts.upcoming</code> / <code>counts.completed</code></td><td>Nothing renders it; the file is imported nowhere</td></tr><tr><td>Phase count mismatch</td><td><code>MissionRoadmap.tsx</code> — derives 8 phases from real mission data</td><td><code>RoadmapJourney.tsx</code> — hardcodes 5, plus a stale <code>landing.json</code> string saying 8</td></tr></tbody></table></div>
+<p><code>MentorsSection.tsx</code> being <strong>dead code with the correct logic in it</strong> is the clearest statement of the problem. The shared component was built exactly as specified, then a second component was written that reimplemented the same thing worse, and that one won.</p>
+<p>The remaining two are different in kind:</p>
+<p>- <strong>175 points with zero completions</strong> is a stale DB row (<code>user_progress.total_score</code>) that no client code derives. A data problem. - <strong>Two "Level" scales</strong> is a genuine product ambiguity, not a bug. It needs a decision before it needs code.</p>
+<p>So: <strong>Prompt A</strong> deletes the duplicates and adds guards so this cannot recur. <strong>Prompt B</strong> fixes the stale score. <strong>Prompt C</strong> resolves Level.</p>
+<hr>
+<hr>
+<h2>PROMPT A — Adopt the Canonical Implementations, Delete the Duplicates</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT A</b> · </span><button class="copy" type="button">Copy</button></header><pre><code>TASK: Three failures from the verification pass share one root cause — a
+correct implementation exists and a duplicate was built beside it. Fix all
+three by adopting the canonical version and deleting the duplicate, then add
+guards so it cannot happen again.
+
+═══════════════════════════════════════════════════════════════
+1. AUTH CTAs LEAKING TO SIGNED-IN USERS
+═══════════════════════════════════════════════════════════════
+
+Signed-in users see "Get started" / sign-up CTAs on five pages. The auth-aware
+pattern was applied to About, How-It-Works and Contact only.
+
+Offending call sites:
+  src/features/knowledge/KnowledgeArticlePage.tsx:178
+  src/features/guides/GuidePage.tsx:148
+    (renders GuideStartupIdeas, GuideValidateStartupIdea,
+     GuideBusinessPlanGenerator)
+  src/pages/ReadinessAssessment.tsx:359
+
+DO NOT patch these five individually — that is how the problem started.
+
+  a) Extract ONE &lt;AuthAwareCTA&gt; component from whichever of About /
+     How-It-Works / Contact has the cleanest implementation. Props:
+       signedOutLabel, signedOutTo, signedInLabel, signedInTo, variant
+     It reads auth state internally. No caller branches on it.
+
+  b) Replace all five call sites with it. Suggested targets:
+       Knowledge article  → signed out: "Start free"  signed in: "Back to my mission"
+       Guides             → signed out: "Start free"  signed in: "Go to dashboard"
+       Readiness          → signed out: "Start free"  signed in: "Go to dashboard"
+
+  c) Migrate About / How-It-Works / Contact onto the same component so there
+     is exactly one implementation in the codebase.
+
+  d) ADD A LINT RULE that fails the build on any raw navigate(PATHS.signup),
+     navigate(PATHS.signin), or &lt;Link to={PATHS.signup}&gt; outside
+     AuthAwareCTA and the auth pages themselves. This is the guard — without
+     it the sixth page will leak next month.
+
+  e) Then grep the whole codebase for signup/signin navigation and report
+     every remaining call site, so we know the five were the complete set.
+
+═══════════════════════════════════════════════════════════════
+2. DASHBOARD MENTORING SURFACE + MISSING STAT ROW
+═══════════════════════════════════════════════════════════════
+
+src/features/dashboard/MentorsSection.tsx already uses the shared
+useSessionState hook and already exposes counts.upcoming / counts.completed.
+It is imported nowhere — dead code.
+
+src/features/overview/ActivityBand.tsx:126 renders the mentoring surface
+instead, computing upcoming itself with raw `new Date(session_date) &gt; now`,
+with no state badges and no Upcoming/Past sections.
+
+  a) ADOPT MentorsSection. Render it wherever the mentoring surface belongs.
+  b) DELETE the bespoke session logic from ActivityBand.tsx — including the
+     raw date comparison at line 126 and the "past: N · mentors: N" counts.
+     Counting rows in the past section is the original bug wearing a new
+     label; counts must come from the shared hook's derived states.
+  c) The stat row must read: Upcoming (from derived state), Completed (only
+     sessions actually badged Completed — with three no_show sessions this is
+     0, not 3), Mentors.
+  d) Confirm all THREE surfaces — dashboard, /mentoring, /collaboration →
+     My Sessions — now render from the same component and agree exactly.
+
+  e) ADD A GUARD: a unit test asserting that any component rendering mentor
+     sessions imports useSessionState. Or simpler and stronger — export the
+     raw session rows only through the hook, so no component can reach the
+     unprocessed dates.
+
+  ALSO ANSWER: /dashboard renders no mentoring block while /overview does.
+  What is the intended difference between these two routes? If they are
+  meant to be one page, say so and I will spec the merge.
+
+═══════════════════════════════════════════════════════════════
+3. PHASE COUNT MISMATCH
+═══════════════════════════════════════════════════════════════
+
+src/components/MissionRoadmap.tsx derives 8 phases from real mission data.
+src/components/RoadmapJourney.tsx hardcodes 5 (discovery / validation / model
+/ build / launch), and the landing page renders "15 missions. 5 phases."
+A stale landing.json string still says "15 missions, 8 phases" — so the
+landing page currently disagrees with the dashboard AND with itself.
+
+  a) The derived 8 are canonical: Discovery, Analysis, Ideation, Validation,
+     Business Model, Development, Strategy, Launch.
+  b) DELETE the hardcoded array in RoadmapJourney.tsx. Derive from the same
+     mission data MissionRoadmap uses, via a shared selector.
+  c) Fix the stale landing.json heading, and derive the count from the data
+     rather than writing a number into a translation string. A hardcoded
+     count in a copy file will drift again the moment a phase is added.
+  d) Check the Arabic translation file for the same stale string.
+
+  e) ADD A BUILD GUARD, alongside the existing mission-schema guard: fail if
+     any phase list is defined outside the canonical mission data.
+
+═══════════════════════════════════════════════════════════════
+REPORT
+═══════════════════════════════════════════════════════════════
+
+For each of the three: what you deleted, what now renders, and the guard you
+added. Then confirm the full grep from 1(e) found no further leaks.</code></pre></div>
+<hr>
+<hr>
+<h2>PROMPT B — Reconcile the Stale Score</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT B</b> · </span><button class="copy" type="button">Copy</button></header><pre><code>TASK: user_progress.total_score reads 175 for this account while
+mission_submissions and user_achievements are both empty. No client code
+derives it — it is an orphaned value from an earlier award path.
+
+This is the same class of bug as the session dates: a derived value was
+stored, then drifted away from what it was derived from.
+
+  a) DECIDE WHERE POINTS COME FROM and write it down. Points should be a
+     function of things that actually happened:
+       completed missions × their point value
+       + achievements earned
+     Nothing else.
+
+  b) DERIVE IT AT READ TIME rather than storing it, matching the pattern
+     already used for session state. If a stored column is needed for query
+     performance, it must be recomputed by a database trigger on every
+     submission and achievement write — never updated by client code.
+
+  c) BACKFILL: recompute total_score for every user from their actual
+     submissions and achievements. Report how many rows changed and by how
+     much — if many accounts carry inflated scores, that is worth knowing
+     before anyone sees a number drop.
+
+  d) MAKE IT EXPLAINABLE. Total points becomes tappable, opening a breakdown
+     of where each point came from. If the breakdown cannot account for the
+     total, the total is wrong — and the breakdown is what makes that
+     visible instead of silent.
+
+  e) AUDIT for the same pattern elsewhere. Any stored column holding a value
+     derivable from other rows — streak counts, achievement counts, mission
+     completion counts, tool usage totals — is the same bug waiting. List
+     what you find; do not fix them in this pass.</code></pre></div>
+<hr>
+<hr>
+<h2>PROMPT C — Resolve the Two Level Scales</h2>
+<p>This one needs a product decision before code. My recommendation is in the prompt; override it if you disagree.</p>
+<div class="prompt"><header><span class="label"><b>PROMPT C</b> · </span><button class="copy" type="button">Copy</button></header><pre><code>TASK: Two incompatible systems are both called "Level":
+
+  src/components/ProgressTracker.tsx:37-41
+    Level from completed missions → currently Level 1, "Beginner"
+
+  src/features/missions/questXp.ts + QuestRewards.tsx
+    Level from per-attempt XP at 60 XP/level → currently Level 2
+
+Both render simultaneously on different pages. This is not a rendering bug —
+it is two different ideas about what progress means, and it needs a decision.
+
+RECOMMENDATION — one "Level", derived from completions:
+
+  Per-attempt XP rewards effort; completions reward outcome. For a product
+  whose core value is a rigorous 70%-to-pass evaluation, rewarding attempts
+  is backwards: a founder can accumulate XP by resubmitting without ever
+  improving, and the number stops meaning anything. It also puts the two
+  systems in direct conflict — one says you are progressing while the other
+  says you have completed nothing, which is exactly what the account shows
+  today.
+
+  So:
+    a) LEVEL = f(completed missions). One definition, one selector, read by
+       every surface. ProgressTracker's is canonical.
+    b) Keep the XP mechanic but RENAME it and scope it — "Mission XP",
+       visible only inside a mission, showing effort within that mission.
+       Never displayed as "Level" and never shown on the dashboard or
+       journey page.
+    c) Delete the 60-XP-per-level scale entirely, or fold it into the
+       mission-local display only.
+    d) Confirm dashboard, /journey and the mission page all read the same
+       selector and show the same number.
+
+  If you would rather keep XP as the headline progression, that is a
+  defensible choice — but then completions must stop being called "Level"
+  too, and XP must only be awarded for improvement (a higher score than the
+  previous attempt), not for submitting.
+
+  Tell me which you are implementing before you write it.</code></pre></div>
+<hr>
+<h2>Where I'd start</h2>
+<p><strong>Prompt A</strong>, and specifically the auth CTA leak inside it. It is user-visible today on five pages, the fix is mechanical, and the lint rule in step 1(d) is what stops the pattern recurring — which matters more than the five pages themselves.</p>
+<p>Prompts A and B can run in parallel; C needs your decision first.</p>
+<h2>Two things worth confirming separately</h2>
+<p><strong><code>/journey</code> now redirects to <code>/dashboard</code>, and <code>/journey/mission/1</code> to <code>/mission/1</code>.</strong> If the journey page and dashboard were deliberately merged, that resolves the three-overlapping-names problem from Round 2 and is a good outcome — but the app nav still shows "Dashboard" and "My Startup Journey" as separate items pointing at the same place. Worth confirming it was intentional.</p>
+<p><strong><code>founder_timezone</code> is NULL on all three session rows</strong>, so times fall back to the browser's detected zone. That works today but shifts if a founder travels or uses a different device. The profile field exists — it just isn't being populated.</p>
+<h2>Still genuinely blocked</h2>
+<p>Phase 3's slow-3G frame capture and the DOM progress-bar widths can't be code-verified — a <code>width: 100%</code> bar with a same-colour fill computes as 0% in the formula and still renders full. Those need the browser session whenever an admin can mint one.</p>
+</div>
+<script>document.querySelectorAll(".prompt").forEach(function(b){var t=b.querySelector(".copy"),p=b.querySelector("pre");
+if(!t||!p)return;t.addEventListener("click",function(){var x=p.textContent,d=function(){t.textContent="Copied";
+setTimeout(function(){t.textContent="Copy"},1600)};if(navigator.clipboard&&navigator.clipboard.writeText){
+navigator.clipboard.writeText(x).then(d,function(){t.textContent="Press \u2318C"})}else{var a=document.createElement("textarea");
+a.value=x;document.body.appendChild(a);a.select();try{document.execCommand("copy");d()}catch(e){t.textContent="Press \u2318C"}
+document.body.removeChild(a)}})});</script>

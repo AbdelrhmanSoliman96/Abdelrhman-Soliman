@@ -1,0 +1,842 @@
+<title>StartPad — Missions Redesign</title>
+<style>
+  :root{--paper:#F2F3F8;--surface:#FFFFFF;--surface-2:#EAEBF3;--ink:#14131C;--ink-soft:#4E4C60;--ink-faint:#7B7990;
+  --rule:#D9DAE6;--rule-soft:#E7E8F0;--accent:#4530E8;--accent-ink:#2E1FB0;--on-accent:#FFFFFF;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0F0E16;--surface:#191823;--surface-2:#221F30;
+  --ink:#ECEBF3;--ink-soft:#A9A7BC;--ink-faint:#7D7B92;--rule:#2E2B3D;--rule-soft:#24222F;--accent:#9A88FF;
+  --accent-ink:#C3B8FF;--on-accent:#14131C;}}
+  :root[data-theme="dark"]{--paper:#0F0E16;--surface:#191823;--surface-2:#221F30;--ink:#ECEBF3;--ink-soft:#A9A7BC;
+  --ink-faint:#7D7B92;--rule:#2E2B3D;--rule-soft:#24222F;--accent:#9A88FF;--accent-ink:#C3B8FF;--on-accent:#14131C;}
+  *{box-sizing:border-box}html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+  body{margin:0;background:var(--paper);color:var(--ink);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Arabic",Arial,sans-serif}
+  .wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem 6rem}
+  h1,h2,h3{text-wrap:balance;margin:0;line-height:1.15;letter-spacing:-.025em}
+  h1{font-size:clamp(2.1rem,5.5vw,3.2rem);font-weight:800;letter-spacing:-.04em;padding-block:3.25rem 1rem}
+  h2{font-size:clamp(1.5rem,3.2vw,2rem);font-weight:800;margin-top:3rem;padding-top:2.25rem;border-top:2px solid var(--ink)}
+  h3{font-size:1.12rem;font-weight:700;margin-top:2.5rem;color:var(--accent-ink);
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:-.01em}
+  p{margin:.85rem 0}
+  blockquote{margin:.9rem 0;padding:.2rem 0 .2rem 1rem;border-inline-start:3px solid var(--accent);color:var(--ink-soft)}
+  a{color:var(--accent);text-underline-offset:2px}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+  hr{border:0;border-top:1px solid var(--rule-soft);margin:2.5rem 0}
+  strong{font-weight:680}
+  em{color:var(--ink-soft)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--surface-2);
+  padding:.1em .35em;border-radius:2px}
+  .table-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:2px;background:var(--surface);margin:1.25rem 0}
+  table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+  th,td{text-align:start;padding:.6rem .8rem;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+  th{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-faint);font-weight:600;background:var(--surface-2)}
+  tbody tr:last-child td{border-bottom:0}
+  .prompt{border:1px solid var(--rule);border-radius:3px;background:var(--surface);overflow:hidden;margin:1rem 0 2rem}
+  .prompt>header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.6rem .9rem;
+  background:var(--surface-2);border-bottom:1px solid var(--rule)}
+  .prompt>header .label{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.7rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-faint);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .prompt>header .label b{color:var(--accent-ink);font-weight:700}
+  .copy{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+  background:transparent;border:1px solid var(--rule);color:var(--ink-soft);padding:.25rem .55rem;border-radius:2px;
+  cursor:pointer;white-space:nowrap;transition:background .15s ease,color .15s ease}
+  .copy:hover{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+  pre{margin:0;padding:1rem .9rem;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:.84rem;line-height:1.7;color:var(--ink);white-space:pre-wrap;word-wrap:break-word;background:var(--surface)}
+  pre code{background:none;padding:0;font-size:inherit}
+</style>
+<div class="wrap">
+<h1>StartPad — Missions Redesign (Round 14, rebuilt against the live roadmap)</h1>
+<p>A full rework of the 15 missions' question set, mapped onto the mission names and phases that are actually shipping — plus 27 questions added to deepen the journey, and a downloadable artefact for every mission.</p>
+<p><strong>What changed since the first version of this document.</strong> I originally worked from <code>startpad15missions.docx</code>. Your roadmap screen shows a different, newer set of mission names and a different phase structure. This rebuild works from the roadmap as the source of truth, and the difference turns out to matter more than a renaming exercise — five missions have changed <em>intent</em>, and four of them are still asking the old mission's questions.</p>
+<hr>
+<h2>The live structure</h2>
+<div class="table-scroll"><table><thead><tr><th>Phase</th><th>#</th><th>Mission</th><th>XP</th></tr></thead><tbody><tr><td><strong>Discover</strong></td><td>1</td><td>Problem Analysis</td><td>100</td></tr><tr><td></td><td>2</td><td>Problem Definition</td><td>100</td></tr><tr><td></td><td>3</td><td>Opportunity Prioritisation</td><td>150</td></tr><tr><td><strong>Shape</strong></td><td>4</td><td>Testable Problem Statement</td><td>150</td></tr><tr><td></td><td>5</td><td>Solution Selection</td><td>200</td></tr><tr><td></td><td>6</td><td>Value Proposition &amp; Assumptions</td><td>200</td></tr><tr><td><strong>Test</strong></td><td>7</td><td>First Assumption Test</td><td>250</td></tr><tr><td><strong>Model</strong></td><td>8</td><td>Business Model Canvas</td><td>300</td></tr><tr><td></td><td>9</td><td>Build a Learning Prototype</td><td>300</td></tr><tr><td></td><td>10</td><td>Prototype User Test</td><td>300</td></tr><tr><td><strong>Readiness</strong></td><td>11</td><td>Go-to-Market Experiment</td><td>300</td></tr><tr><td></td><td>12</td><td>Demand &amp; Market Validation</td><td>350</td></tr><tr><td></td><td>13</td><td>MVP Scope &amp; Build</td><td>400</td></tr><tr><td></td><td>14</td><td>Early Traction Review</td><td>450</td></tr><tr><td></td><td>15</td><td>Launch &amp; Incubator Readiness</td><td>500</td></tr></tbody></table></div>
+<p><strong>4,050 XP total.</strong> Five contiguous phases: 3 · 3 · 1 · 3 · 5.</p>
+<p>Two things I raised as open questions last time are now answered by this screen, and both are answered well:</p>
+<p>- <strong>Phases are contiguous now.</strong> Discover 1–3, Shape 4–6, Test 7, Model 8–10, Readiness 11–15. No more phase names repeating down the roadmap. Nothing to decide. - <strong>Mission 10 is already renamed</strong> to "Prototype User Test". It no longer collides with Mission 7. That prompt is retired.</p>
+<hr>
+<h2>The finding that matters most</h2>
+<p><strong>Four missions are asking questions that belong to a different mission.</strong></p>
+<p>The names moved. The question set didn't. Here is the drift:</p>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question set was written for</th><th>Mission is now called</th><th>Consequence</th></tr></thead><tbody><tr><td>11</td><td><em>Service Selection</em> — market size, channels, pricing, sales process, launch plan</td><td><strong>Go-to-Market Experiment</strong> — "define a focused route-to-market test"</td><td>Asks for an entire GTM plan when the mission asks for one experiment</td></tr><tr><td>14</td><td><em>Product-Market Fit Test</em> — "rate your product-market fit 1–10"</td><td><strong>Early Traction Review</strong> — "interpret early usage <strong>without claiming product-market fit too soon</strong>"</td><td>The mission's description warns against the exact thing its own question demands</td></tr><tr><td>15</td><td><em>Go to Market</em> — launch tactics, campaign spend, users acquired, revenue</td><td><strong>Launch &amp; Incubator Readiness</strong> — "turn launch evidence into a credible next-step story"</td><td>Collects activity metrics; the mission wants a narrative and an ask</td></tr><tr><td>6</td><td><em>Idea Description</em> — value prop, features, benefits, differentiation</td><td><strong>Value Proposition &amp; Assumptions</strong> — "develop problem-solution canvas"</td><td>A named visual canvas is named in the description and rendered as text boxes</td></tr></tbody></table></div>
+<p>Mission 14 is the one to fix first. A founder reads <em>"without claiming product-market fit too soon"</em> at the top of the mission, then question 5 asks them to score their product-market fit out of 10. That isn't a UX flaw, it's the mission contradicting itself — and it teaches the opposite of what the title is trying to teach.</p>
+<p>Two smaller drifts:</p>
+<p>- <strong>Mission 4</strong> was plural, <em>Problem Statements</em>. It is now <strong>Testable Problem Statement</strong> — singular, and the word <em>testable</em> is a requirement the questions never check. - <strong>Mission 9</strong> was <em>Build Prototype</em>. It is now <strong>Build a Learning Prototype</strong> — and nothing asks what the prototype is meant to teach, which is the only thing that makes a prototype a <em>learning</em> prototype.</p>
+<hr>
+<h2>The original diagnosis still stands</h2>
+<p><strong>87 questions across 15 missions. 75 of them are blank textareas.</strong></p>
+<p>That is why your testers struggled, and it is why the industry question defeated people. A blank box asks the founder to invent both the <em>answer</em> and the <em>shape of the answer</em> at the same time. Nobody knows the shape of "what area are you interested in?" until they see a list.</p>
+<p>Three structural problems, unchanged by the renaming:</p>
+<p><strong>The same question is asked up to five times.</strong> "Who is your user" appears in M1, M2 (twice), M4 and M11. "What are your next steps" appears in M9, M10, M13, M14 and M15. Nothing carries forward, so each mission feels like starting over instead of building on the last.</p>
+<p><strong>Two missions are matrices collected as text fields.</strong> M3 and M5 are 2×2 grids. Both are currently text boxes asking founders to type numbers between 1 and 10.</p>
+<p><strong>Two missions are named canvases rendered as forms.</strong> M8 is the nine-block Business Model Canvas as nine consecutive textareas. M6's description says "problem-solution canvas" and there is no canvas.</p>
+<hr>
+<h2>The principle</h2>
+<p><strong>Structure the scaffolding. Never the content.</strong></p>
+<p>A dropdown of industries doesn't tell a founder what their business is — it removes the burden of inventing a taxonomy from scratch. The thinking stays theirs. What changes is that their effort goes into <em>the answer</em> instead of into <em>working out what the answer should look like</em>.</p>
+<p>Your point about mixed cases becomes a rule: <strong>every category question is multi-select with an open "Other" escape.</strong> Fintech <em>and</em> healthcare is a real answer. Subscription <em>and</em> commission is a real answer. A closed single-select would force a founder to lie about their own business.</p>
+<hr>
+<h2>The input vocabulary</h2>
+<p>Eleven types. Everything below maps to one of these.</p>
+<div class="table-scroll"><table><thead><tr><th>Type</th><th>When to use</th><th>Example</th></tr></thead><tbody><tr><td><code>chips-multi</code></td><td>A known set where combinations are real</td><td>Industry, channels, revenue models</td></tr><tr><td><code>chips-single</code></td><td>A known set where only one is true</td><td>Problem frequency, test method</td></tr><tr><td><code>slider</code></td><td>A 1–10 rating</td><td>Impact, frequency, value</td></tr><tr><td><code>matrix</code></td><td>Two scores plotted visually</td><td>M3 and M5</td></tr><tr><td><code>canvas</code></td><td>A named visual framework</td><td>M6 and M8</td></tr><tr><td><code>builder</code></td><td>A sentence with blanks to fill</td><td>Problem statement, hypothesis, value proposition</td></tr><tr><td><code>repeater</code></td><td>A list the founder adds rows to</td><td>Competitors, features, milestones</td></tr><tr><td><code>number</code></td><td>A quantity, with unit and currency</td><td>Market size, price, budget</td></tr><tr><td><code>upload</code></td><td>File, link, or pasted text</td><td>Prototype, survey export, ad screenshot</td></tr><tr><td><code>text</code></td><td>One short line</td><td>A name, a link, a date</td></tr><tr><td><code>textarea</code></td><td>Genuinely open reflection</td><td>"What don't these numbers tell you?"</td></tr></tbody></table></div>
+<p><strong>Every question can carry an attachment.</strong> A founder answering a chip question may still want to attach the survey export. That's your "some answers need to upload documents" — handled as a property of every question, not as a separate question type.</p>
+<p><strong>Every chip list ends with "Other →"</strong>, which opens a text field and stores what they typed. No list is ever closed, and after a few hundred founders you'll know exactly which options your taxonomies are missing.</p>
+<hr>
+<h2>The 15 missions, redesigned</h2>
+<p>Legend: <strong>↩</strong> = carried forward from an earlier mission, pre-filled and editable. <strong>NEW</strong> = a question that doesn't exist today.</p>
+<hr>
+<h3>Phase: Discover</h3>
+<h4>Mission 1 — Problem Analysis · 100 XP</h4>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Now</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td>Which areas interest you?</td><td>text</td><td><strong><code>chips-multi</code></strong> — Fintech · Healthtech · Edtech · E-commerce · Logistics · Agritech · Proptech · Food &amp; beverage · Travel · Media · Gaming · B2B software · Marketplace · Climate · Fashion · Fitness · HR · Legal · Insurance · Manufacturing · Energy · Other →</td></tr><tr><td>2</td><td>A problem you've observed</td><td>textarea</td><td><strong><code>builder</code></strong> — "I noticed that ___ struggle with ___ when ___" + optional detail + optional photo</td></tr><tr><td>3</td><td>Who is affected?</td><td>text</td><td><strong><code>chips-multi</code></strong> — Students · Young professionals · Small business owners · Freelancers · Parents · Farmers · Drivers · Patients · Teachers · Retailers · Other → — plus one line of specifics</td></tr><tr><td>4</td><td>What already exists?</td><td>textarea</td><td><strong><code>repeater</code></strong> — name · link · one line on what it does</td></tr><tr><td>5</td><td>Where do they fall short?</td><td>textarea</td><td><strong><code>chips-multi</code></strong> — Too expensive · Too slow · Hard to use · Not available here · Poor quality · Needs expertise · No offline mode · No Arabic · Other → — then expand</td></tr></tbody></table></div>
+<p>Question 1 is the one your testers named. The 22-chip list doesn't tell anyone what industry they're in; it shows them that "fintech + healthtech" is a legitimate answer, which a single text box never does.</p>
+<h4>Mission 2 — Problem Definition · 100 XP</h4>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td>Your primary user</td><td><strong><code>builder</code></strong> — "[age range] [role] in [city/country] who [context]", each blank a chip set</td></tr><tr><td>2</td><td>Key characteristics</td><td><strong><code>chips-multi</code></strong> — income band · tech comfort · buying power · where they spend time</td></tr><tr><td>3</td><td>The problem they face</td><td>↩ <strong>from M1 Q2</strong>, editable — <em>"You said this in Mission 1. Sharpen it now that you know who you're talking about."</em></td></tr><tr><td>4</td><td>When and where does it happen?</td><td><strong><code>chips-multi</code></strong> — At work · At home · Commuting · Shopping · Studying · Online · In person · Other →</td></tr><tr><td>5</td><td>How often?</td><td><strong><code>chips-single</code></strong> — Many times a day · Daily · Weekly · Monthly · A few times a year · Once</td></tr></tbody></table></div>
+<h4>Mission 3 — Opportunity Prioritisation · 150 XP</h4>
+<p><strong>Replace all seven fields with one interactive matrix.</strong> The mission description already names the axes: <em>impact and frequency</em>.</p>
+<p>Problems from Missions 1 and 2 arrive as draggable cards. The founder drags each onto the grid, or moves two sliders and watches the card move. A <code>repeater</code> adds more. Then <code>chips-single</code> picks the focus problem from those actually plotted, plus one line on why.</p>
+<p>Quadrants are labelled so the exercise <strong>teaches</strong> rather than merely collects:</p>
+<div class="table-scroll"><table><thead><tr><th></th><th>Low frequency</th><th>High frequency</th></tr></thead><tbody><tr><td><strong>High impact</strong></td><td>Big bets</td><td><strong>Fix first</strong></td></tr><tr><td><strong>Low impact</strong></td><td>Park it</td><td>Quick wins</td></tr></tbody></table></div>
+<p>3 inputs, down from 7 fields.</p>
+<hr>
+<h3>Phase: Shape</h3>
+<h4>Mission 4 — Testable Problem Statement · 150 XP</h4>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td>The statement</td><td><strong><code>builder</code></strong> — "[User] needs a way to [job] because [insight]. Today they [workaround], which costs them [impact]."</td></tr><tr><td>2</td><td>Who specifically?</td><td>↩ <strong>from M2 Q1</strong></td></tr><tr><td>3</td><td>What is the impact?</td><td><strong><code>number</code> + unit</strong> (money / hours / times per week) + <code>chips-multi</code> impact type + short note</td></tr><tr><td>4</td><td>How would you know it's solved?</td><td><strong><code>repeater</code></strong> — metric · today's value · target value</td></tr><tr><td>5</td><td><strong>What would prove this statement wrong?</strong></td><td><strong>NEW · <code>text</code></strong> — one line. The mission is called <em>Testable</em>; nothing currently tests that. A statement you cannot falsify isn't a hypothesis, it's a belief — and this single line is what makes Mission 7 possible.</td></tr></tbody></table></div>
+<h4>Mission 5 — Solution Selection · 200 XP</h4>
+<p><strong>Same treatment as Mission 3.</strong> A <code>repeater</code> of ideas, two sliders each, plotted live on a labelled 2×2. Then pick one, and one line on why.</p>
+<p><strong>One thing to decide.</strong> The roadmap calls this a <em>value/impact</em> matrix. Value and impact measure nearly the same thing, so every idea lands on a diagonal and the grid stops discriminating. The version that does useful work is <strong>Value × Effort</strong>:</p>
+<div class="table-scroll"><table><thead><tr><th></th><th>Low effort</th><th>High effort</th></tr></thead><tbody><tr><td><strong>High value</strong></td><td><strong>Do now</strong></td><td>Plan it</td></tr><tr><td><strong>Low value</strong></td><td>Quick win</td><td>Drop it</td></tr></tbody></table></div>
+<p>If you want to keep the "value/impact" wording on the roadmap, the second axis should still be effort — relabel the description rather than the axis. Flagging it rather than silently changing it.</p>
+<h4>Mission 6 — Value Proposition &amp; Assumptions · 200 XP</h4>
+<p><strong>The mission description says "problem-solution canvas". Render one.</strong> Same treatment as Mission 8: a visual layout with tappable blocks, not a stack of text boxes.</p>
+<div class="table-scroll"><table><thead><tr><th>Block</th><th>Input</th></tr></thead><tbody><tr><td>Customer segment</td><td>↩ from M2</td></tr><tr><td>Problem / pains</td><td>↩ from M4</td></tr><tr><td>Existing alternatives</td><td>↩ from M1 Q4</td></tr><tr><td>Gains — what "better" looks like</td><td><strong><code>chips-multi</code></strong> — Cheaper · Faster · Less effort · More reliable · Available locally · In Arabic · More trusted · New capability · Other →</td></tr><tr><td>Your solution</td><td><strong><code>textarea</code></strong> — genuinely open, and one of the few that should be</td></tr><tr><td>Value proposition</td><td><strong><code>builder</code></strong> — "For [user] who [need], [name] is a [category] that [benefit]. Unlike [alternative], we [difference]."</td></tr><tr><td>Key features</td><td><strong><code>repeater</code></strong> — feature + the benefit it delivers</td></tr><tr><td><strong>Assumptions</strong></td><td><strong><code>repeater</code></strong> — assumption + <code>chips-single</code> risk (High / Medium / Low), auto-sorted riskiest first. This list is the direct input to Mission 7.</td></tr></tbody></table></div>
+<p>The old Q3 ("what benefits will users get") is <strong>removed</strong> — it asked the same thing as the features question. Merged into a two-column repeater.</p>
+<hr>
+<h3>Phase: Test</h3>
+<h4>Mission 7 — First Assumption Test · 250 XP</h4>
+<p>The title says <em>First Assumption Test</em>, singular. The mission should be about testing <strong>one</strong> thing properly, not designing a research programme.</p>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td>Which assumption are you testing?</td><td><strong><code>chips-single</code></strong> from <strong>↩ the M6 assumption list</strong>, sorted riskiest first. Pre-selects the top one with <em>"This is your riskiest assumption. Test this one unless you have a reason not to."</em></td></tr><tr><td>2</td><td>Your hypothesis</td><td><strong><code>builder</code></strong> — "We believe [user] will [action] because [reason]. We'll know we're right if [signal]."</td></tr><tr><td>3</td><td>How will you test it?</td><td><strong><code>chips-single</code></strong> — Interviews · Survey · Landing page · Fake door · Concierge · Wizard of Oz — <strong>each with one line explaining what it actually is</strong>, because most first-time founders have not met these words</td></tr><tr><td>4</td><td>What result would prove it?</td><td><strong><code>number</code></strong> threshold — "at least ___ out of ___ do ___" — set <strong>before</strong> running the test</td></tr><tr><td>5</td><td>What happened?</td><td><strong><code>upload</code></strong> (survey export, notes, screenshots) + <strong><code>number</code></strong> actual result</td></tr><tr><td>6</td><td>What did you learn?</td><td><strong><code>textarea</code></strong> + <strong><code>chips-single</code></strong> verdict: Confirmed · Contradicted · Inconclusive. <em>Inconclusive is a valid, respected answer</em> — say so in the helper text, or founders will fabricate a verdict.</td></tr></tbody></table></div>
+<hr>
+<h3>Phase: Model</h3>
+<h4>Mission 8 — Business Model Canvas · 300 XP</h4>
+<p><strong>Render the actual canvas.</strong> Nine blocks in the real BMC layout. Tapping a block opens a focused editor; the canvas fills in visually behind it, with a "4 of 9 blocks" indicator.</p>
+<div class="table-scroll"><table><thead><tr><th>Block</th><th>Input</th></tr></thead><tbody><tr><td>Value Propositions</td><td>↩ from M6</td></tr><tr><td>Customer Segments</td><td>↩ from M2</td></tr><tr><td>Channels</td><td><strong><code>chips-multi</code></strong> — Own website · App store · Instagram · TikTok · WhatsApp · Resellers · Direct sales · Marketplace · Physical shop · Other →</td></tr><tr><td>Customer Relationships</td><td><strong><code>chips-multi</code></strong> — Self-serve · Personal support · Community · Automated · Dedicated account · Other →</td></tr><tr><td><strong>Revenue Streams</strong></td><td><strong><code>chips-multi</code></strong> — Subscription · One-time sale · Commission · Freemium · Advertising · Licensing · Marketplace fee · Usage-based · Other → <strong>Multi-select matters most here.</strong> Mixed revenue models are normal, and a single text box hides that completely.</td></tr><tr><td>Key Resources</td><td><code>chips-multi</code> + repeater for specifics</td></tr><tr><td>Key Activities</td><td><code>repeater</code></td></tr><tr><td>Key Partnerships</td><td><strong><code>repeater</code></strong> — partner + what they provide</td></tr><tr><td>Cost Structure</td><td><strong><code>repeater</code></strong> — cost line + amount + currency, with a running monthly total</td></tr></tbody></table></div>
+<p>Every block carries a one-line explanation. Most founders meeting the canvas for the first time do not know what "Key Activities" means.</p>
+<h4>Mission 9 — Build a Learning Prototype · 300 XP</h4>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td><strong>What is this prototype meant to teach you?</strong></td><td><strong>NEW · <code>builder</code></strong> — "I want to find out whether ___". Offers ↩ the assumptions from M6 that Mission 7 did <em>not</em> test. **This is what makes it a <em>learning</em> prototype**, and it currently isn't asked at all. It goes first, before any tooling question.</td></tr><tr><td>2</td><td>What kind of prototype?</td><td><strong><code>chips-single</code></strong> — Paper sketch · Clickable design · No-code app · Landing page · Slide walkthrough · Coded · Other →</td></tr><tr><td>3</td><td>Which features are in it?</td><td>↩ <strong>features from M6</strong> as checkboxes — "which made it into the prototype?"</td></tr><tr><td>4</td><td>Built with</td><td><strong><code>chips-multi</code></strong> — Figma · Canva · Bubble · Webflow · Glide · FlutterFlow · Adalo · Framer · Paper · Other →</td></tr><tr><td>5</td><td>The key flows</td><td><strong><code>repeater</code></strong> — step by step</td></tr><tr><td>6</td><td>The prototype itself</td><td><strong><code>upload</code></strong> — link or file. <strong>Required.</strong></td></tr></tbody></table></div>
+<p><em>Roadmap copy note:</em> the card currently reads "Create prototype or Figma design". Naming one vendor in mission copy suggests Figma is expected. "Clickable prototype — Figma, Canva, or paper" is truer and less intimidating.</p>
+<h4>Mission 10 — Prototype User Test · 300 XP</h4>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td><strong><code>number</code></strong> — how many people tested it. Under 5, show a quiet note: <em>"Fewer than 5 testers rarely reveals a pattern. It's still worth logging."</em></td></tr><tr><td>2</td><td><strong><code>chips-single</code></strong> — In person · Video call · Unmoderated · Group session</td></tr><tr><td>3</td><td><strong><code>repeater</code></strong> — findings, each tagged <code>chips-single</code>: Confirmed · Contradicted · Surprising</td></tr><tr><td>4</td><td><strong><code>upload</code></strong> notes or recordings + a short summary</td></tr><tr><td>5</td><td><strong><code>repeater</code></strong> — changes to make, each with a priority chip</td></tr><tr><td>6</td><td>↩ <strong>back-reference to M9 Q1</strong> — <em>"You built this to find out whether [X]. Did you?"</em> — <code>chips-single</code> Yes / No / Not yet</td></tr></tbody></table></div>
+<hr>
+<h3>Phase: Readiness</h3>
+<h4>Mission 11 — Go-to-Market Experiment · 300 XP · <strong>respecified</strong></h4>
+<p>The current questions ask for market size, all channels, pricing, a sales process and a launch plan — a full go-to-market <strong>plan</strong>. The mission asks for a focused <strong>test</strong>. Those are different exercises, and the plan questions belong in Mission 12.</p>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td>Which single route are you testing?</td><td><strong><code>chips-single</code></strong> — Instagram · TikTok · WhatsApp groups · LinkedIn · Facebook groups · Google Ads · SEO · Influencers · Events · University campus · Referral · Cold outreach · Reseller · Other → <strong>One only</strong>, with helper text: <em>"You can test more later. Testing five at once tells you nothing about any of them."</em></td></tr><tr><td>2</td><td>Exactly who will you reach?</td><td>↩ <strong>from M2</strong>, narrowed — one segment, not the whole market</td></tr><tr><td>3</td><td>What will you put in front of them?</td><td><strong><code>builder</code></strong> for the offer line + <strong><code>upload</code></strong> for the ad, landing page or message</td></tr><tr><td>4</td><td>What counts as success?</td><td><strong><code>chips-single</code></strong> metric (sign-ups · replies · pre-orders · waitlist joins · clicks · meetings booked) + <strong><code>number</code></strong> threshold — <em>set before you run it</em></td></tr><tr><td>5</td><td>Budget and timebox</td><td><strong><code>number</code> + currency</strong> + <strong><code>number</code></strong> days</td></tr><tr><td>6</td><td>What happened?</td><td><strong><code>number</code></strong> actual + <strong><code>upload</code></strong> evidence + <strong><code>textarea</code></strong> why you think so + <strong><code>chips-single</code></strong> verdict: Worth repeating · Worth changing · Worth dropping</td></tr></tbody></table></div>
+<h4>Mission 12 — Demand &amp; Market Validation · 350 XP</h4>
+<p>Absorbs the market-sizing and pricing questions that were stranded in Mission 11.</p>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td><strong><code>chips-multi</code></strong> — validation methods used</td></tr><tr><td>2</td><td><strong><code>repeater</code></strong> — demand indicator + value</td></tr><tr><td>3</td><td><strong><code>repeater</code></strong> — competitor table: name · link · price · one strength · one weakness</td></tr><tr><td>4</td><td><strong><code>chips-single</code></strong> pricing model + <strong><code>number</code> + currency</strong> price point + <strong><code>chips-single</code></strong> willingness-to-pay response <em>(moved from old M11 Q3)</em></td></tr><tr><td>5</td><td><strong><code>number</code> × 3</strong> — TAM / SAM / SOM with currency, plus <strong><code>textarea</code></strong> "how did you get to this number?" and a <strong>bottom-up helper</strong>: users × price × frequency, calculated live <em>(moved from old M11 Q1)</em></td></tr><tr><td>6</td><td><strong><code>chips-single</code></strong> verdict — Strong demand · Mixed signals · Weak demand — + one line</td></tr></tbody></table></div>
+<h4>Mission 13 — MVP Scope &amp; Build · 400 XP</h4>
+<p>The word <strong>Scope</strong> is in the title and nothing currently scopes anything.</p>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td><strong>What's in, what's out?</strong></td><td><strong>NEW · two-column sorter</strong> — every feature from M6 and M9 arrives as a card; the founder drags each into <strong>"In the MVP"</strong> or <strong>"Not yet"</strong>. <strong>The highest-value new question in the whole set</strong>: it makes cutting scope a visible, deliberate act instead of something that happens by accident three weeks into building.</td></tr><tr><td>2</td><td>Why those cuts?</td><td><strong><code>text</code></strong> — one line</td></tr><tr><td>3</td><td>How will you build it?</td><td><strong><code>chips-multi</code></strong> — No-code: Bubble / Glide / Softr / Webflow · Code: React / Next / Flutter / Laravel / Django / Node · Backend: Supabase / Firebase / AWS · Other →</td></tr><tr><td>4</td><td>How long?</td><td><strong><code>number</code> + unit</strong> — days or weeks</td></tr><tr><td>5</td><td>What got in the way?</td><td><strong><code>chips-multi</code></strong> challenge types + a line</td></tr><tr><td>6</td><td>The MVP</td><td><strong><code>upload</code></strong> — link. <strong>Required.</strong></td></tr><tr><td>7</td><td>Can someone use it end to end?</td><td><strong><code>chips-single</code></strong> Yes / Almost / Not yet → if not, a <code>repeater</code> of blockers</td></tr></tbody></table></div>
+<h4>Mission 14 — Early Traction Review · 450 XP · <strong>respecified</strong></h4>
+<p>The mission description is <em>"interpret early usage without claiming product-market fit too soon"</em>. Every question below serves that sentence. The 1–10 self-rating is removed — it is the exact behaviour the mission exists to prevent.</p>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td>The numbers</td><td><strong>metric grid</strong> — sign-ups · activated · returned in week 1 · returned in week 4 — plus <strong>how many weeks of data</strong> and <strong>sample size</strong>. Every later question is read against these two.</td></tr><tr><td>2</td><td>Retention</td><td><strong>calculated, not typed</strong> — derived from the grid, with the arithmetic shown. Founders currently type a percentage; typed percentages are guesses.</td></tr><tr><td>3</td><td>**What do these numbers <em>not</em> tell you?**</td><td><strong>NEW · <code>textarea</code></strong> — the mission's whole thesis in one question</td></tr><tr><td>4</td><td><strong>What might be inflating this?</strong></td><td><strong>NEW · <code>chips-multi</code></strong> — Friends and family · Paid promotion · A one-off event · Press mention · Discount or incentive · Nothing I can see. <strong>This is the anti-overclaim guard</strong>, and it costs a founder ten seconds to answer honestly.</td></tr><tr><td>5</td><td>Evidence from users</td><td><strong><code>upload</code></strong> + <em>optional</em> Sean Ellis result: ask users <em>"how would you feel if you could no longer use this?"</em> and enter the % who say <strong>very disappointed</strong>. Guarded: <em>"Needs 30+ responses to mean anything. 40% is the recognised threshold — and it's a signal, not a verdict."</em></td></tr><tr><td>6</td><td>What you'll change next</td><td><strong><code>repeater</code></strong> with priority</td></tr></tbody></table></div>
+<p><strong>And remove the PMF score from the UI.</strong> Anywhere the platform shows a product-market-fit number, replace it with <strong>evidence strength — thin · early · promising</strong>, computed from sample size and observation window, never from self-rating. A founder cannot award themselves product-market fit, and the platform shouldn't offer them a field in which to try.</p>
+<h4>Mission 15 — Launch &amp; Incubator Readiness · 500 XP · <strong>respecified</strong></h4>
+<p>Currently asks for launch tactics, campaign spend, users acquired and revenue — activity metrics. The mission asks the founder to <em>turn launch evidence into a credible next-step story</em>. That's a narrative task with an ask at the end, and the questions should build it.</p>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Becomes</th></tr></thead><tbody><tr><td>1</td><td>What did you launch, and when?</td><td><strong><code>text</code></strong> + date + <strong><code>upload</code></strong> link</td></tr><tr><td>2</td><td>Your evidence pack</td><td><strong>auto-assembled</strong> from Missions 3, 4, 7, 10, 11, 12 and 14 — the problem, the user, the assumption test, the prototype test, the GTM experiment, the demand evidence, the traction. Founder reviews, edits and adds. <em>Nothing is retyped.</em></td></tr><tr><td>3</td><td>The story in one paragraph</td><td><strong><code>builder</code></strong> — "In [time period] we [did this], which produced [result]. That tells us [insight], so next we will [step]." Replaces a blank box with the structure of a credible claim.</td></tr><tr><td>4</td><td>What are you asking for?</td><td><strong><code>chips-single</code></strong> — Incubator or accelerator place · Pre-seed investment · Grant · Pilot customer · Co-founder · Not raising yet — + <strong><code>number</code> + currency</strong> if funding</td></tr><tr><td>5</td><td>The next 90 days</td><td><strong><code>repeater</code></strong> — milestone · date · who owns it</td></tr><tr><td>6</td><td><strong>Risks you'd name yourself</strong></td><td><strong>NEW · <code>repeater</code></strong> — risk + how you'd mitigate it. Every incubator panel asks this. A founder who has named their own risks reads as credible; one who hasn't reads as unprepared.</td></tr><tr><td>7</td><td>Generate the readiness pack</td><td><strong>branded PDF export</strong> using the Round 11 template, assembling every mission's output into one document the founder can send</td></tr></tbody></table></div>
+<hr>
+<h2>Questions worth adding</h2>
+<p>You asked whether we can add questions inside the same missions to raise the quality of the journey. Yes — and there's room, because the redesign above removed most of the <em>typing</em>, not the thinking. A chip question costs a founder 15 seconds; the blank box it replaced cost three minutes.</p>
+<p>Below are 27 additions. None of them is padding: each one closes a gap that currently lets a founder finish a mission without having done the thinking the mission is for. <strong>Priority 1</strong> means the journey is weaker without it. <strong>Priority 2</strong> is real value you could defer.</p>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Mission</th><th>New question</th><th>Type</th><th>Why it earns its place</th><th>P</th></tr></thead><tbody><tr><td>1</td><td>M1 Problem Analysis</td><td><strong>How do you know this problem is real?</strong> — I've experienced it · I watched someone deal with it · I've talked to people about it · I read about it · I have data · It's a hunch</td><td><code>chips-multi</code></td><td>Sets the evidence culture in the first mission instead of the seventh, and gives the AI reviewer a calibration signal from minute one. "It's a hunch" must be a permitted answer — that's the honest starting point for most people</td><td>1</td></tr><tr><td>2</td><td>M1</td><td><strong>Why you?</strong> — I've lived this problem · I work in this industry · I have a relevant skill · I know these customers · I'm just interested</td><td><code>chips-multi</code> + line</td><td>Founder–problem fit. Asked here, it's a warm-up; it becomes the first line of the Mission 15 story</td><td>2</td></tr><tr><td>3</td><td>M2 Problem Definition</td><td>**Who is <em>not</em> your user?**</td><td><code>text</code></td><td>One line, and it sharpens a segment more than any positive question. "Everyone" stops being answerable</td><td>1</td></tr><tr><td>4</td><td>M2</td><td><strong>How do they solve it today?</strong> — Manually · Spreadsheet · WhatsApp · A competitor's app · They pay someone · They don't</td><td><code>chips-multi</code></td><td>The real competitor is usually a spreadsheet, not a company. This surfaces it early and feeds Mission 12</td><td>1</td></tr><tr><td>5</td><td>M3 Opportunity Prioritisation</td><td><strong>Roughly how many people have this problem?</strong> + how confident are you</td><td><code>number</code> + <code>chips-single</code></td><td>Plants market sizing at the point it's cheap, so Mission 12's TAM isn't invented from nothing</td><td>2</td></tr><tr><td>6</td><td>M3</td><td>**What did you decide <em>not</em> to work on, and why?**</td><td><code>text</code></td><td>Turns a ranking into a decision. Founders who can name what they dropped defend their focus better</td><td>1</td></tr><tr><td>7</td><td>M4 Testable Problem Statement</td><td><strong>Who would pay to have this solved — the user, or someone else?</strong> — The user · Their employer · A government body · An advertiser · A platform · Not sure yet</td><td><code>chips-single</code></td><td>Payer ≠ user is the most common blind spot in the region's B2B and B2G ideas, and it stays hidden until Mission 8 asks for revenue streams. Ask it here</td><td>1</td></tr><tr><td>8</td><td>M5 Solution Selection</td><td><strong>What's the simplest version that would still help someone?</strong></td><td><code>text</code></td><td>The anti-scope-creep question. Its answer is the default MVP scope in Mission 13</td><td>1</td></tr><tr><td>9</td><td>M5</td><td><strong>What would have to be true for this to work?</strong></td><td><code>repeater</code></td><td>Seeds the Mission 6 assumption register instead of asking a founder to conjure assumptions from a blank page</td><td>1</td></tr><tr><td>10</td><td>M6 Value Prop &amp; Assumptions</td><td><strong>If your riskiest assumption is wrong, what happens?</strong></td><td><code>text</code></td><td>Makes risk concrete. A founder who writes "the whole business doesn't work" has just found what Mission 7 must test</td><td>1</td></tr><tr><td>11</td><td>M7 First Assumption Test</td><td><strong>Who did you test with, and how did you find them?</strong> — Friends and family · My network · Cold outreach · A community or group · Existing users · Recruited/paid</td><td><code>chips-multi</code></td><td>Sampling bias is invisible unless you ask. Ten friends saying yes is not evidence, and the reviewer can only say so if it knows</td><td>1</td></tr><tr><td>12</td><td>M7</td><td><strong>What surprised you?</strong></td><td><code>text</code></td><td>The single most useful sentence in any test write-up, and it's never volunteered unless asked</td><td>2</td></tr><tr><td>13</td><td>M8 Business Model Canvas</td><td><strong>Unit economics</strong> — price · cost to serve one customer · gross margin (calculated)</td><td><code>number</code> grid</td><td>A business model canvas with no unit economics is a poster. Three numbers and one calculation make it a model</td><td>1</td></tr><tr><td>14</td><td>M8</td><td><strong>Which block are you least sure about?</strong></td><td><code>chips-single</code> from the nine</td><td>Names the next thing to test, and gives the platform something intelligent to recommend</td><td>2</td></tr><tr><td>15</td><td>M9 Learning Prototype</td><td><strong>What did you deliberately leave out?</strong></td><td><code>text</code></td><td>Pairs with the scope sorter in Mission 13 and makes omission a decision rather than an oversight</td><td>2</td></tr><tr><td>16</td><td>M9</td><td><strong>What's the first thing a tester will see?</strong></td><td><code>text</code></td><td>Thirty seconds decides most prototype tests. Founders rarely plan the opening</td><td>2</td></tr><tr><td>17</td><td>M10 Prototype User Test</td><td><strong>Where did people get stuck?</strong> — step · what happened</td><td><code>repeater</code></td><td>The findings list captures conclusions; this captures the moments. Directly actionable for Mission 13</td><td>1</td></tr><tr><td>18</td><td>M10</td><td><strong>What did you change your mind about?</strong></td><td><code>text</code></td><td>A test that changed nothing usually wasn't a test</td><td>2</td></tr><tr><td>19</td><td>M11 GTM Experiment</td><td><strong>What did one result cost you?</strong> — budget ÷ results</td><td>calculated</td><td>The founder's first cost-per-acquisition number, free, from data they've already entered</td><td>1</td></tr><tr><td>20</td><td>M11</td><td><strong>Could you do this ten times over?</strong> — Yes easily · Yes with money · Yes with more people · No</td><td><code>chips-single</code></td><td>Separates a channel from a one-off favour. Most first GTM wins don't survive this question</td><td>1</td></tr><tr><td>21</td><td>M12 Demand &amp; Market Validation</td><td><strong>How many said yes but didn't actually do anything?</strong></td><td><code>number</code> + line</td><td>The say/do gap. The most important validation question there is, and it appears nowhere in the journey today</td><td>1</td></tr><tr><td>22</td><td>M12</td><td><strong>What would make you walk away from this market?</strong></td><td><code>text</code></td><td>A founder who can't answer this will never stop, which is a worse outcome than stopping</td><td>2</td></tr><tr><td>23</td><td>M13 MVP Scope &amp; Build</td><td><strong>What's the one thing it has to do well?</strong></td><td><code>text</code></td><td>Forces a single quality bar into a build that's otherwise a feature list</td><td>1</td></tr><tr><td>24</td><td>M13</td><td><strong>How will you know someone actually used it?</strong> — Analytics installed · Database records · I'll ask them · I'll watch · Not set up yet</td><td><code>chips-multi</code></td><td>Founders launch with no instrumentation and then cannot answer a single Mission 14 question. Asking here, one mission earlier, is the difference between having data and guessing</td><td>1</td></tr><tr><td>25</td><td>M14 Early Traction Review</td><td><strong>Which single number will you try to move next month, and to what?</strong></td><td><code>chips-single</code> + <code>number</code></td><td>Converts a review into a commitment, and gives Mission 15 something to report against</td><td>1</td></tr><tr><td>26</td><td>M15 Launch &amp; Incubator Readiness</td><td><strong>What do you need that you don't have?</strong> — Money · A co-founder · Technical help · Customers · Mentorship · Licensing or legal · Nothing right now</td><td><code>chips-multi</code></td><td>The honest version of "what's your ask", and it routes straight into mentoring, the community and the collaboration hub</td><td>1</td></tr><tr><td>27</td><td>M15</td><td><strong>Runway</strong> — cash available · monthly burn · months remaining (calculated)</td><td><code>number</code> grid</td><td>Every incubator asks. A founder who has never calculated it finds out in the room, which is the worst place</td><td>2</td></tr></tbody></table></div>
+<p><strong>Cost to the founder:</strong> 27 questions, of which 21 are chips, one-liners or calculated fields. Realistically 8–12 minutes added across a journey that spans weeks. <strong>17 are Priority 1</strong>; if you want a smaller first pass, ship those and hold the rest.</p>
+<p>Two ground rules for the additions:</p>
+<p>- <strong>None of them may block submission on their own.</strong> They enrich the rubric; they don't become new ways to fail a mission. The Round 11 quality gate stays attached to the substantive questions only. - <strong>Every one of them feeds something later.</strong> That's the test I applied — an added question that doesn't carry forward into a later mission or an export is a question that made the journey longer without making it better.</p>
+<hr>
+<h2>Missions that should produce a downloadable artefact</h2>
+<p>This is the change that alters how the journey <em>feels</em>. Right now a mission ends in a score. It should end in <strong>something the founder owns</strong> — a canvas, a report, a one-pager they can send to a co-founder, a lecturer, an incubator or an investor.</p>
+<p>Every mission produces one. Nine of them are genuinely worth downloading.</p>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Mission</th><th>Artefact</th><th>Formats</th></tr></thead><tbody><tr><td>1</td><td>Problem Analysis</td><td>Problem landscape — the problem, who it affects, what exists today and where it falls short</td><td>PDF</td></tr><tr><td>2</td><td>Problem Definition</td><td><strong>User persona card</strong> — the segment, characteristics, context, frequency</td><td>PDF · PNG</td></tr><tr><td>3</td><td>Opportunity Prioritisation</td><td><strong>Impact × Frequency matrix</strong> with every problem plotted and quadrants labelled</td><td>PNG · PDF</td></tr><tr><td>4</td><td>Testable Problem Statement</td><td>Problem statement card — statement, impact, success metrics, falsification test</td><td>PDF · PNG</td></tr><tr><td>5</td><td>Solution Selection</td><td><strong>Value × Effort matrix</strong> with every idea plotted</td><td>PNG · PDF</td></tr><tr><td>6</td><td>Value Prop &amp; Assumptions</td><td><strong>Problem–solution canvas</strong> + assumption register</td><td>PDF · PNG · CSV <em>(register)</em></td></tr><tr><td>7</td><td>First Assumption Test</td><td><strong>Experiment report</strong> — hypothesis, method, threshold set beforehand, result, verdict, what changed</td><td>PDF</td></tr><tr><td>8</td><td>Business Model Canvas</td><td><strong>The Business Model Canvas</strong> — full landscape layout, all nine blocks, plus the unit economics sheet</td><td><strong>PDF A3 + A4 · PNG · XLSX</strong></td></tr><tr><td>9</td><td>Learning Prototype</td><td>Prototype brief — what it tests, what's in it, the flows, the link</td><td>PDF</td></tr><tr><td>10</td><td>Prototype User Test</td><td>Usability findings — testers, method, findings tagged, where people got stuck, changes</td><td>PDF</td></tr><tr><td>11</td><td>GTM Experiment</td><td>Channel experiment card — route, offer, threshold, result, cost per result, verdict</td><td>PDF · PNG</td></tr><tr><td>12</td><td>Demand &amp; Market Validation</td><td>Market validation report + <strong>competitor comparison table</strong> + TAM/SAM/SOM chart</td><td>PDF · XLSX</td></tr><tr><td>13</td><td>MVP Scope &amp; Build</td><td><strong>MVP scope sheet</strong> — in / out, with the reasoning</td><td>PDF · XLSX</td></tr><tr><td>14</td><td>Early Traction Review</td><td><strong>Metrics one-pager</strong> — funnel, retention curve, evidence strength, confounders named, next target</td><td><strong>PDF · PNG · XLSX</strong></td></tr><tr><td>15</td><td>Launch &amp; Incubator Readiness</td><td><strong>The Readiness Pack</strong> — every artefact above, assembled, with the story and the ask</td><td><strong>PDF · PPTX</strong></td></tr></tbody></table></div>
+<p>Three of these are the ones you named, and they're the three that matter most:</p>
+<p><strong>The Business Model Canvas (M8)</strong> is the artefact founders show people. It has to be a real landscape canvas at A3 — the size it's meant to be printed and pinned — with an A4 fallback, and a PNG for putting in a deck.</p>
+<p><strong>The metrics one-pager (M14)</strong> is the artefact investors and incubators ask for. It should render the funnel and the retention curve as actual charts from the founder's own numbers, and — this is the part that makes it StartPad's rather than generic — it prints the confounders the founder named alongside the numbers. A traction sheet that says "1,200 sign-ups (paid promotion, one-off event)" is worth more than one that says "1,200 sign-ups", and it teaches the founder what honest reporting looks like.</p>
+<p><strong>The Readiness Pack (M15)</strong> is the whole journey as one sendable document. It's also the strongest retention argument the product has: fifteen missions of work becomes a thing you can hand to someone.</p>
+<p><strong>Every export carries the brand.</strong> The logo, the founder's name, the mission, the date, and a quiet "Made on StartPad · startpad.me" footer — which is the cheapest distribution the platform has, because these documents get forwarded. That uses the branded PDF template from Round 11.</p>
+<p><strong>One decision for you.</strong> Exports are an obvious Pro-tier lever — free founders could see the artefact and get a watermarked or preview version, with clean, brand-free download on Pro. That's a real revenue argument. It's also a real goodwill cost, and the Round 12 sweep set missions 1–3 as the free tier. My recommendation: <strong>let everyone download everything, keep the StartPad footer on every export, and don't gate it.</strong> The forwarding is worth more than the upgrades, and a founder who can't download their own canvas will screenshot it anyway. But it's your call, and it changes what gets built.</p>
+<hr>
+<h2>What this changes, in numbers</h2>
+<div class="table-scroll"><table><thead><tr><th></th><th>Before</th><th>After</th></tr></thead><tbody><tr><td>Questions</td><td>87</td><td><strong>114</strong> (87 rebuilt + 27 added)</td></tr><tr><td>Blank textareas</td><td>75</td><td><strong>9</strong></td></tr><tr><td>Answerable by tapping</td><td>0</td><td>~55</td></tr><tr><td>Calculated fields — the founder never types a number they already gave you</td><td>0</td><td>6</td></tr><tr><td>Carried forward from an earlier mission</td><td>0</td><td><strong>13</strong></td></tr><tr><td>Visual/interactive exercises</td><td>0</td><td><strong>5</strong> (two matrices, two canvases, one scope sorter)</td></tr><tr><td>Downloadable artefacts</td><td>0</td><td><strong>15</strong></td></tr><tr><td>Duplicate questions</td><td>12</td><td>0</td></tr><tr><td>Questions asking for something the mission's own description warns against</td><td>1</td><td>0</td></tr></tbody></table></div>
+<p>More questions. Far less work. The 27 additions are chips and one-liners; the 75 textareas they sit alongside are gone.</p>
+<p>The nine that stay open are the ones that <em>should</em> be: M1's problem detail, M6's solution description, M7's "what did you learn", M10's test summary, M11's "why do you think that happened", M12's "how did you get to this number", M13's "why those cuts", M14's "what don't these numbers tell you", M15's evidence notes. Reflection deserves a blank page. Categorisation doesn't.</p>
+<p>The thirteen carried-forward fields:</p>
+<div class="prompt"><header><span class="label">Paste as one message</span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>M2 Q3   ← M1 Q2      problem statement
+M3 cards← M1, M2     problems to prioritise
+M4 Q2   ← M2 Q1      the user
+M6      ← M2, M4, M1 Q4   segment, pains, alternatives
+M7 Q1   ← M6         riskiest assumption
+M8 VP   ← M6         value proposition
+M8 seg  ← M2         customer segments
+M9 Q1   ← M6, M7     untested assumptions
+M9 Q3   ← M6         features
+M10 Q6  ← M9 Q1      did the prototype answer its question?
+M11 Q2  ← M2         narrowed segment
+M13 Q1  ← M6, M9     features to scope
+M15 Q2  ← M3,4,7,10,11,12,14   the evidence pack</code></pre></div>
+<hr>
+<h2>The roadmap screen itself</h2>
+<p>Seven notes on the screen you sent, since it's what a founder meets first.</p>
+<p>1. <strong>Fourteen of fifteen cards are grey and padlocked.</strong> A new founder's first impression of the journey is a wall of locked doors. Show the first card of each phase in full colour with its phase accent, even while locked — the founder should be able to see the shape of the journey, not just its gate. 2. <strong>No lock says how to unlock it.</strong> Add one line per locked card: <em>"Unlocks after Problem Definition."</em> A lock with no condition reads as a paywall, especially now that pricing exists. 3. <strong>The phase progress bars are empty grey pills.</strong> They read as decoration. Give them a number — "0 of 3" — or drop them, since the header already says "0/3 missions". 4. <strong>Spelling is inconsistent inside a single card.</strong> "Opportunity Prioriti<strong>s</strong>ation" with the description "Priorit<strong>iz</strong>e problems based on impact and frequency". Pick one — British matches the title — and sweep every mission title, description and locale string. 5. <strong>"Create prototype or Figma design"</strong> names a vendor in mission copy. "Clickable prototype — Figma, Canva, or paper" is truer and lowers the barrier. 6. <strong>XP is visible on locked missions, which is right</strong> — a founder can see that Mission 15 is worth 500 and that the journey escalates. Consider showing the phase XP subtotal on each phase header too (Discover 350 · Shape 550 · Test 250 · Model 900 · Readiness 2,000). 7. <strong>Mission 7 sits alone in a phase called Test.</strong> One mission, 250 XP, between two three-mission phases. It's fine structurally — the assumption test genuinely is its own gate — but the card looks stranded. Give that phase a one-line explanation on the header: <em>"One test. The riskiest thing you believe."</em></p>
+<hr>
+<hr>
+<h1>The prompts</h1>
+<p>Eight, in build order. Paste one per message.</p>
+<h2>PROMPT A — Build the Question Type System</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT A</b> · </span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>PAGE: All mission question screens (/missions/:id), plus the shared component
+library.
+
+THE PROBLEM
+
+The 15 missions use 87 questions, of which 75 are blank textareas. Testers
+could not answer basic questions — for example "what area are you interested
+in?" — not because the question is hard, but because a blank box asks the
+founder to invent the answer AND the shape of the answer at the same time.
+
+THE FIX
+
+Before changing any mission content, build the input component system the new
+question set needs. Eleven reusable types, driven by a schema so mission
+content is data, not JSX.
+
+  chips-multi   Tappable pills, multi-select, always ending with "Other →"
+                which opens a text field. Selected state uses lime background
+                with near-black text (never lime text on white — it fails
+                contrast at 1.29:1). Minimum 44px tap targets. Wraps on mobile.
+  chips-single  Same, single selection.
+  slider        1-10, ends labelled in words, current value shown large.
+                Draggable and keyboard-accessible.
+  matrix        A 2x2 grid. Cards dragged onto it, or positioned by two
+                sliders. Quadrants labelled. See PROMPT E.
+  canvas        A named-framework layout with tappable blocks. See PROMPT F.
+  builder       A sentence with inline blanks. Each blank is either a chip set
+                or a short input. The finished sentence reads back as prose.
+  repeater      "Add another" rows. Each row is a mini-form defined per
+                question. Rows reorderable and deletable.
+  number        Numeric input with a unit selector, and a currency selector
+                where relevant (EGP, SAR, AED, USD).
+  upload        File, URL, or pasted text — all three accepted. Shows what was
+                attached. Existing OCR applies.
+  text          One short line.
+  textarea      Long-form. Keeps the existing submission gate.
+
+RULES FOR ALL TYPES
+
+1. EVERY QUESTION CAN CARRY AN ATTACHMENT, whatever its type. A founder
+   answering a chip question may still want to attach a screenshot or a
+   document. Put a quiet "Add file or link" affordance on every question, not
+   only on the ones that ask for evidence.
+
+2. NO CHIP LIST IS EVER CLOSED. "Other →" is mandatory on every chips-multi
+   and chips-single, and what the founder types there is stored, so you can
+   later see which options your taxonomies are missing.
+
+3. MULTI-SELECT IS THE DEFAULT for categories. A founder building in fintech
+   AND healthtech is not an edge case, and neither is a business running
+   subscription AND commission revenue. Use chips-single only where exactly
+   one answer can be true (frequency, test method, verdict).
+
+4. SCHEMA-DRIVEN. Each question is a record:
+     { id, missionId, phase, order, type, label, helpText, whyItMatters,
+       options[], allowOther, required, minWords, carriesFrom,
+       attachmentAllowed, exampleAnswerId }
+   Mission content lives in that schema. Never hardcode a question inside a
+   component.
+
+5. ARABIC. Every type works RTL and is labelled in both languages. Chip labels
+   especially — a chip set is only faster than typing if the founder reads it
+   instantly in their own language.
+
+6. MOBILE FIRST. This is where missions get answered. Chips beat typing on a
+   phone, which is most of the point of this change.</code></pre></div>
+<h2>PROMPT B — Realign Missions 11, 14 and 15 to Their Own Names</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT B</b> · </span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>PAGE: /missions/11, /missions/14, /missions/15 — and the mission schema.
+
+THE PROBLEM
+
+The mission names on the roadmap were updated. The questions inside them were
+not. Three missions now ask for something other than what their own title and
+description promise, and one of them contradicts itself outright.
+
+  MISSION 14 "Early Traction Review"
+    Description: "Interpret early usage without claiming product-market fit
+    too soon."
+    Question 5: "Rate your product-market fit from 1 to 10."
+    The mission warns against the exact thing its own question demands.
+
+  MISSION 11 "Go-to-Market Experiment"
+    Description: "Define a focused route-to-market test."
+    Questions ask for target market size, all channels, pricing, a sales
+    process and a launch plan — an entire GTM plan, not one experiment.
+
+  MISSION 15 "Launch &amp; Incubator Readiness"
+    Description: "Turn launch evidence into a credible next-step story."
+    Questions collect launch tactics, campaign spend, users acquired and
+    revenue — activity metrics, not a story and not an ask.
+
+THE FIX
+
+MISSION 14 — Early Traction Review
+
+  Delete the 1-10 self-rating entirely. Replace the question set with:
+
+  Q1  Metric grid: sign-ups, activated, returned week 1, returned week 4.
+      PLUS two required context fields — how many weeks of data, and total
+      sample size. Every other answer is read against these two.
+  Q2  Retention: CALCULATED from Q1, not typed, with the arithmetic shown.
+      Typed percentages are guesses.
+  Q3  NEW textarea: "What do these numbers NOT tell you?"
+  Q4  NEW chips-multi: "What might be inflating this?" — Friends and family ·
+      Paid promotion · A one-off event · Press mention · Discount or incentive
+      · Nothing I can see. This is the anti-overclaim guard.
+  Q5  Upload user evidence. Optional Sean Ellis result — ask users "how would
+      you feel if you could no longer use this?" and enter the % who answer
+      "very disappointed". Show the guard text: "Needs 30+ responses to mean
+      anything. 40% is the recognised threshold — and it is a signal, not a
+      verdict."
+  Q6  Repeater: what you'll change next, with priority.
+
+  AND REMOVE THE PMF SCORE FROM THE UI EVERYWHERE. Wherever the platform
+  displays a product-market-fit number, replace it with EVIDENCE STRENGTH —
+  thin / early / promising — computed from sample size and observation window,
+  never from self-rating. Founders cannot award themselves product-market fit
+  and the platform should not offer a field in which to try.
+
+MISSION 11 — Go-to-Market Experiment
+
+  Q1  chips-single, ONE route only: Instagram · TikTok · WhatsApp groups ·
+      LinkedIn · Facebook groups · Google Ads · SEO · Influencers · Events ·
+      University campus · Referral · Cold outreach · Reseller · Other →
+      Helper: "You can test more later. Testing five at once tells you nothing
+      about any of them."
+  Q2  Carried from Mission 2, narrowed: exactly who will you reach.
+  Q3  builder for the offer line + upload the ad, landing page or message.
+  Q4  chips-single success metric (sign-ups · replies · pre-orders · waitlist
+      joins · clicks · meetings booked) + number threshold, set BEFORE running.
+  Q5  number + currency budget, number of days timebox.
+  Q6  number actual result + upload evidence + textarea why + chips-single
+      verdict: Worth repeating / Worth changing / Worth dropping.
+
+  MOVE the market-sizing and pricing questions OUT of Mission 11 and INTO
+  Mission 12, where they belong — that is the demand and market mission.
+
+MISSION 15 — Launch &amp; Incubator Readiness
+
+  Q1  What did you launch, and when — text + date + upload link.
+  Q2  EVIDENCE PACK, auto-assembled from Missions 3, 4, 7, 10, 11, 12 and 14:
+      the problem, the user, the assumption test, the prototype test, the GTM
+      experiment, the demand evidence, the traction numbers. The founder
+      reviews, edits and adds. NOTHING IS RETYPED.
+  Q3  builder: "In [time period] we [did this], which produced [result]. That
+      tells us [insight], so next we will [step]."
+  Q4  chips-single, the ask: Incubator or accelerator place · Pre-seed
+      investment · Grant · Pilot customer · Co-founder · Not raising yet.
+      Plus number + currency if funding.
+  Q5  repeater, next 90 days: milestone · date · owner.
+  Q6  NEW repeater: risks you'd name yourself + how you'd mitigate each. Every
+      incubator panel asks this. A founder who names their own risks reads as
+      credible; one who hasn't reads as unprepared.
+  Q7  Generate the readiness pack as a branded PDF using the existing document
+      template, assembling every mission's output into one sendable document.
+
+ALSO, TWO SMALLER REALIGNMENTS
+
+  MISSION 4 is now "Testable Problem Statement", singular. Add one question:
+  "What would prove this statement wrong?" — one line. A statement you cannot
+  falsify is a belief, not a hypothesis, and this line is what makes Mission 7
+  possible.
+
+  MISSION 9 is now "Build a LEARNING Prototype". Add a new FIRST question,
+  before any tooling question: "What is this prototype meant to teach you?" —
+  a builder, "I want to find out whether ___", offering the assumptions from
+  Mission 6 that Mission 7 did not test. Then in Mission 10, add a closing
+  question referring back to it: "You built this to find out whether [X]. Did
+  you?"</code></pre></div>
+<h2>PROMPT C — Carry Answers Forward Between Missions</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT C</b> · </span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>PAGE: All mission question screens, plus a new founder-profile store.
+
+THE PROBLEM
+
+The same question is asked up to five times across the 15 missions, because
+nothing carries forward.
+
+  "Who is your user"          M1 Q3, M2 Q1, M2 Q2, M4 Q2, M11 Q1
+  "What are your features"    M6 Q2, M9 Q2, M13 Q1
+  "What did you learn"        M7 Q5, M10 Q4, M14 Q3
+  "What are your next steps"  M9 Q6, M10 Q5, M13, M14 Q6, M15 Q6
+
+Each mission therefore feels like starting over, when it should feel like the
+last one is being built on. Founders retype, drift, and contradict themselves.
+
+THE FIX
+
+1. A FOUNDER PROFILE OBJECT that accumulates across missions:
+     industry[], userSegment, userPersona, problemStatement, focusProblem,
+     valueProposition, features[], assumptions[], businessModel[],
+     channels[], pricing, metrics[], evidence[]
+   Every mission writes into it and reads from it.
+
+2. CARRY-FORWARD FIELDS are pre-filled, editable, and framed as continuation
+   rather than repetition:
+
+     "In Mission 1 you said the problem was:
+      [their exact words, in an editable field]
+      Sharpen it now that you know who you're talking about."
+
+   Never show a carried field blank. Never show it locked.
+
+3. TRACK WHAT CHANGED. When a founder edits a carried answer, keep both
+   versions. At the end of the journey, show how their problem statement
+   evolved from Mission 1 to Mission 4 to Mission 15. That is one of the most
+   satisfying things a guided product can show someone about their own work.
+
+4. THESE THIRTEEN FIELDS CARRY:
+     M2 Q3   ← M1 Q2                  problem statement
+     M3 cards← M1, M2                 problems to prioritise
+     M4 Q2   ← M2 Q1                  the user
+     M6      ← M2, M4, M1 Q4          segment, pains, alternatives
+     M7 Q1   ← M6 assumptions         riskiest assumption, sorted first
+     M8 VP   ← M6                     value proposition
+     M8 seg  ← M2                     customer segments
+     M9 Q1   ← M6, M7                 untested assumptions
+     M9 Q3   ← M6                     features
+     M10 Q6  ← M9 Q1                  did the prototype answer its question
+     M11 Q2  ← M2                     narrowed segment
+     M13 Q1  ← M6, M9                 features to scope
+     M15 Q2  ← M3,4,7,10,11,12,14     the evidence pack
+
+5. REMOVE THE DUPLICATE. Mission 6's "what benefits will users get" asks the
+   same thing as "list your key features". Merge into one repeater with a
+   feature column and a benefit column.
+
+6. Mission 10 has already been renamed from "Solution Hypothesis Test" to
+   "Prototype User Test" — no action needed, noting it so nobody reverts it.</code></pre></div>
+<h2>PROMPT D — The Answering Experience</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT D</b> · </span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>PAGE: /missions/:id — the mission question screen.
+
+THE PROBLEM
+
+All of a mission's questions render on one long page as a stack of blank
+boxes. That is what makes the missions feel like homework, and it is why
+testers gave up rather than asked for help.
+
+THE FIX
+
+1. ONE QUESTION AT A TIME on mobile; two or three on desktop. A stepper at the
+   top shows position ("Question 3 of 5") and allows jumping. Each question
+   gets room to breathe.
+
+2. EVERY QUESTION CARRIES THREE THINGS ABOVE THE INPUT:
+     - The question, in plain language
+     - "Why this matters" — one sentence, collapsible, expanded the first
+       time and collapsed thereafter
+     - An estimated time — "about 2 minutes"
+
+3. "SEE AN EXAMPLE" ON EVERY QUESTION — an anonymised real answer that scored
+   well, shown in a panel, NEVER pre-filled into the field. Founders cannot
+   hit a standard they have never seen. This is the single highest-value item
+   in this prompt.
+
+4. INSTANT, QUIET FEEDBACK. When an answer meets the bar, a small tick and
+   "Ready". Not a score, not a celebration — a signal that they can move on.
+   When it doesn't, say what's missing in one line.
+
+5. MOMENTUM, NOT CONFETTI. After each question, a small progress movement and
+   the next question sliding in. Something bigger on mission completion. Do
+   not celebrate trivial actions — this audience finds that patronising faster
+   than most.
+
+6. SAVE STATE VISIBLY. "Saved 2 minutes ago" near the stepper. Leaving and
+   returning restores exact position. Never lose an answer.
+
+7. SHOW THE THREAD. One line at the top of each mission connecting it to the
+   last: "In Mission 2 you defined your user as [X]. This mission turns that
+   into a problem statement you can test."
+
+8. LET THEM SEE THE WHOLE MISSION. A "view all questions" toggle for founders
+   who want to read ahead. Some people need the map before the first step.
+
+9. ARABIC AND RTL throughout — stepper direction, chip wrapping, slider
+   direction, matrix axes.
+
+10. NEVER MORE THAN ONE PRIMARY BUTTON on screen. The mission page currently
+    shows "Resubmit for Review" in three places.
+
+11. ROADMAP SCREEN, same visit:
+    - Every locked mission states its unlock condition: "Unlocks after Problem
+      Definition." A lock with no condition reads as a paywall.
+    - Show the first card of each phase in full colour even while locked, so
+      the founder sees the shape of the journey rather than a wall of grey.
+    - Phase progress pills get a number ("0 of 3") or are removed — as empty
+      grey bars they read as decoration.
+    - Fix the spelling inconsistency: "Opportunity PrioritiSation" with the
+      description "PrioritiZe problems...". Pick British throughout and sweep
+      all mission titles, descriptions and locale strings.
+    - Change Mission 9's description from "Create prototype or Figma design"
+      to "Clickable prototype — Figma, Canva, or paper". Don't name one vendor
+      in mission copy.
+    - Add a one-line explanation to the Test phase header, which holds a
+      single mission: "One test. The riskiest thing you believe."</code></pre></div>
+<h2>PROMPT E — Turn Missions 3 and 5 Into Real Matrices</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT E</b> · </span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>PAGE: /missions/3 and /missions/5.
+
+THE PROBLEM
+
+Both missions are 2x2 matrices being collected as text fields.
+
+Mission 3 "Opportunity Prioritisation" — its own description says "prioritise
+problems based on impact and frequency" — currently asks: Problem 1
+(textarea), Importance 1-10 (text), Frequency 1-10 (text), Problem 2
+(textarea), Importance (text), Frequency (text), Which will you focus on
+(textarea). Seven fields to fill in what is visibly a grid.
+
+Mission 5 "Solution Selection" is the same shape with ideas.
+
+THE FIX — one interactive matrix component, used by both.
+
+1. CARDS COME FROM EARLIER MISSIONS where possible. Mission 3 pulls the
+   problems described in Missions 1 and 2. Mission 5 starts with a repeater,
+   because the ideas are new.
+
+2. "ADD ANOTHER" lets founders add more cards. No fixed slots of two.
+
+3. EACH CARD IS POSITIONED either by dragging onto the grid or by two sliders
+   — dragging on desktop, sliders on mobile where dragging is fiddly. Both
+   update the same values.
+
+4. THE QUADRANTS ARE LABELLED, so the exercise teaches rather than collects:
+
+     Mission 3 — Impact x Frequency
+       high impact / high frequency   "Fix first"
+       low impact  / high frequency   "Quick wins"
+       high impact / low frequency    "Big bets"
+       low / low                      "Park it"
+
+     Mission 5 — Value x Effort
+       high value / low effort        "Do now"
+       high value / high effort       "Plan it"
+       low value  / low effort        "Quick win"
+       low value  / high effort       "Drop it"
+
+   NOTE ON MISSION 5's AXES: the roadmap description currently says
+   "value/impact matrix". Value and impact measure almost the same thing, so
+   every idea lands on a diagonal and the grid stops discriminating between
+   options. Build it as Value x EFFORT and update the roadmap description to
+   match. If the "value/impact" wording must stay for other reasons, keep the
+   wording but keep effort as the second axis.
+
+5. WHEN A CARD LANDS IN A QUADRANT, NAME IT BACK: "Fix first — this one is
+   both painful and constant." That single line is the lesson.
+
+6. THE FINAL QUESTION becomes a chips-single choosing from the cards actually
+   plotted, defaulting to whichever sits highest-right, plus one short line:
+   why this one.
+
+7. EXPORT the finished matrix as an image into the mission recap and the PDF
+   report.
+
+8. Fully keyboard-accessible, and usable at 390px width.</code></pre></div>
+<h2>PROMPT F — Build the Two Canvases</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT F</b> · </span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>PAGE: /missions/6 and /missions/8.
+
+THE PROBLEM
+
+Two missions are named visual frameworks rendered as stacks of blank text
+areas. The visual structure is the entire pedagogical point in both cases, and
+in both cases it has been removed.
+
+  Mission 8 "Business Model Canvas" — a famous NINE-BLOCK visual tool,
+  currently nine consecutive textareas.
+
+  Mission 6 "Value Proposition &amp; Assumptions" — its own description says
+  "develop problem-solution canvas", and there is no canvas anywhere in it.
+
+THE FIX
+
+MISSION 8 — render the real Business Model Canvas layout:
+
+     ┌──────────┬──────────┬──────────┬──────────┬──────────┐
+     │  Key     │  Key     │  Value   │ Customer │ Customer │
+     │ Partners │Activities│  Props   │Relations │ Segments │
+     │          ├──────────┤          ├──────────┤          │
+     │          │  Key     │          │ Channels │          │
+     │          │Resources │          │          │          │
+     ├──────────┴──────────┼──────────┴──────────┴──────────┤
+     │   Cost Structure    │        Revenue Streams          │
+     └─────────────────────┴─────────────────────────────────┘
+
+  On mobile this stacks vertically in the same order, each block showing its
+  name and a one-line explanation.
+
+  TAPPING A BLOCK opens a focused editor for that block only, with the canvas
+  filling in visually behind it. Show "4 of 9 blocks complete".
+
+  INPUT TYPE PER BLOCK — not nine identical textareas:
+
+    Value Propositions      carried from Mission 6, editable
+    Customer Segments       carried from Mission 2, editable
+    Channels                chips-multi: Own website · App store · Instagram ·
+                            TikTok · WhatsApp · Resellers · Direct sales ·
+                            Marketplace · Physical shop · Other →
+    Customer Relationships  chips-multi: Self-serve · Personal support ·
+                            Community · Automated · Dedicated account · Other →
+    REVENUE STREAMS         chips-multi: Subscription · One-time sale ·
+                            Commission · Freemium · Advertising · Licensing ·
+                            Marketplace fee · Usage-based · Other →
+                            MULTI-SELECT IS ESSENTIAL HERE. Mixed revenue
+                            models are normal and a single text box hides that
+                            entirely.
+    Key Resources           chips-multi + repeater for specifics
+    Key Activities          repeater
+    Key Partnerships        repeater: partner + what they provide
+    Cost Structure          repeater: cost line + amount + currency, with a
+                            running monthly total shown
+
+MISSION 6 — render a problem-solution canvas, as the description promises:
+
+    Customer segment        carried from Mission 2
+    Problem / pains         carried from Mission 4
+    Existing alternatives   carried from Mission 1 Q4
+    Gains                   chips-multi: Cheaper · Faster · Less effort · More
+                            reliable · Available locally · In Arabic · More
+                            trusted · New capability · Other →
+    Your solution           textarea — genuinely open, one of the few
+    Value proposition       builder: "For [user] who [need], [name] is a
+                            [category] that [benefit]. Unlike [alternative],
+                            we [difference]."
+    Key features            repeater: feature + the benefit it delivers
+    ASSUMPTIONS             repeater: assumption + chips-single risk
+                            (High/Medium/Low), AUTO-SORTED riskiest first.
+                            This list is the direct input to Mission 7, so its
+                            order matters.
+
+FOR BOTH CANVASES
+
+1. EACH BLOCK CARRIES A ONE-LINE EXPLANATION. Most founders meeting these
+   frameworks for the first time do not know what "Key Activities" means:
+   "Key Activities — the things your business must do every week for the model
+   to work."
+
+2. EXPORT the completed canvas as an image and as a branded PDF using the
+   existing document template.
+
+3. Once a block is filled, show a short orientation signal rather than a
+   score: "Revenue Streams: 2 selected · Cost Structure not yet filled". The
+   rubric still assesses the whole mission; this is orientation, not grading.
+
+4. RTL layout for Arabic — the canvas mirrors, and block order reverses.</code></pre></div>
+<h2>PROMPT G — Add 27 Questions That Close Real Gaps</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT G</b> · </span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>PAGE: The mission schema, and every mission question screen.
+
+THE PROBLEM
+
+A founder can currently complete a mission without having done the thinking
+the mission exists for. Nothing asks how they know the problem is real.
+Nothing asks who is NOT their user. Nothing asks whether the person who has
+the problem is the person who would pay. Nothing asks how they will know
+anyone used their MVP — so by Mission 14 they have no data and cannot answer
+a single traction question.
+
+THE FIX
+
+Add these questions to the existing missions. All are chips, one-liners or
+calculated fields — roughly 8-12 minutes added across a journey that runs for
+weeks.
+
+PRIORITY 1 — ship these first (17)
+
+  M1  "How do you know this problem is real?" chips-multi:
+      I've experienced it · I watched someone deal with it · I've talked to
+      people about it · I read about it · I have data · It's a hunch
+      "It's a hunch" MUST be a permitted answer. It is the honest starting
+      point for most founders and the rubric should not punish it in Mission 1.
+
+  M2  "Who is NOT your user?" — one line.
+  M2  "How do they solve it today?" chips-multi: Manually · Spreadsheet ·
+      WhatsApp · A competitor's app · They pay someone · They don't.
+      Carry this into Mission 12 — the real competitor is usually a
+      spreadsheet, not a company.
+
+  M3  "What did you decide NOT to work on, and why?" — one line.
+
+  M4  "Who would pay to have this solved — the user, or someone else?"
+      chips-single: The user · Their employer · A government body · An
+      advertiser · A platform · Not sure yet.
+      Carry into Mission 8 Revenue Streams and Mission 12 pricing.
+
+  M5  "What's the simplest version that would still help someone?" — one line.
+      Carry into Mission 13 as the default MVP scope.
+  M5  "What would have to be true for this to work?" repeater.
+      Pre-fills the Mission 6 assumption register.
+
+  M6  "If your riskiest assumption is wrong, what happens?" — one line.
+
+  M7  "Who did you test with, and how did you find them?" chips-multi:
+      Friends and family · My network · Cold outreach · A community or group ·
+      Existing users · Recruited or paid.
+      Sampling bias is invisible unless asked. Pass this to the AI reviewer:
+      ten friends saying yes is not evidence and the feedback should say so.
+
+  M8  UNIT ECONOMICS block: price · cost to serve one customer · gross margin
+      (calculated, not typed). A canvas with no unit economics is a poster.
+
+  M10 "Where did people get stuck?" repeater: step + what happened.
+
+  M11 "What did one result cost you?" — CALCULATED, budget ÷ results. The
+      founder's first cost-per-acquisition number, from data already entered.
+  M11 "Could you do this ten times over?" chips-single: Yes easily · Yes with
+      money · Yes with more people · No. Separates a channel from a favour.
+
+  M12 "How many said yes but didn't actually do anything?" number + line.
+      The say/do gap — the most important validation question there is, and it
+      appears nowhere in the journey today.
+
+  M13 "What's the one thing it has to do well?" — one line.
+  M13 "How will you know someone actually used it?" chips-multi: Analytics
+      installed · Database records · I'll ask them · I'll watch · Not set up
+      yet. If they pick "not set up yet", surface a link to the toolkit.
+      This one question is the difference between Mission 14 having data and
+      Mission 14 being guesswork.
+
+  M14 "Which single number will you try to move next month, and to what?"
+      chips-single metric + number target. Carry into Mission 15.
+
+  M15 "What do you need that you don't have?" chips-multi: Money · A
+      co-founder · Technical help · Customers · Mentorship · Licensing or
+      legal · Nothing right now. Route each answer to the relevant part of the
+      platform — mentoring, the collaboration hub, the community, the toolkit.
+
+PRIORITY 2 — valuable, deferrable (10)
+
+  M1  "Why you?" chips-multi + line — founder-problem fit, reused in M15.
+  M3  "Roughly how many people have this problem?" number + confidence chips.
+  M7  "What surprised you?" — one line.
+  M8  "Which block are you least sure about?" chips-single from the nine.
+  M9  "What did you deliberately leave out?" — one line.
+  M9  "What's the first thing a tester will see?" — one line.
+  M10 "What did you change your mind about?" — one line.
+  M12 "What would make you walk away from this market?" — one line.
+  M15 RUNWAY grid: cash available · monthly burn · months remaining
+      (calculated).
+
+TWO RULES FOR ALL 27
+
+1. NONE OF THEM BLOCKS SUBMISSION ON ITS OWN. They enrich the rubric; they do
+   not become new ways to fail a mission. The existing quality gate stays
+   attached to the substantive questions only.
+
+2. EVERY ONE FEEDS SOMETHING LATER — a later mission, the AI reviewer's
+   context, or a downloadable artefact. Wire the carry-forward at the same
+   time as the question. A question that feeds nothing made the journey longer
+   without making it better.</code></pre></div>
+<h2>PROMPT H — Make Every Mission Produce a Downloadable Artefact</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT H</b> · </span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>PAGE: Every mission completion screen, plus a new "My Documents" page in the
+app shell.
+
+THE PROBLEM
+
+A mission currently ends in a score. The founder does hours of real work —
+a business model, a matrix, an experiment, a set of metrics — and leaves with
+a number. There is nothing to keep, nothing to send to a co-founder, a
+lecturer, a mentor or an incubator, and nothing that reminds them the work
+existed.
+
+THE FIX
+
+Every mission produces a downloadable artefact, generated from the answers the
+founder already gave. Nothing is re-entered.
+
+  M1  Problem landscape                          PDF
+  M2  User persona card                          PDF · PNG
+  M3  Impact x Frequency matrix, plotted         PNG · PDF
+  M4  Problem statement card                     PDF · PNG
+  M5  Value x Effort matrix, plotted             PNG · PDF
+  M6  Problem-solution canvas + assumption
+      register                                   PDF · PNG · CSV
+  M7  Experiment report                          PDF
+  M8  BUSINESS MODEL CANVAS + unit economics     PDF A3 + A4 · PNG · XLSX
+  M9  Prototype brief                            PDF
+  M10 Usability findings                         PDF
+  M11 Channel experiment card                    PDF · PNG
+  M12 Market validation report + competitor
+      table + TAM/SAM/SOM chart                  PDF · XLSX
+  M13 MVP scope sheet (in / out)                 PDF · XLSX
+  M14 METRICS ONE-PAGER                          PDF · PNG · XLSX
+  M15 THE READINESS PACK                         PDF · PPTX
+
+THE THREE THAT MATTER MOST
+
+1. MISSION 8 — THE BUSINESS MODEL CANVAS
+   A real landscape canvas at A3, the size it is meant to be printed and
+   pinned, with an A4 fallback and a PNG for slide decks. All nine blocks in
+   the correct BMC positions, the founder's content inside them, unit
+   economics as a strip beneath. Not a list of headings with paragraphs.
+
+2. MISSION 14 — THE METRICS ONE-PAGER
+   Render the funnel and the retention curve as ACTUAL CHARTS from the
+   founder's own numbers. Then — and this is the part that makes it StartPad's
+   rather than generic — PRINT THE CONFOUNDERS THE FOUNDER NAMED ALONGSIDE THE
+   NUMBERS. "1,200 sign-ups (paid promotion, one-off event)" is worth more
+   than "1,200 sign-ups", and it teaches the founder what honest reporting
+   looks like. Include the sample size and the observation window on the face
+   of the document. Never print a product-market-fit score.
+
+3. MISSION 15 — THE READINESS PACK
+   Every artefact above, assembled into one document, with the founder's
+   story, their ask, their 90-day plan and the risks they named. Also export
+   as PPTX so it can be presented. This is the strongest retention argument
+   the product has: fifteen missions of work becomes a thing you can hand to
+   someone.
+
+RULES FOR ALL EXPORTS
+
+1. USE THE EXISTING BRANDED PDF TEMPLATE. Logo, founder name, mission name,
+   date, and a quiet "Made on StartPad · startpad.me" footer on every page.
+   These documents get forwarded — that footer is the cheapest distribution
+   the platform has.
+
+2. GENERATE ON DEMAND, NOT ON COMPLETION. Regenerate whenever the founder
+   edits an answer, and stamp the version date so an old PDF is identifiable.
+
+3. "MY DOCUMENTS" — a page in the app shell listing every artefact the founder
+   has generated, newest first, grouped by phase, each re-downloadable and
+   showing when it was last regenerated. Link to it from the dashboard and
+   from each mission recap.
+
+4. ARABIC. Every artefact renders RTL with the Arabic type stack when the
+   founder's locale is Arabic — including the canvas, which mirrors, and the
+   charts, whose axis labels and legends must not stay left-to-right inside an
+   RTL page.
+
+5. SHOW THE ARTEFACT BEFORE THE SCORE on the mission completion screen. The
+   thing they made, then how it was assessed. That order matters.
+
+6. FREE VERSUS PRO — build it ungated. Everyone can download everything, with
+   the StartPad footer on every export. Do not watermark and do not paywall
+   downloads. A founder who cannot download their own canvas will screenshot
+   it, and the forwarding is worth more than the upgrades. If this is later
+   reversed, it is a config flag, not a rebuild — so put it behind one.</code></pre></div>
+<hr>
+<h2>Sequence</h2>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Prompt</th><th>Why here</th></tr></thead><tbody><tr><td>1</td><td><strong>A</strong> — input components</td><td>Everything else needs these to exist</td></tr><tr><td>2</td><td><strong>B</strong> — realign 11, 14, 15</td><td>Correctness before polish. Mission 14 currently contradicts itself</td></tr><tr><td>3</td><td><strong>C</strong> — carry-forward</td><td>Cheap, and removes 12 duplicate questions</td></tr><tr><td>4</td><td><strong>G</strong> — the 27 added questions</td><td>Same schema pass as B and C. Doing it separately means touching every mission twice</td></tr><tr><td>5</td><td><strong>D</strong> — answering experience</td><td>The shell the new inputs live in, plus the roadmap fixes</td></tr><tr><td>6</td><td><strong>E</strong> — the two matrices</td><td>Self-contained, high visible impact</td></tr><tr><td>7</td><td><strong>F</strong> — the two canvases</td><td>The biggest build, and the most distinctive</td></tr><tr><td>8</td><td><strong>H</strong> — downloadable artefacts</td><td>Needs E and F to exist, because it exports what they render</td></tr></tbody></table></div>
+<p>A, B, C and G are one coherent schema pass and could ship in about a week — that alone removes most of the friction your testers hit. E, F and H are the ones founders will talk about, and H is the one they'll forward.</p>
+<hr>
+<h2>One inconsistency to fix outside the missions</h2>
+<p>The LinkedIn "About" copy from the branding round describes <strong>eight phases</strong> — Discovery, Analysis, Ideation, Validation, Business Model, Development, Strategy, Launch. The live roadmap has <strong>five</strong>: Discover, Shape, Test, Model, Readiness. I've corrected <code>brand/linkedin/overview-copy.md</code> to match the roadmap. If that copy is already published on LinkedIn, it needs updating there too — and it's worth checking anywhere else the phase list appears: the About page, How It Works, the Help Centre, and the marketing homepage.</p>
+</div>
+<script>document.querySelectorAll(".prompt").forEach(function(b){var t=b.querySelector(".copy"),p=b.querySelector("pre");
+if(!t||!p)return;t.addEventListener("click",function(){var x=p.textContent,d=function(){t.textContent="Copied";
+setTimeout(function(){t.textContent="Copy"},1600)};if(navigator.clipboard&&navigator.clipboard.writeText){
+navigator.clipboard.writeText(x).then(d,function(){t.textContent="Press \u2318C"})}else{var a=document.createElement("textarea");
+a.value=x;document.body.appendChild(a);a.select();try{document.execCommand("copy");d()}catch(e){t.textContent="Press \u2318C"}
+document.body.removeChild(a)}})});</script>

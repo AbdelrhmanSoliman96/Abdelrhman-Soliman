@@ -1,0 +1,989 @@
+<title>StartPad — Screen Review R2 (5 logged-in pages)</title>
+
+<style>
+  :root {
+    --paper:#F2F3F8; --surface:#FFFFFF; --surface-2:#EAEBF3;
+    --ink:#14131C; --ink-soft:#4E4C60; --ink-faint:#7B7990;
+    --rule:#D9DAE6; --rule-soft:#E7E8F0;
+    --accent:#4530E8; --accent-ink:#2E1FB0; --accent-wash:#E9E6FE;
+    --crit:#C0234A; --crit-wash:#FCE7EC;
+    --warn:#9C5B00; --warn-wash:#FBEEDA;
+    --good:#0F7A68; --good-wash:#DDF2EE;
+    --on-accent:#FFFFFF;
+    --shadow:0 1px 2px rgba(20,19,28,.06), 0 8px 24px -12px rgba(20,19,28,.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:#0F0E16; --surface:#191823; --surface-2:#221F30;
+      --ink:#ECEBF3; --ink-soft:#A9A7BC; --ink-faint:#7D7B92;
+      --rule:#2E2B3D; --rule-soft:#24222F;
+      --accent:#9A88FF; --accent-ink:#C3B8FF; --accent-wash:#241F3D;
+      --crit:#FF7D9C; --crit-wash:#381522;
+      --warn:#E7A64A; --warn-wash:#33230D;
+      --good:#4FCFB6; --good-wash:#0D2E29;
+      --on-accent:#14131C;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:#0F0E16; --surface:#191823; --surface-2:#221F30;
+    --ink:#ECEBF3; --ink-soft:#A9A7BC; --ink-faint:#7D7B92;
+    --rule:#2E2B3D; --rule-soft:#24222F;
+    --accent:#9A88FF; --accent-ink:#C3B8FF; --accent-wash:#241F3D;
+    --crit:#FF7D9C; --crit-wash:#381522;
+    --warn:#E7A64A; --warn-wash:#33230D;
+    --good:#4FCFB6; --good-wash:#0D2E29;
+    --on-accent:#14131C;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration:.001ms !important; transition-duration:.001ms !important; }
+  }
+  body {
+    margin:0; background: var(--paper); color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Arabic", Arial, sans-serif;
+    font-size:17px; line-height:1.65; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width:78rem; margin:0 auto; padding:0 1.25rem 6rem; }
+  .col { max-width:46rem; }
+  .col-wide { max-width:62rem; }
+  section { padding-block:3.25rem; border-top:1px solid var(--rule-soft); }
+  section:first-of-type { border-top:0; }
+  .stack { display:flex; flex-direction:column; gap:1.1rem; }
+  .stack-s { display:flex; flex-direction:column; gap:.6rem; }
+  .stack-l { display:flex; flex-direction:column; gap:2rem; }
+
+  h1,h2,h3,h4 { text-wrap:balance; margin:0; line-height:1.12; letter-spacing:-.025em; }
+  h1 { font-size:clamp(2.3rem,6vw,3.7rem); font-weight:800; letter-spacing:-.04em; }
+  h2 { font-size:clamp(1.55rem,3.2vw,2.1rem); font-weight:800; }
+  h3 { font-size:1.22rem; font-weight:700; letter-spacing:-.015em; line-height:1.3; }
+  h4 { font-size:1rem; font-weight:700; }
+  p { margin:0; }
+  a { color: var(--accent); text-underline-offset:2px; }
+  a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:3px; }
+  .lede { font-size:1.16rem; line-height:1.55; color: var(--ink-soft); }
+  .small { font-size:.9rem; line-height:1.55; color: var(--ink-soft); }
+  .eyebrow {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+    color: var(--ink-faint); margin:0 0 .85rem;
+  }
+  ul { margin:0; padding-inline-start:1.15rem; }
+  li { margin-block:.3rem; }
+  li::marker { color: var(--ink-faint); }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:.88em; }
+
+  .masthead { padding-block:3.5rem 2.25rem; }
+  .meta-strip {
+    display:flex; flex-wrap:wrap; gap:.4rem 1.4rem; margin-top:1.75rem;
+    padding-top:1.1rem; border-top:1px solid var(--rule);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size:.74rem; letter-spacing:.06em; text-transform:uppercase; color: var(--ink-faint);
+  }
+  .meta-strip b { color: var(--ink-soft); font-weight:600; }
+
+  nav.toc {
+    position:sticky; top:0; z-index:20;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px); border-block:1px solid var(--rule); margin-bottom:.5rem;
+  }
+  nav.toc .inner { max-width:78rem; margin:0 auto; padding:.55rem 1.25rem; display:flex; gap:1.15rem; overflow-x:auto; }
+  nav.toc a {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size:.73rem; letter-spacing:.08em; text-transform:uppercase;
+    color: var(--ink-soft); text-decoration:none; white-space:nowrap; padding-block:.2rem;
+  }
+  nav.toc a:hover { color: var(--accent); }
+
+  .callout {
+    background: var(--surface); border:1px solid var(--rule);
+    border-inline-start:3px solid var(--accent); padding:1.15rem 1.3rem; border-radius:2px;
+  }
+  .callout.bug { border-inline-start-color: var(--crit); }
+
+  .finding {
+    display:grid; grid-template-columns:8.5rem 1fr; gap:0 1.4rem;
+    padding:1.2rem 0; border-top:1px solid var(--rule-soft);
+  }
+  .finding:first-of-type { border-top:1px solid var(--rule); }
+  .finding .id {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size:.72rem; letter-spacing:.08em; color: var(--ink-faint); padding-top:.2rem;
+    display:flex; flex-wrap:wrap; gap:.3rem; align-content:flex-start;
+  }
+  .finding .body { display:flex; flex-direction:column; gap:.5rem; }
+  .finding .fix { color: var(--ink-soft); font-size:.95rem; }
+  .finding .fix b { color: var(--ink); font-weight:650; }
+  @media (max-width:44rem) { .finding { grid-template-columns:1fr; gap:.5rem; } }
+
+  .chip {
+    display:inline-block; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size:.64rem; letter-spacing:.1em; text-transform:uppercase; font-weight:600;
+    padding:.18rem .45rem; border-radius:2px; white-space:nowrap;
+  }
+  .chip.p0 { background: var(--crit-wash); color: var(--crit); }
+  .chip.p1 { background: var(--warn-wash); color: var(--warn); }
+  .chip.p2 { background: var(--good-wash); color: var(--good); }
+  .chip.bug { background: var(--crit); color: var(--on-accent); }
+  .chip.tag { background: var(--surface-2); color: var(--ink-soft); }
+  .chip.acc { background: var(--accent-wash); color: var(--accent-ink); }
+
+  .table-scroll { overflow-x:auto; border:1px solid var(--rule); border-radius:2px; background: var(--surface); }
+  table { border-collapse:collapse; width:100%; min-width:40rem; font-size:.92rem; }
+  th, td { text-align:start; padding:.7rem .85rem; border-bottom:1px solid var(--rule-soft); vertical-align:top; }
+  th {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size:.68rem; letter-spacing:.1em; text-transform:uppercase;
+    color: var(--ink-faint); font-weight:600; background: var(--surface-2);
+  }
+  tbody tr:last-child td { border-bottom:0; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  .screenhead {
+    display:flex; align-items:baseline; gap:.75rem; flex-wrap:wrap;
+    padding-bottom:.35rem;
+  }
+  .screenhead .n {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size:.8rem; letter-spacing:.1em; color: var(--accent); font-weight:600;
+  }
+  .verdict {
+    display:inline-flex; align-items:center; gap:.5rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size:.7rem; letter-spacing:.08em; text-transform:uppercase;
+    padding:.3rem .6rem; border-radius:2px; border:1px solid var(--rule);
+    background: var(--surface); color: var(--ink-soft);
+  }
+
+  .prompt { border:1px solid var(--rule); border-radius:3px; background: var(--surface); overflow:hidden; }
+  .prompt > header {
+    display:flex; align-items:baseline; justify-content:space-between; gap:1rem;
+    padding:.7rem .9rem; background: var(--surface-2); border-bottom:1px solid var(--rule);
+  }
+  .prompt > header .label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size:.74rem; letter-spacing:.06em; color: var(--ink); font-weight:600;
+  }
+  .prompt > header .label span { color: var(--accent); }
+  .copy {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size:.68rem; letter-spacing:.08em; text-transform:uppercase;
+    background:transparent; border:1px solid var(--rule); color: var(--ink-soft);
+    padding:.25rem .55rem; border-radius:2px; cursor:pointer; white-space:nowrap;
+    transition: background .15s ease, color .15s ease;
+  }
+  .copy:hover { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  pre {
+    margin:0; padding:1rem .9rem; overflow-x:auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size:.83rem; line-height:1.6; color: var(--ink);
+    white-space:pre-wrap; word-wrap:break-word;
+  }
+  footer.end { border-top:1px solid var(--rule); padding-top:1.5rem; margin-top:3rem; }
+</style>
+
+<div class="wrap">
+  <header class="masthead col-wide">
+    <p class="eyebrow">Round 2 · Screen-by-screen · Verified against real pixels</p>
+    <h1>Five StartPad screens, read line by line.</h1>
+    <p class="lede">This is the verification pass on Round 1. I now have real screens — so the hypotheses become observations, and six things turn out to be shipping bugs rather than design opinions.</p>
+    <div class="meta-strip">
+      <span>Screens · <b class="num">5</b></span>
+      <span>Findings · <b class="num">41</b></span>
+      <span>Shipping bugs · <b class="num">6</b></span>
+      <span>New prompts · <b class="num">12</b></span>
+      <span>Date · <b>11 Aug 2026</b></span>
+    </div>
+  </header>
+</div>
+
+<nav class="toc" aria-label="Sections">
+  <div class="inner">
+    <a href="#bugs">Bugs first</a>
+    <a href="#s1">01 Landing</a>
+    <a href="#s2">02 Collab Hub</a>
+    <a href="#s3">03 Community</a>
+    <a href="#s4">04 Mentoring</a>
+    <a href="#s5">05 Journey history</a>
+    <a href="#cross">Cross-cutting</a>
+    <a href="#unseen">Still unseen</a>
+    <a href="#prompts">Prompts</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- ══════ BUGS ══════ -->
+<section id="bugs">
+  <div class="col stack">
+    <p class="eyebrow">Fix these before anything else</p>
+    <h2>Six things that are broken, not debatable</h2>
+    <p class="lede">Everything else in this document is a design judgement you can push back on. These six are defects visible to any user who lands on the page today.</p>
+
+    <div class="callout bug">
+      <div class="stack-s">
+        <h4>1 · Mentoring shows past sessions as "upcoming"</h4>
+        <p class="small">Today is <b>11 August 2026</b>. The page lists sessions on <b>27 May 2026</b> and <b>9 June 2026</b> under "Your Upcoming Sessions", both badged <code>upcoming</code> — two and a half months in the past. Meanwhile the only genuinely future session (13 Aug) is badged <code>pending</code>. The status is derived wrong or never recomputed. This is the most damaging bug in the set: a founder who sees a stale calendar stops trusting the booking system entirely.</p>
+      </div>
+    </div>
+
+    <div class="callout bug">
+      <div class="stack-s">
+        <h4>2 · A blank button on the landing page</h4>
+        <p class="small">In the final CTA band ("Your startup starts here"), next to "Go to dashboard" there is a white button with <b>no label at all</b>. Missing translation string or a failed conditional render. It's the last thing a visitor sees before the footer.</p>
+      </div>
+    </div>
+
+    <div class="callout bug">
+      <div class="stack-s">
+        <h4>3 · Test data is live in the Collaboration Hub</h4>
+        <p class="small">Projects named <code>projx</code> and <code>dasd</code>, a description reading <code>dsad</code>, and a card that says <code>No description.</code> This is the first thing a new user sees on that page, and it reads as an abandoned product. Purge it, or gate the page behind an empty state until there is real content.</p>
+      </div>
+    </div>
+
+    <div class="callout bug">
+      <div class="stack-s">
+        <h4>4 · "1 Total Posts"</h4>
+        <p class="small">Pluralisation bug on the Community stat cards. Also "0 Questions", "0 Answered" — see finding C-01 for why those cards should not exist yet at all.</p>
+      </div>
+    </div>
+
+    <div class="callout bug">
+      <div class="stack-s">
+        <h4>5 · Delete is the loudest button on the Collaboration Hub</h4>
+        <p class="small">A full-width, fully-saturated red <b>Delete</b> button is the single most visually dominant element on the screen — larger and louder than "Join", "Team", or anything else. Destructive actions must never out-rank primary ones. One mis-tap on mobile destroys a project.</p>
+      </div>
+    </div>
+
+    <div class="callout bug">
+      <div class="stack-s">
+        <h4>6 · Logged-in users are served the marketing homepage</h4>
+        <p class="small">A signed-in founder, 63% through their profile, lands on the full public pitch — hero, mission &amp; vision, "Why we built this", MENA market stats, the lot. It's roughly eight screens of scroll to sell a product they have already bought. Redirect authenticated users to <code>/dashboard</code>, or serve a logged-in home.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ SCREEN 1 ══════ -->
+<section id="s1">
+  <div class="col-wide stack">
+    <div class="col stack-s">
+      <div class="screenhead"><span class="n">SCREEN 01</span><h2>Landing page</h2></div>
+      <span class="verdict">Verdict · Strong copy buried under corporate scaffolding</span>
+      <p class="small">Confirms Round 1's UX-01 and UX-02 outright: there is no product visible anywhere on this page, and no way to see the 15 missions before signing up.</p>
+    </div>
+
+    <div>
+      <div class="finding">
+        <div class="id">L-01 <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>Your best line is four screens down</h4>
+          <p class="fix">"We grew up watching brilliant ideas die in group chats." That is the most persuasive sentence on the entire site — specific, emotional, true to the audience, and unmistakably yours. It sits in "Why we built this", roughly 60% of the way down the page, where almost nobody reaches. <b>Fix:</b> that line, or something built from it, belongs at or near the top. The generic "StartPad turns ideas into startups" headline could describe any of forty products.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">L-02 <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>Nothing on the page shows the product</h4>
+          <p class="fix">Four feature cards, a mission statement, a vision statement, a founding story, three "built different" cards, and market stats — and not one screenshot, mission map, or interactive moment. A visitor cannot form a mental picture of what using StartPad is like. <b>Fix:</b> replace the "Our mission / Our vision" block with the actual 15-mission path, and put a live interactive element in the hero.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">L-03 <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>"15+" contradicts your own copy, twice</h4>
+          <p class="fix">The stat band says <b>15+</b>. The feature card below says "15 step-by-step missions". The story section says "Fifteen real missions". <b>Fix:</b> it is 15. The "+" reads as padding and costs you the credibility that a precise number buys. Say <b>15</b> everywhere.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">L-04 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>"MENA" is not a statistic</h4>
+          <p class="fix">The stat row runs 15+ / 24/7 / 100% / <b>MENA</b>. Three numbers and a word, in a component whose whole grammar is numbers. <b>Fix:</b> make it a real figure — countries served, founders enrolled, missions completed this month.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">L-05 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Mission &amp; vision statements are About-page content</h4>
+          <p class="fix">"To democratise startup building…" / "To make StartPad the #1 startup platform in the Arab world" — this is language written for investors and grant committees, not for a 21-year-old deciding whether to click. It also sits <em>above</em> the founding story, which is far more compelling. <b>Fix:</b> move both to <code>/about</code>.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">L-06 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>"100% FREE TO START" with no pricing page</h4>
+          <p class="fix">"To start" implies something later costs money, and there is no pricing link anywhere on the page or in the footer. For the most fraud-literate cohort online, an implied paid tier with hidden pricing reads as a trap. <b>Fix:</b> either say "free, permanently" and mean it, or ship <code>/pricing</code> and link it in the nav and footer.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">L-07 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Market stats carry no sources</h4>
+          <p class="fix">400M+ people, 70% under 35, $3.5B VC funding (2024) — strong, relevant figures presented with no attribution. <b>Fix:</b> a small source line under each. It costs one line and converts a claim into evidence.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">L-08 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Social links skip the channels this audience lives on</h4>
+          <p class="fix">Footer offers LinkedIn, Instagram, Facebook. For MENA Gen Z the order should be Instagram, TikTok, WhatsApp channel, X — with LinkedIn kept for mentors and partners. <b>Facebook is close to irrelevant for under-25s in this region.</b></p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">L-09 <span class="chip p2">P2</span></div>
+        <div class="body">
+          <h4>Hero subhead is three lines of throat-clearing</h4>
+          <p class="fix">"StartPad is a gamified, AI-powered platform that guides young entrepreneurs in the MENA region through every step of building a real startup — from first idea to first customer." <b>Fix:</b> one line. "From your first idea to your first customer, in 15 missions." Let the eyebrow carry the MENA framing, which it already does well.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">L-10 <span class="chip p2">P2</span></div>
+        <div class="body">
+          <h4>What works — keep it</h4>
+          <p class="fix">The "MADE IN EGYPT · BUILT FOR MENA" eyebrow, the two-tone headline treatment, "Built in Cairo. Designed for the entire Arab world.", the type pairing, and the restraint of the green palette. The visual identity is coherent and it does not look templated. The problem here is structure and priority, not craft.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ SCREEN 2 ══════ -->
+<section id="s2">
+  <div class="col-wide stack">
+    <div class="col stack-s">
+      <div class="screenhead"><span class="n">SCREEN 02</span><h2>Collaboration Hub</h2></div>
+      <span class="verdict">Verdict · The weakest screen — reads as abandoned</span>
+    </div>
+
+    <div>
+      <div class="finding">
+        <div class="id">H-01 <span class="chip bug">bug</span> <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>Junk data is the entire content of the page</h4>
+          <p class="fix"><code>projx</code>, <code>dasd</code>, <code>dsad</code>, "No description." Two cards, both garbage. <b>Fix:</b> delete the test rows and design a real empty state — "No projects yet. Start one and find people to build it with." plus the New Project button. An honest empty state is far better than fake activity.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">H-02 <span class="chip bug">bug</span> <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>Delete outranks every other action on screen</h4>
+          <p class="fix">Full-width, fully saturated red, bottom of the card, larger than Join. <b>Fix:</b> move it into an overflow menu (⋯) in the card header, styled as tertiary text, with a confirm dialog that names the consequence: "Delete <em>projx</em>? This removes its files and chat for all 2 members. This cannot be undone."</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">H-03 <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>Two cards for the same object type have completely different anatomy</h4>
+          <p class="fix">Card one: a single giant Join button. Card two: five small buttons in a grid plus Delete. Different heights, different rhythm, no shared structure. <b>Fix:</b> one card component. Constant elements (name, description, members, date, status) always in the same place; the action area swaps based on the viewer's role. Add a <b>"Your project"</b> badge so the difference is explained rather than just felt.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">H-04 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>A collaboration hub with no way to say what you need</h4>
+          <p class="fix">The page's stated job is "find collaborators" — but no card says what role it is looking for. <b>Fix:</b> "Looking for" chips on every project: designer, developer, marketer, co-founder. Then filters on those chips, plus filters for country and startup stage. That is the entire value of the page and it is currently missing.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">H-05 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>An unlabelled date</h4>
+          <p class="fix">"Aug 5, 2026" floats at the card's right edge with no label. Created? Deadline? Last active? <b>Fix:</b> label it, and prefer relative time for recency — "Active 3 days ago" tells a joiner what they need to know; a creation date does not.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">H-06 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>"No description." is a dead end</h4>
+          <p class="fix"><b>Fix:</b> for the owner, make it an inline prompt — "Add a description so people know what you're building →". For everyone else, hide the line entirely rather than advertising the gap.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">H-07 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Five feature buttons where a project page belongs</h4>
+          <p class="fix">Team, Files, Whiteboard, Video calls, Activity crammed into a card. <b>Fix:</b> the card gets one action — "Open project" — and those five become tabs inside the project. If any of them are not yet built, remove the button; a dead button costs more trust than a missing feature.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">H-08 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>"My Sessions" here collides with Mentoring</h4>
+          <p class="fix">Sessions exist in the Collaboration Hub <em>and</em> on the Mentoring page. Team Chat exists here <em>and</em> Community exists separately. <b>Fix:</b> one home for scheduled things, one home for conversation. Right now a founder has to guess which of three places holds what they are looking for.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ SCREEN 3 ══════ -->
+<section id="s3">
+  <div class="col-wide stack">
+    <div class="col stack-s">
+      <div class="screenhead"><span class="n">SCREEN 03</span><h2>Community</h2></div>
+      <span class="verdict">Verdict · Good bones, actively advertising its own emptiness</span>
+    </div>
+
+    <div>
+      <div class="finding">
+        <div class="id">C-01 <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>Four large cards whose only job is to say nobody is here</h4>
+          <p class="fix"><b>1</b> Total Posts · <b>1</b> Discussions · <b>0</b> Questions · <b>0</b> Answered. Then "Top Contributors: 1 post". A newcomer's first impression is a ghost town, stated numerically, four times. <b>Fix:</b> remove the stat row until there is real volume. Replace with something that creates presence — "12 founders online now", or the mission each poster is currently on.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">C-02 <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>The feed has no connection to missions</h4>
+          <p class="fix">This is the structural miss. A founder on Mission 3 opens Community and sees a space-food pitch from 19 days ago. <b>Fix:</b> default the feed to <b>founders on the same mission as you</b>, with tabs for My mission / My circle / All. The mission context is the only thing that makes an early, thin community feel alive — it converts "1 post" into "3 people are on Mission 3 right now".</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">C-03 <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>Arabic posts render inside a left-to-right shell</h4>
+          <p class="fix">The post body is correctly right-aligned, but its container is not: the category chip, author row, metadata, hashtags and action icons all stay LTR, so the card reads as two competing layouts. The hashtag chip renders with the <code>#</code> on the wrong side and a stranded full stop. <b>Fix:</b> detect direction <em>per post</em> and set <code>dir</code> on the whole card, not just the text node. Given the audience, Arabic posts will be the majority — this needs to be right.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">C-04 <span class="chip bug">bug</span> <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>"1 Total Posts"</h4>
+          <p class="fix">Pluralisation. <b>Fix:</b> use <code>Intl.PluralRules</code> — and note that Arabic has six plural forms, so hard-coded <code>s</code> suffixing will break the moment you localise.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">C-05 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Public view counts on a quiet feed suppress posting</h4>
+          <p class="fix">"4 views · 1 like · 0 comments" tells every prospective poster that writing here is shouting into a void. <b>Fix:</b> hide counts below a threshold. Show them once they flatter rather than deter.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">C-06 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Categories aren't steering anyone</h4>
+          <p class="fix">The one post is an idea pitch filed under <b>Help &amp; Support</b>. <b>Fix:</b> pick the category from the composer's intent rather than a free dropdown — "Share an idea" files to Ideas automatically. Structured composers beat taxonomies that users must interpret.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">C-07 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Four separate routes to create a post</h4>
+          <p class="fix">"+ New Post" centred under the header, plus Quick Actions offering Ask a Question, Share an Idea, Showcase Project. <b>Fix:</b> keep the three intent-led actions — they are the better pattern — and drop the generic New Post button, or make it the container that opens those three.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">C-08 <span class="chip p2">P2</span></div>
+        <div class="body">
+          <h4>The layout doesn't collapse around thin content</h4>
+          <p class="fix">One post leaves roughly two thirds of the column empty while the sidebar runs on past it. <b>Fix:</b> when the feed is under three posts, drop the sidebar into the flow below and let the feed take full width.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">C-09 <span class="chip p2">P2</span></div>
+        <div class="body">
+          <h4>What works — keep it</h4>
+          <p class="fix">The <b>"Translate to English"</b> toggle with the <code>AR</code> language badge is genuinely excellent and rare. It directly serves a bilingual community and removes the main reason people avoid posting in Arabic. Make it more prominent, and add the reverse direction for English posts.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ SCREEN 4 ══════ -->
+<section id="s4">
+  <div class="col-wide stack">
+    <div class="col stack-s">
+      <div class="screenhead"><span class="n">SCREEN 04</span><h2>Mentoring</h2></div>
+      <span class="verdict">Verdict · Contains the most damaging bug in the product</span>
+    </div>
+
+    <div>
+      <div class="finding">
+        <div class="id">M-01 <span class="chip bug">bug</span> <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>Sessions from May and June are listed as "upcoming" in August</h4>
+          <p class="fix">27 May and 9 June, both badged <code>upcoming</code>, on 11 August. The genuinely future session — 13 August — is badged <code>pending</code>. <b>Fix:</b> derive status from the timestamp at render, not from a stored field. Split the page into <b>Upcoming</b> and <b>Past</b>, sort ascending within each, and add a real state machine: requested → confirmed → completed → cancelled / no-show. A calendar that shows the past as the future is worse than no calendar.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">M-02 <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>The page called "Mentoring" offers no way to find a mentor</h4>
+          <p class="fix">It shows your bookings and stops. There is no directory, no browse, no search, no "Book a session" button anywhere on screen. <b>Fix:</b> the primary action on this page is <b>Find a mentor</b>. Bookings are secondary. Right now the page can only be used by someone who already booked — which is nobody, on their first visit.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">M-03 <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>Every mentor name is Western, on a platform built for MENA</h4>
+          <p class="fix">Emily Rodriguez. Sarah Johnson. Sarah Johnson again. The homepage promises "Built in Cairo. Designed for the entire Arab world" and "mentors who understand your market" — then the mentor list contains nobody from the region. Whether these are seed rows or real, the effect is the same: your core differentiator is contradicted on the page where it matters most. <b>Fix:</b> if it is placeholder data, replace it today with real MENA mentors, even five. If it is real, recruit regionally before promoting this feature.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">M-04 <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>No timezone on any session</h4>
+          <p class="fix">"10:00 AM" across a region spanning UTC+1 (Morocco) to UTC+4 (UAE). <b>Fix:</b> render in the founder's timezone and name it explicitly — "1:30 PM your time (GMT+3)". Missed calls from timezone ambiguity are the standard failure mode of every mentoring product.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">M-05 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>"pending" and "upcoming" are never explained</h4>
+          <p class="fix">Two states, both green, both with a tick icon, no legend, no action attached. Does pending need something from the founder? <b>Fix:</b> distinct colours and shapes per state, plus an action when one is required — "Waiting for Sarah to confirm" with a nudge button.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">M-06 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>The cards are inert</h4>
+          <p class="fix">No join link, no add-to-calendar, no reschedule, no cancel, no session length, no language, no mentor photo, and nothing appears clickable. <b>Fix:</b> each card carries the four things a booking must have — when (with timezone), how long, in what language, and one button to join or manage.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">M-07 <span class="chip p2">P2</span></div>
+        <div class="body">
+          <h4>No preparation, no follow-up</h4>
+          <p class="fix"><b>Fix:</b> auto-send the mentor a one-page brief built from the founder's mission progress 24h before, and show the founder three suggested questions. Afterwards, capture three action items and push them into the current mission. This is the cheapest possible upgrade to perceived mentor quality.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ SCREEN 5 ══════ -->
+<section id="s5">
+  <div class="col-wide stack">
+    <div class="col stack-s">
+      <div class="screenhead"><span class="n">SCREEN 05</span><h2>Journey history</h2></div>
+      <span class="verdict">Verdict · The best-executed screen of the five</span>
+      <p class="small">Correct empty-state anatomy: icon, plain heading, one line explaining what will appear here, one clear action. This is the standard the other four should be held to.</p>
+    </div>
+
+    <div>
+      <div class="finding">
+        <div class="id">J-01 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>A manual Refresh button admits the data is stale</h4>
+          <p class="fix">If the user has to refresh, the app is telling them it does not know when its own data changed. <b>Fix:</b> refetch on focus and after any submission, and remove the button. If it must stay, it belongs as a small icon, not a bordered control at the same weight as the page title.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">J-02 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Three names for overlapping ideas</h4>
+          <p class="fix">"Dashboard", "My Startup Journey", "Journey history" — plus "Loadout" and "AI Tools" nearby. A founder cannot predict which one holds what. <b>Fix:</b> Dashboard = today's next action. Journey = the 15 missions. History = past submissions, and it should live as a tab <em>inside</em> Journey rather than as its own destination.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">J-03 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Two words for one object in two consecutive lines</h4>
+          <p class="fix">The subtitle says "Every <b>recap</b> you submitted"; the empty state says "No <b>submissions</b> yet". <b>Fix:</b> pick one word and use it in the nav label, the page title, the empty state, and the button. Vocabulary drift is how a product starts feeling improvised.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">J-04 <span class="chip p2">P2</span></div>
+        <div class="body">
+          <h4>The empty state could sell the feature</h4>
+          <p class="fix"><b>Fix:</b> show a greyed-out sample recap card beneath the message so the founder can see what they will get — the answers, the AI score, the evidence. Empty states that demonstrate value outperform empty states that merely explain absence.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ CROSS ══════ -->
+<section id="cross">
+  <div class="col-wide stack">
+    <div class="col stack-s">
+      <p class="eyebrow">Across all five screens</p>
+      <h2>The chrome is eating the product</h2>
+    </div>
+
+    <div>
+      <div class="finding">
+        <div class="id">X-01 <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>Roughly 180px of fixed chrome before any content, on every page</h4>
+          <p class="fix">An 88px navigation bar plus a 90px profile-completion banner, present on all five screens including the marketing homepage. On a laptop that is a quarter of the viewport; on a phone it would be close to half. <b>Fix:</b> the banner must be dismissible for the session and must never appear on the public landing page.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">X-02 <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>Nine top-level navigation items, one of them "Sign out"</h4>
+          <p class="fix">Dashboard · My Startup Journey · Resources · Loadout · AI Tools · More ▾ · language · notifications · name · <b>Sign out</b>. Sign out is the action a user wants roughly once a month, sitting permanently at the same weight as the core product, one target away from their own name. <b>Fix:</b> five items maximum, and move Sign out into the avatar menu. On mobile this becomes a bottom tab bar of five.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">X-03 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>"Loadout" does not communicate</h4>
+          <p class="fix">It is gaming vocabulary — the kit you equip before a match. As a Gen Z-native metaphor it is a defensible choice, but nobody can guess what it contains, and it sits next to plain labels like Resources and AI Tools, so it reads as an inconsistency rather than a wink. <b>Fix:</b> either rename it to what it holds, or keep the name and add a one-line description on hover and in the mobile menu.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">X-04 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>The completion banner nags instead of solving</h4>
+          <p class="fix">Country, Industry, Startup stage — three dropdowns, about thirty seconds of work, presented as a persistent progress bar with a checklist, a snooze and a dismiss. <b>Fix:</b> put the three fields <em>inline in the banner</em>. Three taps and it is gone forever. You are currently spending permanent screen space to defer a half-minute task.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">X-05 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>One green doing eleven jobs</h4>
+          <p class="fix">Primary buttons, active nav, links, stat figures, tag chips, status badges, icons, progress fill and section eyebrows are all the same green. When everything is emphasised, nothing leads — which is why the red Delete button wins every screen it appears on. <b>Fix:</b> reserve full-strength green for the single primary action per screen. Everything else drops to a tint, an outline, or plain text.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">X-06 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Pages end in a cliff of empty space</h4>
+          <p class="fix">Mentoring, Community and the Collaboration Hub all stop abruptly with half a screen or more of nothing. <b>Fix:</b> every page ends with a next step — on Mentoring, suggested mentors; on Community, prompts to post; on the Hub, projects seeking your skills. Never let a page terminate in void.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">X-07 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>The floating chat bubble overlaps content</h4>
+          <p class="fix">On Community it sits on top of the Trending Tags card. <b>Fix:</b> give it a safe-area offset and let it shrink or hide on scroll. On mobile it must not collide with a bottom tab bar.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">X-08 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Two language switchers, and no visible Arabic UI</h4>
+          <p class="fix">"ENGLISH" in the nav, "English" in the footer, different casing. Meanwhile the Community post carries a per-post translate toggle — so content translation exists while interface translation is unproven. <b>Fix:</b> one switcher, and confirm that choosing Arabic actually flips the entire interface to RTL. Given the audience, this is the highest-value thing on this list after the bugs.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">X-09 <span class="chip p2">P2</span></div>
+        <div class="body">
+          <h4>"More ▾" is styled as permanently active</h4>
+          <p class="fix">It carries a filled pill on every screen, including ones whose page lives under it — so the navigation never indicates which page you are actually on. <b>Fix:</b> active state belongs on the current destination, not on the container.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">X-10 <span class="chip p2">P2</span></div>
+        <div class="body">
+          <h4>What works — keep it</h4>
+          <p class="fix">The typography is consistent and well-set across every screen, the green identity is coherent and un-templated, empty states exist (Journey history is genuinely good), and the per-post translate feature is a real competitive edge. The craft is present; it is priority and information architecture that need the work.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ UNSEEN ══════ -->
+<section id="unseen">
+  <div class="col stack">
+    <p class="eyebrow">Scope note</p>
+    <h2>What I still haven't seen</h2>
+    <p>Ten screens reviewed across two rounds, and the most important one is still missing.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Screen</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr><td><b>My Startup Journey</b> — the mission runner</td><td>The core loop. Everything else is scaffolding around it. Nothing I've reviewed touches the thing founders actually spend their time doing.</td></tr>
+          <tr><td>Dashboard</td><td>Where the "what do I do right now?" question is answered — or isn't.</td></tr>
+          <tr><td>AI Tools</td><td>Half of your stated differentiation.</td></tr>
+          <tr><td>Loadout</td><td>I can't evaluate a label I can't see the contents of.</td></tr>
+          <tr><td>Signup &amp; onboarding</td><td>The single biggest conversion surface in the product.</td></tr>
+          <tr><td><b>Any screen on mobile</b></td><td>All ten screenshots are desktop. Your audience is overwhelmingly on phones — the desktop review can't stand in for it.</td></tr>
+          <tr><td>Any screen in Arabic</td><td>The Community card suggests RTL handling is partial. This needs direct verification.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small">Send the mission runner and a handful of mobile screens and I'll run round three. Those two together are worth more than the five pages in this document.</p>
+  </div>
+</section>
+
+<!-- ══════ PROMPTS ══════ -->
+<section id="prompts">
+  <div class="col-wide stack-l">
+    <div class="col stack">
+      <p class="eyebrow">Lovable prompts · Round 2</p>
+      <h2>Twelve prompts for what's actually on screen</h2>
+      <p class="lede">These target the specific defects above and are numbered to continue from the Round 1 set. R01–R03 are same-day fixes. Paste one per message.</p>
+    </div>
+
+    <div class="stack-l">
+
+      <div class="prompt">
+        <header><span class="label"><span>R01</span> · Bug sweep — ship today</span><button class="copy" type="button">Copy</button></header>
+        <pre>Fix these six defects in StartPad. They are all visible in production right now.
+
+1. MENTORING DATES: sessions dated in the past are displayed under "Your Upcoming Sessions" with an "upcoming" badge. Today is 11 Aug 2026 and sessions from 27 May and 9 June are shown as upcoming. Derive session status from the timestamp at render time, never from a stored status field. Split the page into "Upcoming" and "Past" sections, sort ascending within each, and hide the Past section when empty.
+
+2. BLANK BUTTON: in the final CTA band on the landing page ("Your startup starts here") there is a white button with no label, next to "Go to dashboard". Find it and either give it its correct label or remove it.
+
+3. TEST DATA: delete the seeded projects in the Collaboration Hub — "projx", "dasd" with description "dsad". Add a real empty state for when no projects exist.
+
+4. PLURALISATION: the Community stats show "1 Total Posts". Use Intl.PluralRules for all counts across the app. Note Arabic has six plural forms, so never suffix "s" directly.
+
+5. DELETE BUTTON: the project Delete button is a full-width saturated red primary button — the loudest element on the page. Move it into an overflow (⋯) menu in the card header as tertiary text, and add a confirm dialog naming the consequence.
+
+6. LOGGED-IN HOMEPAGE: authenticated users currently land on the full marketing homepage. Redirect them to /dashboard.
+
+Report what you changed for each.</pre>
+      </div>
+
+      <div class="prompt">
+        <header><span class="label"><span>R02</span> · Navigation &amp; chrome diet</span><button class="copy" type="button">Copy</button></header>
+        <pre>The logged-in shell has roughly 180px of fixed chrome before any content — an 88px nav plus a 90px profile banner — on every page. Fix it.
+
+NAVIGATION
+- Reduce to 5 top-level items: Dashboard, Journey, Community, Mentors, Resources. Everything else goes into the avatar menu.
+- Move "Sign out" OUT of the top bar and into the avatar dropdown. It is currently a permanent top-level item sitting next to the user's own name.
+- The "More" dropdown must not show a permanent active state. Active state belongs on the current page only — if the current page lives inside More, highlight it in the open dropdown.
+- "Loadout" is unclear as a label. Either rename it to what it contains, or keep it and add a one-line description in the dropdown and mobile menu.
+- One language switcher only. There are currently two (nav "ENGLISH", footer "English") with inconsistent casing.
+- On mobile: a bottom tab bar with those 5 items, and everything else in a sheet behind the avatar.
+
+PROFILE BANNER
+- Never render it on the public landing page.
+- Put the three missing fields (Country, Industry, Startup stage) as inline dropdowns INSIDE the banner. Three taps and it's done and gone permanently — do not send the user to a separate checklist for 30 seconds of work.
+- Dismissal persists for the session at minimum; "Remind me later" persists for 7 days.
+- Collapse to a single slim line once above 80%.</pre>
+      </div>
+
+      <div class="prompt">
+        <header><span class="label"><span>R03</span> · Fix Arabic post rendering</span><button class="copy" type="button">Copy</button></header>
+        <pre>Arabic posts in the Community feed render inside a left-to-right container. The Arabic body text is right-aligned but the card around it is not — the category chip, author row, timestamp, hashtags, and view/like/comment icons all stay LTR. The hashtag chip renders the "#" on the wrong side with a stranded full stop.
+
+FIX
+- Detect the dominant script of each post at render and set dir="rtl" or dir="ltr" on the ENTIRE post card, not just the text node.
+- All internal spacing must use logical CSS properties (margin-inline-start, padding-inline-end, text-align: start) so the card mirrors correctly as a unit.
+- Hashtags in Arabic posts render with "#" leading in reading order — the RTL container handles this once direction is set on the right element.
+- Wrap mixed-direction fragments (an English product name inside an Arabic sentence) in <bdi> so they don't scramble the surrounding line.
+- Arabic body text needs its own type treatment: roughly 1.1x the font size and 1.2x the line-height of the Latin equivalent, using an Arabic-native family (IBM Plex Sans Arabic, Noto Sans Arabic, or Cairo).
+- Keep the existing "Translate to English" toggle — it's excellent — and add the reverse for English posts when the viewer's locale is Arabic.
+
+Test with the existing post "الأغذيه الصحيه من الأرض للفضاء" and with a post mixing Arabic and English.</pre>
+      </div>
+
+      <div class="prompt">
+        <header><span class="label"><span>R04</span> · Landing page restructure</span><button class="copy" type="button">Copy</button></header>
+        <pre>Restructure the StartPad landing page. The copy is strong but buried and the product is invisible.
+
+MOVE THE BEST LINE UP
+"We grew up watching brilliant ideas die in group chats" is currently ~60% down the page in "Why we built this". It is the most persuasive sentence on the site. Build the hero around it. The current headline ("StartPad turns ideas into startups") could describe any product — demote or replace it.
+
+SHOW THE PRODUCT
+There is currently not a single screenshot, mission map, or interactive element on the entire page. Add:
+- An interactive element in the hero: the visitor types their idea in one sentence and gets a live AI score with one strength, one risk, and a suggested first mission. Works with no account.
+- The 15 missions as a visual path, with names, outcomes and time estimates — replacing the "Our mission / Our vision" block, which moves to /about.
+
+FIX THE NUMBERS
+- "15+" contradicts "15 step-by-step missions" and "Fifteen real missions" elsewhere on the same page. Use 15 everywhere.
+- The stat row is 15+ / 24/7 / 100% / MENA — "MENA" is not a statistic. Replace with a real figure (countries, founders, missions completed this month).
+- Add source lines to the 400M+ / 70% / $3.5B market stats.
+
+OTHER
+- Compress the 3-line hero subhead to one line.
+- "100% FREE TO START" implies a paid tier with no pricing page. Either commit to free or ship /pricing and link it in nav and footer.
+- Footer social: lead with Instagram and TikTok, add a WhatsApp channel, keep LinkedIn for mentors. Facebook is close to irrelevant for this audience.
+
+Keep: the "MADE IN EGYPT · BUILT FOR MENA" eyebrow, the two-tone headline, "Built in Cairo. Designed for the entire Arab world.", and the green identity. Those all work.</pre>
+      </div>
+
+      <div class="prompt">
+        <header><span class="label"><span>R05</span> · Rebuild Mentoring</span><button class="copy" type="button">Copy</button></header>
+        <pre>The Mentoring page shows bookings and nothing else — there is no way to find or book a mentor from it. Rebuild it.
+
+PRIMARY ACTION IS FINDING A MENTOR
+- Page leads with "Find a mentor" and a browsable directory. Existing bookings are secondary, below it.
+- Directory filters: country, language (Arabic / English / both), expertise, startup stage, available this week.
+- Mentor cards: photo, name, role, languages, expertise chips, typical response time, founders helped, next available slot.
+
+SESSION CARDS — every card must carry:
+- Date and time IN THE FOUNDER'S TIMEZONE, with the timezone named: "1:30 PM your time (GMT+3)". Currently no timezone is shown at all, across a region spanning GMT+1 to GMT+4.
+- Session length, language, and mentor photo.
+- One clear action: Join (when live), Add to calendar, Reschedule, Cancel.
+- Whole card is clickable to a detail view.
+
+STATUS
+Replace the current ambiguous "upcoming" / "pending" badges — both green, both ticked, neither explained — with a real state machine: requested → confirmed → completed → cancelled → no-show. Each state gets a distinct colour AND shape, plus an action when one is needed ("Waiting for Sarah to confirm" + a nudge button).
+
+MENTOR ROSTER
+Current mentors are Emily Rodriguez and Sarah Johnson. The homepage promises mentors who understand the MENA market. Prioritise showing MENA-based mentors and mentors who speak Arabic — surface language and country prominently on every card.
+
+PREP AND FOLLOW-UP
+- 24h before: auto-generate a one-page brief from the founder's mission progress, send to the mentor, and show the founder 3 suggested questions.
+- After: rate the call, capture 3 action items, push them into the founder's current mission as tasks.</pre>
+      </div>
+
+      <div class="prompt">
+        <header><span class="label"><span>R06</span> · Rebuild the Collaboration Hub card</span><button class="copy" type="button">Copy</button></header>
+        <pre>The Collaboration Hub has two project cards with completely different anatomy — one has a single giant "Join" button, the other has five small buttons plus a full-width red Delete. Unify them.
+
+ONE CARD COMPONENT
+Constant elements always in the same position: project name, status badge, description, member count, activity date, and "Looking for" chips. Only the action area changes by viewer role.
+- Not a member → "Join" (primary)
+- Member → "Open project"
+- Owner → "Open project" + a "Your project" badge + an overflow (⋯) menu containing Settings and Delete
+
+REPLACE THE FIVE BUTTONS
+Team, Files, Whiteboard, Video calls, Activity should be TABS INSIDE the project, not buttons on the card. If any of these aren't built yet, remove the entry entirely — a dead button costs more trust than a missing feature.
+
+MISSING ESSENTIALS
+- "Looking for" chips on every project: designer, developer, marketer, co-founder. This is the entire purpose of a collaboration hub and it's currently absent.
+- Filters on those chips, plus country and startup stage. Plus search.
+- Label the date and prefer relative time: "Active 3 days ago" not a bare "Aug 5, 2026".
+- "No description." becomes an inline prompt for the owner ("Add a description so people know what you're building") and is hidden entirely from everyone else.
+
+Equal card heights in the grid regardless of content length.</pre>
+      </div>
+
+      <div class="prompt">
+        <header><span class="label"><span>R07</span> · Scope Community to missions</span><button class="copy" type="button">Copy</button></header>
+        <pre>The Community feed has no connection to what founders are actually doing. Someone on Mission 3 opens it and sees an unrelated post from 19 days ago. Fix the structure.
+
+FEED SCOPING
+- Default tab: "My mission" — posts from founders currently on the same mission as the viewer.
+- Other tabs: "My circle" (their cohort) and "All".
+- Every post shows the author's current mission as a chip. This is what makes a thin early community feel alive: it turns "1 post" into "3 founders are on Mission 3 right now".
+
+REMOVE THE EMPTINESS SIGNALS
+- Delete the four stat cards (1 Total Posts / 1 Discussions / 0 Questions / 0 Answered). Four large cards whose only message is that nobody is here.
+- Hide "Top Contributors" until there are at least 10 contributors.
+- Hide per-post view/like/comment counts below a threshold (say 10 views) — "4 views, 0 comments" discourages the next person from posting.
+
+COMPOSER
+- Drop the generic centred "New Post" button. Keep the three intent-led Quick Actions (Ask a Question / Share an Idea / Showcase Project) and make them the primary way to post.
+- Each opens a short structured form with real fields, never a blank box. Category is set by the intent automatically — currently an idea pitch is filed under "Help & Support" because the user had to guess.
+
+LAYOUT
+When the feed has fewer than 3 posts, drop the right sidebar below the content and let the feed run full width. Currently one post leaves two thirds of the column empty while the sidebar runs past it.
+
+SEEDING
+Add mission-linked weekly prompts posted automatically ("Everyone on Mission 3: what did your first customer interview teach you?") so the feed is never empty.</pre>
+      </div>
+
+      <div class="prompt">
+        <header><span class="label"><span>R08</span> · Colour hierarchy pass</span><button class="copy" type="button">Copy</button></header>
+        <pre>One green is doing eleven jobs across StartPad — primary buttons, active nav, links, stat figures, tag chips, status badges, icons, progress fills and section eyebrows are all the same saturated green. When everything is emphasised nothing leads, which is why a red Delete button currently wins every screen it's on.
+
+ESTABLISH A HIERARCHY
+- Full-strength green: exactly ONE primary action per screen. Nothing else.
+- Secondary actions: outlined, green text on transparent.
+- Tertiary actions: plain text, no container.
+- Tag chips, eyebrows and metadata: neutral grey, not green.
+- Stat figures: ink colour, not green. Let the number carry the weight through size and a monospace tabular face.
+- Semantic colours (success / warning / danger) are a separate set from the brand green and are used ONLY for state, never for emphasis.
+
+DESTRUCTIVE ACTIONS
+Never a filled primary button. Text or outline in danger colour, in an overflow menu, with a confirm dialog naming the consequence.
+
+Audit every screen after the change: there should be exactly one obvious "what do I do here" target per page. Also verify 4.5:1 contrast on white text over the green — check the actual value, it's a common failure at this saturation.</pre>
+      </div>
+
+      <div class="prompt">
+        <header><span class="label"><span>R09</span> · No page ends in emptiness</span><button class="copy" type="button">Copy</button></header>
+        <pre>Mentoring, Community and the Collaboration Hub all end abruptly with half a screen or more of blank space. Every page must end with a next step.
+
+- Mentoring: after the session list, show "Mentors available this week" matched to the founder's stage and country.
+- Community: after the feed, show mission-linked prompts to post, and founders on the same mission to follow.
+- Collaboration Hub: after the project grid, show "Projects looking for your skills" based on the founder's profile.
+- Journey history (empty): beneath the existing empty state, show a greyed-out sample recap card so the founder can see what they'll get — the answers, the AI score, the evidence. Demonstrating the value beats explaining the absence.
+
+Also fix the floating chat bubble: it currently overlaps the Trending Tags card on Community. Give it a safe-area offset, shrink or hide it on scroll, and ensure it never collides with a mobile bottom tab bar.</pre>
+      </div>
+
+      <div class="prompt">
+        <header><span class="label"><span>R10</span> · Information architecture cleanup</span><button class="copy" type="button">Copy</button></header>
+        <pre>StartPad currently has overlapping destinations that founders can't distinguish. Consolidate.
+
+CURRENT OVERLAPS
+- "Dashboard" vs "My Startup Journey" vs "Journey history" — three names, unclear boundaries.
+- "My Sessions" in the Collaboration Hub vs sessions on the Mentoring page — two homes for scheduled things.
+- "Team Chat" in the Collaboration Hub vs Community — two homes for conversation.
+
+TARGET STRUCTURE
+- Dashboard = what to do right now. One next-action card, then progress.
+- Journey = the 15 missions, with "History" as a TAB inside it, not a separate destination.
+- Mentors = find, book and manage every mentor session. The only home for scheduled 1:1s.
+- Community = all public conversation. Project team chat stays inside its project.
+- Projects = the Collaboration Hub, with Team / Files / Chat as tabs inside each project.
+
+VOCABULARY
+Pick one word per concept and use it in the nav label, page title, empty state and buttons. Currently "recap" and "submissions" describe the same object in two consecutive lines on Journey history. Build a short glossary and enforce it across all copy.</pre>
+      </div>
+
+      <div class="prompt">
+        <header><span class="label"><span>R11</span> · Verify Arabic UI end to end</span><button class="copy" type="button">Copy</button></header>
+        <pre>StartPad has a language switcher labelled ENGLISH, and per-post content translation in Community — but I need the full interface verified in Arabic.
+
+Switch the app to Arabic and check every screen, then fix what breaks:
+- Does the entire interface translate, or only some strings? List anything still in English.
+- Does dir="rtl" apply to the whole document — nav, banner, cards, forms, dropdowns, modals, toasts?
+- Are directional icons mirrored (arrows, chevrons, progress fills, the mission path)? Logos, clocks and phone numbers must NOT mirror.
+- Is an Arabic-native font loaded (IBM Plex Sans Arabic / Noto Sans Arabic / Cairo) at its own scale — ~1.1x size and ~1.2x line-height versus Latin? Never rely on a Latin font's Arabic fallback.
+- Are dates, numbers and currency formatted per locale via Intl?
+- Do mixed-direction strings (an English startup name in an Arabic sentence) render correctly with <bdi>?
+- Is the locale in the URL (/ar/*), persisted per user, with hreflang tags?
+- Consolidate the two language switchers (nav "ENGLISH", footer "English") into one.
+
+Report every screen that breaks. Given this audience, half-working RTL is worse than English-only.</pre>
+      </div>
+
+      <div class="prompt">
+        <header><span class="label"><span>R12</span> · Mobile audit</span><button class="copy" type="button">Copy</button></header>
+        <pre>Every StartPad screen I've reviewed is desktop, but the audience is overwhelmingly on phones. Audit and fix the full app at 390px width.
+
+- The logged-in shell currently has ~180px of fixed chrome (88px nav + 90px profile banner). On a phone that's close to half the viewport. Collapse the nav to a bottom tab bar with 5 items and make the banner a single slim dismissible line.
+- Convert every centred modal to a bottom sheet, draggable to dismiss.
+- The Collaboration Hub's 5-button grid and the Community 4-card stat row must reflow, not shrink.
+- The Mentoring session cards must stack with time, timezone and the primary action all visible without horizontal scroll.
+- Every tap target 44x44px minimum, with spacing between adjacent targets. The Delete button in particular must not sit adjacent to a common action.
+- The floating chat bubble must not overlap the bottom tab bar or any primary action.
+- No horizontal page scroll anywhere.
+- Test the landing page: it's currently very long on desktop and will be enormous on mobile. Compress it and add a sticky bottom CTA.
+
+Report each screen with a before/after and list what you changed.</pre>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="end col">
+  <p class="small">Round 2 · 11 August 2026 · 41 findings across 5 screens. Round 1 (journey audit, page inventory, 24 prompts) remains the strategic layer; this document is the verification pass against real pixels. The mission runner and mobile remain unreviewed — they are worth more than everything here.</p>
+</footer>
+
+</div>
+
+<script>
+  document.querySelectorAll(".prompt").forEach(function (block) {
+    var btn = block.querySelector(".copy");
+    var pre = block.querySelector("pre");
+    if (!btn || !pre) return;
+    btn.addEventListener("click", function () {
+      var text = pre.textContent;
+      var done = function () {
+        btn.textContent = "Copied";
+        setTimeout(function () { btn.textContent = "Copy"; }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { btn.textContent = "Press ⌘C"; });
+      } else {
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand("copy"); done(); } catch (e) { btn.textContent = "Press ⌘C"; }
+        document.body.removeChild(ta);
+      }
+    });
+  });
+</script>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  @font-face { font-family:'Satoshi'; src:url('fonts/Satoshi-Black.otf') format('opentype');   font-weight:900; }
+  @font-face { font-family:'Satoshi'; src:url('fonts/Satoshi-Bold.otf') format('opentype');    font-weight:700; }
+  @font-face { font-family:'Satoshi'; src:url('fonts/Satoshi-Medium.otf') format('opentype');  font-weight:500; }
+  @font-face { font-family:'Zain';    src:url('fonts/Zain-Black.ttf') format('truetype');      font-weight:900; }
+  @font-face { font-family:'Zain';    src:url('fonts/Zain-Bold.ttf') format('truetype');       font-weight:700; }
+  @font-face { font-family:'Zain';    src:url('fonts/Zain-Regular.ttf') format('truetype');    font-weight:400; }
+
+  :root{ --lime:#CBF24A; --ink:#0B0D10; --grey400:#A5A9AF; --white:#FFF; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#333}
+
+  .stage{ position:relative; overflow:hidden; background:var(--ink);
+          font-family:'Satoshi',system-ui,sans-serif; color:var(--white);
+          width:820px; height:312px; }
+  .sweep{ position:absolute; inset:0;
+    background:radial-gradient(120% 190% at 50% 132%,
+      rgba(203,242,74,.30) 0%, rgba(76,232,133,.20) 20%, rgba(6,220,197,.15) 38%,
+      rgba(31,143,250,.12) 56%, rgba(52,24,224,.15) 74%, rgba(11,13,16,0) 92%); }
+  .rule{ position:absolute; left:0; right:0; bottom:0; height:3px;
+    background:linear-gradient(90deg,#3418E0,#2B6BFF,#12B2F5,#06DCC5,#4CE885,#CBF24A); }
+  .grid{ position:absolute; inset:0; opacity:.045;
+    background-image:linear-gradient(#FFF 1px,transparent 1px),linear-gradient(90deg,#FFF 1px,transparent 1px);
+    background-size:34px 34px; }
+
+  /* everything lives in the centred 640px safe zone, lifted clear of the
+     profile photo which overlays bottom-left on desktop, bottom-centre on mobile */
+  .content{
+    position:absolute; left:50%; top:42%; transform:translate(-50%,-50%);
+    width:600px; text-align:center;
+  }
+  .kicker{ font-weight:700; color:var(--lime); text-transform:uppercase;
+           letter-spacing:.2em; font-size:11px; margin-bottom:12px; }
+  .head{ font-weight:900; letter-spacing:-.025em; line-height:1.05; font-size:40px; }
+  .head .hl{ color:var(--lime); }
+  .sub{ font-weight:500; color:var(--grey400); font-size:15px; margin-top:12px; }
+  img.lockup{ display:block; margin:0 auto 20px; width:250px; }
+  img.mark{ display:block; margin:0 auto 16px; height:62px; }
+  .chip{ display:inline-block; background:var(--lime); color:var(--ink);
+         font-weight:900; border-radius:999px; font-size:13px; padding:8px 18px; margin-top:16px; }
+
+  /* Arabic */
+  #ar{ direction:rtl; font-family:'Zain','Satoshi',system-ui,sans-serif; }
+  #ar .kicker{ font-size:15px; letter-spacing:0; font-weight:700; margin-bottom:10px; }
+  #ar .head{ font-size:52px; line-height:1.15; letter-spacing:0; font-weight:900; }
+  #ar .sub{ font-size:20px; margin-top:12px; font-weight:400; white-space:nowrap; }
+</style></head>
+<body>
+
+<!-- A · lockup above, headline below -->
+<div class="stage" id="a">
+  <div class="sweep"></div><div class="grid"></div>
+  <div class="content">
+    <img class="lockup" src="startpad_lockup_reversed.png" alt="">
+    <div class="head">From idea to <span class="hl">launched startup</span></div>
+    <div class="sub">15 guided missions · AI-evaluated feedback · Real mentors</div>
+  </div>
+  <div class="rule"></div>
+</div>
+
+<!-- B · mark-led, headline dominant -->
+<div class="stage" id="b">
+  <div class="sweep"></div><div class="grid"></div>
+  <div class="content">
+    <img class="mark" src="startpad_mark.png" alt="">
+    <div class="kicker">Built in Cairo · For MENA founders</div>
+    <div class="head">From idea to <span class="hl">launched startup</span></div>
+    <div class="sub">15 guided missions · Free to start</div>
+  </div>
+  <div class="rule"></div>
+</div>
+
+<!-- C · Arabic -->
+<div class="stage" id="ar">
+  <div class="sweep"></div><div class="grid"></div>
+  <div class="content">
+    <img class="lockup" src="startpad_lockup_reversed.png" alt="">
+    <div class="head">من فكرة إلى <span class="hl">شركة ناشئة</span></div>
+    <div class="sub">15 مهمة موجّهة · تقييم بالذكاء الاصطناعي · مرشدون</div>
+  </div>
+  <div class="rule"></div>
+</div>
+
+</body></html>
