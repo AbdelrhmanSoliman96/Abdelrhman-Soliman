@@ -103,7 +103,7 @@ A second deliverable in this repo: a scrape-ready registry of the organisations 
 startup programmes across **Egypt, the GCC and the wider MENA region** (Israel excluded
 per scoping).
 
-**115 programme rows · 105 unique entities · 17 markets · 174 URLs queued for scraping**
+**133 programme rows · 122 unique entities · 17 markets · 203 URLs queued for scraping**
 
 ## Deliverables
 
@@ -149,10 +149,11 @@ environment's egress proxy blocked *every* outbound request (verified against fl
 magnitt.com, wamda.com, itida.gov.eg, hub71.com, oasis500.com, sheraa.ae, startupqatar.qa),
 so **no page was ever opened**.
 
-**Three verification passes have been run.** Each weak entity was re-queried by name, and a
-URL was kept only when it came back as an actual indexed search-result *link* rather than
-being named in prose. That moved the confidence split from `high` 46 / `medium` 17 / `low` 25
-to **`high` 88 / `medium` 20 / `low` 7**, and grew the registry from 88 rows to 115.
+**Three expansion-and-verification passes have been run.** Each weak entity was re-queried by
+name, and a URL was kept only when it came back as an actual indexed search-result *link*
+rather than being named in prose. That moved the confidence split from
+`high` 46 / `medium` 17 / `low` 25 to **`high` 98 / `medium` 23 / `low` 12**, and grew the
+registry from 88 rows to **133**.
 
 Verification caught three factual errors that would otherwise have shipped:
 
@@ -167,10 +168,14 @@ One row carries a **security caution**: Endeavor Egypt's `endeavoreg.org` resolv
 `/contact/` page returned a gambling-spam page title in search results, suggesting part of the
 domain may be compromised or parked.
 
-Seven rows remain `low` — EdVentures, Innoventures, Egypt Fund of Funds, KAUST Innovation Fund,
-Riyadh Valley Company, Startupbootcamp Dubai and Kuwait's National Fund — with no official
-domain indexed after three passes. Each carries a placeholder URL and says so. Run
-`--verify-only` from a normal network first; it writes an `http_status` back for every source.
+Twelve rows remain `low` — EdVentures, Innoventures, Egypt Fund of Funds, Nclude, KAUST
+Innovation Fund, Riyadh Valley Company, SVC, Badir, The Garage, Startupbootcamp Dubai, Oman's
+Ithraa and Kuwait's National Fund — with no official domain returned as an indexed link. Each
+carries a profile, government or coverage URL as a working placeholder and says so. Several are
+major institutions whose own sites are simply poorly indexed: **SVC and The Garage are certainly
+real — it is the URL, not the entity, that is unconfirmed.**
+
+Run `--verify-only` from a normal network first; it writes an `http_status` back for every source.
 
 The scraper's four parser tiers were tested offline against fixtures (JSON-LD extraction,
 HTML heuristic including Arabic, noise exclusion, fingerprint stability) and the error path

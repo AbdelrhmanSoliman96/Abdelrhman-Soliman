@@ -1151,12 +1151,13 @@ PROGRAMS = [
 COVERAGE_NOTES = [
     ("Scope delivered",
      "Egypt and the GCC are covered most densely, then the Levant and North Africa, "
-     "per the brief. Israel is excluded from scope. 17 markets."),
-    ("Two verification passes have been run",
-     "Pass 1 built the registry. Pass 2 re-queried every weak entity by name and kept a URL "
-     "only when it came back as an actual indexed search-result LINK, not merely named in "
-     "prose. That moved the confidence split from high 46 / medium 17 / low 25 to "
-     "high 85 / medium 20 / low 10, and grew the file from 88 rows to 115."),
+     "per the brief. Israel is excluded from scope. 17 markets, 122 entities, 133 programmes."),
+    ("Three verification passes have been run",
+     "Pass 1 built the registry. Passes 2 and 3 re-queried every weak entity by name and "
+     "added new ones, keeping a URL only when it came back as an actual indexed search-result "
+     "LINK, not merely named in "
+     "prose. Across three passes the confidence split moved from high 46 / medium 17 / low 25 "
+     "to high 98 / medium 23 / low 12, and the file grew from 88 rows to 133."),
     ("Still not fetch-verified — this is the honest ceiling here",
      "The egress proxy blocked every outbound request in both passes; curl to flat6labs.com, "
      "magnitt.com, wamda.com, itida.gov.eg, hub71.com, oasis500.com, sheraa.ae and "
@@ -1173,13 +1174,16 @@ COVERAGE_NOTES = [
      "Endeavor Egypt's endeavoreg.org resolves, but its /contact/ page returned a gambling-spam "
      "page title in search results — a sign that part of the domain may be compromised or "
      "parked. Flagged in that row's source note. Check before sending founders there."),
-    ("Seven rows are still low confidence — verify these first",
-     "EdVentures, Innoventures, the Egypt Fund of Funds, the KAUST Innovation Fund, Riyadh "
-     "Valley Company, Startupbootcamp Dubai and Kuwait's National Fund for SME Development have "
-     "no official domain that returned as an indexed link across three search passes. Each row "
-     "carries a profile or coverage URL as a placeholder and says so in its source note."),
+    ("Twelve rows are still low confidence — verify these first",
+     "EdVentures, Innoventures, the Egypt Fund of Funds, Nclude, the KAUST Innovation Fund, "
+     "Riyadh Valley Company, SVC, Badir, The Garage, Startupbootcamp Dubai, Oman's Ithraa and "
+     "Kuwait's National Fund for SME Development have no official domain that returned as an "
+     "indexed link. Each carries a profile, government or coverage URL as a working placeholder "
+     "and says so in its source note. Several are major institutions whose own sites are simply "
+     "poorly indexed — SVC and The Garage in particular are certainly real; it is the URL, not "
+     "the entity, that is unconfirmed."),
     ("This is a deep v1, not a census",
-     "115 programme rows across 105 entities and 17 markets. Directory sources report larger "
+     "133 programme rows across 122 entities and 17 markets after three expansion passes. Directory sources report larger "
      "universes — Tracxn lists 41 accelerators in Egypt, Founder Institute 350+ Egyptian "
      "ecosystem entries, EgyptInnovate 780 entities, Causo 390+ programmes with deadlines. The "
      "aggregator rows are in the registry deliberately so the scraper discovers programmes this "
@@ -1793,3 +1797,286 @@ for _p in PROGRAMS:
     if _patch:
         _p.update(_patch)
 CORRECTIONS.update(CORRECTIONS_2B)
+
+
+# ===========================================================================
+# PASS 3 — further expansion. Same rule: a URL is kept only when it came back
+# as an actual indexed search-result link, not merely named in an article.
+# ===========================================================================
+EXTRA_PROGRAMS_3 = [
+
+    # ---------------- Saudi Arabia ----------------
+    dict(entity="Wadi Makkah Ventures", entity_type="University programme",
+         country="Saudi Arabia", city="Makkah", program="Growth Incubator / Nomow",
+         program_type="Incubator", stage="Idea",
+         sectors="Hajj & Umrah, occupational safety, edtech, fintech",
+         eligibility="Saudi startups", funding="Financial support + investment",
+         equity="Yes", duration="Programme cycle", cadence="Annual cohorts",
+         status="Active",
+         description="Investment company owned by Umm Al-Qura University. Runs six incubators "
+                     "with co-working, a FabLab innovation lab for prototyping, legal and "
+                     "technical consultation, and patent-registration support.",
+         stats="6 incubators, 37 incubatees, 40 portfolio startups; introduced 17 new startups in one intake",
+         entity_url="https://wmvc.sa/", programs_url="https://wmvc.sa/", apply_url="",
+         confidence="high", source="wmvc.sa indexed; UQU news; IASP member directory"),
+
+    dict(entity="Badir Program (KACST)", entity_type="Government / Authority",
+         country="Saudi Arabia", city="Riyadh", program="Technology incubators & accelerators",
+         program_type="Incubator", stage="Idea", sectors="ICT, biotech, advanced manufacturing",
+         eligibility="Saudi tech entrepreneurs and SMEs",
+         funding="Incubation + access to funding", equity="No", duration="Programme-dependent",
+         cadence="Rolling", status="Active",
+         description="National technology incubator programme launched by King Abdulaziz City "
+                     "for Science and Technology (KACST) in 2007, to accelerate the growth of "
+                     "technology-based businesses in Saudi Arabia.",
+         stats="Launched 2007 by KACST; incubators across Riyadh and other cities",
+         entity_url="https://magnitt.com/enablers/badir-technology-incubator-riyadh-1048",
+         programs_url="https://www.prodevs.io/accelerators/badir", apply_url="",
+         confidence="low",
+         source="MAGNiTT and ProDevs profiles indexed; no official badir domain returned — verify"),
+
+    dict(entity="SVC (Saudi Venture Capital Company)", entity_type="Sovereign / National fund",
+         country="Saudi Arabia", city="Riyadh", program="Fund investment & co-investment",
+         program_type="Fund of funds", stage="Any", sectors="E-commerce, fintech, health, edtech, logistics",
+         eligibility="Startups and SMEs, pre-seed to pre-IPO",
+         funding="USD 2 billion investment mandate", equity="Yes/indirect", duration="N/A",
+         cadence="Rolling", status="Active",
+         description="Established 2018, a subsidiary of the SME Bank within the National "
+                     "Development Fund. Stimulates financing for startups and SMEs from "
+                     "pre-seed to pre-IPO via private capital funds and co-investment. "
+                     "Co-backer of the Flat6Labs Riyadh Seed Programme.",
+         stats="USD 2bn mandate; invested in 54 funds and 800+ startups and SMEs",
+         entity_url="https://magnitt.com/investors/saudi-venture-capital-company-svc-51100",
+         programs_url="https://vision2030.ai/encyclopedia/saudi-arabia-venture-funds/",
+         apply_url="", confidence="low",
+         source="MAGNiTT profile and Saudi Press Agency releases indexed; no official SVC "
+                "domain returned as a link — verify"),
+
+    dict(entity="The Garage (MCIT / KACST)", entity_type="Government / Authority",
+         country="Saudi Arabia", city="Riyadh", program="Innovation district & startup hub",
+         program_type="Incubator", stage="Any", sectors="Tech, cybersecurity, gaming, drones",
+         eligibility="Startups operating in KSA", funding="Space + programmes", equity="No",
+         duration="Ongoing", cadence="Rolling", status="Active",
+         description="Unveiled September 2023 as a collaboration between the Ministry of "
+                     "Communications and IT, KACST and the Saudi Federation for Cybersecurity, "
+                     "Programming and Drones. Combines incubators, accelerators and shared "
+                     "resources in one location inside KACST.",
+         stats="28,000 sqm — described as the largest innovation district in the Middle East; "
+               "capacity for 300+ startups",
+         entity_url="https://saudigazette.com.sa/article/635963",
+         programs_url="https://www.trade.gov/market-intelligence/saudi-arabia-information-technology-garage-new-player-saudi-arabias-startup",
+         apply_url="", confidence="low",
+         source="Saudi Gazette and US trade.gov market-intelligence pages indexed; prose cites "
+                "thegarage.sa but that domain did not return as a link — verify"),
+
+    # ---------------- Qatar ----------------
+    dict(entity="Qatar FinTech Hub (QFTH)", entity_type="Government / Authority",
+         country="Qatar", city="Doha", program="Incubator & Accelerator (wave-based)",
+         program_type="Accelerator", stage="Seed", sectors="FinTech",
+         eligibility="Local and international fintechs",
+         funding="Programme support + funding opportunities", equity="Varies",
+         duration="Programme cycle", cadence="Waves (wave 5 announced)", status="Active",
+         description="Launched 2020 and powered by Qatar Development Bank. A central hub for "
+                     "fintech innovation advancing Qatar's Third Financial Sector Strategy and "
+                     "National FinTech Strategy — business, technical and regulatory support, "
+                     "mentorship, market access and funding.",
+         stats="Launched 2020; runs wave-based incubator and accelerator intakes",
+         entity_url="https://fintech.qa/en", programs_url="https://fintech.qa/en",
+         apply_url="", confidence="high",
+         source="fintech.qa indexed; FF News wave-5 announcement; USQBC portal profile"),
+
+    # ---------------- Bahrain ----------------
+    dict(entity="Hope Ventures", entity_type="VC firm", country="Bahrain", city="Manama",
+         program="Co-investment in Bahraini founders", program_type="Seed fund", stage="Seed",
+         sectors="Agnostic", eligibility="Bahraini-founded scalable businesses",
+         funding="Co-investment", equity="Yes", duration="N/A", cadence="Rolling",
+         status="Active",
+         description="The investment arm of Hope Fund, founded 2021 in Manama, co-investing in "
+                     "high-potential scalable Bahraini-founded businesses to accelerate growth. "
+                     "Listed on the Bahrain Investment Market. Partnered with the ministry on a "
+                     "National Innovation Centre.",
+         stats="Founded 2021; landmark listing on Bahrain Investment Market",
+         entity_url="https://www.hopefund.bh/",
+         programs_url="https://www.hopefund.bh/about-hope-ventures", apply_url="",
+         confidence="high", source="hopefund.bh and /about-hope-ventures indexed; Bahrain Bourse listing notice"),
+
+    # ---------------- Kuwait ----------------
+    dict(entity="Zain Great Idea (ZGI)", entity_type="Corporate programme", country="Kuwait",
+         city="Kuwait City", program="ZGI Accelerator", program_type="Accelerator",
+         stage="Seed", sectors="Tech", eligibility="Kuwaiti and now regional founders",
+         funding="Access to Zain Ventures and investors", equity="Varies",
+         duration="Programme cycle", cadence="Annual", status="Active",
+         description="Zain's award-winning tech startup accelerator, running 15 years and now "
+                     "open to entrepreneurs across the region. Offers a Silicon Valley trip, "
+                     "mentorship from global experts, bootcamps and investor access. KFAS "
+                     "certified trainers deliver specialised sessions.",
+         stats="15 years running; regional intake; Demo Day with Zain Ventures",
+         entity_url="https://zaingreatidea.com/",
+         programs_url="https://www.zain.com/en/press-release/zgi2025",
+         apply_url="https://zaingreatidea.com/", confidence="high",
+         source="zaingreatidea.com and zain.com ZGI press releases indexed"),
+
+    # ---------------- Oman ----------------
+    dict(entity="Ithraa", entity_type="Government / Authority", country="Oman", city="Muscat",
+         program="Investment & export development support", program_type="Soft landing / Market access",
+         stage="Any", sectors="All", eligibility="Investors and exporters in Oman",
+         funding="Facilitation", equity="No", duration="Ongoing", cadence="Rolling",
+         status="Active",
+         description="Oman's official investment and export development agency — the front door "
+                     "for founders and investors entering the Omani market.",
+         stats="National investment-promotion agency",
+         entity_url="https://globaledge.msu.edu/global-resources/resource/5807",
+         programs_url="https://globaledge.msu.edu/global-resources/resource/5807",
+         apply_url="", confidence="low",
+         source="globalEDGE country resource page indexed; prose cites ithraa.om but that "
+                "domain did not return as a link — verify"),
+
+    # ---------------- Egypt ----------------
+    dict(entity="Nclude", entity_type="Corporate programme", country="Egypt", city="Cairo",
+         program="Fintech & financial-inclusion fund", program_type="Seed fund", stage="Seed",
+         sectors="FinTech, financial inclusion", eligibility="Egyptian fintechs",
+         funding="USD 105 million first fund", equity="Yes", duration="N/A",
+         cadence="Rolling", status="Active",
+         description="Cairo-based fund founded 2022, focused on financial inclusion and "
+                     "building a fintech stack for Egypt. Backed by Banque Misr, National Bank "
+                     "of Egypt and Banque du Caire, with Banque Misr leading the raise.",
+         stats="USD 105M first fund; founded 2022; three state-bank backers",
+         entity_url="https://lucidityinsights.com/spotlights/nclude-accelerating-fintech-in-egypt",
+         programs_url="https://lucidityinsights.com/spotlights/nclude-accelerating-fintech-in-egypt",
+         apply_url="", confidence="low",
+         source="Lucidity Insights spotlight indexed; no official Nclude domain returned — verify"),
+
+    dict(entity="Plug and Play", entity_type="Accelerator", country="Egypt", city="Cairo",
+         program="Plug and Play Egypt — Smart Cities Hub", program_type="Accelerator",
+         stage="Seed", sectors="Smart cities, proptech", eligibility="Startups targeting Egypt",
+         funding="Corporate pilots + investment", equity="Varies",
+         duration="Programme cycle", cadence="Cohort-based", status="Active",
+         description="Silicon Valley innovation platform's Egypt operation, which launched an "
+                     "inaugural Smart Cities Hub cohort. Plug and Play is the most active "
+                     "accelerator in the world by programme volume.",
+         stats="Inaugural Egypt Smart Cities Hub cohort launched",
+         entity_url="https://www.plugandplaytechcenter.com/",
+         programs_url="https://www.plugandplaytechcenter.com/press/plug-and-play-egypt-launches-inaugural-cohort-of-the-smart-cities-hub/",
+         apply_url="", confidence="high",
+         source="plugandplaytechcenter.com Egypt press release indexed"),
+
+    dict(entity="Orange Digital Center", entity_type="Corporate programme",
+         country="Regional (MENA)", city="Cairo / Tunis / Casablanca and others",
+         program="Orange Digital Center network", program_type="Incubator", stage="Idea",
+         sectors="Digital, coding, tech", eligibility="Young people and early-stage founders",
+         funding="Training + acceleration + early-stage investment", equity="Varies",
+         duration="Ongoing", cadence="Rolling", status="Active",
+         description="Orange's free digital centres across the Middle East and Africa, first "
+                     "launched in Tunisia and extended to Egypt, Morocco and the wider region "
+                     "from 2020. Coding training for young people, startup acceleration and "
+                     "early-stage investment.",
+         stats="Network across MEA; first centre in Tunisia, extended from 2020",
+         entity_url="https://newsroom.orange.com/orange-a-key-player-engaged-in-the-digital-transformation-in-africa-and-the-middle-east-launches-its-first-orange-digital-centre-in-tunisia/",
+         programs_url="https://newsroom.orange.com/orange-a-key-player-engaged-in-the-digital-transformation-in-africa-and-the-middle-east-launches-its-first-orange-digital-centre-in-tunisia/",
+         apply_url="", confidence="medium",
+         source="Orange newsroom launch release indexed; per-country ODC pages not returned — verify"),
+
+    # ---------------- Tunisia ----------------
+    dict(entity="216 Capital + Plug and Play", entity_type="Accelerator", country="Tunisia",
+         city="Tunis", program="Tunisia startup accelerator (EUR 50K)",
+         program_type="Accelerator", stage="Pre-seed", sectors="Tech",
+         eligibility="Tunisian startups", funding="EUR 50,000", equity="Yes",
+         duration="Programme cycle", cadence="Cohort-based", status="Active",
+         description="Tunisia-based VC 216 Capital partnered with Plug and Play to launch a "
+                     "EUR 50K accelerator for local startups.",
+         stats="EUR 50,000 per startup",
+         entity_url="https://arabfounders.net/en/tunisia-216capital-plugandplay-startup-accelerator/",
+         programs_url="https://arabfounders.net/en/tunisia-216capital-plugandplay-startup-accelerator/",
+         apply_url="", confidence="medium",
+         source="Arab Founders launch coverage indexed; 216capital domain not returned — verify"),
+
+    # ---------------- Regional competitions & development finance ----------------
+    dict(entity="MIT Enterprise Forum Pan Arab", entity_type="NGO / Development agency",
+         country="Regional (MENA)", city="Pan-Arab",
+         program="Arab Startup Competition (ASC)", program_type="Competition / Challenge",
+         stage="Any", sectors="Agnostic", eligibility="Startups across 21 Arab countries",
+         funding="Equity-free cash prizes", equity="No (equity-free)",
+         duration="Annual cycle", cadence="Annual", status="Active",
+         description="Annual pan-Arab competition running since 2006, organised with Abdul "
+                     "Latif Jameel Community Initiatives. Equity-free cash prizes across "
+                     "ideas, startups and social-enterprise tracks.",
+         stats="Running since 2006; targets 21 Arab countries; equity-free prizes",
+         entity_url="https://arab.org/directory/mit-enterprise-forum-pan-arab/",
+         programs_url="https://www.insme.org/the-arab-startup-competition/",
+         apply_url="", confidence="medium",
+         source="arab.org directory and INSME pages indexed; prose cites "
+                "mitarabcompetition.com but it did not return as a link — verify"),
+
+    dict(entity="EBRD", entity_type="NGO / Development agency", country="Regional (MENA)",
+         city="London / SEMED", program="Star Venture", program_type="Accelerator",
+         stage="Pre-seed",
+         sectors="Tech", eligibility="High-potential early-stage firms in EBRD regions incl. SEMED (Egypt, Jordan, Morocco, Tunisia, West Bank & Gaza)",
+         funding="Tailored advisory + capacity building", equity="No",
+         duration="Multi-month", cadence="Country-based intakes", status="Active",
+         description="EBRD programme supporting accelerators and high-potential pre-seed and "
+                     "seed-stage startups in emerging markets, with tailored advisory and "
+                     "capacity-building. Active across the southern and eastern Mediterranean.",
+         stats="650+ early-stage companies assisted across 23 countries",
+         entity_url="https://www.ebrd.com/home/what-we-do/focus-areas/digitalisation/ebrd-star-venture.html",
+         programs_url="https://www.ebrd.com/home/what-we-do/products-and-services/support-for-start-ups-and-msmes/our-programmes/star-venture.html",
+         apply_url="", confidence="high",
+         source="Two ebrd.com Star Venture pages indexed; West Bank & Gaza launch release"),
+
+    dict(entity="Hult Prize", entity_type="NGO / Development agency", country="Global",
+         city="Global", program="Hult Prize student competition",
+         program_type="Competition / Challenge", stage="Idea", sectors="Social impact",
+         eligibility="University student teams worldwide",
+         funding="USD 1 million top prize", equity="No", duration="Annual cycle",
+         cadence="Annual", status="Active",
+         description="The world's largest student social-entrepreneurship competition, "
+                     "challenging university teams to solve pressing global issues with viable "
+                     "business ideas. Runs campus rounds across MENA universities.",
+         stats="USD 1,000,000 prize",
+         entity_url="https://www.hult.edu/about/hult-prize/",
+         programs_url="https://www.hult.edu/about/hult-prize/", apply_url="",
+         confidence="high", source="hult.edu Hult Prize pages indexed"),
+
+    dict(entity="Seedstars", entity_type="Accelerator", country="Regional (MENA)",
+         city="Geneva / MENA", program="Seedstars MENA regional summit & growth programmes",
+         program_type="Competition / Challenge", stage="Seed", sectors="Agnostic",
+         eligibility="Emerging-market startups", funding="Programme + investment",
+         equity="Varies", duration="Programme cycle", cadence="Annual regional rounds",
+         status="Active",
+         description="Founded 2012 in Switzerland with a network across 90+ countries. Runs "
+                     "MENA regional playoffs and delivered the Misk Growth Accelerator; also "
+                     "launched a MENA Growth Accelerator with Misk and Vision Ventures.",
+         stats="Network covering 90+ countries; MENA regional summit",
+         entity_url="https://seedstars.com/",
+         programs_url="https://www.seedstarsworld.com/regional-summits/seedstars-mena/",
+         apply_url="", confidence="high",
+         source="seedstars.com, seedstarsworld.com MENA summit and MENA content hub all indexed"),
+
+    dict(entity="Shorooq Partners", entity_type="VC firm", country="Regional (MENA)",
+         city="Abu Dhabi", program="Equity venture capital", program_type="Seed fund",
+         stage="Seed", sectors="Fintech, platforms", eligibility="MENA startups",
+         funding="VC investment", equity="Yes", duration="N/A",
+         cadence="Rolling — founders submit pitches on the site", status="Active",
+         description="One of the region's most active early-stage funds, founded 2017. Founders "
+                     "can submit pitches directly through the site. Backed in part by Bahrain's "
+                     "Al Waha Fund of Funds.",
+         stats="AUM grown from USD 2M at founding in 2017 to around half a billion",
+         entity_url="https://www.shorooq.com/",
+         programs_url="https://www.shorooq.com/what-we-do/equity-venture-capital",
+         apply_url="https://www.shorooq.com/", confidence="high",
+         source="shorooq.com, /about and /what-we-do/equity-venture-capital indexed"),
+
+    dict(entity="Forbes Middle East", entity_type="Media / Data platform",
+         country="Regional (MENA)", city="Dubai", program="VC and ecosystem lists",
+         program_type="Directory listing", stage="Any", sectors="All", eligibility="Open",
+         funding="N/A", equity="N/A", duration="Ongoing", cadence="Annual lists",
+         status="Active",
+         description="Publishes annual regional lists — including the Middle East's Top "
+                     "Venture Capitalists — useful for spotting newly prominent funds and the "
+                     "programmes they back.",
+         stats="Annual Top Venture Capitalists list",
+         entity_url="https://www.forbesmiddleeast.com/",
+         programs_url="https://www.forbesmiddleeast.com/lists/the-middle-easts-top-venture-capitalists-2024/",
+         apply_url="", confidence="high", source="forbesmiddleeast.com list page indexed"),
+]
+
+PROGRAMS.extend(EXTRA_PROGRAMS_3)
