@@ -180,3 +180,35 @@ Run `--verify-only` from a normal network first; it writes an `http_status` back
 The scraper's four parser tiers were tested offline against fixtures (JSON-LD extraction,
 HTML heuristic including Arabic, noise exclusion, fingerprint stability) and the error path
 was exercised by the blocked network — failures log per source rather than aborting the run.
+
+---
+
+# StartPad × GrowthLabs — LEAP launch press release
+
+A third deliverable: the bilingual launch announcement for StartPad at LEAP, and for
+GrowthLabs' full, **non-cash** adoption of the platform.
+
+| File | What it is |
+|---|---|
+| `press/release.py` | Source of truth for the copy, Arabic and English. |
+| `output/StartPad_LEAP_Launch_Press_Release.docx` | Both languages in one document — Arabic first with real RTL, English after, fact-check sources last. |
+| `press/startpad_leap_launch_ar.md`, `..._en.md` | Plain-text copy for wire submission forms, email and LinkedIn. |
+| `press/fact_check_sources.md` | Where each figure came from. |
+| `output/startpad_press_kit.html` | The press-kit page — [published artifact](https://claude.ai/code/artifact/28a2e66e-5e91-4017-bb4f-0967e6387f3d). |
+
+```bash
+pip install python-docx
+python3 scripts/build_press_docx.py     output/StartPad_LEAP_Launch_Press_Release.docx
+python3 scripts/build_press_md.py       press
+python3 scripts/build_press_artifact.py output/startpad_press_kit.html
+```
+
+## Two things to check before it goes out
+
+**Placeholders.** Anything still to be supplied is written in `[SQUARE BRACKETS]` —
+media contacts, pricing, and the proposed GrowthLabs quote, which needs its speaker's
+approval. The press-kit page marks them in bronze so none can slip through.
+
+**Figures.** Every number came from a live web search at drafting time, listed in
+`press/fact_check_sources.md`. As with the rest of this repo, the egress proxy blocked
+direct page fetches, so confirm them against the live pages before distribution.
