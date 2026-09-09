@@ -1,0 +1,533 @@
+<title>Mission Zero at Techne</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
+<style>
+:root{
+  --ground:#FAFAF8; --panel:#F1F1EC; --panel-2:#E9EAE3;
+  --ink:#101E2E; --body:#2C3B47; --muted:#63737F;
+  --rule:#D9DBD3; --rule-soft:#E8E9E2;
+  --deep:#152A45; --sea:#0E7C86; --sea-wash:#E1F0F0;
+  --amber:#B4650E; --amber-wash:#FAEFDF;
+  --good:#1E6B4F; --good-wash:#E3F0E9;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#0D141B; --panel:#141E27; --panel-2:#1B2731;
+  --ink:#EAF1F5; --body:#C2CFD8; --muted:#8195A2;
+  --rule:#26343F; --rule-soft:#1B2731;
+  --deep:#9FC0DE; --sea:#4FBAC2; --sea-wash:#10262A;
+  --amber:#E0A254; --amber-wash:#2A1F10;
+  --good:#5FBF95; --good-wash:#11251C;
+}}
+:root[data-theme="dark"]{
+  --ground:#0D141B; --panel:#141E27; --panel-2:#1B2731;
+  --ink:#EAF1F5; --body:#C2CFD8; --muted:#8195A2;
+  --rule:#26343F; --rule-soft:#1B2731;
+  --deep:#9FC0DE; --sea:#4FBAC2; --sea-wash:#10262A;
+  --amber:#E0A254; --amber-wash:#2A1F10;
+  --good:#5FBF95; --good-wash:#11251C;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--ground); color:var(--body);
+  font-family:"Source Sans 3","IBM Plex Sans Arabic",system-ui,sans-serif;
+  font-size:16.5px; line-height:1.62; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:60rem;margin:0 auto;padding:0 1.5rem 5rem}
+h1,h2,h3,.dsp{font-family:"Archivo",system-ui,sans-serif;color:var(--ink);text-wrap:balance}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.ar{font-family:"IBM Plex Sans Arabic",sans-serif;direction:rtl;text-align:right}
+
+/* masthead */
+header.top{border-bottom:1px solid var(--rule);background:var(--panel)}
+.top-in{max-width:60rem;margin:0 auto;padding:2.6rem 1.5rem 2.1rem}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--sea);margin:0 0 .9rem}
+h1{font-size:clamp(2rem,5vw,3.1rem);line-height:1.06;letter-spacing:-.02em;font-weight:700;margin:0 0 .7rem}
+.stand{font-size:1.16rem;color:var(--muted);max-width:46rem;margin:0 0 1.6rem}
+.clock{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--rule);background:var(--ground)}
+.clock div{padding:.75rem 1.1rem;border-inline-end:1px solid var(--rule);flex:1 1 auto;min-width:9rem}
+.clock div:last-child{border-inline-end:0}
+.clock dt{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 .2rem}
+.clock dd{margin:0;font-family:"Archivo",sans-serif;font-weight:600;color:var(--ink);font-size:1.02rem;
+  font-variant-numeric:tabular-nums}
+.clock .hot dd{color:var(--amber)}
+
+h2{font-size:1.62rem;font-weight:700;letter-spacing:-.01em;margin:3.2rem 0 .3rem;padding-top:1.5rem;
+  border-top:2px solid var(--ink)}
+h2 .num{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--sea);
+  display:block;letter-spacing:.14em;margin-bottom:.45rem;font-weight:400}
+h3{font-size:1.1rem;font-weight:600;margin:1.9rem 0 .45rem}
+p{margin:0 0 1rem;max-width:68ch}
+ul,ol{margin:0 0 1.1rem;padding-inline-start:1.25rem;max-width:68ch}
+li{margin-bottom:.5rem}
+li::marker{color:var(--sea)}
+strong{color:var(--ink);font-weight:600}
+a{color:var(--sea)}
+em.q{font-style:normal;background:var(--sea-wash);padding:.05em .3em;border-radius:2px;color:var(--ink)}
+
+/* decision block */
+.decisions{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:1.6rem 0 0}
+.decision{background:var(--ground);padding:1.15rem 1.3rem}
+.decision .lbl{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.35rem}
+.decision .say{font-family:"Archivo",sans-serif;font-weight:600;color:var(--ink);
+  font-size:1.08rem;line-height:1.35;margin-bottom:.35rem}
+.decision p{margin:0;font-size:.96rem;color:var(--body)}
+
+/* callouts */
+.note{border-inline-start:3px solid var(--sea);background:var(--sea-wash);
+  padding:.9rem 1.1rem;margin:1.3rem 0;max-width:68ch}
+.warn{border-inline-start:3px solid var(--amber);background:var(--amber-wash);
+  padding:.9rem 1.1rem;margin:1.3rem 0;max-width:68ch}
+.note p:last-child,.warn p:last-child{margin-bottom:0}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.12em;
+  text-transform:uppercase;display:block;margin-bottom:.3rem}
+.note .tag{color:var(--sea)} .warn .tag{color:var(--amber)}
+
+/* tables */
+.tw{overflow-x:auto;margin:1.2rem 0 1.5rem;border:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%;font-size:.94rem;min-width:34rem}
+th,td{text-align:start;padding:.6rem .85rem;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+thead th{background:var(--panel);font-family:"IBM Plex Mono",monospace;font-size:.68rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;
+  border-bottom:1px solid var(--rule)}
+tbody tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:end;font-variant-numeric:tabular-nums;font-family:"IBM Plex Mono",monospace;font-size:.88rem}
+tfoot td{background:var(--panel);font-weight:600;color:var(--ink);border-top:1px solid var(--rule)}
+td b{color:var(--ink)}
+
+/* timeline */
+.tl{margin:1.4rem 0 1.6rem}
+.tl-row{display:grid;grid-template-columns:8.5rem minmax(0,1fr);gap:0 1.4rem;
+  border-top:1px solid var(--rule-soft);padding:.85rem 0}
+.tl-row:first-child{border-top:1px solid var(--rule)}
+.tl-when{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--ink);
+  font-variant-numeric:tabular-nums;padding-top:.1rem}
+.tl-row.pin{background:var(--panel)}
+.tl-row.pin .tl-when{color:var(--amber);font-weight:500}
+.tl-what b{display:block;color:var(--ink);font-family:"Archivo",sans-serif;font-weight:600;
+  font-size:1rem;margin-bottom:.15rem}
+.tl-what span{font-size:.95rem}
+
+/* two-col give/get */
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(17rem,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);margin:1.3rem 0}
+.split > div{background:var(--ground);padding:1.1rem 1.25rem}
+.split h3{margin:0 0 .6rem;font-size:1rem}
+.split ul{margin:0;padding-inline-start:1.1rem;font-size:.95rem}
+
+.kicker-rule{height:0;border-top:1px solid var(--rule);margin:2.6rem 0 0}
+footer{margin-top:2.6rem;padding-top:1.2rem;border-top:1px solid var(--rule);
+  font-size:.88rem;color:var(--muted)}
+footer a{word-break:break-word}
+
+@media (max-width:640px){
+  .tl-row{grid-template-columns:minmax(0,1fr);gap:.2rem}
+  .clock div{border-inline-end:0;border-bottom:1px solid var(--rule)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <p class="eyebrow">StartPad × Techne · competition plan · 9 Sept 2026</p>
+    <h1>Mission Zero</h1>
+    <p class="stand">A national youth challenge where the entry ticket is finishing StartPad missions —
+      launched from the Techne Summit stage, judged on evidence, not on slides.</p>
+    <dl class="clock">
+      <div class="hot"><dt>Techne Summit Cairo</dt><dd>26–27 Sept · in 17 days</dd></div>
+      <div class="hot"><dt>Techne Summit Alexandria</dt><dd>3–5 Oct · in 24 days</dd></div>
+      <div><dt>Prize pool</dt><dd>EGP 100,000</dd></div>
+      <div><dt>Decision needed by</dt><dd>Sun 13 Sept</dd></div>
+    </dl>
+  </div>
+</header>
+
+<div class="wrap">
+
+<h2><span class="num">01 / THE READ</span>What Techne actually is, and why it changes the plan</h2>
+
+<p>Techne is not a single conference you buy a booth at. It is a year-round machine with four
+moving parts, and each one is a different opportunity:</p>
+
+<ul>
+  <li><strong>Techne Summit Cairo</strong> — 26–27 September 2026. The corporate and institutional end.</li>
+  <li><strong>Techne Summit Alexandria</strong> — 3–5 October 2026. The big one: 60,000+ attendees last
+    edition, 1,500 startups, 250 investors, 400 speakers, under the auspices of MCIT, ITIDA, DETGD
+    and FEDCOC. This is where the youth are.</li>
+  <li><strong>Techne Drifts</strong> — a year-round, one-day roadshow across <strong>14 Egyptian
+    cities</strong>, explicitly aimed at university students and youth entrepreneurs, structured as
+    Egypt's first roadshow competition across the governorates. Its finale is hosted at Techne
+    Summit Cairo.</li>
+  <li><strong>Compete</strong> — Techne's competition track. 50+ competitions run to date, sector
+    tournaments with partners like EdVentures, and in 2026 the <strong>Startup World Cup regional
+    tournament in Alexandria on 4 October</strong>, whose winner goes to the San Francisco grand
+    finale on 6 November for a USD 1,000,000 investment prize.</li>
+</ul>
+
+<div class="warn">
+  <span class="tag">The thing to avoid</span>
+  <p>Running "a startup competition with EGP 50,000 for first place" at the same venue and the same
+  week as a tournament advertising a <strong>USD 1,000,000</strong> prize makes our prize the story,
+  and our prize loses. And Techne already owns the national youth roadshow competition. A parallel
+  youth competition is not a partnership — it is a competitor to their own asset, which is the
+  fastest way to get a polite no.</p>
+</div>
+
+<h3>Three decisions that follow from this</h3>
+
+<div class="decisions">
+  <div class="decision">
+    <span class="lbl">Decision 1 · positioning</span>
+    <div class="say">Not a startup competition. A qualification challenge for people who do not have a startup yet.</div>
+    <p>Techne's Compete track serves teams with a prototype and traction. Ours serves the 19-year-old
+    who has never spoken to a customer. Different entry point, different judging, no overlap — and it
+    feeds their track next year instead of competing with it. Say this in the first line of the
+    proposal.</p>
+  </div>
+  <div class="decision">
+    <span class="lbl">Decision 2 · the event's role</span>
+    <div class="say">Techne Summit is the launchpad, not the finish line.</div>
+    <p>There are 17 days to Cairo. A serious mission-completion challenge needs six weeks of founder
+    work; three weeks of that would be recruitment. Announce and recruit on their stage, run the
+    challenge afterwards, and bring the trophy back to a Techne moment — the Drifts finale is
+    purpose-built for it.</p>
+  </div>
+  <div class="decision">
+    <span class="lbl">Decision 3 · the prize</span>
+    <div class="say">Cash is the smallest thing we are giving away — stop leading with it.</div>
+    <p>EGP 50,000 does not start a company. A verified evidence profile, a seat in a GrowthLabs
+    programme, and a guaranteed slot in Techne's real Compete track next year are worth more to a
+    22-year-old and cost us less. Keep the cash; bury it third in the announcement.</p>
+  </div>
+</div>
+
+<h2><span class="num">02 / THE FORMAT</span>Two tiers, one launch</h2>
+
+<p>The tension in this plan is that you want a demo day <em class="q">at</em> the event, and the
+event is in 17 days. Both are satisfiable if the competition is split into a small on-site spectacle
+and a real national challenge behind it.</p>
+
+<h3>Tier 1 — the Sprint (the spectacle, on-site)</h3>
+<p>A small, fast, visible cohort that exists to produce a stage moment and prove the product works
+in front of an audience.</p>
+<ul>
+  <li>Recruited live at <strong>Cairo, 26–27 Sept</strong>, from a 45-minute "Mission 1 Live" workshop
+    where every attendee completes Mission 1 on their phone in the room. Target 40 teams.</li>
+  <li><strong>Missions 1–4</strong> (problem analysis → problem statements) over the following week,
+    with two online office hours.</li>
+  <li>Top 6 pitch for three minutes each on a stage in <strong>Alexandria, 5 Oct</strong>. Awards:
+    certificates, mentor hours and Techne 2027 passes — <em>no cash at this tier</em>.</li>
+  <li>From that same stage, the National Challenge opens. The Sprint is the trailer.</li>
+</ul>
+
+<h3>Tier 2 — the National Challenge (the real one)</h3>
+<ul>
+  <li>Opens <strong>5 Oct</strong>, closes <strong>16 Nov</strong> — six weeks.</li>
+  <li><strong>Missions 1–8</strong>: from problem analysis through to a completed Business Model
+    Canvas. This is the right scope — it is everything a founder can honestly do without a product,
+    and it ends on an artefact a judge can read in two minutes.</li>
+  <li>Open nationally, promoted through Techne's 14 Drifts cities so it does not become a
+    Cairo-and-Alexandria event.</li>
+  <li>Demo Day and the EGP 100,000 in late November, at a Techne Drift stop or a co-branded finale.</li>
+</ul>
+
+<div class="note">
+  <span class="tag">Why missions 1–8 and not all 15</span>
+  <p>Missions 9–15 require building a prototype, an MVP and a go-to-market. Asking students to do
+  that in six weeks guarantees either fabricated answers or a field of twelve finishers. Missions 1–8
+  end at the Business Model Canvas, which is exactly the artefact a judging panel can compare across
+  a hundred entries.</p>
+</div>
+
+<h2><span class="num">03 / WHO CAN ENTER</span>Eligibility, kept deliberately narrow</h2>
+
+<div class="tw"><table>
+  <thead><tr><th>Rule</th><th>Setting</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr><td>Age</td><td><b>18–30</b> on the closing date</td><td>Under-18s bring guardian consent and
+      child-data obligations that cannot be built properly in 17 days. Run a school edition later,
+      on purpose.</td></tr>
+    <tr><td>Residency</td><td>Resident in Egypt</td><td>Keeps prize payment, ID verification and tax
+      treatment simple in year one. Regional expansion follows MEIW in 2027.</td></tr>
+    <tr><td>Team size</td><td>1–4, one named lead</td><td>The lead owns the StartPad account and is
+      the payee. Avoids prize-splitting disputes.</td></tr>
+    <tr><td>Company stage</td><td><b>No registered company, no external funding, no revenue</b></td>
+      <td>This is the line that stops real startups walking in and taking the youth prize — and the
+      line that keeps us out of Techne's Compete track.</td></tr>
+    <tr><td>Entries per person</td><td>One</td><td>Prevents spraying five ideas to game the odds.</td></tr>
+    <tr><td>Entry fee</td><td>None</td><td>Non-negotiable. A paid entry to a youth competition reads
+      badly and would deserve to.</td></tr>
+  </tbody>
+</table></div>
+
+<h2><span class="num">04 / JUDGING</span>The part that decides whether this is credible</h2>
+
+<p>The moment cash is attached to an AI-scored submission, some entrants will write for the
+evaluator rather than talk to customers. This is the same failure the mission audit already
+flagged inside the product — Mission 14's self-rated product-market fit score is unfalsifiable —
+and prize money makes it worse. The judging has to be built assuming people will try.</p>
+
+<ol>
+  <li><strong>The AI score is a filter, never a verdict.</strong> It sorts the field and takes the top
+    ~20% through. It does not pick winners and this is stated publicly, so nobody believes they are
+    negotiating with a machine.</li>
+  <li><strong>Evidence artefacts, not prose.</strong> Every customer-interview claim carries a logged
+    entry: interviewee first name, city, date, channel, and a consent checkbox. No log, no score on
+    that question.</li>
+  <li><strong>Verification calls.</strong> For finalists only, we contact a random 10% of logged
+    interviewees. Announce that this happens <em>before</em> entries open — the announcement does
+    more work than the calls.</li>
+  <li><strong>Duplicate and template detection</strong> across submissions, because one popular
+    YouTube tutorial produces forty identical problem statements.</li>
+  <li><strong>A blind human panel</strong> scores the shortlist without names or universities
+    attached.</li>
+  <li><strong>The live pitch decides.</strong> Three minutes, four minutes of questions. Very little
+    survives an unscripted question from a judge who has read the submission.</li>
+</ol>
+
+<h3>The published rubric</h3>
+<p>Publish this on day one. It doubles as a teaching tool, and it makes the result arguable only on
+the facts.</p>
+
+<div class="tw"><table>
+  <thead><tr><th>Pillar</th><th class="n">Weight</th><th>What earns the marks</th></tr></thead>
+  <tbody>
+    <tr><td><b>Evidence</b></td><td class="n">35%</td><td>Real conversations with real people, logged.
+      Number, quality and how much the answers changed the founder's mind.</td></tr>
+    <tr><td><b>Problem clarity</b></td><td class="n">20%</td><td>A specific person with a specific
+      problem at a specific moment — not "young people in Egypt need..."</td></tr>
+    <tr><td><b>Mission completion depth</b></td><td class="n">20%</td><td>All eight missions answered
+      at depth, not eight one-line answers.</td></tr>
+    <tr><td><b>Business model coherence</b></td><td class="n">15%</td><td>Does the canvas actually
+      follow from the evidence, or was it written first?</td></tr>
+    <tr><td><b>Pitch and answers</b></td><td class="n">10%</td><td>Finals only. Clarity under
+      questioning.</td></tr>
+  </tbody>
+  <tfoot><tr><td>Total</td><td class="n">100%</td><td>AI-scored pillars are advisory; the panel's
+    score is final.</td></tr></tfoot>
+</table></div>
+
+<h2><span class="num">05 / PRIZES</span>Restructured so the cash is the third thing they hear</h2>
+
+<div class="warn">
+  <span class="tag">Confirm before anything is printed</span>
+  <p>The brief said <strong>EGP 50 / 30 / 20</strong>. This plan assumes you mean
+  <strong>50,000 / 30,000 / 20,000</strong>, a pool of EGP 100,000. If the figures are literal, the
+  competition should not run with cash prizes at all — non-cash rewards alone would be more credible
+  than EGP 50.</p>
+</div>
+
+<div class="tw"><table>
+  <thead><tr><th>Place</th><th class="n">Cash</th><th>What actually matters more</th></tr></thead>
+  <tbody>
+    <tr><td><b>First</b></td><td class="n">EGP 50,000</td><td>A seat in the next GrowthLabs
+      incubation cohort · guaranteed entry to Techne's Compete track at Summit 2027 · exhibition
+      space at Summit 2027 · six mentor sessions</td></tr>
+    <tr><td><b>Second</b></td><td class="n">EGP 30,000</td><td>Guaranteed Compete entry 2027 ·
+      four mentor sessions · Summit 2027 passes</td></tr>
+    <tr><td><b>Third</b></td><td class="n">EGP 20,000</td><td>Four mentor sessions · Summit 2027
+      passes</td></tr>
+    <tr><td><b>Top 10 finalists</b></td><td class="n">—</td><td>Pitched on a Techne stage · a
+      verified profile on Startup Gate · one mentor session each</td></tr>
+    <tr><td><b>Everyone who finishes 8 missions</b></td><td class="n">—</td><td>A certificate
+      co-signed by Techne and StartPad, and a permanent verified evidence profile</td></tr>
+  </tbody>
+  <tfoot><tr><td>Cash pool</td><td class="n">EGP 100,000</td><td>Funded by StartPad / GrowthLabs,
+    awarded under joint branding</td></tr></tfoot>
+</table></div>
+
+<h3>Two recognitions that cost nothing and change behaviour</h3>
+<ul>
+  <li><strong>Best University</strong> — awarded on completion rate, not on winners. Turns individual
+    entry into a campus competition and gets student unions recruiting for you.</li>
+  <li><strong>Best Governorate</strong> — maps directly onto Techne's 14 Drifts cities and gives them
+    a reason to push it through their regional network.</li>
+</ul>
+
+<h2><span class="num">06 / THE FUNNEL</span>What a good outcome looks like</h2>
+
+<p>Every number below is an assumption, not a forecast — they are here so the plan can be judged
+against something and corrected after week one.</p>
+
+<div class="tw"><table>
+  <thead><tr><th>Stage</th><th class="n">Target</th><th class="n">Rate</th><th>Where it comes from</th></tr></thead>
+  <tbody>
+    <tr><td>Reached at the two summits</td><td class="n">60,000+</td><td class="n">—</td><td>Techne's own attendance</td></tr>
+    <tr><td>Registrations captured</td><td class="n">2,500</td><td class="n">~4%</td><td>Booth, stage sessions, Techne mailers, ambassadors</td></tr>
+    <tr><td>StartPad accounts created</td><td class="n">1,500</td><td class="n">60%</td><td>Registration → activated account</td></tr>
+    <tr><td>Started Mission 1</td><td class="n">825</td><td class="n">55%</td><td>The workshop cohort converts far higher than the mailer cohort</td></tr>
+    <tr><td>Completed Missions 1–4</td><td class="n">205</td><td class="n">25%</td><td>First real drop-off: interviews are work</td></tr>
+    <tr><td><b>Completed Missions 1–8 — eligible</b></td><td class="n"><b>100</b></td><td class="n">12%</td><td>The number that matters</td></tr>
+    <tr><td>Shortlisted for human review</td><td class="n">20</td><td class="n">20%</td><td>AI filter</td></tr>
+    <tr><td>Pitched at Demo Day</td><td class="n">10</td><td class="n">50%</td><td>Blind panel</td></tr>
+  </tbody>
+</table></div>
+
+<p>Read it the other way round: to award three prizes honestly, roughly a hundred young people must
+complete eight missions of real customer work. <strong>That</strong> is the return on this
+competition — the prize money buys a hundred activated, evidence-graded founders and a dataset on
+youth entrepreneurship across the governorates. The three winners are the marketing.</p>
+
+<h2><span class="num">07 / TIMELINE</span>Seventeen days to the first stage</h2>
+
+<div class="tl">
+  <div class="tl-row pin"><div class="tl-when">Wed 9 Sept</div><div class="tl-what">
+    <b>Confirm the prize figures and send the proposal</b>
+    <span>Everything else waits on Techne. The proposal and email are ready to send today.</span></div></div>
+  <div class="tl-row"><div class="tl-when">Thu 10 – Sun 13</div><div class="tl-what">
+    <b>Techne response window</b>
+    <span>Chase by phone on day two — this close to their event, email alone will not surface.
+    <b>Sun 13 Sept is the go/no-go</b>: past that, Tier 1 cannot be produced.</span></div></div>
+  <div class="tl-row"><div class="tl-when">Mon 14 – Wed 16</div><div class="tl-what">
+    <b>Lock the format, publish the rules</b>
+    <span>Landing page and registration on startpad.me; rules and rubric in Arabic and English;
+    prize terms and the IP clause legally checked.</span></div></div>
+  <div class="tl-row"><div class="tl-when">Thu 17 – Thu 24</div><div class="tl-what">
+    <b>Production and recruitment</b>
+    <span>Booth build, roll-ups, flyer with a QR to registration, 8–12 campus ambassadors briefed,
+    judges confirmed, teaser campaign live.</span></div></div>
+  <div class="tl-row pin"><div class="tl-when">Sat 26 – Sun 27</div><div class="tl-what">
+    <b>Techne Summit Cairo — launch</b>
+    <span>Stage announcement, "Mission 1 Live" workshop, Sprint cohort recruited at the booth.</span></div></div>
+  <div class="tl-row"><div class="tl-when">Mon 28 – Fri 2 Oct</div><div class="tl-what">
+    <b>Sprint week</b>
+    <span>Missions 1–4, two online office hours, daily leaderboard.</span></div></div>
+  <div class="tl-row pin"><div class="tl-when">Sat 3 – Mon 5 Oct</div><div class="tl-what">
+    <b>Techne Summit Alexandria — the stage moment</b>
+    <span>Booth all three days. Sprint Final on stage Mon 5 Oct: six teams, three minutes each.
+    The National Challenge opens from the same stage.</span></div></div>
+  <div class="tl-row"><div class="tl-when">6 Oct – 16 Nov</div><div class="tl-what">
+    <b>The National Challenge runs</b>
+    <span>Six weeks, Missions 1–8, a weekly live clinic, a mid-point push through the Drifts
+    cities.</span></div></div>
+  <div class="tl-row"><div class="tl-when">17 – 24 Nov</div><div class="tl-what">
+    <b>Scoring</b>
+    <span>AI filter → duplicate check → blind panel → verification calls on finalists.</span></div></div>
+  <div class="tl-row pin"><div class="tl-when">Late Nov</div><div class="tl-what">
+    <b>Demo Day and the prizes</b>
+    <span>At a Techne Drift stop or a co-branded finale. Winners announced, certificates issued to
+    every finisher.</span></div></div>
+</div>
+
+<h2><span class="num">08 / THE PARTNERSHIP</span>What to ask Techne for, and what to give</h2>
+
+<div class="split">
+  <div>
+    <h3>Ask</h3>
+    <ul>
+      <li>Official track status and naming — <em>the StartPad Youth Track at Techne Summit 2026</em>,
+        under the MEIW umbrella</li>
+      <li>A 45-minute workshop slot in Cairo (26 or 27 Sept)</li>
+      <li>A 30-minute stage slot in Alexandria on 5 Oct for the Sprint Final</li>
+      <li>Booth or activation space in both cities, comped or discounted against the programming we
+        deliver</li>
+      <li>Agenda and event-app listing, two mailer mentions, three social posts</li>
+      <li>Two judges from their network, plus one from ITIDA or TIEC</li>
+      <li>Introductions into the 14 Drifts cities and their university contacts</li>
+      <li>First option to host the Demo Day at a Drift stop</li>
+    </ul>
+  </div>
+  <div>
+    <h3>Give</h3>
+    <ul>
+      <li>Fully produced youth programming they neither run nor pay for</li>
+      <li>EGP 100,000 in prizes, funded by us, awarded under joint branding</li>
+      <li>Techne co-branding on every certificate and on the track inside the platform — visibility
+        that outlives the event</li>
+      <li>A scored, auditable pipeline they can reuse for Drifts and feed into Compete next year</li>
+      <li>Aggregated data on youth entrepreneurship by governorate — reportable to MCIT and ITIDA,
+        which is what a summit under their auspices needs</li>
+      <li>Free StartPad licences for all Drifts participants for twelve months</li>
+      <li>A named feeder: our top 10 enter their Compete track in 2027</li>
+    </ul>
+  </div>
+</div>
+
+<div class="note">
+  <span class="tag">The pitch in one sentence</span>
+  <p>"You already run the national youth roadshow. We will give you the scoring engine behind it,
+  pay for the prizes, and hand you the pipeline — for a stage slot and your logo next to ours."</p>
+</div>
+
+<h3>Fallback ladder, if the answer is partly no</h3>
+<ol>
+  <li><strong>No stage slot, booth only</strong> → run "Mission 1 Live" at the booth on the hour;
+    keep everything else.</li>
+  <li><strong>No booth in time</strong> → buy passes, run it as an official side event or community
+    event, which Techne offers explicitly.</li>
+  <li><strong>Nothing available this year</strong> → launch at the Drifts finale instead and sign a
+    2027 track agreement now, while their programming for next year is still open.</li>
+</ol>
+
+<h2><span class="num">09 / BUDGET</span>Order of magnitude, in EGP</h2>
+
+<div class="tw"><table>
+  <thead><tr><th>Line</th><th class="n">Low</th><th class="n">High</th><th>Note</th></tr></thead>
+  <tbody>
+    <tr><td>Prize pool</td><td class="n">100,000</td><td class="n">100,000</td><td>Fixed</td></tr>
+    <tr><td>Techne booth / activation, both cities</td><td class="n">0</td><td class="n">150,000</td>
+      <td><b>The unknown.</b> Ask them to comp it against the programming</td></tr>
+    <tr><td>Booth build, roll-ups, print</td><td class="n">20,000</td><td class="n">35,000</td><td></td></tr>
+    <tr><td>Paid social, six weeks</td><td class="n">40,000</td><td class="n">80,000</td><td>Meta and TikTok, youth targeting by governorate</td></tr>
+    <tr><td>Campus ambassadors (10 × stipend)</td><td class="n">20,000</td><td class="n">35,000</td><td>The highest-return line in this table</td></tr>
+    <tr><td>Demo Day production</td><td class="n">30,000</td><td class="n">60,000</td><td>Lower if hosted inside a Drift</td></tr>
+    <tr><td>Judges, mentors, travel</td><td class="n">15,000</td><td class="n">30,000</td><td></td></tr>
+    <tr><td>Certificates, trophies, merchandise</td><td class="n">10,000</td><td class="n">20,000</td><td></td></tr>
+    <tr><td>Contingency, 15%</td><td class="n">35,000</td><td class="n">77,000</td><td></td></tr>
+  </tbody>
+  <tfoot><tr><td>Total</td><td class="n">270,000</td><td class="n">587,000</td>
+    <td>≈ USD 5,500 – 12,000</td></tr></tfoot>
+</table></div>
+
+<h2><span class="num">10 / RISKS</span>What can actually go wrong</h2>
+
+<div class="tw"><table>
+  <thead><tr><th>Risk</th><th>Handling</th></tr></thead>
+  <tbody>
+    <tr><td><b>Techne does not answer in time.</b> Seventeen days out, their team is consumed by
+      their own event.</td><td>Send today, phone Friday, and treat Sunday 13 Sept as go/no-go. Have
+      the fallback ladder pre-agreed internally so nobody has to make the call under pressure.</td></tr>
+    <tr><td><b>Entrants write for the AI.</b></td><td>The whole of section 04. Announce verification
+      before entries open.</td></tr>
+    <tr><td><b>Ten finishers instead of a hundred.</b></td><td>Missions 1–8, not 15. Weekly clinics.
+      Campus ambassadors. If week two is short, cut the requirement to Missions 1–6 publicly and
+      early, never at judging time.</td></tr>
+    <tr><td><b>"They will steal my idea."</b> A real and specific blocker with young Egyptian
+      founders.</td><td>Put <em>"You own your idea. Always."</em> on the landing page, in the rules,
+      and on the stage. Nothing in the terms should assign IP or a right of first refusal — and if
+      anyone suggests adding one, the competition is worth less than the clause.</td></tr>
+    <tr><td><b>Personal data of a thousand young people.</b></td><td>Egypt's Personal Data Protection
+      Law (Law 151 of 2020) applies. Explicit consent at registration, a stated retention period, a
+      named data owner, and no sharing of entrant contact details with sponsors.</td></tr>
+    <tr><td><b>Prize payment.</b></td><td>Bank transfer against national ID and a signed receipt.
+      Have an accountant confirm the tax treatment of prize money to individuals <i>before</i>
+      announcing, not after winning.</td></tr>
+    <tr><td><b>A judge knows a finalist.</b></td><td>Blind shortlist scoring, declared conflicts, and
+      a published appeal window of 72 hours after results.</td></tr>
+  </tbody>
+</table></div>
+
+<h2><span class="num">11 / NAME</span>Mission Zero</h2>
+<p>The missions are the product, so the name should come from them. <strong>Mission Zero</strong> —
+<span class="ar">المهمة صفر</span> — is the mission before the missions: the decision to start.
+It works in both languages, it does not contain the word "competition", and it says the entry point
+is zero, which is precisely the audience.</p>
+<p>Alternatives if it is taken: <strong>Zero to Evidence</strong> · <strong>First Mission</strong>
+(<span class="ar">أول مهمة</span>) · <strong>Proof</strong> (<span class="ar">دليل</span>).</p>
+
+<div class="kicker-rule"></div>
+<footer>
+  <p><strong>Facts in this plan come from public sources, checked 9 September 2026.</strong>
+  The compiling environment could not open pages directly, so dates and figures are as reported in
+  search results — reconfirm the Cairo and Alexandria dates and the Compete track details with
+  Techne in the first email.</p>
+  <p>Techne Summit 2026 dates and scale · Techne Drifts roadshow structure · Startup World Cup
+  regional tournament, Alexandria 4 Oct · Middle East Innovation Week 2026 ·
+  <a href="https://technesummit.com/2026">technesummit.com/2026</a> ·
+  <a href="https://www.techne.me/events">techne.me/events</a></p>
+</footer>
+
+</div>

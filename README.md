@@ -212,3 +212,29 @@ approval. The press-kit page marks them in bronze so none can slip through.
 **Figures.** Every number came from a live web search at drafting time, listed in
 `press/fact_check_sources.md`. As with the rest of this repo, the egress proxy blocked
 direct page fetches, so confirm them against the live pages before distribution.
+
+---
+
+# Mission Zero — the StartPad × Techne youth competition
+
+A national youth challenge where the entry ticket is finishing StartPad missions, launched at
+Techne Summit 2026 (Cairo 26–27 Sept, Alexandria 3–5 Oct).
+
+| File | What it is |
+|---|---|
+| `output/mission_zero_playbook.html` | The plan — format, eligibility, judging, prizes, funnel targets, timeline, budget and risks. [Published artifact](https://claude.ai/code/artifact/52089729-b58d-441f-b539-1125d5974e0e). |
+| `competition/proposal.py` | Source of truth for the partnership proposal and its covering email. |
+| `output/StartPad_Techne_Partnership_Proposal.docx` | Two pages to attach, plus the email to send. |
+
+```bash
+python3 scripts/build_techne_proposal_docx.py output/StartPad_Techne_Partnership_Proposal.docx
+```
+
+The plan turns on three findings about Techne: they already run the national youth roadshow
+competition (Techne Drifts, 14 cities), their Compete track is hosting a Startup World Cup
+tournament with a USD 1M headline prize, and their summit is 17 days away. So this is positioned as
+a **feeder into** their track rather than a rival to it, the summit is used as the launchpad rather
+than the finale, and cash is deliberately the third thing a participant hears about.
+
+Dates and figures came from live web search on 9 September 2026; the egress proxy blocked page
+fetches, so reconfirm them with Techne in the first email.
