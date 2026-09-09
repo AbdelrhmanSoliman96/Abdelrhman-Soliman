@@ -217,12 +217,12 @@ direct page fetches, so confirm them against the live pages before distribution.
 
 # Mission Zero — the StartPad × Techne youth competition
 
-A national youth challenge where the entry ticket is finishing StartPad missions, launched at
-Techne Summit 2026 (Cairo 26–27 Sept, Alexandria 3–5 Oct).
+A national youth challenge where the entry ticket is finishing all 15 StartPad missions in one
+month, launched from the Techne Summit Alexandria stage (3–5 October 2026).
 
 | File | What it is |
 |---|---|
-| `output/mission_zero_playbook.html` | The plan — format, eligibility, judging, prizes, funnel targets, timeline, budget and risks. [Published artifact](https://claude.ai/code/artifact/52089729-b58d-441f-b539-1125d5974e0e). |
+| `output/mission_zero_playbook.html` | The plan — the mutual-value case, format, four-week structure, judging, prizes, funnel targets, timeline, budget and risks. [Published artifact](https://claude.ai/code/artifact/52089729-b58d-441f-b539-1125d5974e0e). |
 | `competition/proposal.py` | Source of truth for the partnership proposal and its covering email. |
 | `output/StartPad_Techne_Partnership_Proposal.docx` | Two pages to attach, plus the email to send. |
 
@@ -230,11 +230,17 @@ Techne Summit 2026 (Cairo 26–27 Sept, Alexandria 3–5 Oct).
 python3 scripts/build_techne_proposal_docx.py output/StartPad_Techne_Partnership_Proposal.docx
 ```
 
-The plan turns on three findings about Techne: they already run the national youth roadshow
-competition (Techne Drifts, 14 cities), their Compete track is hosting a Startup World Cup
-tournament with a USD 1M headline prize, and their summit is 17 days away. So this is positioned as
-a **feeder into** their track rather than a rival to it, the summit is used as the launchpad rather
-than the finale, and cash is deliberately the third thing a participant hears about.
+Three findings about Techne shape the plan: they already run the national youth roadshow competition
+(Techne Drifts, 14 cities), their Compete track is hosting a Startup World Cup tournament with a
+USD 1M headline prize, and their summit is 24 days away. So this is positioned as a **feeder into**
+their track rather than a rival, eligibility structurally excludes anyone with a company, funding or
+revenue, and cash is deliberately the third thing a participant hears about.
+
+The one hard problem is fitting all 15 missions into 30 days: missions 9, 13 and 14 ask for a
+prototype, an MVP and a product-market-fit test. The plan solves it by publishing narrow definitions
+of done — a clickable prototype rather than code, a manual MVP with 10 real users, and a demand-signal
+test rather than a self-rated PMF score — and by setting a tripwire to reduce the requirement
+publicly and early if week 2 completion runs short.
 
 Dates and figures came from live web search on 9 September 2026; the egress proxy blocked page
 fetches, so reconfirm them with Techne in the first email.
