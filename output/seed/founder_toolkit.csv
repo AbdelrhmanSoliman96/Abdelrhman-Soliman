@@ -1,0 +1,49 @@
+shelf,sort_order,tool_slug,tool_name,category,rationale
+Fundraising track (proposed Mission 16 — 'Raise Your Round'),1,pitch-narrative,Pitch Narrative,Fundraising & Investor,The 7-beat story before any slide is designed.
+Fundraising track (proposed Mission 16 — 'Raise Your Round'),2,pitch-deck-builder-12-slides,Pitch Deck Builder (12 slides),Investor Materials (DOCX),The deck itself — companion Word template.
+Fundraising track (proposed Mission 16 — 'Raise Your Round'),3,investor-one-pager,Investor One-Pager,Investor Materials (DOCX),The leave-behind / cold-send page.
+Fundraising track (proposed Mission 16 — 'Raise Your Round'),4,fundability-scorecard,Fundability Scorecard,Fundraising & Investor,Honest investor-readiness score before you start pitching.
+Fundraising track (proposed Mission 16 — 'Raise Your Round'),5,funding-ask,Funding Ask,Cap Table & Deal Terms,"How much to raise, backed by the runway math."
+Fundraising track (proposed Mission 16 — 'Raise Your Round'),6,use-of-funds,Use of Funds,Cap Table & Deal Terms,Where the money goes — slide 12's supporting detail.
+Fundraising track (proposed Mission 16 — 'Raise Your Round'),7,fundraising-pipeline,Fundraising Pipeline,Fundraising & Investor,Investor CRM; a raise is a sales process.
+Fundraising track (proposed Mission 16 — 'Raise Your Round'),8,data-room-checklist,Data Room Checklist,Fundraising & Investor,"What diligence will ask for, assembled in advance."
+Fundraising track (proposed Mission 16 — 'Raise Your Round'),9,investor-update-delta,Investor Update Delta,Fundraising & Investor,Monthly update — the habit that makes the next round easier.
+Fundraising track (proposed Mission 16 — 'Raise Your Round'),10,cap-table-dynamic-multi-round,"Cap Table — dynamic, multi-round",Cap Table & Deal Terms,"Who owns what, at every stage."
+Fundraising track (proposed Mission 16 — 'Raise Your Round'),11,safe-conversion,SAFE Conversion,Cap Table & Deal Terms,What the SAFE becomes at the priced round.
+Fundraising track (proposed Mission 16 — 'Raise Your Round'),12,quick-dilution-what-if,Quick Dilution What-If,Cap Table & Deal Terms,Napkin math before a conversation.
+Fundraising track (proposed Mission 16 — 'Raise Your Round'),13,term-sheet-analyzer,Term Sheet Analyzer,Cap Table & Deal Terms,The real terms behind the headline valuation.
+Fundraising track (proposed Mission 16 — 'Raise Your Round'),14,3-year-revenue-projection,3-Year Revenue Projection,Financial Statements,The model investors will ask to see.
+Fundraising track (proposed Mission 16 — 'Raise Your Round'),15,scenario-model,Scenario Model,Financial Statements,Downside / base / upside — asked in every diligence call.
+Finance shelf (available from Mission 8 onward),1,income-statement-p-and-l,Income Statement (P&L),Financial Statements,Monthly P&L once real numbers exist.
+Finance shelf (available from Mission 8 onward),2,cash-flow-statement,Cash Flow Statement,Financial Statements,Where cash actually moves.
+Finance shelf (available from Mission 8 onward),3,operating-budget-opex,Operating Budget / OpEx,Financial Statements,Departmental budget.
+Finance shelf (available from Mission 8 onward),4,working-capital,Working Capital,Financial Statements,Cash conversion cycle — critical for any inventory or services model.
+Finance shelf (available from Mission 8 onward),5,rolling-cash-forecast,Rolling Cash Forecast,Financial Statements,The 13-week view; the standard survival tool.
+Finance shelf (available from Mission 8 onward),6,break-even-analysis,Break-Even Analysis,Financial Statements,When do revenues cover costs.
+Finance shelf (available from Mission 8 onward),7,kpi-tracker-actual-vs-projected,KPI Tracker — Actual vs Projected,KPI Tracker,"Plan vs reality, every month."
+"Team & governance shelf (trigger: first hire, incorporation, contractor)",1,culture-and-values,Culture & Values,Team & Operations,Before the third person joins.
+"Team & governance shelf (trigger: first hire, incorporation, contractor)",2,team-structure-and-equity,Team Structure & Equity,Team & Operations,"Founder equity split — settle it early, in writing."
+"Team & governance shelf (trigger: first hire, incorporation, contractor)",3,team-roles-and-hiring-plan,Team Roles & Hiring Plan,Team & Operations,Who to hire and when.
+"Team & governance shelf (trigger: first hire, incorporation, contractor)",4,hiring-cost-model,Hiring Cost Model,Team & Operations,Fully-loaded cost of a hire.
+"Team & governance shelf (trigger: first hire, incorporation, contractor)",5,compensation-bands,Compensation Bands,Team & Operations,Consistent pay before ad-hoc offers create problems.
+"Team & governance shelf (trigger: first hire, incorporation, contractor)",6,org-span-of-control,Org Span of Control,Team & Operations,Org shape past ~8 people.
+"Team & governance shelf (trigger: first hire, incorporation, contractor)",7,legal-checklist,Legal Checklist,Team & Operations,"Entity, founders' agreement, IP assignment, privacy."
+"Team & governance shelf (trigger: first hire, incorporation, contractor)",8,ip-strategy,IP Strategy,Team & Operations,Trademark and IP assignment.
+"Team & governance shelf (trigger: first hire, incorporation, contractor)",9,risk-register,Risk Register,Team & Operations,"Standing register, reviewed monthly."
+"Team & governance shelf (trigger: first hire, incorporation, contractor)",10,okrs,OKRs,Strategy & Business Model,Quarterly goals once the team is more than the founders.
+"Team & governance shelf (trigger: first hire, incorporation, contractor)",11,vision-and-mission,Vision & Mission,Strategy & Business Model,"Written once, referenced constantly."
+"Team & governance shelf (trigger: first hire, incorporation, contractor)",12,sales-velocity,Sales Velocity,Team & Operations,Once a pipeline exists.
+"Team & governance shelf (trigger: first hire, incorporation, contractor)",13,sales-capacity,Sales Capacity,Team & Operations,Once you have more than one seller.
+Scale shelf (post-Mission 15),1,scaling-readiness-scorecard,Scaling Readiness Scorecard,Strategy & Business Model,Are you ready to scale?
+Scale shelf (post-Mission 15),2,market-expansion-priority,Market Expansion Priority,Strategy & Business Model,Which market next.
+Scale shelf (post-Mission 15),3,new-market-entry-scorecard,New Market Entry Scorecard,Strategy & Business Model,Cross-border entry decision.
+Scale shelf (post-Mission 15),4,partnership-bd-pipeline,Partnership / BD Pipeline,Strategy & Business Model,Partnerships as a growth channel.
+Scale shelf (post-Mission 15),5,expansion-and-nrr,Expansion & NRR,Metrics & Growth Analytics,Growth from existing accounts.
+Scale shelf (post-Mission 15),6,revenue-per-employee,Revenue per Employee,Metrics & Growth Analytics,Productivity as you add headcount.
+Scale shelf (post-Mission 15),7,rule-of-40,Rule of 40,Metrics & Growth Analytics,Growth-vs-profit balance.
+Scale shelf (post-Mission 15),8,magic-number,Magic Number,Metrics & Growth Analytics,Sales efficiency.
+Scale shelf (post-Mission 15),9,growth-accounting,Growth Accounting,Metrics & Growth Analytics,Decomposed growth.
+Scale shelf (post-Mission 15),10,customer-health-score,Customer Health Score,Metrics & Growth Analytics,Retention early-warning system.
+Scale shelf (post-Mission 15),11,saas-metrics-dashboard,SaaS Metrics Dashboard,Metrics & Growth Analytics,The standing metrics board.
+Scale shelf (post-Mission 15),12,kpi-scorecard,KPI Scorecard,Metrics & Growth Analytics,Target vs actual.
+Scale shelf (post-Mission 15),13,growth-rate-and-cagr,Growth Rate & CAGR,Metrics & Growth Analytics,Momentum.

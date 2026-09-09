@@ -1,0 +1,197 @@
+mission_id,mission_title,tool_slug,tool_name,role,sort_order,rationale,feeds_question
+1,Problem Analysis,market-research-brief,Market Research Brief,core,1,"Frames the industry scan before any opinion forms — market, trends, players, sources.",Q1 What area/industry are you interested in?
+1,Problem Analysis,problem-statement,Problem Statement,core,2,"Forces the observed problem into a precise sentence and scores its frequency × intensity, so 'a problem I noticed' becomes a measured one.",Q2 Describe a specific problem you've observed
+1,Problem Analysis,jobs-to-be-done,Jobs-to-be-Done,core,3,Captures what the person is actually trying to get done — stops the founder describing a feature instead of a problem.,Q2 / Q3
+1,Problem Analysis,competitor-feature-coverage,Competitor Feature Coverage,core,4,The white-space matrix: list every existing solution and what it does/doesn't cover. Directly answers Q4 and Q5.,Q4 What solutions currently exist? · Q5 Limitations
+1,Problem Analysis,interview-script-builder,Interview Script Builder,core,5,"Mom-Test style script so the first conversations produce facts, not polite encouragement.",Q2 / Q3 (evidence behind the answers)
+1,Problem Analysis,customer-persona,Customer Persona,supporting,1,A first sketch of who is affected — refined properly in Mission 2.,Q3 Who is affected by this problem?
+1,Problem Analysis,assumptions-tracker,Assumptions Tracker,supporting,2,Log every belief you are treating as fact from day one; this list drives Missions 7 and 12.,Q5 (what you assume about current solutions)
+1,Problem Analysis,pestel-analysis,PESTEL Analysis,supporting,3,"Macro scan — regulation, economics, tech shifts — that explains why the problem exists now.",Q1
+1,Problem Analysis,interview-synthesis,Interview Synthesis,stretch,1,"If you managed more than 3 conversations, synthesise them instead of quoting the loudest one.",Q2 / Q5
+1,Problem Analysis,swot-analysis,SWOT Analysis,stretch,2,"Early read on where you could play, if you already have an angle.",Q1
+2,Problem Definition,customer-persona,Customer Persona,core,1,"The mission's whole job: one named, specific user. Feeds Q1 and Q2 line for line.",Q1 Who is your primary user? · Q2 Key characteristics
+2,Problem Definition,jobs-to-be-done,Jobs-to-be-Done,core,2,"Ties the persona to a concrete job, with the trigger and the current workaround.",Q3 What specific problem do they face?
+2,Problem Definition,interview-script-builder,Interview Script Builder,core,3,You cannot answer Q4/Q5 from a desk. The script gets context and frequency from real users.,Q4 When/where does it occur? · Q5 How often?
+2,Problem Definition,interview-synthesis,Interview Synthesis,core,4,Turns 5-10 interviews into the patterns that become the persona's characteristics.,Q2 / Q3
+2,Problem Definition,problem-statement,Problem Statement,core,5,Frequency (1-10) and Intensity (1-10) inputs are literally Q5 and the severity behind Q3.,Q3 / Q5
+2,Problem Definition,assumptions-tracker,Assumptions Tracker,supporting,1,Every persona attribute you did not hear from a real user is an assumption — log it now.,Q2
+2,Problem Definition,survey-sample-size,Survey Sample Size,supporting,2,Tells you how many people you need before 'how often' is a number rather than a guess.,Q5 How often does this problem occur?
+2,Problem Definition,market-sizing-tam-sam-som,Market Sizing (TAM/SAM/SOM),supporting,3,A first count of how many people match this persona.,Q1
+2,Problem Definition,churn-by-segment,Churn by Segment,stretch,1,"If you already have users, shows which segment actually has the problem worst.",Q1
+3,Importance/Frequency Matrix,importance-frequency-matrix,Importance / Frequency Matrix,core,1,This mission IS the tool. Plot each candidate problem on importance × frequency and read the quadrant.,Q1-Q6 (all problem/importance/frequency pairs)
+3,Importance/Frequency Matrix,problem-statement,Problem Statement,core,2,Its severity score (frequency × intensity) is the numeric input for each problem you plot.,Q2/Q3 and Q5/Q6 scores
+3,Importance/Frequency Matrix,idea-scorecard,Idea Scorecard,core,3,Weighted scoring for the tie-break when two problems land in the same quadrant.,Q7 Which problem will you focus on?
+3,Importance/Frequency Matrix,assumptions-tracker,Assumptions Tracker,supporting,1,"Ranks the riskiest assumption behind each score, so you know which number is softest.",Q7
+3,Importance/Frequency Matrix,interview-synthesis,Interview Synthesis,supporting,2,Sources the scores from evidence rather than founder instinct.,Q2-Q6
+3,Importance/Frequency Matrix,survey-sample-size,Survey Sample Size,supporting,3,"If you want the frequency scores to be defensible, this sets the n you need.",Q3 / Q6
+3,Importance/Frequency Matrix,value-vs-effort,Value vs Effort,stretch,1,A second lens: some high-importance problems are unreachable for a team of your size.,Q7
+4,Problem Statements,problem-statement,Problem Statement,core,1,"The mission deliverable in one tool — target user, pain, frequency, intensity, evidence.",Q1 Main problem statement · Q2 Who specifically
+4,Problem Statements,customer-persona,Customer Persona,core,2,Q2 asks 'who specifically'. The persona is the specific answer.,Q2 Who specifically faces this problem?
+4,Problem Statements,market-sizing-tam-sam-som,Market Sizing (TAM/SAM/SOM),core,3,Quantifies impact — how many people × how much it costs them.,Q3 What is the impact of this problem?
+4,Problem Statements,hypothesis-builder,Hypothesis Builder,core,4,"Turns the statement into a falsifiable claim, which is what Mission 7 will test.",Q1 / Q4
+4,Problem Statements,north-star-metric,North Star Metric,core,5,"Q4 asks how you'll measure success. This defines the one number, before you build anything.",Q4 How will you measure success?
+4,Problem Statements,positioning-statement,Positioning Statement,supporting,1,"The 'For / Who / Unlike' skeleton keeps the problem statement customer-first, not product-first.",Q1
+4,Problem Statements,validation-scorecard,Validation Scorecard,supporting,2,Scores how much real evidence sits behind the statement — honest baseline before validation.,Q1
+4,Problem Statements,kpi-scorecard,KPI Scorecard,supporting,3,"Sets target vs actual for the success measure so Q4 has a threshold, not just a metric name.",Q4
+4,Problem Statements,vision-and-mission,Vision & Mission,stretch,1,"If the problem is one you intend to spend years on, write the long-form version now.",Q1
+5,Idea Selection,value-vs-effort,Value vs Effort,core,1,This mission IS the value/impact matrix. Plot every candidate solution and read the quadrant.,Q2/Q3 and Q5/Q6 scores
+5,Idea Selection,idea-scorecard,Idea Scorecard,core,2,"Weighted, multi-criteria scoring — the objective backup for 'why did you select this idea'.",Q7 Which idea · Q8 Why
+5,Idea Selection,feature-prioritisation-rice,Feature Prioritisation — RICE,core,3,"Where two ideas score alike, Reach × Impact × Confidence ÷ Effort separates them with numbers.",Q7 / Q8
+5,Idea Selection,experiment-backlog-ice,Experiment Backlog — ICE,supporting,1,Sequences the ideas you did NOT pick into a backlog instead of losing them.,Q7
+5,Idea Selection,build-vs-buy,Build vs Buy,supporting,2,Some ideas are cheaper to integrate than to build — changes the effort score materially.,Q3 / Q6 Impact & effort scores
+5,Idea Selection,assumptions-tracker,Assumptions Tracker,supporting,3,Each idea rests on assumptions; the riskiest one should influence the choice.,Q8
+5,Idea Selection,swot-analysis,SWOT Analysis,supporting,4,Checks the chosen idea against what your team is actually good at.,Q8
+5,Idea Selection,revenue-model-designer,Revenue Model Designer,stretch,1,"An idea you cannot charge for is a feature, not a startup — sanity-check monetisation early.",Q8
+6,Idea Description,value-proposition-canvas,Value Proposition Canvas,core,1,"The problem-solution canvas this mission asks for: pains/gains on the right, your value map on the left.",Q1 Value proposition · Q3 Benefits
+6,Idea Description,lean-canvas,Lean Canvas,core,2,"One page that holds problem, solution, UVP and unfair advantage together — the mission on a page.",Q1 / Q2 / Q4
+6,Idea Description,product-description,Product Description,core,3,"Name, core features, benefits, use cases, differentiators — directly answers Q2 and Q3.",Q2 List 3-5 key features · Q3 Benefits
+6,Idea Description,elevator-pitch,Elevator Pitch,core,4,"Forces the value proposition into 30 seconds. If it doesn't fit, Q1 isn't finished.",Q1 What is your value proposition?
+6,Idea Description,assumptions-tracker,Assumptions Tracker,core,5,"Q5 asks what you're assuming. This tool is the register, ranked by risk.",Q5 What assumptions are you making?
+6,Idea Description,competitor-feature-coverage,Competitor Feature Coverage,supporting,1,Q4 (how is this different) is only credible against a mapped competitive set.,Q4 How is this different from existing solutions?
+6,Idea Description,positioning-statement,Positioning Statement,supporting,2,"'Unlike [alternative], we [differentiator]' is the sentence Q4 wants.",Q4
+6,Idea Description,mvp-scope-moscow,MVP Scope (MoSCoW),supporting,3,Turns the 3-5 key features into must / should / could before Mission 9 begins.,Q2
+6,Idea Description,business-model-canvas,Business Model Canvas,stretch,1,A first pass now makes Mission 8 an edit rather than a blank page.,Q1
+6,Idea Description,brand-identity,Brand Identity,stretch,2,"If the value proposition is emotional as much as functional, define the brand basics.",Q3
+7,Solution Hypothesis Test,hypothesis-builder,Hypothesis Builder,core,1,Q1 asks for a hypothesis. This tool makes it falsifiable: 'We believe X. We'll know we're right if Y.',Q1 What is your main hypothesis?
+7,Solution Hypothesis Test,assumptions-tracker,Assumptions Tracker,core,2,Riskiest-Assumption-Test ranking tells you which hypothesis is worth testing first.,Q1
+7,Solution Hypothesis Test,interview-script-builder,Interview Script Builder,core,3,The most common test at this stage. Designed to avoid leading questions.,Q2 How will you test this hypothesis?
+7,Solution Hypothesis Test,validation-scorecard,Validation Scorecard,core,4,Q3 asks what would prove you right — this sets the pass threshold before you see results.,Q3 What would prove your hypothesis correct?
+7,Solution Hypothesis Test,interview-synthesis,Interview Synthesis,core,5,Converts raw conversations into the findings Q4 and Q5 ask for.,Q4 Test results · Q5 What did you learn?
+7,Solution Hypothesis Test,demand-smoke-test,Demand / Smoke Test,supporting,1,"A landing page + traffic proves interest with behaviour, not opinions.",Q2 / Q4
+7,Solution Hypothesis Test,landing-page-brief,Landing Page Brief,supporting,2,"Specs the smoke-test page so the test measures the offer, not bad copy.",Q2
+7,Solution Hypothesis Test,survey-sample-size,Survey Sample Size,supporting,3,Sets how many responses make the result meaningful rather than anecdotal.,Q3
+7,Solution Hypothesis Test,waitlist-pre-order-tracker,Waitlist / Pre-order Tracker,supporting,4,The strongest early signal: someone gave you their email or their money.,Q4
+7,Solution Hypothesis Test,a-b-test,A/B Test,stretch,1,"If you have enough traffic, test two framings of the value proposition against each other.",Q2 / Q4
+7,Solution Hypothesis Test,willingness-to-pay-test,Willingness-to-Pay Test,stretch,2,Tests price alongside desirability — worth doing now if you can.,Q4
+8,Business Model Canvas,business-model-canvas,Business Model Canvas,core,1,The mission IS this canvas. All 9 blocks map 1:1 onto Q1-Q9.,Q1-Q9 (all nine blocks)
+8,Business Model Canvas,value-proposition-canvas,Value Proposition Canvas,core,2,Feeds the Value Propositions and Customer Segments blocks with tested detail.,Q1 Value Propositions · Q2 Customer Segments
+8,Business Model Canvas,revenue-model-designer,Revenue Model Designer,core,3,"Q5 Revenue Streams needs a chosen pattern — subscription, transaction, marketplace, licence.",Q5 Revenue Streams
+8,Business Model Canvas,pricing-strategy,Pricing Strategy,core,4,A revenue stream without a price is not a business model.,Q5 Revenue Streams
+8,Business Model Canvas,cost-structure-and-budget,Cost Structure & Budget,core,5,"Q9 asks for cost structure. This is the real line-item breakdown, not a guess.",Q9 Cost Structure
+8,Business Model Canvas,unit-economics,Unit Economics,core,6,Proves the model works per customer before it has to work at scale.,Q5 / Q9
+8,Business Model Canvas,channel-cac-planner,Channel CAC Planner,supporting,1,Q3 Channels is only answered when you know what each channel costs.,Q3 Channels
+8,Business Model Canvas,partnership-bd-pipeline,Partnership / BD Pipeline,supporting,2,Turns Q8 Key Partnerships from a wish list into a pipeline with named counterparties.,Q8 Key Partnerships
+8,Business Model Canvas,team-roles-and-hiring-plan,Team Roles & Hiring Plan,supporting,3,Key Resources are mostly people at this stage.,Q6 Key Resources
+8,Business Model Canvas,break-even-analysis,Break-Even Analysis,supporting,4,Tests whether the price and cost structure you just wrote can ever meet.,Q5 / Q9
+8,Business Model Canvas,lean-canvas,Lean Canvas,supporting,5,The lighter alternative if the full BMC is too heavy for a pre-revenue idea.,Q1-Q9
+8,Business Model Canvas,willingness-to-pay-test,Willingness-to-Pay Test,supporting,6,Grounds the revenue block in what customers said they'd pay.,Q5
+8,Business Model Canvas,income-statement-p-and-l,Income Statement (P&L),stretch,1,Turn the canvas into a first monthly P&L — makes the model numeric.,Q5 / Q9
+8,Business Model Canvas,operating-budget-opex,Operating Budget / OpEx,stretch,2,Departmental view of the cost structure.,Q9
+8,Business Model Canvas,customer-health-score,Customer Health Score,stretch,3,"If your model depends on retention, define what a healthy customer looks like now.",Q4
+9,Build Prototype,mvp-scope-moscow,MVP Scope (MoSCoW),core,1,Decides what the prototype must show and what it explicitly will not — the discipline this mission needs.,Q2 What key features does it include?
+9,Build Prototype,product-roadmap,Product Roadmap,core,2,"Now / Next / Later sequencing so the prototype is step one of a plan, not a one-off.",Q6 What are your next steps?
+9,Build Prototype,value-vs-effort,Value vs Effort,core,3,Fast triage of which flows are worth prototyping in the hours you have.,Q2 / Q3
+9,Build Prototype,tech-stack-selector,Tech Stack Selector,core,4,Q4 asks what tools you used. Weighted decision matrix instead of picking what's familiar.,Q4 What tools did you use?
+9,Build Prototype,feature-prioritisation-rice,Feature Prioritisation — RICE,supporting,1,Ranks the features inside the must-have set when even those don't all fit.,Q2
+9,Build Prototype,build-vs-buy,Build vs Buy,supporting,2,"At prototype stage, most things should be bought or faked, not built.",Q4
+9,Build Prototype,product-description,Product Description,supporting,3,The one-liner that the prototype's first screen has to communicate.,Q1
+9,Build Prototype,landing-page-brief,Landing Page Brief,supporting,4,"If the prototype is a landing page or concierge test, this specs it.",Q1 / Q3
+9,Build Prototype,sprint-velocity-eta,Sprint Velocity / ETA,supporting,5,Sets a realistic finish date for the 5-10 hour budget.,Q6
+9,Build Prototype,interview-script-builder,Interview Script Builder,stretch,1,"Write the test script while you build, so Mission 10 starts immediately.",Q6
+9,Build Prototype,risk-register,Risk Register,stretch,2,Technical risks the prototype should be designed to expose early.,Q6
+10,Solution Hypothesis Test (Prototype),user-testing-synthesis,User Testing Synthesis,core,1,"The mission deliverable: task success, time on task, severity-ranked usability findings.",Q3 Key findings · Q4 User feedback
+10,Solution Hypothesis Test (Prototype),interview-script-builder,Interview Script Builder,core,2,Q2 asks how you conducted the tests — a written protocol is the answer.,Q2 How did you conduct the tests?
+10,Solution Hypothesis Test (Prototype),hypothesis-builder,Hypothesis Builder,core,3,"Each test session should test a stated belief, not just 'see what they think'.",Q2 / Q3
+10,Solution Hypothesis Test (Prototype),validation-scorecard,Validation Scorecard,core,4,Turns mixed qualitative feedback into one evidence score you can compare to Mission 7.,Q3 / Q5
+10,Solution Hypothesis Test (Prototype),survey-sample-size,Survey Sample Size,core,5,Q1 asks how many people tested. This says how many were enough.,Q1 How many people tested your prototype?
+10,Solution Hypothesis Test (Prototype),nps,NPS,supporting,1,One comparable number across test rounds.,Q3
+10,Solution Hypothesis Test (Prototype),interview-synthesis,Interview Synthesis,supporting,2,For the open-ended half of each session.,Q4
+10,Solution Hypothesis Test (Prototype),assumptions-tracker,Assumptions Tracker,supporting,3,"Mark which assumptions the tests killed, confirmed, or left open.",Q3 / Q5
+10,Solution Hypothesis Test (Prototype),feature-adoption,Feature Adoption,supporting,4,"If the prototype is clickable and instrumented, shows which features got touched at all.",Q3
+10,Solution Hypothesis Test (Prototype),value-vs-effort,Value vs Effort,supporting,5,Prioritises the improvement list Q5 asks for.,Q5 What improvements will you make?
+10,Solution Hypothesis Test (Prototype),engagement-score,Engagement Score,stretch,1,For interactive prototypes with enough sessions to score.,Q3
+10,Solution Hypothesis Test (Prototype),feature-prioritisation-rice,Feature Prioritisation — RICE,stretch,2,Ranks the fix list with numbers before Mission 13.,Q5
+11,Service Selection,go-to-market-plan,Go-to-Market Plan,core,1,"The mission's spine: segment, positioning, channels, messaging, motion, budget.",Q1-Q5 (all)
+11,Service Selection,marketing-strategy,Marketing Strategy,core,2,STP + 4Ps — the structured answer to 'who is your target market' and 'which channels'.,Q1 Target market · Q2 Marketing channels
+11,Service Selection,channel-cac-planner,Channel CAC Planner,core,3,Q2 is only answerable with cost per channel — otherwise it's a list of hopes.,Q2 What marketing channels will you use?
+11,Service Selection,pricing-strategy,Pricing Strategy,core,4,"Q3 asks for a pricing strategy — cost-plus vs value-based, with the reasoning.",Q3 What is your pricing strategy?
+11,Service Selection,pricing-tiering-arpu,Pricing Tiering / ARPU,core,5,Turns one price into a Good-Better-Best structure and an expected ARPU.,Q3
+11,Service Selection,sales-strategy,Sales Strategy,core,6,"Q4 asks you to describe the sales process — motion, stages, tactics, quota.",Q4 Describe your sales process
+11,Service Selection,positioning-statement,Positioning Statement,supporting,1,Every channel message inherits from this sentence.,Q1
+11,Service Selection,marketing-sales-funnel,Marketing / Sales Funnel,supporting,2,Models the conversion path the channels are supposed to feed.,Q2 / Q4
+11,Service Selection,sales-velocity,Sales Velocity,supporting,3,Deals × value × win rate ÷ cycle length — makes the sales process a forecast.,Q4
+11,Service Selection,sales-capacity,Sales Capacity,supporting,4,Tells you how many deals the current team can actually carry.,Q4
+11,Service Selection,brand-identity,Brand Identity,supporting,5,The voice and look every launch asset will use.,Q2
+11,Service Selection,content-cadence,Content Cadence,supporting,6,The publishing calendar behind an owned-channel strategy.,Q2
+11,Service Selection,launch-checklist,Launch Checklist,supporting,7,Q5 asks for a launch plan — this is the plan in checklist form.,Q5 What is your launch plan?
+11,Service Selection,marketing-materials,Marketing Materials,supporting,8,The asset list the launch plan depends on.,Q5
+11,Service Selection,market-expansion-priority,Market Expansion Priority,stretch,1,"If more than one geography or segment is in play, rank them.",Q1
+11,Service Selection,partnership-bd-pipeline,Partnership / BD Pipeline,stretch,2,Channel partners are a go-to-market motion in their own right in MENA.,Q2
+11,Service Selection,referral-viral-loop,Referral / Viral Loop,stretch,3,Designs acquisition that doesn't cost per head.,Q2
+12,Market Validation,market-sizing-tam-sam-som,Market Sizing (TAM/SAM/SOM),core,1,"Q5 asks for estimated market size — bottom-up, with your math shown.",Q5 What is your estimated market size?
+12,Market Validation,demand-smoke-test,Demand / Smoke Test,core,2,"Q1/Q2 want real demand indicators: traffic, sign-ups, conversion — behaviour, not opinion.",Q1 How did you validate? · Q2 Indicators of demand
+12,Market Validation,willingness-to-pay-test,Willingness-to-Pay Test,core,3,Van Westendorp gives Q4 an evidence-based answer instead of an anecdote.,Q4 How did the market respond to your pricing?
+12,Market Validation,competitor-feature-coverage,Competitor Feature Coverage,core,4,Q3 asks what you learned about competitors — the feature-gap matrix is the artefact.,Q3 What did you learn about competitors?
+12,Market Validation,waitlist-pre-order-tracker,Waitlist / Pre-order Tracker,core,5,Converts interest into a committed number you can quote to investors.,Q2
+12,Market Validation,validation-scorecard,Validation Scorecard,core,6,One evidence-based score across everything you ran in this mission.,Q1
+12,Market Validation,porter-s-five-forces,Porter's Five Forces,supporting,1,Deepens Q3 from 'who else exists' to 'is this industry structurally winnable'.,Q3
+12,Market Validation,survey-sample-size,Survey Sample Size,supporting,2,Makes the demand numbers defensible.,Q1 / Q2
+12,Market Validation,pestel-analysis,PESTEL Analysis,supporting,3,Regulatory and economic conditions that decide whether the market is ready now.,Q1
+12,Market Validation,market-research-brief,Market Research Brief,supporting,4,Sources and trend data behind the market size number.,Q5
+12,Market Validation,cac-calculator,CAC Calculator,supporting,5,Cost per acquired customer from the smoke test — the first real CAC you'll have.,Q2
+12,Market Validation,paid-ads-performance,Paid Ads Performance,supporting,6,"If you drove test traffic with paid ads, this reads CTR/CPC/CPA.",Q1 / Q2
+12,Market Validation,market-expansion-priority,Market Expansion Priority,stretch,1,Ranks which sub-market to attack first.,Q5
+12,Market Validation,new-market-entry-scorecard,New Market Entry Scorecard,stretch,2,For cross-border MENA expansion decisions.,Q5
+12,Market Validation,landing-page-brief,Landing Page Brief,stretch,3,"If the smoke test needs a second, sharper page.",Q1
+13,Build MVP,mvp-scope-moscow,MVP Scope (MoSCoW),core,1,Q1 asks what features you included. Must/Should/Could is the discipline that keeps 20-40 hours from becoming 200.,Q1 What features did you include in your MVP?
+13,Build MVP,product-roadmap,Product Roadmap,core,2,Now/Next/Later — what ships in the MVP and what is explicitly deferred.,Q1 / Q6
+13,Build MVP,tech-stack-selector,Tech Stack Selector,core,3,Q2 asks for your stack. A weighted matrix beats defaulting to what you know.,Q2 What technology stack did you use?
+13,Build MVP,sprint-velocity-eta,Sprint Velocity / ETA,core,4,"Q3 asks how long development took — plan it, then compare to actual.",Q3 How long did development take?
+13,Build MVP,feature-prioritisation-rice,Feature Prioritisation — RICE,core,5,Ranks inside the must-have set when the build is still too big.,Q1
+13,Build MVP,burn-rate-and-runway,Burn Rate & Runway,core,6,A 20-40 hour build has a cash cost. This says whether you can afford to finish.,Q4 What challenges did you face?
+13,Build MVP,build-vs-buy,Build vs Buy,supporting,1,"Auth, payments, notifications — buy them. TCO comparison in one place.",Q2
+13,Build MVP,risk-register,Risk Register,supporting,2,Q4 asks about challenges. Ranked risks turn surprises into managed items.,Q4
+13,Build MVP,north-star-metric,North Star Metric,supporting,3,Instrument the MVP for this metric before launch or Mission 14 has no data.,Q6 Is your MVP ready for launch?
+13,Build MVP,aarrr-funnel,AARRR Funnel,supporting,4,Defines the events to log at build time — acquisition through revenue.,Q6
+13,Build MVP,cost-structure-and-budget,Cost Structure & Budget,supporting,5,The real cost of building and running the MVP.,Q4
+13,Build MVP,team-roles-and-hiring-plan,Team Roles & Hiring Plan,supporting,6,"If you can't build it alone, this is who you need and when.",Q4
+13,Build MVP,legal-checklist,Legal Checklist,supporting,7,"Terms, privacy policy and data handling must exist before real users touch the MVP.",Q6
+13,Build MVP,hiring-cost-model,Hiring Cost Model,stretch,1,Fully-loaded cost of the first engineer or contractor.,Q4
+13,Build MVP,rolling-cash-forecast,Rolling Cash Forecast,stretch,2,13-week cash view across the build period.,Q4
+13,Build MVP,ip-strategy,IP Strategy,stretch,3,Assign IP to the company before contractors touch the codebase.,Q6
+13,Build MVP,team-structure-and-equity,Team Structure & Equity,stretch,4,"If a co-founder or early employee joins for the build, agree equity before, not after.",Q4
+14,Product-Market Fit Test,cohort-retention,Cohort Retention,core,1,The single most honest PMF signal: do cohorts stay? Feeds Q4 directly.,Q4 What is your user retention rate?
+14,Product-Market Fit Test,retention-curve,Retention Curve,core,2,A curve that flattens is product-market fit. A curve that hits zero is not.,Q4 / Q5
+14,Product-Market Fit Test,nps,NPS,core,3,"Structured user sentiment for Q3, comparable month to month.",Q3 What feedback did users provide?
+14,Product-Market Fit Test,north-star-metric,North Star Metric,core,4,Q2 asks what metrics you achieved — the North Star is the headline one.,Q2 What user metrics did you achieve?
+14,Product-Market Fit Test,aarrr-funnel,AARRR Funnel,core,5,"Q1/Q2 need the whole funnel: acquisition, activation, retention, referral, revenue.",Q1 How did your MVP launch go? · Q2
+14,Product-Market Fit Test,engagement-score,Engagement Score,core,6,Distinguishes sign-ups from actual usage — the difference PMF lives in.,Q2
+14,Product-Market Fit Test,validation-scorecard,Validation Scorecard,core,7,Q5 asks you to rate PMF 1-10. This makes that rating evidence-based rather than a mood.,Q5 Rate your product-market fit (1-10)
+14,Product-Market Fit Test,churn-and-retention,Churn & Retention,supporting,1,"The inverse view, and the one investors will ask about.",Q4
+14,Product-Market Fit Test,churn-by-segment,Churn by Segment,supporting,2,Shows PMF is often real for one segment and absent for another — the Superhuman insight.,Q4 / Q6
+14,Product-Market Fit Test,dau-mau-stickiness,DAU/MAU Stickiness,supporting,3,"Frequency of use, for products that should be habitual.",Q2
+14,Product-Market Fit Test,growth-accounting,Growth Accounting,supporting,4,Splits net growth into new / resurrected / churned so a flat number stops hiding trouble.,Q2
+14,Product-Market Fit Test,feature-adoption,Feature Adoption,supporting,5,Which features the retained users actually use — the roadmap input for Q6.,Q6
+14,Product-Market Fit Test,customer-health-score,Customer Health Score,supporting,6,Predicts who is about to churn while you can still act.,Q4
+14,Product-Market Fit Test,ltv-calculator,LTV Calculator,supporting,7,Retention has now made LTV computable rather than theoretical.,Q2
+14,Product-Market Fit Test,cac-calculator,CAC Calculator,supporting,8,Real acquisition cost from the launch.,Q2
+14,Product-Market Fit Test,ltv-cac-and-payback,LTV:CAC & Payback,supporting,9,The ratio that says whether growth is worth funding.,Q2
+14,Product-Market Fit Test,user-testing-synthesis,User Testing Synthesis,supporting,10,Qualitative depth behind the numbers.,Q3
+14,Product-Market Fit Test,survey-sample-size,Survey Sample Size,stretch,1,The Sean Ellis 40% survey needs a defensible n.,Q5
+14,Product-Market Fit Test,interview-synthesis,Interview Synthesis,stretch,2,Interview the users who would be 'very disappointed' — they define your ICP.,Q3 / Q6
+14,Product-Market Fit Test,feature-prioritisation-rice,Feature Prioritisation — RICE,stretch,3,Ranks the Q6 improvement list.,Q6 What improvements will you make?
+14,Product-Market Fit Test,expansion-and-nrr,Expansion & NRR,stretch,4,"If you have paying accounts, expansion revenue is the strongest PMF proof there is.",Q2
+15,Go to Market,launch-checklist,Launch Checklist,core,1,Q1 asks you to describe the launch strategy — this is the executable version.,Q1 Describe your launch strategy
+15,Go to Market,launch-budget,Launch Budget,core,2,What the launch costs and what CPA it implies.,Q2 What campaigns did you run?
+15,Go to Market,marketing-sales-funnel,Marketing / Sales Funnel,core,3,Models and then measures the funnel the campaigns feed.,Q3 Launch results · Q4 Users acquired
+15,Go to Market,channel-roi-roas,Channel ROI / ROAS,core,4,Q3 asks for results. ROAS per channel is the answer that tells you what to do next.,Q3 / Q6
+15,Go to Market,experiment-tracker,Experiment Tracker,core,5,Launch is a sequence of experiments; this logs each one and what it taught.,Q2 / Q3
+15,Go to Market,mrr-arr-tracker,MRR / ARR Tracker,core,6,"Q5 asks what revenue you generated — the recurring view, not just cash in.",Q5 What revenue did you generate?
+15,Go to Market,marketing-materials,Marketing Materials,core,7,"The asset set the launch needs, planned rather than improvised.",Q2
+15,Go to Market,pr-plan,PR Plan,supporting,1,"Story angle, target media, timeline — the earned-media half of the launch.",Q2
+15,Go to Market,launch-event,Launch Event,supporting,2,"For MENA ecosystems, a launch moment with partners often outperforms paid.",Q2
+15,Go to Market,paid-ads-performance,Paid Ads Performance,supporting,3,CTR / CPC / CPA per campaign.,Q2 / Q3
+15,Go to Market,conversion-rate-optimisation,Conversion Rate Optimisation,supporting,4,Turns the same traffic into more users — the cheapest growth in the first month.,Q4 How many users did you acquire?
+15,Go to Market,a-b-test,A/B Test,supporting,5,Tests the launch messaging with real traffic.,Q2
+15,Go to Market,referral-viral-loop,Referral / Viral Loop,supporting,6,Q6 asks about growth next steps; K-factor is the compounding one.,Q6 Next steps for growth
+15,Go to Market,experiment-backlog-ice,Experiment Backlog — ICE,supporting,7,Prioritises what to try in the weeks after launch day.,Q6
+15,Go to Market,saas-metrics-dashboard,SaaS Metrics Dashboard,supporting,8,One board with the numbers an investor or mentor will ask for.,Q3 / Q5
+15,Go to Market,kpi-tracker-actual-vs-projected,KPI Tracker — Actual vs Projected,supporting,9,Launch is the first month where actuals exist to compare against the plan.,Q3
+15,Go to Market,content-cadence,Content Cadence,supporting,10,Sustains attention past launch week.,Q6
+15,Go to Market,brand-identity,Brand Identity,supporting,11,Keeps every launch asset consistent.,Q2
+15,Go to Market,growth-rate-and-cagr,Growth Rate & CAGR,stretch,1,Quantifies momentum for the first investor update.,Q6
+15,Go to Market,kpi-scorecard,KPI Scorecard,stretch,2,Target vs actual across the launch KPIs.,Q3
+15,Go to Market,rule-of-40,Rule of 40,stretch,3,"Once revenue exists, the growth-vs-burn balance check.",Q6
+15,Go to Market,magic-number,Magic Number,stretch,4,"Sales efficiency, if you have a sales motion.",Q6
+15,Go to Market,scaling-readiness-scorecard,Scaling Readiness Scorecard,stretch,5,Decides whether to scale or keep iterating.,Q6
+15,Go to Market,revenue-per-employee,Revenue per Employee,stretch,6,Productivity check before you hire on launch optimism.,Q6
