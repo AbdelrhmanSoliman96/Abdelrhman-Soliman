@@ -1,0 +1,123 @@
+tool_slug,tool_name,category,description,framework_reference,source_tab
+income-statement-p-and-l,Income Statement (P&L),Financial Statements,Full monthly P&L with real expense breakdown,GAAP-style income statement,Financial Statements
+cost-structure-and-budget,Cost Structure & Budget,Financial Statements,Full cost breakdown — COGS + OpEx by line item,Zero-based budgeting,Financial Statements
+cash-flow-statement,Cash Flow Statement,Financial Statements,3-section monthly cash flow,Indirect-method statement of cash flows,Financial Statements
+3-year-revenue-projection,3-Year Revenue Projection,Financial Statements,"Annual, multi-stream revenue build",Bottoms-up SaaS revenue build,Financial Statements
+burn-rate-and-runway,Burn Rate & Runway,Financial Statements,Monthly cash discipline tracker,Startup burn-multiple & runway math,Financial Statements
+break-even-analysis,Break-Even Analysis,Financial Statements,Unit economics of break-even,Cost-volume-profit (CVP) analysis,Financial Statements
+scenario-model,Scenario Model,Financial Statements,Downside / Base / Upside,Scenario & sensitivity planning,Financial Statements
+operating-budget-opex,Operating Budget / OpEx,Financial Statements,Annual budget by department,Departmental zero-based budget,Financial Statements
+working-capital,Working Capital,Financial Statements,Cash conversion cycle,Working-capital & CCC analysis,Financial Statements
+rolling-cash-forecast,Rolling Cash Forecast,Financial Statements,The standard 13-week cash view,13-week cash-flow forecast (CFO standard),Financial Statements
+cap-table-dynamic-multi-round,"Cap Table — dynamic, multi-round",Cap Table & Deal Terms,"Incorporation through each round, every holder's % auto-updates",Standard priced-round cap table mechanics,Cap Table & Deal Terms
+safe-conversion,SAFE Conversion,Cap Table & Deal Terms,What your SAFE turns into when the next round happens,YC post-money SAFE,Cap Table & Deal Terms
+quick-dilution-what-if,Quick Dilution What-If,Cap Table & Deal Terms,Fast napkin-math dilution check,Priced-round dilution mechanics,Cap Table & Deal Terms
+use-of-funds,Use of Funds,Cap Table & Deal Terms,Where the raise goes,Standard use-of-funds breakdown,Cap Table & Deal Terms
+funding-ask,Funding Ask,Cap Table & Deal Terms,"The one-line ask, backed by the math",Fundraise sizing,Cap Table & Deal Terms
+term-sheet-analyzer,Term Sheet Analyzer,Cap Table & Deal Terms,"Read the real terms, not just the headline valuation",NVCA model term sheet,Cap Table & Deal Terms
+kpi-tracker-actual-vs-projected,KPI Tracker — Actual vs Projected,KPI Tracker,Fill actuals monthly; projected pulls live from the financial model,Plan-vs-actual variance tracking,KPI Tracker
+pitch-narrative,Pitch Narrative,Fundraising & Investor,"The 7-beat story arc, in order",Narrative arc for investor pitches,Fundraising & Investor
+fundraising-pipeline,Fundraising Pipeline,Fundraising & Investor,Your investor CRM,Fundraising pipeline management,Fundraising & Investor
+fundability-scorecard,Fundability Scorecard,Fundraising & Investor,Weighted investor-readiness score,VC investment-criteria scoring,Fundraising & Investor
+data-room-checklist,Data Room Checklist,Fundraising & Investor,What investors will ask for in diligence,VC due-diligence checklist,Fundraising & Investor
+investor-update-delta,Investor Update Delta,Fundraising & Investor,"Month-over-month, ready to paste into your update",Monthly investor-update format (YC / a16z style),Fundraising & Investor
+unit-economics,Unit Economics,Metrics & Growth Analytics,Per-unit profitability,Unit economics / contribution margin,Metrics & Growth Analytics
+saas-metrics-dashboard,SaaS Metrics Dashboard,Metrics & Growth Analytics,Core SaaS metrics in one view,SaaS metrics (David Skok; Bessemer),Metrics & Growth Analytics
+ltv-calculator,LTV Calculator,Metrics & Growth Analytics,Lifetime value,Customer Lifetime Value (LTV/CLV),Metrics & Growth Analytics
+mrr-arr-tracker,MRR / ARR Tracker,Metrics & Growth Analytics,Track recurring revenue,Recurring revenue (MRR/ARR),Metrics & Growth Analytics
+cohort-retention,Cohort Retention,Metrics & Growth Analytics,Retention by signup cohort,Cohort analysis,Metrics & Growth Analytics
+retention-curve,Retention Curve,Metrics & Growth Analytics,See if retention flattens,Retention cohorts / curve,Metrics & Growth Analytics
+magic-number,Magic Number,Metrics & Growth Analytics,Sales efficiency,SaaS Magic Number (Scale VP),Metrics & Growth Analytics
+kpi-scorecard,KPI Scorecard,Metrics & Growth Analytics,Track KPI vs target,Balanced Scorecard (Kaplan & Norton),Metrics & Growth Analytics
+cac-calculator,CAC Calculator,Metrics & Growth Analytics,Cost to acquire a customer,Customer Acquisition Cost (CAC),Metrics & Growth Analytics
+ltv-cac-and-payback,LTV:CAC & Payback,Metrics & Growth Analytics,Efficiency of growth,LTV:CAC & CAC payback (David Skok),Metrics & Growth Analytics
+churn-and-retention,Churn & Retention,Metrics & Growth Analytics,Measure stickiness,Churn & retention rate,Metrics & Growth Analytics
+rule-of-40,Rule of 40,Metrics & Growth Analytics,Balance growth & profit,Rule of 40 (Feld; Bessemer),Metrics & Growth Analytics
+growth-rate-and-cagr,Growth Rate & CAGR,Metrics & Growth Analytics,Quantify growth,CAGR — Compound Annual Growth Rate,Metrics & Growth Analytics
+north-star-metric,North Star Metric,Metrics & Growth Analytics,One metric that matters,North Star Metric (Amplitude; Sean Ellis),Metrics & Growth Analytics
+growth-accounting,Growth Accounting,Metrics & Growth Analytics,Decompose net growth into new/resurrected/churned,"Growth accounting (Jonathan Hsu, Social Capital)",Metrics & Growth Analytics
+dau-mau-stickiness,DAU/MAU Stickiness,Metrics & Growth Analytics,Measure engagement frequency,DAU/MAU stickiness ratio,Metrics & Growth Analytics
+nps,NPS,Metrics & Growth Analytics,Track customer love,"Net Promoter Score (Reichheld, Bain/HBR)",Metrics & Growth Analytics
+customer-health-score,Customer Health Score,Metrics & Growth Analytics,Predict retention,Customer health score (Customer Success),Metrics & Growth Analytics
+churn-by-segment,Churn by Segment,Metrics & Growth Analytics,Find where churn concentrates,Segmented churn analysis,Metrics & Growth Analytics
+engagement-score,Engagement Score,Metrics & Growth Analytics,Quantify engagement,Product-engagement scoring,Metrics & Growth Analytics
+feature-adoption,Feature Adoption,Metrics & Growth Analytics,Track feature uptake,Feature-adoption rate,Metrics & Growth Analytics
+expansion-and-nrr,Expansion & NRR,Metrics & Growth Analytics,Grow existing accounts,Net Revenue Retention / expansion (Bessemer),Metrics & Growth Analytics
+revenue-per-employee,Revenue per Employee,Metrics & Growth Analytics,Track productivity,Revenue per employee (productivity),Metrics & Growth Analytics
+go-to-market-plan,Go-to-Market Plan,Go-to-Market & Marketing,Plan the route to market,Go-to-market strategy,Go-to-Market & Marketing
+marketing-materials,Marketing Materials,Go-to-Market & Marketing,Plan launch assets,Marketing collateral plan,Go-to-Market & Marketing
+launch-checklist,Launch Checklist,Go-to-Market & Marketing,Coordinate the launch,Launch-readiness checklist,Go-to-Market & Marketing
+brand-identity,Brand Identity,Go-to-Market & Marketing,Define the brand basics,Brand Identity Prism (Kapferer),Go-to-Market & Marketing
+channel-cac-planner,Channel CAC Planner,Go-to-Market & Marketing,Compare acquisition channels,Customer Acquisition Cost (per channel),Go-to-Market & Marketing
+content-cadence,Content Cadence,Go-to-Market & Marketing,Plan content & cadence,Content marketing calendar,Go-to-Market & Marketing
+marketing-strategy,Marketing Strategy,Go-to-Market & Marketing,Plan marketing approach (STP + mix),STP & marketing mix / 4Ps (Kotler),Go-to-Market & Marketing
+pr-plan,PR Plan,Go-to-Market & Marketing,Plan press & outreach,PR & communications plan,Go-to-Market & Marketing
+launch-event,Launch Event,Go-to-Market & Marketing,Plan a launch event,Launch plan / event,Go-to-Market & Marketing
+landing-page-brief,Landing Page Brief,Go-to-Market & Marketing,Spec the landing page,Conversion-centred landing page (Wiebe),Go-to-Market & Marketing
+marketing-sales-funnel,Marketing / Sales Funnel,Go-to-Market & Marketing,Model the conversion funnel,AIDA / conversion funnel,Go-to-Market & Marketing
+launch-budget,Launch Budget,Go-to-Market & Marketing,Budget the launch,Launch budgeting / CPA,Go-to-Market & Marketing
+conversion-rate-optimisation,Conversion Rate Optimisation,Go-to-Market & Marketing,Improve page conversion,Conversion Rate Optimisation,Go-to-Market & Marketing
+paid-ads-performance,Paid Ads Performance,Go-to-Market & Marketing,Track ad efficiency,Digital ad metrics (CTR/CPC/CPA),Go-to-Market & Marketing
+aarrr-funnel,AARRR Funnel,Go-to-Market & Marketing,Measure the full funnel,AARRR Pirate Metrics (Dave McClure),Go-to-Market & Marketing
+channel-roi-roas,Channel ROI / ROAS,Go-to-Market & Marketing,Find profitable channels,Return on Ad Spend (ROAS),Go-to-Market & Marketing
+a-b-test,A/B Test,Go-to-Market & Marketing,Test variants,A/B / split testing (hypothesis testing),Go-to-Market & Marketing
+referral-viral-loop,Referral / Viral Loop,Go-to-Market & Marketing,Build viral growth,Viral coefficient / K-factor,Go-to-Market & Marketing
+experiment-backlog-ice,Experiment Backlog — ICE,Go-to-Market & Marketing,Prioritise growth bets,"ICE scoring (Sean Ellis, GrowthHackers)",Go-to-Market & Marketing
+experiment-tracker,Experiment Tracker,Go-to-Market & Marketing,Run & log experiments,Growth experimentation (Build-Measure-Learn),Go-to-Market & Marketing
+pricing-tiering-arpu,Pricing Tiering / ARPU,Go-to-Market & Marketing,Optimise pricing tiers,Good-Better-Best tiering · ARPU,Go-to-Market & Marketing
+business-model-canvas,Business Model Canvas,Strategy & Business Model,Map the whole model on one page,Business Model Canvas (Osterwalder & Pigneur),Strategy & Business Model
+value-proposition-canvas,Value Proposition Canvas,Strategy & Business Model,Fit value to customer,Value Proposition Canvas (Osterwalder),Strategy & Business Model
+pestel-analysis,PESTEL Analysis,Strategy & Business Model,Scan the macro environment,PESTEL / PESTLE (Francis Aguilar),Strategy & Business Model
+competitor-feature-coverage,Competitor Feature Coverage,Strategy & Business Model,Map competitors & white space,Competitive analysis / feature-gap matrix,Strategy & Business Model
+elevator-pitch,Elevator Pitch,Strategy & Business Model,Craft a 30-second pitch,Elevator pitch / value positioning (Moore),Strategy & Business Model
+pricing-strategy,Pricing Strategy,Strategy & Business Model,Set the right price,Cost-plus & value-based pricing,Strategy & Business Model
+positioning-statement,Positioning Statement,Strategy & Business Model,Own a clear position,Positioning (Ries & Trout; Moore),Strategy & Business Model
+revenue-model-designer,Revenue Model Designer,Strategy & Business Model,Design how you earn,Monetization / revenue-model patterns,Strategy & Business Model
+vision-and-mission,Vision & Mission,Strategy & Business Model,Set purpose & direction,Vision/Mission (Collins & Porras),Strategy & Business Model
+lean-canvas,Lean Canvas,Strategy & Business Model,Lean one-page model,"Lean Canvas (Ash Maurya, Running Lean)",Strategy & Business Model
+swot-analysis,SWOT Analysis,Strategy & Business Model,Internal/external position,"SWOT Analysis (Albert Humphrey, Stanford SRI)",Strategy & Business Model
+porter-s-five-forces,Porter's Five Forces,Strategy & Business Model,Assess industry attractiveness,"Five Forces (Michael Porter, HBR 1979)",Strategy & Business Model
+okrs,OKRs,Strategy & Business Model,Set measurable goals,Objectives & Key Results (Grove; Doerr),Strategy & Business Model
+scaling-readiness-scorecard,Scaling Readiness Scorecard,Strategy & Business Model,Are you ready to scale?,Scaling-readiness assessment,Strategy & Business Model
+market-expansion-priority,Market Expansion Priority,Strategy & Business Model,Prioritise new markets,Market prioritisation (TAM-based),Strategy & Business Model
+new-market-entry-scorecard,New Market Entry Scorecard,Strategy & Business Model,Decide where to expand,Market-entry analysis (CAGE / scoring),Strategy & Business Model
+partnership-bd-pipeline,Partnership / BD Pipeline,Strategy & Business Model,Manage partnerships,Weighted BD pipeline,Strategy & Business Model
+problem-statement,Problem Statement,Customer & Market Research,Define the core problem precisely,Lean Startup problem framing (Ries) · Design Thinking POV,Customer & Market Research
+market-sizing-tam-sam-som,Market Sizing (TAM/SAM/SOM),Customer & Market Research,Quantify the opportunity,TAM / SAM / SOM market sizing,Customer & Market Research
+jobs-to-be-done,Jobs-to-be-Done,Customer & Market Research,Capture the underlying job,Jobs-to-be-Done Theory (Christensen; Ulwick),Customer & Market Research
+idea-scorecard,Idea Scorecard,Customer & Market Research,Score the opportunity objectively,Weighted scoring / Pugh decision matrix,Customer & Market Research
+importance-frequency-matrix,Importance / Frequency Matrix,Customer & Market Research,Prioritise which problem to solve,"Opportunity scoring (Ulwick, Outcome-Driven Innovation)",Customer & Market Research
+customer-persona,Customer Persona,Customer & Market Research,Define the target user,"Buyer/Proto-persona (Alan Cooper, About Face)",Customer & Market Research
+market-research-brief,Market Research Brief,Customer & Market Research,Understand market & trends,Market & industry analysis,Customer & Market Research
+assumptions-tracker,Assumptions Tracker,Customer & Market Research,Rank riskiest assumptions,"Riskiest Assumption Test (Bland & Osterwalder, Testing Business Ideas)",Customer & Market Research
+interview-script-builder,Interview Script Builder,Customer & Market Research,Design customer interviews,The Mom Test (Fitzpatrick) · Customer Discovery (Blank),Customer & Market Research
+survey-sample-size,Survey Sample Size,Customer & Market Research,Quantify demand at scale,Cochran's sample-size formula,Customer & Market Research
+willingness-to-pay-test,Willingness-to-Pay Test,Customer & Market Research,Find the acceptable price,Van Westendorp Price Sensitivity Meter,Customer & Market Research
+waitlist-pre-order-tracker,Waitlist / Pre-order Tracker,Customer & Market Research,Convert interest to commitment,Pre-sell / concierge MVP validation,Customer & Market Research
+hypothesis-builder,Hypothesis Builder,Customer & Market Research,Turn assumptions into tests,Build-Measure-Learn hypothesis (Ries),Customer & Market Research
+interview-synthesis,Interview Synthesis,Customer & Market Research,Extract signal from interviews,Customer Discovery synthesis (Steve Blank),Customer & Market Research
+demand-smoke-test,Demand / Smoke Test,Customer & Market Research,Measure real interest pre-build,Smoke-test / landing-page MVP (Ries),Customer & Market Research
+validation-scorecard,Validation Scorecard,Customer & Market Research,Single evidence-based score,Evidence-based validation (Testing Business Ideas),Customer & Market Research
+mvp-scope-moscow,MVP Scope (MoSCoW),Product & Build,Define the smallest valuable build,MoSCoW prioritisation (DSDM) · MVP (Ries),Product & Build
+feature-prioritisation-rice,Feature Prioritisation — RICE,Product & Build,Rank features by impact,RICE scoring (Intercom),Product & Build
+product-roadmap,Product Roadmap,Product & Build,Sequence what you build,Now-Next-Later roadmap (Janna Bastow),Product & Build
+tech-stack-selector,Tech Stack Selector,Product & Build,Choose the stack,Weighted decision matrix,Product & Build
+user-testing-synthesis,User Testing Synthesis,Product & Build,Learn from prototype tests,Usability testing (Nielsen) · SUS (Brooke),Product & Build
+product-description,Product Description,Product & Build,Describe the product clearly,Product positioning / one-liner,Product & Build
+value-vs-effort,Value vs Effort,Product & Build,Quick prioritisation,Value/Effort (Impact-Effort) matrix,Product & Build
+sprint-velocity-eta,Sprint Velocity / ETA,Product & Build,Plan the build sprints,Agile velocity (Scrum),Product & Build
+build-vs-buy,Build vs Buy,Product & Build,Decide build or integrate,Build-vs-Buy / Total Cost of Ownership,Product & Build
+culture-and-values,Culture & Values,Team & Operations,Define values & ways of working,Core values & culture (Lencioni),Team & Operations
+risk-register,Risk Register,Team & Operations,Identify & rank risks,Risk register / Probability-Impact matrix (PMI PMBOK),Team & Operations
+team-roles-and-hiring-plan,Team Roles & Hiring Plan,Team & Operations,Plan roles to hire & when,Organisational design & hiring plan,Team & Operations
+legal-checklist,Legal Checklist,Team & Operations,Cover legal basics,Startup legal & compliance checklist,Team & Operations
+ip-strategy,IP Strategy,Team & Operations,Protect intellectual property,Intellectual-property strategy,Team & Operations
+team-structure-and-equity,Team Structure & Equity,Team & Operations,"Map founders, roles & equity","Founder equity split (Slicing Pie, Mike Moyer)",Team & Operations
+hiring-cost-model,Hiring Cost Model,Team & Operations,Plan & cost hiring,Fully-loaded labour cost,Team & Operations
+org-span-of-control,Org Span of Control,Team & Operations,Design the org,Span of control (org design),Team & Operations
+compensation-bands,Compensation Bands,Team & Operations,Standardise pay,Compensation banding / compa-ratio,Team & Operations
+sales-velocity,Sales Velocity,Team & Operations,Speed up the pipeline,Sales velocity formula,Team & Operations
+sales-strategy,Sales Strategy,Team & Operations,Plan the sales motion,Sales methodology (SPIN / Challenger / MEDDIC),Team & Operations
+sales-capacity,Sales Capacity,Team & Operations,Plan sales capacity,Sales capacity planning,Team & Operations
+pitch-deck-builder-12-slides,Pitch Deck Builder (12 slides),Investor Materials (DOCX),"The 12-slide deck outline, one page per slide",Sequoia / YC deck structure,Pitch Deck & One-Pager Template.docx
+investor-one-pager,Investor One-Pager,Investor Materials (DOCX),One page you can send cold or leave behind,Investor one-pager / teaser,Pitch Deck & One-Pager Template.docx
