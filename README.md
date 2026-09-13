@@ -230,6 +230,31 @@ month, launched from the Techne Summit Alexandria stage (3–5 October 2026).
 python3 scripts/build_techne_proposal_docx.py output/StartPad_Techne_Partnership_Proposal.docx
 ```
 
+## The operating pack — what actually gets published
+
+The playbook is for the team. These are the assets a participant, a judge and a landing
+page need on day one.
+
+| File | What it is |
+|---|---|
+| `competition/rules.py` | Source of truth for the participant-facing pack, Arabic and English. |
+| `output/Mission_Zero_Rules_AR_EN.docx` | Rules, schedule, definitions of done, the published rubric, IP and data terms. Arabic first with real RTL — including `w:bidiVisual` on tables, so Arabic columns read right-to-left too. |
+| `output/mission_zero_rules.html` | The page entrants read, Arabic by default. [Published artifact](https://claude.ai/code/artifact/c9f6324a-cc90-4493-b0d3-e272ba6232b4) — usable as the QR destination at the booth before the real landing page exists. |
+| `output/Mission_Zero_Judging_Pack.xlsx` | Judging workbook: rubric, scoresheet with weighted formulas, shortlist, verification log, vocab. |
+
+```bash
+python3 scripts/build_rules_docx.py     output/Mission_Zero_Rules_AR_EN.docx
+python3 scripts/build_rules_artifact.py output/mission_zero_rules.html
+python3 scripts/build_judging_xlsx.py   output/Mission_Zero_Judging_Pack.xlsx
+```
+
+The judging workbook reads its weights out of `competition/rules.py`, so the sheet a judge
+scores on cannot disagree with the rubric published to entrants. Pillar scores are entered
+0–5 and the weighted total is a formula — nobody hand-computes a percentage at Demo Day.
+Two columns exist because of how this competition can fail rather than because a scoring
+sheet usually has them: a conflict-of-interest flag declared before scores are entered, and
+a log for the verification calls placed to people finalists claim to have interviewed.
+
 Three findings about Techne shape the plan: they already run the national youth roadshow competition
 (Techne Drifts, 14 cities), their Compete track is hosting a Startup World Cup tournament with a
 USD 1M headline prize, and their summit is 24 days away. So this is positioned as a **feeder into**
