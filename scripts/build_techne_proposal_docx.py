@@ -12,6 +12,7 @@ from docx.shared import Cm, Pt, RGBColor
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from competition.proposal import (BLOCKS, CONTACT, EMAIL_BODY, EMAIL_SUBJECT,  # noqa: E402
                                   META, SUBTITLE, TITLE)
+from scripts import _ooxml as X  # noqa: E402
 from scripts._determinism import FIXED_TIMESTAMP, normalize_zip  # noqa: E402
 
 INK = RGBColor(0x10, 0x1E, 0x2E)
@@ -42,13 +43,14 @@ def rule(doc, color="101E2E", size="8", after=10):
     p = doc.add_paragraph()
     p.paragraph_format.space_before = Pt(2)
     p.paragraph_format.space_after = Pt(after)
-    pbdr = OxmlElement("w:pBdr")
+    pbdr = X.insert_ordered(p._p.get_or_add_pPr(), "w:pBdr", X.PPR)
+    for _c in list(pbdr):
+        pbdr.remove(_c)
     bottom = OxmlElement("w:bottom")
     bottom.set(qn("w:val"), "single")
     bottom.set(qn("w:sz"), size)
     bottom.set(qn("w:color"), color)
     pbdr.append(bottom)
-    p._p.get_or_add_pPr().append(pbdr)
 
 
 def bullet(doc, text):

@@ -19,6 +19,7 @@ from docx.shared import Cm, Pt, RGBColor
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from competition.rules import VERSIONS  # noqa: E402
+from scripts import _ooxml as X  # noqa: E402
 from scripts._determinism import FIXED_TIMESTAMP, normalize_zip  # noqa: E402
 
 INK = RGBColor(0x10, 0x1E, 0x2E)
@@ -29,15 +30,11 @@ ARABIC_FONT = "Arial"
 
 
 def _bidi_para(p):
-    el = OxmlElement("w:bidi")
-    el.set(qn("w:val"), "1")
-    p._p.get_or_add_pPr().append(el)
+    X.para_rtl(p)
 
 
 def _bidi_table(table):
-    el = OxmlElement("w:bidiVisual")
-    el.set(qn("w:val"), "1")
-    table._tbl.tblPr.append(el)
+    X.tbl_rtl(table)
 
 
 def _style_run(run, size, rtl, bold=False, italic=False, color=INK):
@@ -45,17 +42,7 @@ def _style_run(run, size, rtl, bold=False, italic=False, color=INK):
     run.font.bold = bold
     run.font.italic = italic
     run.font.color.rgb = color
-    rPr = run._r.get_or_add_rPr()
-    szCs = OxmlElement("w:szCs")
-    szCs.set(qn("w:val"), str(int(size * 2)))
-    rPr.append(szCs)
-    if rtl:
-        fonts = OxmlElement("w:rFonts")
-        fonts.set(qn("w:cs"), ARABIC_FONT)
-        rPr.append(fonts)
-        el = OxmlElement("w:rtl")
-        el.set(qn("w:val"), "1")
-        rPr.append(el)
+    X.run_cs(run, ARABIC_FONT if rtl else "Calibri", size, rtl)
 
 
 def para(doc, text="", size=10.5, rtl=False, bold=False, italic=False, color=INK,
@@ -79,21 +66,11 @@ def para(doc, text="", size=10.5, rtl=False, bold=False, italic=False, color=INK
 
 
 def shade(cell, hexcolor):
-    shd = OxmlElement("w:shd")
-    shd.set(qn("w:val"), "clear")
-    shd.set(qn("w:fill"), hexcolor)
-    cell._tc.get_or_add_tcPr().append(shd)
+    X.tc_shade(cell, hexcolor)
 
 
 def borders(table, color="D9DBD3"):
-    el = OxmlElement("w:tblBorders")
-    for edge in ("top", "left", "bottom", "right", "insideH", "insideV"):
-        e = OxmlElement(f"w:{edge}")
-        e.set(qn("w:val"), "single")
-        e.set(qn("w:sz"), "4")
-        e.set(qn("w:color"), color)
-        el.append(e)
-    table._tbl.tblPr.append(el)
+    X.tbl_borders(table, color=color, sz="4")
 
 
 def cell_text(cell, text, rtl, size=9, bold=False, color=INK):

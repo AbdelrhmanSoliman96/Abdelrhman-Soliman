@@ -269,3 +269,64 @@ publicly and early if week 2 completion runs short.
 
 Dates and figures came from live web search on 9 September 2026; the egress proxy blocked page
 fetches, so reconfirm them with Techne in the first email.
+
+---
+
+# Founder template library — 10 tools, English and Arabic
+
+Twenty downloadable Word files for the `/resources` page: ten templates, each in
+English and Arabic, one template per file. Every file is four parts — a cover, a page
+explaining the tool and citing where it came from, the fillable template itself, and a
+closing page about StartPad.
+
+| # | Template | Missions it serves |
+|---|---|---|
+| 1 | Lean Canvas | 5, 6, 8 |
+| 2 | Business Model Canvas | 8 → 11, 15 |
+| 3 | Value Proposition Canvas | 6, 11, 12 |
+| 4 | Customer Persona | 2, 4 → 11, 12, 15 |
+| 5 | Customer Interview Script & Evidence Log | 1, 2, 3 → 7, 10, 12, 14 |
+| 6 | Importance–Frequency Matrix | 3 → 4, 5 |
+| 7 | SWOT & TOWS Analysis | 5, 15 |
+| 8 | PESTEL Analysis | 2, 12 |
+| 9 | Competitive Moat & Five Forces | 4, 5, 15 |
+| 10 | Market Sizing — TAM, SAM, SOM | 4, 12 |
+
+```bash
+pip install python-docx pillow
+python3 scripts/build_template_docx.py output/templates
+python3 scripts/check_docx_order.py    output          # gate before publishing
+```
+
+Source of truth is `templates/catalog_en.py` and `templates/catalog_ar.py`, with shared
+page furniture in `templates/strings.py`. The Arabic is composed in Arabic, not
+translated — the brand guidelines are explicit that a translation reads as one — and
+both catalogues are asserted to share identical grid geometry, so a box added to one
+must be added to the other.
+
+## Brand
+
+Taken from the 2026 brand presentation and encoded in `scripts/build_template_docx.py`:
+
+- **Lime `#CBF24A`** is a ground, never ink. At 1.29:1 on white it cannot carry type, so
+  it fills band headings and rules and sets no body copy anywhere in these files.
+- **Ultraviolet `#3418E0`** carries white type at 8.9:1 and is therefore the cover surface.
+- **Ink `#0B0E14`** and white do the reading.
+- **Satoshi** sets Latin, **Zain** sets Arabic. Both are named in the files; Word
+  substitutes if they are not installed locally, and the document still opens correctly.
+- One language per asset, so English and Arabic are separate files rather than facing
+  columns.
+- Logo lockups live in `brand/logo/` — horizontal is the document default, white on the
+  ultraviolet cover, ink on the lime closing band.
+
+## Why there is an XML order checker
+
+WordprocessingML property containers are `xsd:sequence`: `w:bidi` must precede
+`w:spacing` and `w:jc` inside `w:pPr`, `w:bidiVisual` must precede `w:tblBorders` inside
+`w:tblPr`. Word reorders silently on open, which hides the mistake; other readers are
+stricter. `scripts/_ooxml.py` inserts every hand-built element at its schema position and
+`scripts/check_docx_order.py` proves it, exiting non-zero so it can gate a publish step.
+
+Running it caught genuine violations in four documents built earlier in this repo — the
+playbook, the press release, the competition rules and the Techne proposal. All four
+builders now go through the same helpers, and all 24 `.docx` in `output/` pass.

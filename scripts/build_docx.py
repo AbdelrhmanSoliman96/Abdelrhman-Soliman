@@ -15,6 +15,7 @@ from startpad.missions import ALWAYS_AVAILABLE, MAPPING, MISSIONS  # noqa: E402
 from startpad.resources import BY_MISSION, FOUNDATION, FUNDRAISING  # noqa: E402
 from startpad.tools import TOOL_BY_NAME  # noqa: E402
 from scripts.build_xlsx import FINDINGS  # noqa: E402
+from scripts import _ooxml as X  # noqa: E402
 from scripts._determinism import FIXED_TIMESTAMP, normalize_zip  # noqa: E402
 
 INK = RGBColor(0x1F, 0x29, 0x33)
@@ -31,24 +32,11 @@ ROLE_STYLE = {
 
 
 def shade(cell, hexcolor):
-    tcPr = cell._tc.get_or_add_tcPr()
-    shd = OxmlElement("w:shd")
-    shd.set(qn("w:val"), "clear")
-    shd.set(qn("w:fill"), hexcolor)
-    tcPr.append(shd)
+    X.tc_shade(cell, hexcolor)
 
 
 def no_borders(table):
-    tbl = table._tbl
-    tblPr = tbl.tblPr
-    borders = OxmlElement("w:tblBorders")
-    for edge in ("top", "left", "bottom", "right", "insideH", "insideV"):
-        e = OxmlElement(f"w:{edge}")
-        e.set(qn("w:val"), "single")
-        e.set(qn("w:sz"), "4")
-        e.set(qn("w:color"), "DCE3E0")
-        borders.append(e)
-    tblPr.append(borders)
+    X.tbl_borders(table, color="DCE3E0", sz="4")
 
 
 def para(doc, text="", size=10.5, bold=False, italic=False, color=INK,
@@ -85,14 +73,14 @@ def rule(doc):
     p = doc.add_paragraph()
     p.paragraph_format.space_before = Pt(2)
     p.paragraph_format.space_after = Pt(8)
-    pPr = p._p.get_or_add_pPr()
-    pbdr = OxmlElement("w:pBdr")
+    pbdr = X.insert_ordered(p._p.get_or_add_pPr(), "w:pBdr", X.PPR)
+    for _c in list(pbdr):
+        pbdr.remove(_c)
     bottom = OxmlElement("w:bottom")
     bottom.set(qn("w:val"), "single")
     bottom.set(qn("w:sz"), "6")
     bottom.set(qn("w:color"), "0F5C4B")
     pbdr.append(bottom)
-    pPr.append(pbdr)
 
 
 def bullet(doc, text, size=10.5, indent=0.6, color=INK, bold_prefix=None):
@@ -132,8 +120,8 @@ def hyperlink(paragraph, url, text, size=9):
     sz = OxmlElement("w:sz")
     sz.set(qn("w:val"), str(int(size * 2)))
     rPr.append(col)
-    rPr.append(u)
     rPr.append(sz)
+    rPr.append(u)
     new_run.append(rPr)
     t = OxmlElement("w:t")
     t.text = text

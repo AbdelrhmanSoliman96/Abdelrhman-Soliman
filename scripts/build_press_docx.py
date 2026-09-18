@@ -20,6 +20,7 @@ from docx.shared import Cm, Pt, RGBColor
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from press.release import NOTES_SOURCES, VERSIONS  # noqa: E402
+from scripts import _ooxml as X  # noqa: E402
 from scripts._determinism import FIXED_TIMESTAMP, normalize_zip  # noqa: E402
 
 INK = RGBColor(0x1F, 0x29, 0x33)
@@ -31,27 +32,15 @@ ARABIC_FONT = "Arial"
 
 
 def _bidi(p):
-    pPr = p._p.get_or_add_pPr()
-    el = OxmlElement("w:bidi")
-    el.set(qn("w:val"), "1")
-    pPr.append(el)
+    X.para_rtl(p)
 
 
 def _style_run(run, size, rtl):
     run.font.size = Pt(size)
-    rPr = run._r.get_or_add_rPr()
     # Complex-script size is a separate property; without it Arabic renders at the
-    # default 10pt no matter what run.font.size says.
-    szCs = OxmlElement("w:szCs")
-    szCs.set(qn("w:val"), str(int(size * 2)))
-    rPr.append(szCs)
-    if rtl:
-        fonts = OxmlElement("w:rFonts")
-        fonts.set(qn("w:cs"), ARABIC_FONT)
-        rPr.append(fonts)
-        el = OxmlElement("w:rtl")
-        el.set(qn("w:val"), "1")
-        rPr.append(el)
+    # default 10pt no matter what run.font.size says. Schema order is enforced by
+    # scripts/_ooxml.
+    X.run_cs(run, ARABIC_FONT if rtl else LATIN_FONT, size, rtl)
 
 
 def para(doc, text="", size=11, bold=False, italic=False, color=INK, rtl=False,
@@ -81,14 +70,14 @@ def rule(doc, color="0F5C4B", size="6"):
     p = doc.add_paragraph()
     p.paragraph_format.space_before = Pt(2)
     p.paragraph_format.space_after = Pt(10)
-    pPr = p._p.get_or_add_pPr()
-    pbdr = OxmlElement("w:pBdr")
+    pbdr = X.insert_ordered(p._p.get_or_add_pPr(), "w:pBdr", X.PPR)
+    for _c in list(pbdr):
+        pbdr.remove(_c)
     bottom = OxmlElement("w:bottom")
     bottom.set(qn("w:val"), "single")
     bottom.set(qn("w:sz"), size)
     bottom.set(qn("w:color"), color)
     pbdr.append(bottom)
-    pPr.append(pbdr)
 
 
 def bullet(doc, text, rtl):
