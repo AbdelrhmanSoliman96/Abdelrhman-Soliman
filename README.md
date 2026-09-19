@@ -330,3 +330,91 @@ stricter. `scripts/_ooxml.py` inserts every hand-built element at its schema pos
 Running it caught genuine violations in four documents built earlier in this repo — the
 playbook, the press release, the competition rules and the Techne proposal. All four
 builders now go through the same helpers, and all 24 `.docx` in `output/` pass.
+
+---
+
+# Founder resource library — eight PDFs
+
+Five guided toolkits a founder fills in, and three mini whitepapers that each explain
+one thing. **71 pages**, all English, all vector, built for the `/resources` page and
+for printing.
+
+| # | Document | Missions | Pages |
+|---|---|---|---|
+| WP 01 | The Readiness Gap | 1, 2 | 7 |
+| TK 01 | The Readiness Audit | 1, 2 | 12 |
+| TK 02 | The Evidence Toolkit | 2, 3, 7 | 10 |
+| WP 02 | Market Sizing Without Lying | 4, 12 | 8 |
+| TK 03 | The Manual MVP | 9, 13 | 10 |
+| TK 04 | The Demand Signal | 13, 14 | 8 |
+| TK 05 | The Application File | 15 | 8 |
+| WP 03 | The Idea Is Not the Asset | 1, 3, 15 | 8 |
+
+Every file is a cover, the content, and a closing **About StartPad** page carrying the
+mark and `startpad.me`. The toolkits carry ruled worksheets sized to be written on.
+
+```bash
+python3 scripts/build_whitepapers.py        # all eight, or pass slugs: tk01 wp02
+python3 scripts/check_pdfs.py               # verification gate
+python3 scripts/preview_whitepapers.py tk01 # page images, to look at the layout
+```
+
+Source of truth is `whitepapers/library/*.py` — one module per document, holding
+metadata and a list of content blocks. `whitepapers/common.py` owns the stylesheet
+and the block renderer, so restyling all eight is one edit.
+
+## The figures
+
+Twenty-eight infographics, generated as SVG by `whitepapers/figures.py` from data held
+in the document that uses it — so a figure cannot drift away from the sentence beside
+it. Nothing is a bitmap; everything stays sharp at any zoom and prints at full
+resolution.
+
+Colour is assigned by job and the palettes were checked with a validator rather than
+chosen by eye. Results are recorded in `brand.CHART_PALETTE_CHECKS`:
+
+- **Categorical** — `#3418E0 · #0087E8 · #00996B`. Sampled from the brand's own
+  ultraviolet-to-lime arc, then re-stepped down in lightness until all three cleared
+  3:1 on white unaided. Passes all six checks, worst all-pairs CVD ΔE 14.7.
+- **Ordinal** — generated at even lightness along hue 272.6. Passes the ramp checks at
+  every length the library uses. The ceiling is six steps, enforced by the checker:
+  at seven, the adjacent lightness gap falls under 0.06.
+- **Lime is never a data mark.** At 1.29:1 on white it cannot carry type or a value,
+  which is the brand's own rule and the contrast rule agreeing.
+
+There is no hover layer in a printed page, so every value a reader needs is on the
+page as type: direct labels throughout, values outside the bar end where they could
+otherwise be clipped, and text wrapped to each mark's own width rather than to an
+average.
+
+## Brand decisions worth recording
+
+- **Calm mode.** These are documents that have to be believed rather than shared, so
+  the chain pattern is not used anywhere — the guidelines exclude it from anything in
+  that category.
+- **The mark never sits on lime.** The horizontal lockup's symbol *is* lime, so a
+  lime ground would erase the counters the mark is built from. The closing page puts
+  the mark on white above the lime band.
+- **The cover ribbon is white, not the spectrum.** On ultraviolet the sweep's own dark
+  end disappears into the ground.
+- **Typeface.** The brand specifies Satoshi, which is Fontshare-distributed and
+  unreachable from this build. The PDFs embed Plus Jakarta Sans — the closest freely
+  embeddable geometric grotesque, matched on the high x-height and closed apertures
+  the guidelines name. Satoshi is first in every font stack, so dropping the real file
+  into `brand/fonts/` and rebuilding picks it up. See `brand/fonts/README.md`.
+
+## Verification
+
+`scripts/check_pdfs.py` is the gate and exits non-zero on any failure. It checks page
+counts, that `startpad.me` and the About page reached every file, that the document
+metadata reads as StartPad rather than as the browser that rendered it, that no
+forbidden phrase from the voice rules appears in the copy, and that no figure exceeds
+the ordinal ramp's step ceiling.
+
+    8 documents, 71 pages, 0 with problems
+
+## What still needs a human
+
+The labour-market and funnel figures in **The Readiness Gap** come from StartPad's own
+market analysis rather than from a single published dataset, and the paper says so on
+the page. Trace them to the underlying statistics before quoting them externally.
