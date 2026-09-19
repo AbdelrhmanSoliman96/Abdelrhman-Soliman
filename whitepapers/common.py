@@ -22,6 +22,10 @@ from . import figures as F
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# The source every report in the library is derived from, named in one place so the
+# citation is identical in all of them.
+BOOK = "StartPad Brand Presentation, GrowthLabs Group, 2026"
+
 
 def _data_uri(path, mime):
     with open(os.path.join(ROOT, path), "rb") as fh:
@@ -225,6 +229,23 @@ figcaption .src {{ display: block; margin-top: 1mm; color: {B.INK_FAINT}; font-s
 .sources li {{ margin-bottom: 1.6mm; }}
 .sources a {{ color: {B.ULTRAVIOLET}; text-decoration: none; word-break: break-all; }}
 
+/* The source panel. Every report in the library is derived from one framework in
+   the brand book, and the panel puts that attribution on the page beside the
+   argument rather than in a footnote nobody reads. */
+.bookref {{
+  border-top: 2px solid {B.INK}; border-bottom: 1px solid {B.HAIRLINE};
+  padding: 3.5mm 0 4mm 0; margin: 0 0 5mm 0; break-inside: avoid;
+}}
+.bookref .src {{
+  font-size: 7.6pt; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: {B.INK_FAINT}; margin-bottom: 2.5mm;
+}}
+.bookref .line {{
+  font-size: 13pt; font-weight: 700; line-height: 1.32; letter-spacing: -0.012em;
+  color: {B.INK}; margin-bottom: 2mm; max-width: 150mm;
+}}
+.bookref .where {{ font-size: 8.4pt; color: {B.INK_MUTED}; }}
+
 .pb {{ break-before: page; page-break-before: always; }}
 .keep {{ break-inside: avoid; }}
 
@@ -346,6 +367,11 @@ def render_blocks(blocks):
                 f'<div class="row"><div class="bx"></div><div class="tx"><b>{t}</b>'
                 f"<span>{d}</span></div></div>" for t, d in blk[1])
             out.append(f'<div class="check">{rows}</div>')
+        elif kind == "bookref":
+            _, line, where = blk
+            out.append(f'<div class="bookref"><div class="src">From the book</div>'
+                       f'<div class="line">“{line}”</div>'
+                       f'<div class="where">{BOOK} · {where}</div></div>')
         elif kind == "note":
             out.append(f'<p class="note">{blk[1]}</p>')
         elif kind == "sources":

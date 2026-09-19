@@ -602,8 +602,140 @@ def stack(segments, total_label, note=None):
     return _svg(h, "".join(out), "Part to whole")
 
 
+# ------------------------------------------------------------------ pillars
+
+def pillars(items, note=None):
+    """
+    Four (or three) named principles side by side: [(n, word, meaning, test), ...].
+
+    The brand book sets its four DNA words as four equal columns under one rule, and
+    the equality is the point — none of them outranks another. Drawing them as a
+    ranked list or a pyramid would say something the source does not.
+    """
+    n = len(items)
+    gap = 12
+    cw = (W - gap * (n - 1)) / n
+    meanings = [wrap(m, 8.4, cw - 24) for _, _, m, _ in items]
+    tests = [wrap(t, 8.2, cw - 24) for _, _, _, t in items]
+    body = max(len(m) for m in meanings) * 11
+    h = 58 + body + 16 + max(len(t) for t in tests) * 11 + 22 + (20 if note else 0)
+    out = []
+    for i, (num, word, meaning, test) in enumerate(items):
+        x = i * (cw + gap)
+        colour = _ordinal(i, n)
+        out.append(f'<rect x="{x:.1f}" y="0" width="{cw:.1f}" height="4" fill="{colour}" rx="2"/>')
+        out.append(_t(x, 22, num, 7.5, B.INK_FAINT, 700))
+        out.append(_t(x, 42, word, 14, B.INK, 800))
+        for j, ln in enumerate(meanings[i]):
+            out.append(_t(x, 58 + j * 11, ln, 8.4, B.INK_SECONDARY, 500))
+        ty = 58 + body + 14
+        out.append(_rule(x, ty - 8, x + cw, B.HAIRLINE))
+        out.append(_t(x, ty + 4, "THE FOUNDER TEST", 6.8, B.INK_FAINT, 700))
+        for j, ln in enumerate(tests[i]):
+            out.append(_t(x, ty + 17 + j * 11, ln, 8.2, B.INK_MUTED, 500))
+    if note:
+        out.append(_t(0, h - 4, note, 8.2, B.INK_MUTED, 500))
+    return _svg(h, "".join(out), "Principles")
+
+
+# ------------------------------------------------------------------- states
+
+def states(items, note=None):
+    """
+    The three mission states, drawn by the book's own rules: [(name, meaning), ...].
+
+    Dormant is held back at low opacity because nothing has been earned and the
+    surface says so; in motion takes a mid-spectrum hue and is cropped off its frame,
+    so movement is shown by the crop rather than by an arrow; resolved is solid lime,
+    whole and centred, the only state that gets to be still.
+    """
+    n = len(items)
+    gap = 14
+    cw = (W - gap * (n - 1)) / n
+    wrapped = [wrap(m, 8.6, cw - 8) for _, m in items]
+    panel = 84
+    h = panel + 26 + max(len(w) for w in wrapped) * 11 + (20 if note else 6)
+    out = []
+    for i, (name, meaning) in enumerate(items):
+        x = i * (cw + gap)
+        if i == 0:                       # dormant
+            fill, opacity, ink = B.WASH, "1", B.INK_FAINT
+        elif i == n - 1:                 # resolved
+            fill, opacity, ink = B.LIME, "1", B.INK
+        else:                            # in motion
+            fill, opacity, ink = _ordinal(i, n + 1), "1", "#FFFFFF"
+        out.append(f'<rect x="{x:.1f}" y="0" width="{cw:.1f}" height="{panel}" '
+                   f'fill="{fill}" opacity="{opacity}" rx="4"/>')
+        # the mark stands in as a block: held back, cropped, or whole and centred
+        if i == 0:
+            out.append(f'<rect x="{x + 18:.1f}" y="26" width="30" height="30" '
+                       f'fill="{B.INK}" opacity="0.14" rx="3"/>')
+        elif i == n - 1:
+            out.append(f'<rect x="{x + cw / 2 - 17:.1f}" y="25" width="34" height="34" '
+                       f'fill="{B.INK}" rx="3"/>')
+        else:
+            # Cropped hard and pushed off the frame: the movement is shown by the
+            # crop, not by an arrow. The clip is a real clipPath bound to the
+            # panel's own rectangle, so the mark is cut by the frame rather than
+            # merely drawn to look as though it were.
+            cid = f"crop{i}"
+            out.append(f'<clipPath id="{cid}"><rect x="{x:.1f}" y="0" '
+                       f'width="{cw:.1f}" height="{panel}" rx="4"/></clipPath>')
+            out.append(f'<g clip-path="url(#{cid})">'
+                       f'<rect x="{x + cw - 24:.1f}" y="20" width="46" height="46" '
+                       f'fill="#FFFFFF" opacity="0.94" rx="4"/></g>')
+        out.append(_t(x + 14, panel - 14, name.upper(), 8.2, ink, 700))
+        for j, ln in enumerate(wrapped[i]):
+            out.append(_t(x, panel + 20 + j * 11, ln, 8.6, B.INK_MUTED, 500))
+    if note:
+        out.append(_t(0, h - 4, note, 8.2, B.INK_MUTED, 500))
+    return _svg(h, "".join(out), "Three states")
+
+
+# --------------------------------------------------------------- progression
+
+def progression(stages, note=None):
+    """
+    The progression line: [(label, meaning), ...] for enter, travel, turn, resolve.
+
+    One line that enters, travels, turns and resolves at the mark. The turn is drawn
+    where its own label sits, so the picture and the caption agree; its radius is the
+    counter width, which is why the line reads as the same object the monogram is
+    built from rather than as a decoration applied to it. One line is one founder.
+    """
+    n = len(stages)
+    col_w = W / n
+    wrapped = [wrap(m, 8.4, col_w - 14) for _, m in stages]
+    y_hi, y_lo, radius = 22, 56, 14
+    body_top = 78
+    h = body_top + max(len(w) for w in wrapped) * 11 + (22 if note else 6)
+
+    # the turn happens under the third column, and the line resolves under the last
+    x_turn = (n - 2) * col_w
+    x_end = (n - 1) * col_w + 22
+
+    d = (f"M0 {y_lo} H{x_turn - radius:.1f} "
+         f"A{radius} {radius} 0 0 0 {x_turn:.1f} {y_lo - radius:.1f} "
+         f"V{y_hi + radius:.1f} "
+         f"A{radius} {radius} 0 0 1 {x_turn + radius:.1f} {y_hi:.1f} "
+         f"H{x_end:.1f}")
+    out = [f'<path d="{d}" fill="none" stroke="{B.ULTRAVIOLET}" stroke-width="5" '
+           f'stroke-linecap="round" stroke-linejoin="round"/>',
+           f'<circle cx="{x_end + 9:.1f}" cy="{y_hi}" r="9" fill="{B.LIME}"/>']
+    for i, (label, meaning) in enumerate(stages):
+        x = i * col_w
+        out.append(_t(x, 12, label.upper(), 7.5, B.INK_FAINT, 700))
+        for j, ln in enumerate(wrapped[i]):
+            out.append(_t(x, body_top + j * 11, ln, 8.4, B.INK_MUTED, 500))
+    if note:
+        out.append(_rule(0, h - 16, W))
+        out.append(_t(0, h - 4, note, 8.2, B.INK_MUTED, 500))
+    return _svg(h, "".join(out), "The progression line")
+
+
 BUILDERS = {
     "ribbon": ribbon, "funnel": funnel, "bars": bars, "stat_row": stat_row,
     "ladder": ladder, "nested": nested, "timeline": timeline, "matrix": matrix,
     "flow": flow, "compare": compare, "bands": bands, "stack": stack,
+    "pillars": pillars, "states": states, "progression": progression,
 }

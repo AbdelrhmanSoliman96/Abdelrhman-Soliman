@@ -69,6 +69,14 @@ def check(doc):
     if doc["title"].lower() not in low:
         problems.append("cover title is missing")
 
+    # Every report is derived from a framework in the brand book, so the book has to
+    # be named on the page rather than assumed.
+    if doc["kind"] == "report":
+        if not any(b[0] == "bookref" for b in doc["blocks"]):
+            problems.append("report has no citation of the source book")
+        if "brand presentation" not in low:
+            problems.append("the source book is not named in the text")
+
     # Every figure must have reached the page: count the captions, which only exist
     # where a figure rendered.
     figs = sum(1 for b in doc["blocks"] if b[0] == "fig")
@@ -95,7 +103,8 @@ def check(doc):
     from whitepapers import figures as FIG
     counted = {"funnel": "stages", "ladder": "rungs", "flow": "steps",
                "timeline": "phases", "nested": "layers", "stack": "segments",
-               "bands": "segments"}
+               "bands": "segments", "pillars": "items", "states": "items",
+               "progression": "stages"}
     for b in doc["blocks"]:
         if b[0] != "fig" or b[1] not in counted:
             continue

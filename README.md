@@ -333,11 +333,12 @@ builders now go through the same helpers, and all 24 `.docx` in `output/` pass.
 
 ---
 
-# Founder resource library — eight PDFs
+# Founder resource library — sixteen PDFs
 
-Five guided toolkits a founder fills in, and three mini whitepapers that each explain
-one thing. **71 pages**, all English, all vector, built for the `/resources` page and
-for printing.
+Five guided toolkits a founder fills in, three mini whitepapers that each explain one
+thing, and eight reports that read a framework from the brand book as an operating
+tool. **127 pages**, all English, all vector, built for the `/resources` page and for
+printing.
 
 | # | Document | Missions | Pages |
 |---|---|---|---|
@@ -349,6 +350,39 @@ for printing.
 | TK 04 | The Demand Signal | 13, 14 | 8 |
 | TK 05 | The Application File | 15 | 8 |
 | WP 03 | The Idea Is Not the Asset | 1, 3, 15 | 8 |
+
+## The reports
+
+Eight documents, each taking one framework the **StartPad Brand Presentation,
+GrowthLabs Group, 2026** actually states and reading it as something a founder can
+operate rather than as a design rule. Every report names the book on the page it
+argues from, in a `bookref` block, and `check_pdfs.py` fails the build if a report
+does not.
+
+| # | Report | The framework it comes from | Pages |
+|---|---|---|---|
+| R 01 | Requirement, Gap, Route | Ch. 05 — the voice's sentence structure | 7 |
+| R 02 | Truth, Readiness, Proof | Ch. 02 — the solution, three moves | 7 |
+| R 03 | The Four Words | Ch. 02 — brand DNA | 6 |
+| R 04 | Progress Is a Colour, Not a Number | Ch. 04 and 06 — mission states, product | 7 |
+| R 05 | Believed or Shared | Ch. 04 — two intensities | 7 |
+| R 06 | One Idea Only | Ch. 02 and 03 — the one rule, hierarchy | 7 |
+| R 07 | Composed, Not Translated | Ch. 03 and 05 — the bilingual rule, the voice | 8 |
+| R 08 | Warm Candour with Institutional Precision | Ch. 02 — personality | 7 |
+
+The reports are not restatements of the book. Each takes the framework as written,
+then argues what it means for somebody running a company — the failure modes of
+inverting Truth/Readiness/Proof, the earned-versus-claimed test behind "lime appears
+only on what has been earned", what it costs to send an energy-mode document to a
+reader who has to believe it. Where the report adds something the book does not say,
+it says so on the page.
+
+Three figure types were added for them, all drawn by the book's own rules: `pillars`
+(four equal columns, because the book sets the DNA words as equals and a ranked list
+would say something the source does not), `states` (dormant held back, in motion
+cropped by a real clip path so the crop shows the movement, resolved solid and
+centred) and `progression` (the line enters, travels, turns under its own label, and
+resolves at the mark).
 
 Every file is a cover, the content, and a closing **About StartPad** page carrying the
 mark and `startpad.me`. The toolkits carry ruled worksheets sized to be written on.
@@ -365,7 +399,7 @@ and the block renderer, so restyling all eight is one edit.
 
 ## The figures
 
-Twenty-eight infographics, generated as SVG by `whitepapers/figures.py` from data held
+Fifty-seven infographics, generated as SVG by `whitepapers/figures.py` from data held
 in the document that uses it — so a figure cannot drift away from the sentence beside
 it. Nothing is a bitmap; everything stays sharp at any zoom and prints at full
 resolution.
@@ -408,10 +442,10 @@ average.
 `scripts/check_pdfs.py` is the gate and exits non-zero on any failure. It checks page
 counts, that `startpad.me` and the About page reached every file, that the document
 metadata reads as StartPad rather than as the browser that rendered it, that no
-forbidden phrase from the voice rules appears in the copy, and that no figure exceeds
-the ordinal ramp's step ceiling.
+forbidden phrase from the voice rules appears in the copy, that every report cites the
+book it derives from, and that no figure exceeds the ordinal ramp's step ceiling.
 
-    8 documents, 71 pages, 0 with problems
+    16 documents, 127 pages, 0 with problems
 
 ## What still needs a human
 
