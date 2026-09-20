@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| **Between** | Abdelrhman Soliman — Investment & Business Expert |
+| **Between** | Abdelrhman Soliman and Mustafa [ insert full name ] — Business & Investment Consultants |
 | **And** | Btakka — [Insert Registered Legal Entity Name] |
 | **Date** | [ ___ / ___ / 2026 ] |
 | **Relates to** | The Proposal dated 13 September 2026, annexed to this Agreement |
@@ -18,8 +18,9 @@
 | Document title | Investment Readiness & Investment Round Management — Consulting Agreement |
 | Document 2 of 2 | This Agreement sets the binding terms. The accompanying **Proposal** describes the work and is annexed to and forms part of this Agreement. |
 | Version | 1.0 — For Client Review |
-| Consultant | Abdelrhman Soliman, Independent Investment Advisor & Consultant |
+| Consultant | Abdelrhman Soliman and Mustafa [ insert full name ], Business & Investment Consultants, acting jointly (Clause 1.2) |
 | Consultant contact | abdelrhmansoliman96@gmail.com · +20 109 651 5287 · Cairo, Egypt |
+| Signatories required | Both Consultants and the Client |
 | Client (trade name) | Btakka |
 | Client (legal entity) | [Insert full registered name] |
 | Commercial Register No. | [Insert CR number] |
@@ -41,11 +42,15 @@ This Agreement is made on **[ ___ / ___ / 2026 ]** (the "**Effective Date**")
 
 **BETWEEN:**
 
-**(1) ABDELRHMAN SOLIMAN**, an independent investment advisor and consultant, of Cairo, Arab Republic of Egypt, National ID / Tax Registration No. **[ ]**, of **[ address ]** (the "**Consultant**"); and
+**(1) ABDELRHMAN SOLIMAN**, a business and investment consultant, of Cairo, Arab Republic of Egypt, National ID / Tax Registration No. **[ ]**, of **[ address ]**; and
 
-**(2) [ INSERT FULL REGISTERED LEGAL NAME ]**, trading as **Btakka**, a company registered in the Arab Republic of Egypt under Commercial Register No. **[ ]**, Tax Card No. **[ ]**, with its registered office at **[ address ]**, represented by **[ name ]**, **[ title ]** (the "**Client**").
+**(2) MUSTAFA [ INSERT FULL NAME ]**, a business and investment consultant, of **[ city ]**, Arab Republic of Egypt, National ID / Tax Registration No. **[ ]**, of **[ address ]**,
 
-The Consultant and the Client are each a "**Party**" and together the "**Parties**".
+(together the "**Consultant**"); and
+
+**(3) [ INSERT FULL REGISTERED LEGAL NAME ]**, trading as **Btakka**, a company registered in the Arab Republic of Egypt under Commercial Register No. **[ ]**, Tax Card No. **[ ]**, with its registered office at **[ address ]**, represented by **[ name ]**, **[ title ]** (the "**Client**").
+
+Abdelrhman Soliman and Mustafa [ insert full name ] together constitute the Consultant and are, for the purposes of this Agreement, a single Party. The Consultant and the Client are each a "**Party**" and together the "**Parties**".
 
 **WHEREAS:**
 
@@ -67,6 +72,7 @@ The Consultant and the Client are each a "**Party**" and together the "**Parties
 | **Business Day** | Any day other than Friday, Saturday or a public holiday in the Arab Republic of Egypt |
 | **Client Input Pack** | The seven items listed at section 8 of, and Annex C to, the Proposal |
 | **Confidential Information** | As defined at Clause 10.1 |
+| **Consultant** | Abdelrhman Soliman and Mustafa [ insert full name ] together. Every obligation, right and entitlement of the Consultant under this Agreement belongs to them jointly, as set out at Clause 1.2 |
 | **Deliverables** | The items listed at section 7 of, and Annex A to, the Proposal, summarised at Schedule 1 |
 | **Engagement Standard** | The Client response obligations at Clause 5.3 |
 | **Final Close** | The date the Round is declared closed by the Client or the target Round size is fully subscribed and funded, whichever is earlier |
@@ -86,9 +92,17 @@ The Consultant and the Client are each a "**Party**" and together the "**Parties
 | **Target Investor Map** | The tiered investor target list delivered under Phase 2 Stage 1 |
 | **Ticket** | An individual investment made into the Client as part of or in connection with the Round |
 
-**1.2** Headings are for convenience only. The singular includes the plural. "Including" means "including without limitation". References to a Clause or Schedule are to a clause or schedule of this Agreement.
+**1.2 The Consultant acts jointly.** The Consultant comprises two individuals, Abdelrhman Soliman and Mustafa [ insert full name ], who deliver the Services together. Accordingly:
 
-**1.3** The Proposal is annexed to and forms part of this Agreement. In the event of conflict, the order of precedence is: the clauses of this Agreement, then its Schedules, then the Proposal.
+- **(a)** every reference in this Agreement to "the Consultant" is a reference to both of them together, and every obligation of the Consultant binds each of them **jointly and severally**, so that the Client may enforce the whole of any obligation against either;
+- **(b)** each of them is authorised to give and receive notices, approvals and instructions on behalf of both, and anything done or omitted by one is treated as done or omitted by both;
+- **(c)** the Client shall deal with **[ Abdelrhman Soliman / to be confirmed ]** as the Consultant's single point of contact, and is entitled to rely on that person's authority to bind the Consultant;
+- **(d)** all Fees under Clause 6 are payable to the single account nominated at Schedule 2.4, and payment into that account discharges the Client's payment obligation to both of them in full. The apportionment of Fees between them is a matter solely between themselves and is no concern of the Client; and
+- **(e)** Clauses 5.5 (non-circumvention), 10 (confidentiality) and 11 (intellectual property) bind each of them individually as well as together.
+
+**1.3** Headings are for convenience only. The singular includes the plural. "Including" means "including without limitation". References to a Clause or Schedule are to a clause or schedule of this Agreement.
+
+**1.4** The Proposal is annexed to and forms part of this Agreement. In the event of conflict, the order of precedence is: the clauses of this Agreement, then its Schedules, then the Proposal.
 
 ---
 
@@ -355,10 +369,12 @@ in each case where the relevant event is recorded in the Investor Log in accorda
 
 | | Consultant | Client |
 |---|---|---|
-| **For the attention of** | Abdelrhman Soliman | [ name ] |
-| **Email** | abdelrhmansoliman96@gmail.com | [ email ] |
-| **Phone** | +20 109 651 5287 | [ phone ] |
+| **For the attention of** | Abdelrhman Soliman and Mustafa [ insert full name ] | [ name ] |
+| **Email** | abdelrhmansoliman96@gmail.com · [ Mustafa — email ] | [ email ] |
+| **Phone** | +20 109 651 5287 · [ Mustafa — phone ] | [ phone ] |
 | **Address** | Cairo, Arab Republic of Egypt | [ address ] |
+
+Notice given to either individual comprising the Consultant is notice to both (Clause 1.2(b)).
 
 **16.2** A notice is deemed received: if by email, on the next Business Day after sending, absent a delivery failure notification; if by hand, on delivery; if by registered post, five (5) Business Days after posting.
 
@@ -406,20 +422,22 @@ in each case where the relevant event is recorded in the Investor Log in accorda
 
 <br>
 
-| **THE CONSULTANT** | **THE CLIENT** |
-|---|---|
-| **ABDELRHMAN SOLIMAN** | **[ FULL REGISTERED LEGAL NAME ]** trading as **Btakka** |
-| Independent Investment Advisor & Consultant | |
-| | |
-| Signature: ............................................. | Signature: ............................................. |
-| | |
-| Name: Abdelrhman Soliman | Name: ...................................................... |
-| | |
-| Title: Consultant | Title: ......................................................... |
-| | |
-| Date: ....................................................... | Date: ....................................................... |
-| | |
-| | Company stamp: |
+| **THE CONSULTANT (1)** | **THE CONSULTANT (2)** | **THE CLIENT** |
+|---|---|---|
+| **ABDELRHMAN SOLIMAN** | **MUSTAFA [ FULL NAME ]** | **[ FULL REGISTERED LEGAL NAME ]** trading as **Btakka** |
+| Business & Investment Consultant | Business & Investment Consultant | |
+| | | |
+| Signature: ........................... | Signature: ........................... | Signature: ........................... |
+| | | |
+| Name: Abdelrhman Soliman | Name: ..................................... | Name: ..................................... |
+| | | |
+| Title: Consultant | Title: Consultant | Title: ........................................ |
+| | | |
+| Date: ..................................... | Date: ..................................... | Date: ..................................... |
+| | | |
+| | | Company stamp: |
+
+Both individuals comprising the Consultant must sign. A signature by only one of them does not bind the Consultant.
 
 <br>
 
@@ -436,7 +454,7 @@ This Schedule summarises the Services for ease of reference. The full descriptio
 | Workstream | Covers |
 |---|---|
 | **A — Story, positioning & market** | Investment thesis and narrative; problem/solution framing; TAM, SAM and SOM; competitive analysis; go-to-market strategy; customer development evidence and traction narrative |
-| **B — Financial model, expectations & valuation** | Driver-based model (3–5 years, monthly for years 1–2); revenue model across both product lines; cost structure and headcount from the HR plan; cash flow, burn and runway; base / conservative / upside scenarios; financial expectations pack; Use of Funds; pre-seed valuation; cap table and dilution; key metrics dashboard |
+| **B — Financial model, expectations & valuation** | Driver-based model (3–5 years, monthly for years 1–2); revenue model across both product lines; cost structure and headcount from the HR plan; cash flow, burn and runway; financial expectations pack; Use of Funds; pre-seed valuation; cap table and dilution; key metrics dashboard |
 | **C — Data room construction** | Data room architecture, index and naming convention; preparation of every Consultant-owned item and quality control of every Client-provided item in Annex A; gap analysis and remediation; diligence Q&A bank; access control and version discipline; final readiness review |
 | **D — Investor document set** | Pitch deck (10–15 slides); one-page teaser; full business plan; term sheet template; valuation document; investor-standard founder bios; product demo script |
 
@@ -460,7 +478,7 @@ This Schedule summarises the Services for ease of reference. The full descriptio
 
 ### 1.4 Deliverables
 
-Twenty-five (25) Phase 1 deliverables and thirteen (13) Phase 2 deliverables, itemised with formats and due dates at section 7 of the Proposal. All 36 items of the Client's Pre-Seed Round Data Room Checklist are allocated to an owner at Annex A to the Proposal: twelve prepared by the Consultant, twelve jointly produced, and twelve provided by the Client.
+Twenty-four (24) Phase 1 deliverables and thirteen (13) Phase 2 deliverables, itemised with formats and due dates at section 7 of the Proposal. All 36 items of the Client's Pre-Seed Round Data Room Checklist are allocated to an owner at Annex A to the Proposal: twelve prepared by the Consultant, twelve jointly produced, and twelve provided by the Client.
 
 ---
 
@@ -558,7 +576,10 @@ The following fields must be completed, and the following commercial points conf
 | Ref | Field |
 |---|---|
 | Preamble | Client's full registered legal name, Commercial Register number, Tax Card number, registered address |
-| Preamble | Consultant's National ID / Tax Registration number and address |
+| Preamble | Abdelrhman Soliman's National ID / Tax Registration number and address |
+| Preamble | **Mustafa's full legal name**, National ID / Tax Registration number, city and address |
+| Clause 1.2(c) | Which of the two Consultants is the Client's single point of contact |
+| Clause 16.1 | Mustafa's email and phone for notices |
 | Clause 4.5 | Client's nominated point of contact — name, title, email, mobile |
 | Clause 3.5 | Hourly rate for out-of-scope revisions |
 | Schedule 2.4 | Consultant's bank account details |

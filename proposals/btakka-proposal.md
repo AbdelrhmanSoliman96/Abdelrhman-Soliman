@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **Prepared for** | Btakka — [Insert Registered Legal Entity Name] |
-| **Prepared by** | Abdelrhman Soliman — Investment & Business Expert |
+| **Prepared by** | Abdelrhman Soliman and Mustafa [ insert full name ] — Business & Investment Consultants |
 | **Date** | 13 September 2026 |
 | **Validity of this proposal** | 30 days from the date above |
 
@@ -18,8 +18,9 @@
 | Document title | Investment Readiness & Investment Round Management — Proposal |
 | Document 1 of 2 | This proposal describes the work. The accompanying **Consulting Agreement** sets the binding terms. |
 | Version | 1.0 — For Client Review |
-| Consultant | Abdelrhman Soliman, Independent Investment Advisor & Consultant |
+| Consultant | Abdelrhman Soliman and Mustafa [ insert full name ], Business & Investment Consultants, acting jointly |
 | Consultant contact | abdelrhmansoliman96@gmail.com · +20 109 651 5287 · Cairo, Egypt |
+| Signatories required | Both Consultants and the Client |
 | Client (trade name) | Btakka |
 | Client (legal entity) | [Insert full registered name] |
 | Target round | Pre-Seed |
@@ -50,11 +51,15 @@ This engagement delivers exactly that, in two phases:
 
 ---
 
-## 2. About the Consultant
+## 2. About the Consultants
+
+This engagement is delivered by two consultants working jointly. Both are Parties to the accompanying Consulting Agreement and are jointly and severally responsible for delivery, so Btakka has two named people accountable for the work rather than one.
+
+### Abdelrhman Soliman — Business & Investment Consultant
 
 Abdelrhman Soliman is an independent investment advisor based in Cairo, working with founders, angels, VCs and family offices across MENA and global markets. Specialisations: investment evaluation, fundraising strategy, investor relations, financial modelling and portfolio development.
 
-### Track record
+#### Track record
 
 | Metric | Figure |
 |---|---|
@@ -62,37 +67,59 @@ Abdelrhman Soliman is an independent investment advisor based in Cairo, working 
 | Startups mentored | 100+ |
 | Capital raised supported | USD 10M+ |
 | Financial models built and reviewed | 50+ |
-| Peak simulated fund DPI | 120x |
 
-### Experience
-
-| Period | Role | Organisation |
-|---|---|---|
-| Jun 2026 — present | Independent Investment Advisor & Consultant | Private Practice |
-| 2025 — 2026 | Syndicate Lead & Head of Investment | Multiples Ventures |
-| 2024 — 2025 | Senior Investment Analyst | Multiples Ventures |
-| 2024 — present | Startup Investment Mentor | Startupbootcamp · VC4A |
-| 2022 — 2023 | Investment Unit Supervisor | G. World MENA |
-| 2020 — 2022 | Investment Analyst | G. World MENA |
-
-### Recognition
+#### Recognition
 
 - **Top 4% — VC Lab, Cohort 17.** Among the top 4% of emerging fund managers globally; validated a USD 3M pre-seed SaaS fund thesis.
 - **Winner — Fintech Saudi 2024 Content Challenge**, for "Reimagining the Financial Services Value Chain".
 - **Top 10 LinkedIn VC Creators, MENA**, for thought leadership and founder education.
-- **+120x** simulated growth-stage DPI and +6x early-stage DPI, VC Fund Manager Masterclass.
 
-### Credentials
+#### Credentials
 
-CFA Level I (CFA Institute) · VC & Private Equity (Bocconi) · Advanced Valuation (Erasmus Rotterdam) · Investment Banking virtual experience (J.P. Morgan) · Alternative Investing (Apollo Academy) · Data Analysis (Dubai Future Foundation).
+CFA Level I (CFA Institute) · VC & Private Equity (Bocconi) · Advanced Valuation (Erasmus Rotterdam) · Investment Banking virtual experience (J.P. Morgan) · Alternative Investing (Apollo Academy).
 
-### Sectors covered
+#### Sectors covered
 
 SaaS · Fintech · E-commerce · Real Estate · Ed-tech · Logistics · Climate Tech · Retail.
 
-### Speaking and media
+#### Speaking and media
 
 Startupbootcamp · VC4A · Startup Without Borders · TINTS Business Lobby · Asharq News (Sharq Bounce) · Alhadath Alyoum TV (Financial Market) · *Investment World* LinkedIn newsletter · YouTube founder-education channel.
+
+### Mustafa [ insert full name ] — Business & Investment Consultant
+
+> **To complete before sending.** The block below is a template. Fill it in with Mustafa's actual background — do not send this proposal with placeholder text in it.
+
+[ Insert a short professional summary: where Mustafa is based, years of experience, specialisations, and the parts of this engagement he leads. ]
+
+#### Track record
+
+| Metric | Figure |
+|---|---|
+| [ Insert metric ] | [ Insert figure ] |
+| [ Insert metric ] | [ Insert figure ] |
+| [ Insert metric ] | [ Insert figure ] |
+
+#### Credentials
+
+[ Insert qualifications, certifications and relevant training. ]
+
+#### Sectors covered
+
+[ Insert sectors. ]
+
+### How the two of us split the work
+
+| Workstream | Lead |
+|---|---|
+| Story, positioning and market (Workstream A) | [ Abdelrhman / Mustafa ] |
+| Financial model, expectations and valuation (Workstream B) | [ Abdelrhman / Mustafa ] |
+| Data room construction (Workstream C) | [ Abdelrhman / Mustafa ] |
+| Investor document set (Workstream D) | [ Abdelrhman / Mustafa ] |
+| Fundraising strategy and investor outreach (Phase 2) | [ Abdelrhman / Mustafa ] |
+| Single point of contact for Btakka | [ Abdelrhman / Mustafa ] |
+
+Both consultants attend every workshop. Whichever of us leads a workstream, both are accountable for it under the Consulting Agreement.
 
 ---
 
@@ -146,7 +173,6 @@ To take Btakka from its current position to a **funded pre-seed round**, by:
 - Revenue model across both product lines, built on real unit economics
 - Cost structure: COGS, operating expenses, and headcount costs derived from Btakka's HR plan
 - Cash flow, burn rate, runway and current cash position statement
-- Base / conservative / upside scenarios with sensitivity analysis
 - **Financial expectations pack** — the forward projections investors will underwrite
 - Use of Funds statement covering a 12–18 month runway with milestone mapping
 - Pre-seed valuation with method, comparables and a defensible range
@@ -214,7 +240,7 @@ Workshops are the mechanism by which the reasoning behind every deliverable is t
 |---|---|---|---|---|---|
 | **W1** | **Discovery & Story Session** — initial meeting to understand the story | Week 1 | 3 hours | All founders | Confirmed business understanding, investment thesis draft, full information request list |
 | **W2** | **Financial Modelling Workshop — Session 1** | Week 2 | 3 hours | Founders + finance lead | Driver tree, unit economics, assumption book v1 |
-| **W3** | **Financial Modelling Workshop — Session 2** | Week 3 | 3 hours | Founders + finance lead | Model review and challenge, scenarios, use of funds, valuation range |
+| **W3** | **Financial Modelling Workshop — Session 2** | Week 3 | 3 hours | Founders + finance lead | Model review and challenge, use of funds, valuation range |
 | **W4** | **Full Data Room Workshop** | Week 4 | 4 hours | Full leadership team | Complete data room walkthrough, diligence Q&A drill, readiness sign-off |
 | **W5** | **Investor Pitch Rehearsal** | Week 5 | 2 hours | Pitching founders | Pitch calibration, objection handling, go-live sign-off |
 
@@ -238,41 +264,40 @@ Every deliverable below is produced by the Consultant and handed over in both ed
 | 6 | Financial model (driver-based, 3–5 years) | Excel | Week 3 |
 | 7 | Financial expectations pack | Excel + document | Week 3 |
 | 8 | Revenue model overview | Document | Week 3 |
-| 9 | Scenario and sensitivity analysis | Excel | Week 3 |
-| 10 | Use of Funds statement | Document | Week 3 |
-| 11 | Cap table (current and post-money) | Excel | Week 3 |
-| 12 | Valuation document | Document + model | Week 3 |
-| 13 | Key metrics dashboard | Excel | Week 3 |
-| 14 | Go-to-market strategy | Document | Week 3 |
-| 15 | Pitch deck (10–15 slides) | Designed deck + source | Week 4 |
-| 16 | Teaser (one page, designed) | Designed PDF + source | Week 4 |
-| 17 | Business plan (all parts) | Document | Week 4 |
-| 18 | Term sheet template | Document | Week 4 |
-| 19 | Founder bios (investor standard) | Document | Week 4 |
-| 20 | Product demo script and walkthrough | Document | Week 4 |
-| 21 | Technical overview | Document | Week 4 |
-| 22 | Organisational chart and key hire plan | Document | Week 4 |
-| 23 | Diligence Q&A bank | Document | Week 4 |
-| 24 | Complete, indexed, populated data room | Live data room | Week 4 |
-| 25 | Diligence readiness review and sign-off | Report | Week 4 |
+| 9 | Use of Funds statement | Document | Week 3 |
+| 10 | Cap table (current and post-money) | Excel | Week 3 |
+| 11 | Valuation document | Document + model | Week 3 |
+| 12 | Key metrics dashboard | Excel | Week 3 |
+| 13 | Go-to-market strategy | Document | Week 3 |
+| 14 | Pitch deck (10–15 slides) | Designed deck + source | Week 4 |
+| 15 | Teaser (one page, designed) | Designed PDF + source | Week 4 |
+| 16 | Business plan (all parts) | Document | Week 4 |
+| 17 | Term sheet template | Document | Week 4 |
+| 18 | Founder bios (investor standard) | Document | Week 4 |
+| 19 | Product demo script and walkthrough | Document | Week 4 |
+| 20 | Technical overview | Document | Week 4 |
+| 21 | Organisational chart and key hire plan | Document | Week 4 |
+| 22 | Diligence Q&A bank | Document | Week 4 |
+| 23 | Complete, indexed, populated data room | Live data room | Week 4 |
+| 24 | Diligence readiness review and sign-off | Report | Week 4 |
 
 ### Phase 2 deliverables
 
 | # | Deliverable | Format | Due by |
 |---|---|---|---|
-| 26 | Fundraising strategy document | Document | Week 6 |
-| 27 | Round architecture and terms recommendation | Document | Week 6 |
-| 28 | Target Investor Map (tiered, with warm paths) | Tracker | Week 6 |
-| 29 | Outreach plan, sequences and messaging | Document | Week 6 |
-| 30 | Investor Log (maintained live) | Tracker | Weekly from Week 7 |
-| 31 | Weekly pipeline report | Report | Every week, Weeks 7–16 |
-| 32 | Meeting preparation briefs and debriefs | Documents | Per meeting |
-| 33 | Investor feedback analysis and materials iteration | Report + updated materials | Rolling |
-| 34 | Diligence response coordination pack | Documents | As required |
-| 35 | Term sheet review and negotiation commentary | Document | On receipt |
-| 36 | Dilution and offer comparison model | Excel | On receipt |
-| 37 | Investor update template and reporting structure | Template | At close |
-| 38 | Engagement closing report and handover | Report | At close |
+| 25 | Fundraising strategy document | Document | Week 6 |
+| 26 | Round architecture and terms recommendation | Document | Week 6 |
+| 27 | Target Investor Map (tiered, with warm paths) | Tracker | Week 6 |
+| 28 | Outreach plan, sequences and messaging | Document | Week 6 |
+| 29 | Investor Log (maintained live) | Tracker | Weekly from Week 7 |
+| 30 | Weekly pipeline report | Report | Every week, Weeks 7–16 |
+| 31 | Meeting preparation briefs and debriefs | Documents | Per meeting |
+| 32 | Investor feedback analysis and materials iteration | Report + updated materials | Rolling |
+| 33 | Diligence response coordination pack | Documents | As required |
+| 34 | Term sheet review and negotiation commentary | Document | On receipt |
+| 35 | Dilution and offer comparison model | Excel | On receipt |
+| 36 | Investor update template and reporting structure | Template | At close |
+| 37 | Engagement closing report and handover | Report | At close |
 
 ---
 
@@ -305,7 +330,7 @@ In addition, the items marked **Client** in Annex A are required — principally
 | **Week 0** | Signature, deposit, NDA, Client Input Pack request, data room provisioning | — | Engagement mobilised |
 | **Week 1** | Discovery, business deep dive, information collection, data room architecture | **W1** | Information request issued; data room structure live |
 | **Week 2** | Market sizing, competitive analysis, thesis, model build begins | **W2** | Assumption book agreed; market pack delivered |
-| **Week 3** | Model completion, scenarios, use of funds, valuation, cap table | **W3** | Financial model, expectations and valuation delivered |
+| **Week 3** | Model completion, use of funds, valuation, cap table | **W3** | Financial model, expectations and valuation delivered |
 | **Week 4** | Investor document set, data room population, readiness review | **W4** | **Phase 1 complete — data room signed off** |
 
 ### Phase 2 — Investment Round Management: 3 months
@@ -437,10 +462,17 @@ The Phase 1 clock starts on the date the last item of the Client Input Pack is r
 
 | | |
 |---|---|
-| **Abdelrhman Soliman** | Independent Investment Advisor & Consultant |
+| **Abdelrhman Soliman** | Business & Investment Consultant |
 | **Email** | abdelrhmansoliman96@gmail.com |
 | **Phone** | +20 109 651 5287 |
 | **Location** | Cairo, Arab Republic of Egypt |
+
+| | |
+|---|---|
+| **Mustafa [ insert full name ]** | Business & Investment Consultant |
+| **Email** | [ insert email ] |
+| **Phone** | [ insert phone ] |
+| **Location** | [ insert city ], Arab Republic of Egypt |
 
 ---
 
@@ -549,7 +581,7 @@ Of the 12 items Btakka provides outright, **7 are optional or conditional** (20,
 |---|---|---|---|---|---|---|
 | **W1** | Discovery & Story Session | 1 | 3 hrs | All founders | Company history and origin; the problem and why now; product walkthrough of both apps; current traction and revenue; team; the raise and what it must achieve | Confirmed business understanding; investment thesis draft; consolidated information request list |
 | **W2** | Financial Modelling — Session 1 | 2 | 3 hrs | Founders + finance lead | Revenue engine and pricing; unit economics — CAC, payback, contribution margin, LTV; cost structure; headcount from the HR plan; the driver tree | Driver tree agreed; assumption book v1 signed off |
-| **W3** | Financial Modelling — Session 2 | 3 | 3 hrs | Founders + finance lead | Model walkthrough and challenge; base / conservative / upside scenarios; sensitivity testing; use of funds and milestone mapping; valuation method and range; cap table and dilution | Model approved; use of funds agreed; valuation range agreed |
+| **W3** | Financial Modelling — Session 2 | 3 | 3 hrs | Founders + finance lead | Model walkthrough and challenge; use of funds and milestone mapping; valuation method and range; cap table and dilution | Model approved; use of funds agreed; valuation range agreed |
 | **W4** | Full Data Room Workshop | 4 | 4 hrs | Full leadership team | Data room structure and index walkthrough; every item reviewed; diligence Q&A drill against the investor question bank; gap closure; access control and version discipline | Data room walkthrough complete; readiness sign-off; Phase 1 milestone M2 triggered |
 | **W5** | Investor Pitch Rehearsal | 5 | 2 hrs | Pitching founders | Live pitch delivery; timing and structure; objection handling drill; the hard questions; follow-up discipline | Pitch calibrated; founders cleared to go live |
 
