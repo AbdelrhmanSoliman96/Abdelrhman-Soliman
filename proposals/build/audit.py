@@ -26,11 +26,9 @@ check('12/12/12 ownership split in both', 'twelve prepared by the Consultant' in
 print('\n── scenario analysis removed from the financial model ──')
 bad_p = [l for l in p.splitlines() if re.search(r'scenario|sensitivity', l, re.I) and 'dilution' not in l.lower()]
 bad_a = [l for l in a.splitlines() if re.search(r'scenario|sensitivity', l, re.I)
-         and 'Worked scenario' not in l and 'illustrative only' not in l
-         and not l.startswith('| Scenario |') and 'dilution' not in l.lower()]
+         and 'dilution' not in l.lower()]
 check('no model-scenario language left in proposal', not bad_p, f'{bad_p}')
 check('no model-scenario language left in agreement', not bad_a, f'{bad_a}')
-check('fee "Worked scenarios" table kept (Schedule 2.3)', '### 2.3 Worked scenarios' in a)
 
 print('\n── sole consultant ──')
 check('no Mustafa in proposal', 'Mustafa' not in p)
@@ -64,8 +62,14 @@ check('no stale "Independent Investment Advisor"', 'Independent Investment Advis
 print('\n── cross-references resolve ──')
 for ref, doc, name in [('Annex A', p, 'proposal'), ('Annex B', p, 'proposal'), ('Annex C', p, 'proposal')]:
     check(f'{ref} exists in {name}', f'## {ref}' in doc)
-for n in range(1, 5):
+for n in range(1, 4):
     check(f'Schedule {n} exists in agreement', f'## Schedule {n}' in a)
+check('Schedule 4 (drafting to-do) removed from the contract', '## Schedule 4' not in a)
+check('no reference to the removed Schedule 4', 'Schedule 4' not in a and 'Schedule 4' not in p)
+check('no editorial commentary left in the contract', 'commercial core of Phase 2' not in a and 'Alternative, to be selected' not in a)
+check('Document Control removed', '### Document Control' not in a)
+check('worked scenarios removed', 'Worked scenarios' not in a)
+check('payment details renumbered to 2.3', '### 2.3 Payment details' in a and '### 2.4' not in a)
 for ref in re.findall(r'Schedule (\d)', p):
     check(f'proposal cites Schedule {ref} -> exists', f'## Schedule {ref}' in a)
 for ref in set(re.findall(r'Annex ([A-C])', a)):

@@ -408,7 +408,7 @@ This proposal is accompanied by a **Consulting Agreement** — the binding contr
 | Step | Action | Who | When |
 |---|---|---|---|
 | 1 | Review this proposal and the accompanying Consulting Agreement | Btakka | — |
-| 2 | Confirm the seven open commercial points listed at Schedule 4 of the Agreement | Both | Before signature |
+| 2 | Agree the open commercial points the Consultant raises — target round size and instrument, dispute forum, whether an Arabic execution copy is needed, and the data room platform | Both | Before signature |
 | 3 | Complete the blank fields in the Agreement — legal entity name, Commercial Register and Tax Card numbers, registered address, nominated point of contact | Btakka | Before signature |
 | 4 | Sign the Consulting Agreement | Both | Effective Date |
 | 5 | Pay the M1 down payment of EGP 30,000 | Btakka | On signature |

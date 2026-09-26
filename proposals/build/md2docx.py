@@ -165,13 +165,13 @@ def add_rule():
 # ---------- parse ----------
 lines = SRC.read_text(encoding='utf-8').split('\n')
 if COVER == 'agreement':
-    # the designed title page replaces the markdown cover; resume at Document Control
+    # the designed title page replaces the markdown cover; resume at the operative agreement
     for n, ln in enumerate(lines):
-        if ln.strip() == '### Document Control':
+        if ln.strip() == '# CONSULTING AGREEMENT':
             lines = lines[n:]
             break
     else:
-        raise SystemExit('cover mode: "### Document Control" marker not found')
+        raise SystemExit('cover mode: "# CONSULTING AGREEMENT" marker not found')
 i = 0
 para_buf, quote_buf = [], []
 

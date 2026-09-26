@@ -11,28 +11,6 @@
 
 ---
 
-### Document Control
-
-| Field | Detail |
-|---|---|
-| Document title | Investment Readiness & Investment Round Management — Consulting Agreement |
-| Document 2 of 2 | This Agreement sets the binding terms. The accompanying **Proposal** describes the work and is annexed to and forms part of this Agreement. |
-| Version | 1.0 — For Client Review |
-| Consultant | Abdelrhman Soliman, Business & Investment Consultant |
-| Consultant contact | abdelrhmansoliman96@gmail.com · +20 109 651 5287 · Cairo, Egypt |
-| Client (trade name) | Btakka |
-| Client (legal entity) | [Insert full registered name] |
-| Commercial Register No. | [Insert CR number] |
-| Tax Card No. | [Insert tax ID] |
-| Registered address | [Insert address] |
-| Client signatory | [Insert name and title] |
-| Total engagement fee | EGP 150,000 plus a 10% Success Fee on Consultant-introduced tickets |
-| Governing law | Arab Republic of Egypt |
-
-> **How to read this document.** Clauses 1–19 are the binding terms. **Schedules 1–4** carry the scope summary, the fee schedule, the investor log format, and the list of fields and commercial points still to settle before signature. The **Proposal** — issued alongside this Agreement — describes the work in full and is annexed to and forms part of this Agreement. Fields shown as `[ ]` are to be completed before signature; Schedule 4 lists them all in one place.
-
----
-
 # CONSULTING AGREEMENT
 
 **Investment Readiness and Investment Round Management Services Agreement**
@@ -149,8 +127,6 @@ The Consultant and the Client are each a "**Party**" and together the "**Parties
 ---
 
 ## 5. Investor Introductions, Client Engagement and Attribution
-
-> This Clause is the commercial core of Phase 2. It defines who counts as an investor the Consultant brought, what the Client must do when one appears, and what happens if the Client does not.
 
 **5.1 Introduced Investor.** An Investor is an "Introduced Investor" if the Consultant was the effective cause of the Client's contact with that Investor, including where the Consultant:
 
@@ -405,8 +381,6 @@ in each case where the relevant event is recorded in the Investor Log in accorda
 
 **18.3 Jurisdiction.** If the dispute is not resolved under Clause 18.2, it shall be submitted to the exclusive jurisdiction of the **competent Economic Courts of Cairo, Arab Republic of Egypt**.
 
-> *Alternative, to be selected before signature if preferred:* the dispute shall be finally settled by arbitration under the Rules of the Cairo Regional Centre for International Commercial Arbitration (CRCICA), before a sole arbitrator, seated in Cairo, conducted in English, with the award final and binding.
-
 ---
 
 ## 19. Execution
@@ -501,19 +475,7 @@ Twenty-four (24) Phase 1 deliverables and thirteen (13) Phase 2 deliverables, it
 | **Foreign currency** | Converted at the CBE mid-market rate on the date of receipt (Clause 6.2(d)) |
 | **Tail** | Payable on Introduced Investor Tickets funded within 12 months of expiry or termination (Clause 9) |
 
-### 2.3 Worked scenarios
-
-| Scenario | Round closed | Introduced by Consultant | Client-sourced | Fixed Fee | Success Fee | **Total** |
-|---|---|---|---|---|---|---|
-| **1** — Consultant closes the full round | EGP 10,000,000 | EGP 10,000,000 | — | 150,000 | 1,000,000 | **EGP 1,150,000** |
-| **2** — Mixed round | EGP 10,000,000 | EGP 6,000,000 | EGP 4,000,000 | 150,000 | 600,000 | **EGP 750,000** |
-| **3** — Client closes the full round themselves | EGP 10,000,000 | — | EGP 10,000,000 | 150,000 | — | **EGP 150,000** |
-| **4** — Smaller round, all introduced | EGP 4,000,000 | EGP 4,000,000 | — | 150,000 | 400,000 | **EGP 550,000** |
-| **5** — Readiness completed, no close within Term or Tail | — | — | — | 60,000 | — | **EGP 60,000** |
-
-*Scenarios are illustrative only and do not constitute a projection or expectation of round size.*
-
-### 2.4 Payment details
+### 2.3 Payment details
 
 | Field | Detail |
 |---|---|
@@ -556,35 +518,6 @@ Maintained by the Consultant, issued to Btakka weekly with the pipeline report. 
 ### 3.3 Weekly pipeline report
 
 Issued every week during Phase 2, covering: new investors contacted; responses received; meetings held and outcomes; investors in diligence; term sheets received; capital committed and funded to date against target; investor objections and how the materials were updated in response; Client actions outstanding; and any delay recorded under Clause 7.2.
-
----
-
-## Schedule 4 — Points to Confirm Before Signature
-
-The following fields must be completed, and the following commercial points confirmed, before this Agreement is executed.
-
-### 4.1 Fields to complete
-
-| Ref | Field |
-|---|---|
-| Preamble | Client's full registered legal name, Commercial Register number, Tax Card number, registered address |
-| Preamble | Consultant's National ID / Tax Registration number and address |
-| Clause 4.5 | Client's nominated point of contact — name, title, email, mobile |
-| Clause 3.5 | Hourly rate for out-of-scope revisions |
-| Schedule 2.4 | Consultant's bank account details |
-| Clause 19 | Signature date, signatory names and titles |
-
-### 4.2 Commercial points to confirm
-
-| # | Point | Position drafted | To confirm |
-|---|---|---|---|
-| 1 | Target round size and instrument | Not yet fixed — to be set in W1 and the Phase 2 strategy | Btakka's target raise and preferred instrument |
-| 2 | Grants, soft funding and debt | Excluded from the Success Fee base (Clause 1.1, Schedule 2.2) | Whether Btakka intends to pursue grants or non-dilutive funding, and whether these should be brought into scope at a separate rate |
-| 3 | Dispute resolution forum | Cairo Economic Courts (Clause 18.3) | Whether the Parties prefer CRCICA arbitration instead |
-| 4 | Arabic version | English governs (Clause 17.9) | Whether a bilingual execution copy is required, and which language prevails |
-| 5 | Regulatory treatment | Clause 12.3 — advisory fee, not placement | Each Party to take independent Egyptian legal advice on the treatment of a success-based fee under Financial Regulatory Authority rules |
-| 6 | Phase 2 exclusivity | Consultant has exclusivity on process management; Btakka's own direct fundraising is permitted (Clause 2.5) | Confirm this is acceptable to Btakka |
-| 7 | Data room platform | Not specified | Which platform will be used, and who pays for it (Clause 6.7) |
 
 ---
 
