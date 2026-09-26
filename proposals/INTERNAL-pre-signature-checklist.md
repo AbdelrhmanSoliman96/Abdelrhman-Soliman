@@ -18,7 +18,7 @@ The following fields must be completed, and the following commercial points conf
 | Clause 4.5 | Client's nominated point of contact — name, title, email, mobile |
 | Clause 3.5 | Hourly rate for out-of-scope revisions |
 | Schedule 2.3 | Consultant's bank account details |
-| Clause 19 | Signature date, signatory names and titles |
+| Execution page | Signature date, signatory names and titles |
 
 ### 4.2 Commercial points to confirm
 

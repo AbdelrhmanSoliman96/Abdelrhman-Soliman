@@ -104,3 +104,44 @@ def build(doc, section, *, consultant, client_legal, client_trade,
 
     # ── page break ─────────────────────────────────────────────
     doc.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
+
+
+def contents(doc, clauses, schedules):
+    """Index of clauses and schedules, on its own page after the title page."""
+    p = _p(doc, 0, 4, WD_ALIGN_PARAGRAPH.LEFT)
+    _run(p, "C O N T E N T S", 9, BRASS, SANS, bold=True, caps_space=1.4)
+    _rule(doc, '0F2C4A', '10', 2, 16)
+
+    def row(num, title, bold_num=False):
+        q = doc.add_paragraph()
+        q.paragraph_format.space_before = Pt(0)
+        q.paragraph_format.space_after = Pt(5)
+        q.paragraph_format.left_indent = Cm(1.5)
+        q.paragraph_format.first_line_indent = Cm(-1.5)
+        q.paragraph_format.line_spacing = 1.0
+        _run(q, num.ljust(6), 10, BRASS if bold_num else SLATE, SANS, bold=bold_num)
+        _run(q, title, 10.5, NAVY, SERIF)
+        return q
+
+    def group(label):
+        g = _p(doc, 14, 7, WD_ALIGN_PARAGRAPH.LEFT)
+        _run(g, label, 8, BRASS, SANS, bold=True, caps_space=1.2)
+        return g
+
+    group("C L A U S E S")
+    for num, title in clauses:
+        row(f"{num}.", title)
+
+    group("S C H E D U L E S")
+    for ref, title in schedules:
+        row(ref.replace("Schedule ", "") + ".", title)
+
+    group("E X E C U T I O N")
+    row("", "Signature page — to be signed by both Parties")
+
+    note = _p(doc, 20, 0, WD_ALIGN_PARAGRAPH.LEFT)
+    _run(note, "Each page of this Agreement is to be initialled by both Parties in the space "
+               "provided at the foot of the page. The final page is the signature page.",
+         9, SLATE, SERIF, italic=True)
+
+    doc.add_paragraph().add_run().add_break(WD_BREAK.PAGE)

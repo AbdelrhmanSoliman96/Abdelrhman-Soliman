@@ -9,7 +9,7 @@ DOCS = {
  'agreement': dict(
     src='/home/user/Abdelrhman-Soliman/proposals/btakka-consulting-agreement.md',
     out='/home/user/Abdelrhman-Soliman/proposals/btakka-consulting-agreement.html',
-    anchor='# CONSULTING AGREEMENT', end='*End of agreement.*',
+    anchor='# CONSULTING AGREEMENT', end='@@NO-TRAILING-BLOCK@@',
     title='Btakka Consulting Agreement'),
 }
 

@@ -75,6 +75,15 @@ for ref in re.findall(r'Schedule (\d)', p):
 for ref in set(re.findall(r'Annex ([A-C])', a)):
     check(f'agreement cites Annex {ref} -> exists', f'## Annex {ref}' in p)
 cl = sorted({int(m) for m in re.findall(r'Clause (\d+)', p)})
-check('proposal cites only real clauses (1-19)', all(1 <= c <= 19 for c in cl), f'{cl}')
+check('proposal cites only real clauses (1-18)', all(1 <= c <= 18 for c in cl), f'{cl}')
+
+print('\n── page layout: initials and signature page ──')
+import re as _re
+cn = [int(m) for m in _re.findall(r'^## (\d+)\. ', a, _re.M)]
+check('clauses run 1..18 with no gaps', cn == list(range(1, 19)), f'{cn}')
+check('Execution lifted out of the numbered clauses', '## 19.' not in a and '# EXECUTION' in a)
+check('Execution comes after every schedule', a.index('# EXECUTION') > a.index('## Schedule 3'))
+check('signature block is the last content', a.rstrip().endswith('Company stamp: |') or 'Company stamp' in a.rstrip()[-400:])
+check('no trailing credit block after signatures', 'End of agreement' not in a)
 
 print('\n' + ('ALL CHECKS PASSED' if not fails else f'{len(fails)} FAILED: {fails}'))

@@ -41,6 +41,13 @@ if COVER == 'agreement':
         governing_law= "Arab Republic of Egypt",
     )
 
+if COVER == 'agreement':
+    import re as _re
+    _src = SRC.read_text(encoding='utf-8')
+    _clauses = _re.findall(r'^## (\d+)\. (.+)$', _src, _re.M)
+    _scheds  = _re.findall(r'^## (Schedule \d+) — (.+)$', _src, _re.M)
+    coverpage.contents(doc, _clauses, _scheds)
+
 st = doc.styles['Normal']
 st.font.name = SERIF; st.font.size = Pt(10.5)
 st.element.rPr.rFonts.set(qn('w:eastAsia'), SERIF)
@@ -242,12 +249,41 @@ flush_para(); flush_quote()
 # ---------- footer ----------
 from docx.oxml import OxmlElement as OE
 sec = doc.sections[0]
+
+def _field(par, instr):
+    f = OE('w:fldSimple'); f.set(qn('w:instr'), instr)
+    r = OE('w:r'); rPr = OE('w:rPr')
+    sz = OE('w:sz'); sz.set(qn('w:val'), '15'); rPr.append(sz)
+    col = OE('w:color'); col.set(qn('w:val'), '555F6B'); rPr.append(col)
+    rf = OE('w:rFonts'); rf.set(qn('w:ascii'), SANS); rf.set(qn('w:hAnsi'), SANS); rPr.append(rf)
+    r.append(rPr); f.append(r); par._p.append(f)
+
+def _small(par, text, size=7.5, color=GREY, font=SANS, bold=False, spacing=None):
+    r = par.add_run(text)
+    r.font.size = Pt(size); r.font.color.rgb = color; r.font.name = font; r.bold = bold
+    r.element.rPr.rFonts.set(qn('w:eastAsia'), font)
+    if spacing is not None:
+        sp = OE('w:spacing'); sp.set(qn('w:val'), str(int(spacing * 20))); r.element.rPr.append(sp)
+    return r
+
 fp = sec.footer.paragraphs[0]
 fp.alignment = WD_ALIGN_PARAGRAPH.CENTER
-r = fp.add_run(f"{FOOTER_LABEL}  \u00b7  Btakka \u00d7 Abdelrhman Soliman  \u00b7  v1.0  \u00b7  Page ")
-r.font.size = Pt(7.5); r.font.color.rgb = GREY; r.font.name = SANS
-fld = OE('w:fldSimple'); fld.set(qn('w:instr'), 'PAGE')
-fp._p.append(fld)
+fp.paragraph_format.space_after = Pt(2)
+if COVER == 'agreement':
+    # Every page is initialled by both Parties so no page can be substituted.
+    _small(fp, "CONSULTANT\u2019S INITIALS", 7, RGBColor(0x8A,0x61,0x15), SANS, bold=True, spacing=0.8)
+    _small(fp, "  ...................          ", 8)
+    _small(fp, "CLIENT\u2019S INITIALS", 7, RGBColor(0x8A,0x61,0x15), SANS, bold=True, spacing=0.8)
+    _small(fp, "  ...................", 8)
+    fp2 = sec.footer.add_paragraph()
+    fp2.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    fp2.paragraph_format.space_before = Pt(0)
+else:
+    fp2 = fp
+_small(fp2, f"{FOOTER_LABEL}  \u00b7  Btakka \u00d7 Abdelrhman Soliman  \u00b7  v1.0  \u00b7  Page ")
+_field(fp2, 'PAGE')
+_small(fp2, " of ")
+_field(fp2, 'NUMPAGES')
 
 doc.save(OUT)
 print("Saved:", OUT)

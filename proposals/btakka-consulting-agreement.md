@@ -383,31 +383,6 @@ in each case where the relevant event is recorded in the Investor Log in accorda
 
 ---
 
-## 19. Execution
-
-**IN WITNESS WHEREOF** the Parties have executed this Agreement on the Effective Date first written above.
-
-<br>
-
-| **THE CONSULTANT** | **THE CLIENT** |
-|---|---|
-| **ABDELRHMAN SOLIMAN** | **[ FULL REGISTERED LEGAL NAME ]** trading as **Btakka** |
-| Business & Investment Consultant | |
-| | |
-| Signature: ............................................. | Signature: ............................................. |
-| | |
-| Name: Abdelrhman Soliman | Name: ...................................................... |
-| | |
-| Title: Consultant | Title: ......................................................... |
-| | |
-| Date: ....................................................... | Date: ....................................................... |
-| | |
-| | Company stamp: |
-
-<br>
-
----
-
 # SCHEDULES
 
 ## Schedule 1 — Services and Deliverables Summary
@@ -521,10 +496,25 @@ Issued every week during Phase 2, covering: new investors contacted; responses r
 
 ---
 
-*End of agreement.*
+# EXECUTION
 
-**Investment Readiness & Investment Round Management — Consulting Agreement**
+**IN WITNESS WHEREOF** the Parties have executed this Agreement on the Effective Date first written above.
 
-Abdelrhman Soliman · Cairo, Egypt · abdelrhmansoliman96@gmail.com · +20 109 651 5287
+<br>
 
-Version 1.0 — For Client Review · 13 September 2026 · Document 2 of 2
+| **THE CONSULTANT** | **THE CLIENT** |
+|---|---|
+| **ABDELRHMAN SOLIMAN** | **[ FULL REGISTERED LEGAL NAME ]** trading as **Btakka** |
+| Business & Investment Consultant | |
+| | |
+| Signature: ............................................. | Signature: ............................................. |
+| | |
+| Name: Abdelrhman Soliman | Name: ...................................................... |
+| | |
+| Title: Consultant | Title: ......................................................... |
+| | |
+| Date: ....................................................... | Date: ....................................................... |
+| | |
+| | Company stamp: |
+
+<br>
