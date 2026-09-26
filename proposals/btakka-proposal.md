@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **Prepared for** | Btakka — [Insert Registered Legal Entity Name] |
-| **Prepared by** | Abdelrhman Soliman and Mustafa [ insert full name ] — Business & Investment Consultants |
+| **Prepared by** | Abdelrhman Soliman — Business & Investment Consultant |
 | **Date** | 13 September 2026 |
 | **Validity of this proposal** | 30 days from the date above |
 
@@ -18,9 +18,8 @@
 | Document title | Investment Readiness & Investment Round Management — Proposal |
 | Document 1 of 2 | This proposal describes the work. The accompanying **Consulting Agreement** sets the binding terms. |
 | Version | 1.0 — For Client Review |
-| Consultant | Abdelrhman Soliman and Mustafa [ insert full name ], Business & Investment Consultants, acting jointly |
+| Consultant | Abdelrhman Soliman, Business & Investment Consultant |
 | Consultant contact | abdelrhmansoliman96@gmail.com · +20 109 651 5287 · Cairo, Egypt |
-| Signatories required | Both Consultants and the Client |
 | Client (trade name) | Btakka |
 | Client (legal entity) | [Insert full registered name] |
 | Target round | Pre-Seed |
@@ -45,21 +44,17 @@ This engagement delivers exactly that, in two phases:
 
 **Phase 2 — Investment Round Management (3 months).** Convert readiness into capital: fundraising strategy, investor target map, structured outreach, meeting management, diligence coordination, term sheet negotiation and close.
 
-**Commercials.** EGP 150,000 in fixed fees across three milestones (EGP 30,000 on signature, EGP 30,000 on completion of readiness, EGP 90,000 on first close), plus a 10% Success Fee on the value of investment tickets funded by investors the Consultant introduced.
+**Commercials.** EGP 150,000 in fixed fees across four milestones (EGP 30,000 on signature, EGP 30,000 on completion of readiness, EGP 20,000 on launch of investor outreach, EGP 70,000 on first close), plus a 10% Success Fee on the value of investment tickets funded by investors the Consultant introduced.
 
 **The one thing that determines whether this works.** Every deadline in this document is conditional on Btakka's engagement — documents delivered on time, workshops attended by decision-makers, and introduced investors answered within three business days. This is stated plainly in Clause 5 and Clause 7 of the accompanying Consulting Agreement because it is the single largest cause of failed rounds, and it is the one input the Consultant cannot supply.
 
 ---
 
-## 2. About the Consultants
-
-This engagement is delivered by two consultants working jointly. Both are Parties to the accompanying Consulting Agreement and are jointly and severally responsible for delivery, so Btakka has two named people accountable for the work rather than one.
-
-### Abdelrhman Soliman — Business & Investment Consultant
+## 2. About the Consultant
 
 Abdelrhman Soliman is an independent investment advisor based in Cairo, working with founders, angels, VCs and family offices across MENA and global markets. Specialisations: investment evaluation, fundraising strategy, investor relations, financial modelling and portfolio development.
 
-#### Track record
+### Track record
 
 | Metric | Figure |
 |---|---|
@@ -68,58 +63,23 @@ Abdelrhman Soliman is an independent investment advisor based in Cairo, working 
 | Capital raised supported | USD 10M+ |
 | Financial models built and reviewed | 50+ |
 
-#### Recognition
+### Recognition
 
 - **Top 4% — VC Lab, Cohort 17.** Among the top 4% of emerging fund managers globally; validated a USD 3M pre-seed SaaS fund thesis.
 - **Winner — Fintech Saudi 2024 Content Challenge**, for "Reimagining the Financial Services Value Chain".
 - **Top 10 LinkedIn VC Creators, MENA**, for thought leadership and founder education.
 
-#### Credentials
+### Credentials
 
 CFA Level I (CFA Institute) · VC & Private Equity (Bocconi) · Advanced Valuation (Erasmus Rotterdam) · Investment Banking virtual experience (J.P. Morgan) · Alternative Investing (Apollo Academy).
 
-#### Sectors covered
+### Sectors covered
 
 SaaS · Fintech · E-commerce · Real Estate · Ed-tech · Logistics · Climate Tech · Retail.
 
-#### Speaking and media
+### Speaking and media
 
 Startupbootcamp · VC4A · Startup Without Borders · TINTS Business Lobby · Asharq News (Sharq Bounce) · Alhadath Alyoum TV (Financial Market) · *Investment World* LinkedIn newsletter · YouTube founder-education channel.
-
-### Mustafa [ insert full name ] — Business & Investment Consultant
-
-> **To complete before sending.** The block below is a template. Fill it in with Mustafa's actual background — do not send this proposal with placeholder text in it.
-
-[ Insert a short professional summary: where Mustafa is based, years of experience, specialisations, and the parts of this engagement he leads. ]
-
-#### Track record
-
-| Metric | Figure |
-|---|---|
-| [ Insert metric ] | [ Insert figure ] |
-| [ Insert metric ] | [ Insert figure ] |
-| [ Insert metric ] | [ Insert figure ] |
-
-#### Credentials
-
-[ Insert qualifications, certifications and relevant training. ]
-
-#### Sectors covered
-
-[ Insert sectors. ]
-
-### How the two of us split the work
-
-| Workstream | Lead |
-|---|---|
-| Story, positioning and market (Workstream A) | [ Abdelrhman / Mustafa ] |
-| Financial model, expectations and valuation (Workstream B) | [ Abdelrhman / Mustafa ] |
-| Data room construction (Workstream C) | [ Abdelrhman / Mustafa ] |
-| Investor document set (Workstream D) | [ Abdelrhman / Mustafa ] |
-| Fundraising strategy and investor outreach (Phase 2) | [ Abdelrhman / Mustafa ] |
-| Single point of contact for Btakka | [ Abdelrhman / Mustafa ] |
-
-Both consultants attend every workshop. Whichever of us leads a workstream, both are accountable for it under the Consulting Agreement.
 
 ---
 
@@ -252,6 +212,8 @@ All workshops may be held in person in Cairo or remotely by video, at Btakka's p
 
 Every deliverable below is produced by the Consultant and handed over in both editable source format and a final PDF, except where noted.
 
+**How delivery divides.** The Consultant prepares the **investment documents** — the financial model, financial expectations, valuation, cap table, use of funds, market sizing, competitive analysis, go-to-market strategy, metrics dashboard, pitch deck, teaser, business plan and term sheet template. Btakka delivers the **remaining documents together with the Consultant** — the corporate, legal, financial-record, product, traction and customer materials. Annex A sets out which of the 36 data room items falls where, and Clause 3.7 of the Consulting Agreement makes the division binding.
+
 ### Phase 1 deliverables
 
 | # | Deliverable | Format | Due by |
@@ -363,11 +325,12 @@ Where Btakka does not meet these conditions, the timeline extends day-for-day (C
 
 | Milestone | Trigger | Amount | Cumulative |
 |---|---|---|---|
-| **M1 — Deposit** | On signature of this Agreement | **EGP 30,000** | EGP 30,000 |
+| **M1 — Down payment** | On signature of this Agreement | **EGP 30,000** | EGP 30,000 |
 | **M2 — Readiness complete** | On sign-off of the Phase 1 data room readiness review | **EGP 30,000** | EGP 60,000 |
-| **M3 — Closing** | On First Close — first investment funds received in cleared funds | **EGP 90,000** | **EGP 150,000** |
+| **M3 — Round** | On launch of the first investor outreach wave | **EGP 20,000** | EGP 80,000 |
+| **M4 — Closing** | On First Close — first investment ticket received in cleared funds | **EGP 70,000** | **EGP 150,000** |
 
-**M3 is payable whether the closing investor was introduced by the Consultant or sourced by Btakka.** The work that makes a round closeable — the model, the valuation, the data room, the deck and the process — is delivered regardless of whose contact ultimately signs.
+**M4 is payable whether the closing investor was introduced by the Consultant or sourced by Btakka.** The work that makes a round closeable — the model, the valuation, the data room, the deck and the process — is delivered regardless of whose contact ultimately signs.
 
 ### Success fee — 10%
 
@@ -432,7 +395,7 @@ The following are outside scope. Any of them can be added by written variation.
 
 **The founders keep the capability.** The workshop structure exists so that Btakka's team can defend every assumption after the engagement ends — in this round and in the next one.
 
-**The incentives are aligned.** EGP 90,000 of the fixed fee and the entire Success Fee sit behind a close. The Consultant is paid properly when Btakka is funded.
+**The incentives are aligned.** EGP 70,000 of the fixed fee and the entire Success Fee sit behind a close. The Consultant is paid properly when Btakka is funded.
 
 **The process is transparent.** Weekly pipeline reporting and a live Investor Log mean Btakka always knows exactly where the round stands.
 
@@ -448,7 +411,7 @@ This proposal is accompanied by a **Consulting Agreement** — the binding contr
 | 2 | Confirm the seven open commercial points listed at Schedule 4 of the Agreement | Both | Before signature |
 | 3 | Complete the blank fields in the Agreement — legal entity name, Commercial Register and Tax Card numbers, registered address, nominated point of contact | Btakka | Before signature |
 | 4 | Sign the Consulting Agreement | Both | Effective Date |
-| 5 | Pay the M1 deposit of EGP 30,000 | Btakka | On signature |
+| 5 | Pay the M1 down payment of EGP 30,000 | Btakka | On signature |
 | 6 | Deliver the Client Input Pack — the seven items at section 8 and Annex C | Btakka | Within 5 business days of signature |
 | 7 | Discovery & Story Workshop (W1) | Both | Week 1 |
 
@@ -466,13 +429,6 @@ The Phase 1 clock starts on the date the last item of the Client Input Pack is r
 | **Email** | abdelrhmansoliman96@gmail.com |
 | **Phone** | +20 109 651 5287 |
 | **Location** | Cairo, Arab Republic of Egypt |
-
-| | |
-|---|---|
-| **Mustafa [ insert full name ]** | Business & Investment Consultant |
-| **Email** | [ insert email ] |
-| **Phone** | [ insert phone ] |
-| **Location** | [ insert city ], Arab Republic of Egypt |
 
 ---
 

@@ -39,7 +39,7 @@ def _rule(doc, color='0F2C4A', size='8', space_before=0, space_after=0, width_pc
     pbdr.append(bot); p._p.get_or_add_pPr().append(pbdr)
     return p
 
-def build(doc, section, *, consultant_1, consultant_2, client_legal, client_trade,
+def build(doc, section, *, consultant, client_legal, client_trade,
           date_line, proposal_ref, version, governing_law):
     # ── eyebrow ────────────────────────────────────────────────
     p = _p(doc, 0, 4)
@@ -65,10 +65,8 @@ def build(doc, section, *, consultant_1, consultant_2, client_legal, client_trad
 
     # ── parties ────────────────────────────────────────────────
     p = _p(doc, 0, 7); _run(p, "B E T W E E N", 8.5, BRASS, SANS, bold=True, caps_space=1.6)
-    p = _p(doc, 0, 2); _run(p, consultant_1, 14, NAVY, SERIF, bold=True)
-    p = _p(doc, 0, 2); _run(p, "and", 10.5, SLATE, SERIF, italic=True)
-    p = _p(doc, 0, 3); _run(p, consultant_2, 14, NAVY, SERIF, bold=True)
-    p = _p(doc, 0, 16); _run(p, 'together, "the Consultant"', 10, SLATE, SERIF, italic=True)
+    p = _p(doc, 0, 3); _run(p, consultant, 14, NAVY, SERIF, bold=True)
+    p = _p(doc, 0, 16); _run(p, '"the Consultant"', 10, SLATE, SERIF, italic=True)
 
     p = _p(doc, 0, 7); _run(p, "A N D", 8.5, BRASS, SANS, bold=True, caps_space=1.6)
     p = _p(doc, 0, 2); _run(p, client_legal, 14, NAVY, SERIF, bold=True)

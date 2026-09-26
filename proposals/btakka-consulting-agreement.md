@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| **Between** | Abdelrhman Soliman and Mustafa [ insert full name ] — Business & Investment Consultants |
+| **Between** | Abdelrhman Soliman — Business & Investment Consultant |
 | **And** | Btakka — [Insert Registered Legal Entity Name] |
 | **Date** | [ ___ / ___ / 2026 ] |
 | **Relates to** | The Proposal dated 13 September 2026, annexed to this Agreement |
@@ -18,9 +18,8 @@
 | Document title | Investment Readiness & Investment Round Management — Consulting Agreement |
 | Document 2 of 2 | This Agreement sets the binding terms. The accompanying **Proposal** describes the work and is annexed to and forms part of this Agreement. |
 | Version | 1.0 — For Client Review |
-| Consultant | Abdelrhman Soliman and Mustafa [ insert full name ], Business & Investment Consultants, acting jointly (Clause 1.2) |
+| Consultant | Abdelrhman Soliman, Business & Investment Consultant |
 | Consultant contact | abdelrhmansoliman96@gmail.com · +20 109 651 5287 · Cairo, Egypt |
-| Signatories required | Both Consultants and the Client |
 | Client (trade name) | Btakka |
 | Client (legal entity) | [Insert full registered name] |
 | Commercial Register No. | [Insert CR number] |
@@ -42,15 +41,11 @@ This Agreement is made on **[ ___ / ___ / 2026 ]** (the "**Effective Date**")
 
 **BETWEEN:**
 
-**(1) ABDELRHMAN SOLIMAN**, a business and investment consultant, of Cairo, Arab Republic of Egypt, National ID / Tax Registration No. **[ ]**, of **[ address ]**; and
+**(1) ABDELRHMAN SOLIMAN**, a business and investment consultant, of Cairo, Arab Republic of Egypt, National ID / Tax Registration No. **[ ]**, of **[ address ]** (the "**Consultant**"); and
 
-**(2) MUSTAFA [ INSERT FULL NAME ]**, a business and investment consultant, of **[ city ]**, Arab Republic of Egypt, National ID / Tax Registration No. **[ ]**, of **[ address ]**,
+**(2) [ INSERT FULL REGISTERED LEGAL NAME ]**, trading as **Btakka**, a company registered in the Arab Republic of Egypt under Commercial Register No. **[ ]**, Tax Card No. **[ ]**, with its registered office at **[ address ]**, represented by **[ name ]**, **[ title ]** (the "**Client**").
 
-(together the "**Consultant**"); and
-
-**(3) [ INSERT FULL REGISTERED LEGAL NAME ]**, trading as **Btakka**, a company registered in the Arab Republic of Egypt under Commercial Register No. **[ ]**, Tax Card No. **[ ]**, with its registered office at **[ address ]**, represented by **[ name ]**, **[ title ]** (the "**Client**").
-
-Abdelrhman Soliman and Mustafa [ insert full name ] together constitute the Consultant and are, for the purposes of this Agreement, a single Party. The Consultant and the Client are each a "**Party**" and together the "**Parties**".
+The Consultant and the Client are each a "**Party**" and together the "**Parties**".
 
 **WHEREAS:**
 
@@ -72,7 +67,6 @@ Abdelrhman Soliman and Mustafa [ insert full name ] together constitute the Cons
 | **Business Day** | Any day other than Friday, Saturday or a public holiday in the Arab Republic of Egypt |
 | **Client Input Pack** | The seven items listed at section 8 of, and Annex C to, the Proposal |
 | **Confidential Information** | As defined at Clause 10.1 |
-| **Consultant** | Abdelrhman Soliman and Mustafa [ insert full name ] together. Every obligation, right and entitlement of the Consultant under this Agreement belongs to them jointly, as set out at Clause 1.2 |
 | **Deliverables** | The items listed at section 7 of, and Annex A to, the Proposal, summarised at Schedule 1 |
 | **Engagement Standard** | The Client response obligations at Clause 5.3 |
 | **Final Close** | The date the Round is declared closed by the Client or the target Round size is fully subscribed and funded, whichever is earlier |
@@ -92,17 +86,9 @@ Abdelrhman Soliman and Mustafa [ insert full name ] together constitute the Cons
 | **Target Investor Map** | The tiered investor target list delivered under Phase 2 Stage 1 |
 | **Ticket** | An individual investment made into the Client as part of or in connection with the Round |
 
-**1.2 The Consultant acts jointly.** The Consultant comprises two individuals, Abdelrhman Soliman and Mustafa [ insert full name ], who deliver the Services together. Accordingly:
+**1.2** Headings are for convenience only. The singular includes the plural. "Including" means "including without limitation". References to a Clause or Schedule are to a clause or schedule of this Agreement.
 
-- **(a)** every reference in this Agreement to "the Consultant" is a reference to both of them together, and every obligation of the Consultant binds each of them **jointly and severally**, so that the Client may enforce the whole of any obligation against either;
-- **(b)** each of them is authorised to give and receive notices, approvals and instructions on behalf of both, and anything done or omitted by one is treated as done or omitted by both;
-- **(c)** the Client shall deal with **[ Abdelrhman Soliman / to be confirmed ]** as the Consultant's single point of contact, and is entitled to rely on that person's authority to bind the Consultant;
-- **(d)** all Fees under Clause 6 are payable to the single account nominated at Schedule 2.4, and payment into that account discharges the Client's payment obligation to both of them in full. The apportionment of Fees between them is a matter solely between themselves and is no concern of the Client; and
-- **(e)** Clauses 5.5 (non-circumvention), 10 (confidentiality) and 11 (intellectual property) bind each of them individually as well as together.
-
-**1.3** Headings are for convenience only. The singular includes the plural. "Including" means "including without limitation". References to a Clause or Schedule are to a clause or schedule of this Agreement.
-
-**1.4** The Proposal is annexed to and forms part of this Agreement. In the event of conflict, the order of precedence is: the clauses of this Agreement, then its Schedules, then the Proposal.
+**1.3** The Proposal is annexed to and forms part of this Agreement. In the event of conflict, the order of precedence is: the clauses of this Agreement, then its Schedules, then the Proposal.
 
 ---
 
@@ -112,7 +98,7 @@ Abdelrhman Soliman and Mustafa [ insert full name ] together constitute the Cons
 
 **2.2 Term.** This Agreement commences on the Effective Date and continues until the earlier of (a) Final Close of the Round, (b) four (4) months from the Phase 1 Start Date as extended under Clause 7.2, or (c) termination under Clause 8. The Parties may extend by written agreement.
 
-**2.3 Phase 1 Start Date.** Phase 1 commences on the later of (a) the Effective Date, (b) receipt of the M1 deposit under Clause 6.1, and (c) the date the Client Input Pack is received in full.
+**2.3 Phase 1 Start Date.** Phase 1 commences on the later of (a) the Effective Date, (b) receipt of the M1 down payment under Clause 6.1, and (c) the date the Client Input Pack is received in full.
 
 **2.4 Non-exclusivity of the Consultant.** The Consultant may provide services to other clients, including other companies, provided the Consultant does not act for a direct competitor of the Client in the same fundraising round without the Client's prior written consent.
 
@@ -133,6 +119,12 @@ Abdelrhman Soliman and Mustafa [ insert full name ] together constitute the Cons
 **3.5 Revisions.** Each Deliverable includes two (2) rounds of revision at no additional cost, where requested within ten (10) Business Days of delivery. Further revisions, or revisions arising from a material change in the Client's business, strategy or data after a Deliverable has been approved, are chargeable at EGP **[ ___ ]** per hour or by written variation.
 
 **3.6 Variation.** Any change to scope, Deliverables, timeline or fees must be agreed in writing and signed by both Parties.
+
+**3.7 Division of delivery.** The Deliverables are divided between the Parties as follows:
+
+- **(a)** the **Consultant prepares the investment documents** — the financial model, the financial expectations pack, the revenue model, the valuation, the cap table, the Use of Funds statement, the market sizing, the competitive analysis, the go-to-market strategy, the key metrics dashboard, the pitch deck, the teaser, the business plan and the term sheet template, being the items marked **C** at Annex A to the Proposal;
+- **(b)** the **Client delivers the remaining documents together with the Consultant** — the corporate, legal, financial-record, product, traction and customer materials, being the items marked **C+B** (jointly produced) and **B** (Client-provided) at Annex A to the Proposal; and
+- **(c)** the Consultant is responsible for the preparation and quality of the documents at (a). The Consultant is not responsible for the content, accuracy or timeliness of any document at (b) that the Client has not supplied, and any resulting delay is a Client-caused delay to which Clause 7.2 applies.
 
 ---
 
@@ -193,7 +185,7 @@ in each case where the relevant event is recorded in the Investor Log in accorda
 
 **5.7 No warranty as to Investors.** The Consultant makes no representation or warranty as to the financial standing, willingness, capacity or conduct of any Investor. An introduction is not a recommendation to accept investment, and the Client is responsible for conducting its own diligence on any Investor before accepting funds.
 
-**5.8 Client-sourced investors.** For the avoidance of doubt, an Investor sourced independently by the Client, not appearing on the Target Investor Map, not included in any outreach wave and not otherwise falling within Clause 5.1, is a "Client-Sourced Investor". **No Success Fee is payable on a Client-Sourced Investor's Ticket.** The M3 Closing Milestone under Clause 6.1 remains payable regardless of whether the First Close arises from an Introduced Investor or a Client-Sourced Investor.
+**5.8 Client-sourced investors.** For the avoidance of doubt, an Investor sourced independently by the Client, not appearing on the Target Investor Map, not included in any outreach wave and not otherwise falling within Clause 5.1, is a "Client-Sourced Investor". **No Success Fee is payable on a Client-Sourced Investor's Ticket.** The M4 Closing Milestone under Clause 6.1 remains payable regardless of whether the First Close arises from an Introduced Investor or a Client-Sourced Investor.
 
 ---
 
@@ -203,15 +195,18 @@ in each case where the relevant event is recorded in the Investor Log in accorda
 
 | Milestone | Trigger | Amount |
 |---|---|---|
-| **M1 — Deposit** | On signature of this Agreement | **EGP 30,000** |
+| **M1 — Down payment** | On signature of this Agreement | **EGP 30,000** |
 | **M2 — Readiness** | On completion of Phase 1 under Clause 3.4 | **EGP 30,000** |
-| **M3 — Closing** | On First Close | **EGP 90,000** |
+| **M3 — Round** | On launch of the first outreach wave under Phase 2 | **EGP 20,000** |
+| **M4 — Closing** | On First Close | **EGP 70,000** |
 
-**(a)** The M1 deposit is a non-refundable mobilisation fee and is payable before the Phase 1 Start Date.
+**(a)** The M1 down payment is a non-refundable mobilisation fee and is payable before the Phase 1 Start Date.
 
-**(b)** The M3 Closing Milestone Fee of EGP 90,000 shall become due upon First Close — being the date on which the first Investment Amount is received in cleared funds into the Client's bank account — irrespective of whether the Round remains open for subsequent tranches, and **irrespective of whether the closing Investor was an Introduced Investor or a Client-Sourced Investor**.
+**(b)** The M3 Round Milestone Fee of EGP 20,000 shall become due on the date the Consultant launches the first outreach wave under Phase 2 Stage 2, and is payable whether or not any Investor has by then responded, met the Client or begun diligence.
 
-**(c)** If the Round has not reached First Close by the date this Agreement expires or is terminated other than under Clause 8.2, M3 remains payable on the first subsequent close occurring within the Tail Period.
+**(c)** The M4 Closing Milestone Fee of EGP 70,000 shall become due upon First Close — being the date on which the first Investment Amount is received in cleared funds into the Client's bank account — irrespective of whether the Round remains open for subsequent tranches, and **irrespective of whether the closing Investor was an Introduced Investor or a Client-Sourced Investor**.
+
+**(d)** If the Round has not reached First Close by the date this Agreement expires or is terminated other than under Clause 8.2, M4 remains payable on the first subsequent close occurring within the Tail Period.
 
 **6.2 Success Fee.** In addition to the Fixed Fee, the Client shall pay the Consultant a Success Fee of **ten percent (10%) of the aggregate Investment Amount funded by Introduced Investors**.
 
@@ -266,9 +261,9 @@ in each case where the relevant event is recorded in the Investor Log in accorda
 **8.5 Consequences of termination.** On termination:
 
 - **(a)** all Fees accrued or due to the date of termination become immediately payable, including any milestone already triggered;
-- **(b)** the M1 deposit is non-refundable in all circumstances;
-- **(c)** where termination occurs after Phase 1 is complete, M2 is payable in full;
-- **(d)** where the Client terminates under Clause 8.1, or the Consultant terminates under Clause 8.3, Clauses 5.5, 5.6, 6.1(c), 6.2 and 9 continue to apply for the Tail Period;
+- **(b)** the M1 down payment is non-refundable in all circumstances;
+- **(c)** where termination occurs after Phase 1 is complete, M2 is payable in full, and where it occurs after the first outreach wave has launched, M3 is also payable in full;
+- **(d)** where the Client terminates under Clause 8.1, or the Consultant terminates under Clause 8.3, Clauses 5.5, 5.6, 6.1(d), 6.2 and 9 continue to apply for the Tail Period;
 - **(e)** where the Client terminates under Clause 8.2 for the Consultant's material breach, no further Fixed Fee milestone accrues after the date of termination, and the Success Fee remains payable only in respect of Tickets from Introduced Investors already recorded in the Investor Log at the date of termination;
 - **(f)** the Consultant shall deliver to the Client all completed Deliverables for which payment has been received, together with the data room and the Investor Log; and
 - **(g)** each Party shall return or destroy the other's Confidential Information on request, subject to Clause 10.5.
@@ -279,7 +274,7 @@ in each case where the relevant event is recorded in the Investor Log in accorda
 
 ## 9. Tail Period
 
-**9.1** The Success Fee under Clause 6.2 and the Closing Milestone under Clause 6.1(c) remain payable in respect of any Ticket funded during the **Tail Period of twelve (12) months** following expiry or termination of this Agreement, where the Investor is an Introduced Investor recorded in the Investor Log at the date of expiry or termination.
+**9.1** The Success Fee under Clause 6.2 and the Closing Milestone under Clause 6.1(d) remain payable in respect of any Ticket funded during the **Tail Period of twelve (12) months** following expiry or termination of this Agreement, where the Investor is an Introduced Investor recorded in the Investor Log at the date of expiry or termination.
 
 **9.2** The Client shall notify the Consultant in writing within **ten (10) Business Days** of any Ticket funded during the Tail Period, stating the Investor, the amount and the funding date.
 
@@ -369,12 +364,10 @@ in each case where the relevant event is recorded in the Investor Log in accorda
 
 | | Consultant | Client |
 |---|---|---|
-| **For the attention of** | Abdelrhman Soliman and Mustafa [ insert full name ] | [ name ] |
-| **Email** | abdelrhmansoliman96@gmail.com · [ Mustafa — email ] | [ email ] |
-| **Phone** | +20 109 651 5287 · [ Mustafa — phone ] | [ phone ] |
+| **For the attention of** | Abdelrhman Soliman | [ name ] |
+| **Email** | abdelrhmansoliman96@gmail.com | [ email ] |
+| **Phone** | +20 109 651 5287 | [ phone ] |
 | **Address** | Cairo, Arab Republic of Egypt | [ address ] |
-
-Notice given to either individual comprising the Consultant is notice to both (Clause 1.2(b)).
 
 **16.2** A notice is deemed received: if by email, on the next Business Day after sending, absent a delivery failure notification; if by hand, on delivery; if by registered post, five (5) Business Days after posting.
 
@@ -422,22 +415,20 @@ Notice given to either individual comprising the Consultant is notice to both (C
 
 <br>
 
-| **THE CONSULTANT (1)** | **THE CONSULTANT (2)** | **THE CLIENT** |
-|---|---|---|
-| **ABDELRHMAN SOLIMAN** | **MUSTAFA [ FULL NAME ]** | **[ FULL REGISTERED LEGAL NAME ]** trading as **Btakka** |
-| Business & Investment Consultant | Business & Investment Consultant | |
-| | | |
-| Signature: ........................... | Signature: ........................... | Signature: ........................... |
-| | | |
-| Name: Abdelrhman Soliman | Name: ..................................... | Name: ..................................... |
-| | | |
-| Title: Consultant | Title: Consultant | Title: ........................................ |
-| | | |
-| Date: ..................................... | Date: ..................................... | Date: ..................................... |
-| | | |
-| | | Company stamp: |
-
-Both individuals comprising the Consultant must sign. A signature by only one of them does not bind the Consultant.
+| **THE CONSULTANT** | **THE CLIENT** |
+|---|---|
+| **ABDELRHMAN SOLIMAN** | **[ FULL REGISTERED LEGAL NAME ]** trading as **Btakka** |
+| Business & Investment Consultant | |
+| | |
+| Signature: ............................................. | Signature: ............................................. |
+| | |
+| Name: Abdelrhman Soliman | Name: ...................................................... |
+| | |
+| Title: Consultant | Title: ......................................................... |
+| | |
+| Date: ....................................................... | Date: ....................................................... |
+| | |
+| | Company stamp: |
 
 <br>
 
@@ -488,9 +479,10 @@ Twenty-four (24) Phase 1 deliverables and thirteen (13) Phase 2 deliverables, it
 
 | Milestone | Trigger event | Evidence of trigger | Amount (EGP) | Invoice issued | Payment due |
 |---|---|---|---|---|---|
-| **M1 — Deposit** | Signature of this Agreement | Executed Agreement | **30,000** | On signature | Within 7 Business Days, and before the Phase 1 Start Date |
+| **M1 — Down payment** | Signature of this Agreement | Executed Agreement | **30,000** | On signature | Within 7 Business Days, and before the Phase 1 Start Date |
 | **M2 — Readiness** | Completion of Phase 1 under Clause 3.4 | Client sign-off of the diligence readiness review, or deemed sign-off after 5 Business Days | **30,000** | On completion | Within 7 Business Days |
-| **M3 — Closing** | First Close | Confirmation of funds received in cleared funds, from any Investor, Introduced or Client-Sourced | **90,000** | On First Close | Within 7 Business Days |
+| **M3 — Round** | Launch of the first outreach wave under Phase 2 Stage 2 | The outreach wave recorded in the Investor Log and weekly pipeline report | **20,000** | On launch | Within 7 Business Days |
+| **M4 — Closing** | First Close | Confirmation of funds received in cleared funds, from any Investor, Introduced or Client-Sourced | **70,000** | On First Close | Within 7 Business Days |
 | | | **Total Fixed Fee** | **150,000** | | |
 
 ### 2.2 Success Fee — 10%
@@ -576,10 +568,7 @@ The following fields must be completed, and the following commercial points conf
 | Ref | Field |
 |---|---|
 | Preamble | Client's full registered legal name, Commercial Register number, Tax Card number, registered address |
-| Preamble | Abdelrhman Soliman's National ID / Tax Registration number and address |
-| Preamble | **Mustafa's full legal name**, National ID / Tax Registration number, city and address |
-| Clause 1.2(c) | Which of the two Consultants is the Client's single point of contact |
-| Clause 16.1 | Mustafa's email and phone for notices |
+| Preamble | Consultant's National ID / Tax Registration number and address |
 | Clause 4.5 | Client's nominated point of contact — name, title, email, mobile |
 | Clause 3.5 | Hourly rate for out-of-scope revisions |
 | Schedule 2.4 | Consultant's bank account details |

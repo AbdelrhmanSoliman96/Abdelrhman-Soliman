@@ -32,8 +32,7 @@ if COVER == 'agreement':
     doc.sections[0].different_first_page_header_footer = True
     coverpage.build(
         doc, doc.sections[0],
-        consultant_1 = "ABDELRHMAN SOLIMAN",
-        consultant_2 = "MUSTAFA [ INSERT FULL NAME ]",
+        consultant   = "ABDELRHMAN SOLIMAN",
         client_legal = "[ INSERT FULL REGISTERED LEGAL NAME ]",
         client_trade = "BTAKKA",
         date_line    = "Dated  [ ____ ]  [ __________ ]  2026",
@@ -245,7 +244,7 @@ from docx.oxml import OxmlElement as OE
 sec = doc.sections[0]
 fp = sec.footer.paragraphs[0]
 fp.alignment = WD_ALIGN_PARAGRAPH.CENTER
-r = fp.add_run(f"{FOOTER_LABEL}  \u00b7  Btakka \u00d7 Abdelrhman Soliman & Mustafa  \u00b7  v1.0  \u00b7  Page ")
+r = fp.add_run(f"{FOOTER_LABEL}  \u00b7  Btakka \u00d7 Abdelrhman Soliman  \u00b7  v1.0  \u00b7  Page ")
 r.font.size = Pt(7.5); r.font.color.rgb = GREY; r.font.name = SANS
 fld = OE('w:fldSimple'); fld.set(qn('w:instr'), 'PAGE')
 fp._p.append(fld)
