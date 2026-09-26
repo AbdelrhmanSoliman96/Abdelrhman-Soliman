@@ -1,0 +1,1082 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400..700;1,400..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<title>Btakka Consulting Agreement</title>
+<style>
+:root{
+  --ground:#FAF8F3; --ground-2:#F1EEE4; --surface:#FFFFFF;
+  --ink:#1A211C; --ink-2:#4A5550; --ink-3:#7A857F;
+  --rule:#DEDACE; --rule-2:#EAE7DC;
+  --accent:#0A5A4A; --accent-ink:#0A5A4A; --accent-soft:#E4EDE9; --accent-line:#B9D2C8;
+  --brass:#8A6115; --brass-soft:#F4EAD3; --brass-line:#DEC793;
+  --shadow:0 1px 2px rgba(26,33,28,.05), 0 8px 24px -12px rgba(26,33,28,.16);
+  --sans:"Familjen Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#141A17; --ground-2:#1B2320; --surface:#19201C;
+    --ink:#ECEFE8; --ink-2:#A7B2AB; --ink-3:#7B867F;
+    --rule:#2C3833; --rule-2:#242E29;
+    --accent:#63C2A6; --accent-ink:#8FD6BF; --accent-soft:#1C332C; --accent-line:#2F5548;
+    --brass:#D9A441; --brass-soft:#31280F; --brass-line:#5A481D;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#141A17; --ground-2:#1B2320; --surface:#19201C;
+  --ink:#ECEFE8; --ink-2:#A7B2AB; --ink-3:#7B867F;
+  --rule:#2C3833; --rule-2:#242E29;
+  --accent:#63C2A6; --accent-ink:#8FD6BF; --accent-soft:#1C332C; --accent-line:#2F5548;
+  --brass:#D9A441; --brass-soft:#31280F; --brass-line:#5A481D;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--serif);font-size:16.5px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;font-variant-numeric:oldstyle-nums}
+::selection{background:var(--accent-soft);color:var(--ink)}
+a{color:var(--accent-ink);text-decoration:none;border-bottom:1px solid var(--accent-line)}
+a:hover{border-bottom-color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+/* ============ HERO ============ */
+.hero{border-bottom:1px solid var(--rule);background:var(--ground-2)}
+.hero-in{max-width:1180px;margin:0 auto;padding:16px;padding-block:clamp(38px,7vw,68px)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--brass);margin:0 0 18px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.eyebrow .dot{width:4px;height:4px;border-radius:50%;background:var(--brass-line)}
+h1.title{font-family:var(--sans);font-weight:600;font-size:clamp(30px,5.4vw,52px);line-height:1.04;
+  letter-spacing:-.021em;margin:0;text-wrap:balance;max-width:16ch;font-variant-numeric:lining-nums}
+h1.title em{font-style:normal;color:var(--accent-ink)}
+.standfirst{font-size:clamp(16.5px,1.7vw,19px);color:var(--ink-2);max-width:56ch;margin:20px 0 0;line-height:1.55}
+.parties{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:30px;padding-top:24px;border-top:1px solid var(--rule)}
+.party{min-width:min(230px,100%)}
+.party dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);margin:0 0 5px}
+.party dd{margin:0;font-family:var(--sans);font-size:15.5px;font-weight:500;line-height:1.35}
+.party dd small{display:block;font-weight:400;font-size:13px;color:var(--ink-2);margin-top:3px;font-family:var(--serif)}
+
+/* ============ TERMS STRIP ============ */
+.terms{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:1px;margin-top:34px;
+  background:var(--rule);border:1px solid var(--rule)}
+.term{background:var(--ground-2);padding:16px 18px}
+.term dt{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin:0 0 7px}
+.term dd{margin:0;font-family:var(--sans);font-weight:600;font-size:clamp(19px,2.3vw,25px);
+  letter-spacing:-.015em;font-variant-numeric:lining-nums tabular-nums;line-height:1.1}
+.term dd .u{font-size:.6em;font-weight:500;color:var(--ink-2);letter-spacing:0}
+.term dd small{display:block;font-family:var(--serif);font-size:12.5px;font-weight:400;
+  color:var(--ink-2);margin-top:6px;letter-spacing:0;font-variant-numeric:normal}
+
+/* ============ GATES ============ */
+.gates{margin-top:30px}
+.gates-h{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 14px}
+.gate-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.gate{background:var(--surface);border:1px solid var(--rule);border-top:2.5px solid var(--brass);
+  padding:15px 17px 17px;box-shadow:var(--shadow)}
+.gate .code{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--brass)}
+.gate .amt{font-family:var(--sans);font-weight:600;font-size:22px;letter-spacing:-.015em;margin:7px 0 8px;
+  font-variant-numeric:lining-nums tabular-nums}
+.gate .amt .c{font-size:.62em;color:var(--ink-2);font-weight:500;margin-right:3px}
+.gate .trig{font-size:13.5px;color:var(--ink-2);line-height:1.45;margin:0}
+.gate.pct{border-top-color:var(--accent)}
+.gate.pct .code{color:var(--accent-ink)}
+
+/* ============ SHELL ============ */
+.shell{max-width:1180px;margin:0 auto;padding:0 16px;display:grid;grid-template-columns:238px minmax(0,1fr);
+  gap:clamp(28px,4vw,56px);align-items:start}
+@media (max-width:900px){.shell{grid-template-columns:minmax(0,1fr)}}
+
+/* ============ TOC ============ */
+.rail{position:sticky;top:0;max-height:100vh;overflow-y:auto;padding-block:36px;
+  scrollbar-width:thin;scrollbar-color:var(--rule) transparent}
+@media (max-width:900px){.rail{position:static;max-height:none;overflow:visible;padding-block:26px 0}}
+.rail-h{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid var(--rule)}
+.rail ul{list-style:none;margin:0;padding:0}
+.rail a{display:block;border:0;padding:3.5px 0;line-height:1.34}
+.toc-part>a{font-family:var(--sans);font-size:12.5px;font-weight:600;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--ink);margin-top:16px;display:block}
+.toc-part:first-child>a{margin-top:0}
+.toc-part>ul{margin:7px 0 0;padding-left:0;border-left:1px solid var(--rule)}
+.toc-part>ul li a{display:grid;grid-template-columns:30px minmax(0,1fr);gap:5px;padding:3.5px 0 3.5px 11px;
+  font-family:var(--sans);font-size:13px;color:var(--ink-2);margin-left:-1px;border-left:2px solid transparent}
+.toc-part>ul li a:hover{color:var(--ink)}
+.toc-part>ul li a.on{color:var(--accent-ink);border-left-color:var(--accent);font-weight:500}
+.rail .cn{font-family:var(--mono);font-size:10px;color:var(--ink-3);padding-top:1px;white-space:nowrap}
+.rail a.on .cn{color:var(--accent-ink)}
+.rail .ct{min-width:0}
+details.m-toc>summary{font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;
+  padding:11px 0;color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+details.m-toc>summary::-webkit-details-marker{display:none}
+details.m-toc>summary::after{content:"+";font-family:var(--mono);color:var(--brass);font-size:16px}
+details.m-toc[open]>summary::after{content:"–"}
+@media (min-width:901px){details.m-toc>summary{display:none}}
+
+/* ============ DOC BODY ============ */
+.doc{padding-block:40px 12px;min-width:0}
+.doc>*{max-width:70ch}
+.doc .tw{max-width:none}
+.doc h1{font-family:var(--sans);font-weight:600;font-size:clamp(13px,1.5vw,14px);letter-spacing:.17em;
+  text-transform:uppercase;color:var(--brass);margin:0 0 34px;padding:14px 0;max-width:none;
+  border-top:2px solid var(--brass-line);border-bottom:1px solid var(--rule);scroll-margin-top:14px}
+.doc h1:not(:first-child){margin-top:74px}
+.doc h2{font-family:var(--sans);font-weight:600;font-size:clamp(22px,2.7vw,28px);letter-spacing:-.018em;
+  line-height:1.2;margin:54px 0 16px;text-wrap:balance;scroll-margin-top:14px}
+.doc h2:first-of-type{margin-top:0}
+.doc h3{font-family:var(--sans);font-weight:600;font-size:17px;letter-spacing:-.008em;
+  color:var(--ink);margin:36px 0 11px;text-wrap:balance}
+.doc h4{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);margin:28px 0 10px}
+.doc p{margin:0 0 15px}
+.doc ul,.doc ol{margin:0 0 17px;padding-left:1.35em}
+.doc li{margin-bottom:7px;padding-left:2px}
+.doc li::marker{color:var(--brass)}
+.doc hr{border:0;border-top:1px solid var(--rule-2);margin:34px 0;max-width:none}
+.doc strong{font-weight:650;color:var(--ink)}
+.doc em{font-style:italic}
+.doc blockquote{margin:26px 0;padding:18px 22px;background:var(--accent-soft);
+  border-left:3px solid var(--accent);font-size:15.5px;line-height:1.55;color:var(--ink)}
+.doc blockquote p:last-child{margin-bottom:0}
+.doc code{font-family:var(--mono);font-size:.85em;background:var(--ground-2);
+  padding:1px 5px;border:1px solid var(--rule-2);border-radius:3px}
+
+/* ============ TABLES ============ */
+.tw{overflow-x:auto;margin:22px 0 28px;border:1px solid var(--rule);background:var(--surface);
+  scrollbar-width:thin;scrollbar-color:var(--rule) transparent}
+table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:13.5px;line-height:1.42;
+  font-variant-numeric:lining-nums tabular-nums}
+thead th{background:var(--ground-2);font-weight:600;font-size:11px;letter-spacing:.075em;text-transform:uppercase;
+  color:var(--ink-2);text-align:left;padding:11px 13px;border-bottom:1px solid var(--rule);
+  white-space:nowrap}
+tbody td{padding:11px 13px;border-bottom:1px solid var(--rule-2);vertical-align:top;color:var(--ink-2)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:var(--ground-2)}
+tbody td strong{color:var(--ink);font-weight:600}
+tbody td:first-child{color:var(--ink)}
+
+/* chips */
+.own{font-family:var(--mono);font-size:11px;font-weight:600;padding:2.5px 7px;border-radius:3px;
+  display:inline-block;white-space:nowrap;border:1px solid}
+.own-c{background:var(--accent-soft);color:var(--accent-ink);border-color:var(--accent-line)}
+.own-cb{background:var(--brass-soft);color:var(--brass);border-color:var(--brass-line)}
+.own-b{background:var(--ground-2);color:var(--ink-2);border-color:var(--rule)}
+.prio{font-family:var(--sans);font-size:11.5px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.prio::before{content:"";width:6px;height:6px;border-radius:50%;flex:none}
+.p-hi::before{background:var(--brass)}
+.p-md::before{background:var(--accent)}
+.p-lo::before{background:var(--ink-3)}
+.opt{display:block;font-family:var(--serif);font-size:11.5px;font-style:italic;color:var(--ink-3);margin-top:3px}
+.cbx{font-size:18px;color:var(--brass);text-align:center}
+.slot{font-family:var(--mono);font-size:.86em;color:var(--brass);background:var(--brass-soft);
+  border-bottom:1px solid var(--brass-line);padding:0 3px;white-space:nowrap}
+
+/* ============ FOOTER ============ */
+.foot{border-top:1px solid var(--rule);background:var(--ground-2);margin-top:60px}
+.foot-in{max-width:1180px;margin:0 auto;padding:16px;padding-block:38px;
+  display:flex;flex-wrap:wrap;gap:26px 48px;justify-content:space-between;align-items:flex-start}
+.foot-b{min-width:min(240px,100%)}
+.foot-b h4{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 9px}
+.foot-b p{margin:0;font-size:14.5px;color:var(--ink-2);line-height:1.55}
+.foot-b p strong{color:var(--ink);font-family:var(--sans);font-weight:600}
+.foot-b a{color:var(--ink-2)}
+.stamp{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;color:var(--ink-3);
+  text-transform:uppercase;width:100%;padding-top:22px;border-top:1px solid var(--rule);margin-top:4px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+<header class="hero">
+  <div class="hero-in">
+    <p class="eyebrow"><span>Consulting Agreement</span><span class="dot"></span><span>Document 2 of 2</span><span class="dot"></span><span>Unexecuted draft</span><span class="dot"></span><span>v1.0 · 13 Sept 2026</span></p>
+    <h1 class="title">Consulting Agreement</h1>
+    <p class="standfirst">The binding terms for the investment readiness and round management engagement, between Btakka and two consultants acting jointly. The Proposal describes the work and is annexed to and forms part of this Agreement.</p>
+
+    <dl class="parties">
+      <div class="party"><dt>The Consultant</dt><dd>Abdelrhman Soliman<small>Business &amp; Investment Consultant · Cairo</small></dd></div>
+      <div class="party"><dt>The Client</dt><dd>Btakka<small>[Insert registered legal entity name]</small></dd></div>
+      <div class="party"><dt>Effective Date</dt><dd>[ ___ / ___ / 2026 ]<small>On signature by both Parties</small></dd></div>
+    </dl>
+
+    <dl class="terms">
+      <div class="term"><dt>Fixed fee</dt><dd><span class="u">EGP</span> 150,000<small>Clause 6.1 · M1 / M2 / M3 / M4</small></dd></div>
+      <div class="term"><dt>Success fee</dt><dd>10<span class="u">%</span><small>Clause 6.2 · introduced investors only</small></dd></div>
+      <div class="term"><dt>Tail period</dt><dd>12<span class="u"> months</span><small>Clause 9 · post-termination</small></dd></div>
+      <div class="term"><dt>Governing law</dt><dd>Egypt<small>Clause 18 · Cairo Economic Courts</small></dd></div>
+    </dl>
+
+    <div class="gates">
+      <p class="gates-h">Before signature</p>
+      <div class="gate-row">
+        <div class="gate"><span class="code">BLANK FIELDS</span><div class="amt">6</div><p class="trig">Legal entity name, CR and Tax Card numbers, registered address, point of contact, bank details, revision rate. Listed at Schedule 4.1.</p></div>
+        <div class="gate"><span class="code">OPEN POINTS</span><div class="amt">7</div><p class="trig">Round size, grants treatment, dispute forum, Arabic version, regulatory advice, exclusivity, data room platform. Listed at Schedule 4.2.</p></div>
+        <div class="gate pct"><span class="code">ANNEXED</span><div class="amt">Proposal</div><p class="trig">The Proposal v1.0 dated 13 September 2026 forms part of this Agreement and must be attached on execution.</p></div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="shell">
+  <nav class="rail" aria-label="Contents">
+    <details class="m-toc" open><summary>Contents</summary>
+      <p class="rail-h">Contents</p>
+      <ul id="toc">
+<li class="toc-part"><a href="#consulting-agreement">Consulting Agreement</a><ul>
+<li><a href="#1-definitions-and-interpretation"><span class="cn">1</span><span class="ct">Definitions and Interpretation</span></a></li>
+<li><a href="#2-appointment-and-term"><span class="cn">2</span><span class="ct">Appointment and Term</span></a></li>
+<li><a href="#3-services"><span class="cn">3</span><span class="ct">Services</span></a></li>
+<li><a href="#4-client-obligations"><span class="cn">4</span><span class="ct">Client Obligations</span></a></li>
+<li><a href="#5-investor-introductions-client-engagement-and-attribution"><span class="cn">5</span><span class="ct">Investor Introductions, Client Engagement and Attribution</span></a></li>
+<li><a href="#6-fees-and-payment"><span class="cn">6</span><span class="ct">Fees and Payment</span></a></li>
+<li><a href="#7-timeline-and-delay"><span class="cn">7</span><span class="ct">Timeline and Delay</span></a></li>
+<li><a href="#8-suspension-and-termination"><span class="cn">8</span><span class="ct">Suspension and Termination</span></a></li>
+<li><a href="#9-tail-period"><span class="cn">9</span><span class="ct">Tail Period</span></a></li>
+<li><a href="#10-confidentiality"><span class="cn">10</span><span class="ct">Confidentiality</span></a></li>
+<li><a href="#11-intellectual-property"><span class="cn">11</span><span class="ct">Intellectual Property</span></a></li>
+<li><a href="#12-no-guarantee-of-funding-nature-of-the-services"><span class="cn">12</span><span class="ct">No Guarantee of Funding; Nature of the Services</span></a></li>
+<li><a href="#13-independent-contractor"><span class="cn">13</span><span class="ct">Independent Contractor</span></a></li>
+<li><a href="#14-warranties-and-limitation-of-liability"><span class="cn">14</span><span class="ct">Warranties and Limitation of Liability</span></a></li>
+<li><a href="#15-force-majeure"><span class="cn">15</span><span class="ct">Force Majeure</span></a></li>
+<li><a href="#16-notices"><span class="cn">16</span><span class="ct">Notices</span></a></li>
+<li><a href="#17-general"><span class="cn">17</span><span class="ct">General</span></a></li>
+<li><a href="#18-governing-law-and-dispute-resolution"><span class="cn">18</span><span class="ct">Governing Law and Dispute Resolution</span></a></li>
+</ul></li>
+<li class="toc-part"><a href="#schedules">Schedules</a><ul>
+<li><a href="#schedule-1-services-and-deliverables-summary"><span class="cn">S1</span><span class="ct">Services and Deliverables Summary</span></a></li>
+<li><a href="#schedule-2-fee-schedule-and-payment-milestones"><span class="cn">S2</span><span class="ct">Fee Schedule and Payment Milestones</span></a></li>
+<li><a href="#schedule-3-investor-log"><span class="cn">S3</span><span class="ct">Investor Log</span></a></li>
+</ul></li>
+<li class="toc-part"><a href="#execution">Execution</a><ul>
+</ul></li>
+      </ul>
+    </details>
+  </nav>
+
+  <main class="doc">
+<h1 id="consulting-agreement">CONSULTING AGREEMENT</h1>
+<p><strong>Investment Readiness and Investment Round Management Services Agreement</strong></p>
+<p>This Agreement is made on <strong><span class="slot">[ ___ / ___ / 2026 ]</span></strong> (the "<strong>Effective Date</strong>")</p>
+<p><strong>BETWEEN:</strong></p>
+<p><strong>(1) ABDELRHMAN SOLIMAN</strong>, a business and investment consultant, of Cairo, Arab Republic of Egypt, National ID / Tax Registration No. <strong><span class="slot">[ ]</span></strong>, of <strong><span class="slot">[ address ]</span></strong> (the "<strong>Consultant</strong>"); and</p>
+<p><strong>(2) <span class="slot">[ INSERT FULL REGISTERED LEGAL NAME ]</span></strong>, trading as <strong>Btakka</strong>, a company registered in the Arab Republic of Egypt under Commercial Register No. <strong><span class="slot">[ ]</span></strong>, Tax Card No. <strong><span class="slot">[ ]</span></strong>, with its registered office at <strong><span class="slot">[ address ]</span></strong>, represented by <strong><span class="slot">[ name ]</span></strong>, <strong><span class="slot">[ title ]</span></strong> (the "<strong>Client</strong>").</p>
+<p>The Consultant and the Client are each a "<strong>Party</strong>" and together the "<strong>Parties</strong>".</p>
+<p><strong>WHEREAS:</strong></p>
+<ul>
+<li><strong>(A)</strong> The Client operates the mobile applications <em>Btakka Business</em> and <em>Btakka Finishing &amp; Decor</em> and intends to raise a pre-seed investment round.</li>
+<li><strong>(B)</strong> The Consultant provides investment readiness, financial modelling, valuation, data room preparation and fundraising process management services.</li>
+<li><strong>(C)</strong> The Client wishes to engage the Consultant, and the Consultant agrees to be engaged, on the terms set out below.</li>
+</ul>
+<p><strong>NOW IT IS AGREED:</strong></p>
+<hr>
+<h2 id="1-definitions-and-interpretation">1. Definitions and Interpretation</h2>
+<p><strong>1.1</strong> In this Agreement:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Agreement</strong></td>
+<td>This agreement, including its Schedules and the Proposal, which is annexed to and forms part of it</td>
+</tr>
+<tr>
+<td><strong>Business Day</strong></td>
+<td>Any day other than Friday, Saturday or a public holiday in the Arab Republic of Egypt</td>
+</tr>
+<tr>
+<td><strong>Client Input Pack</strong></td>
+<td>The seven items listed at section 8 of, and Annex C to, the Proposal</td>
+</tr>
+<tr>
+<td><strong>Confidential Information</strong></td>
+<td>As defined at Clause 10.1</td>
+</tr>
+<tr>
+<td><strong>Deliverables</strong></td>
+<td>The items listed at section 7 of, and Annex A to, the Proposal, summarised at Schedule 1</td>
+</tr>
+<tr>
+<td><strong>Engagement Standard</strong></td>
+<td>The Client response obligations at Clause 5.3</td>
+</tr>
+<tr>
+<td><strong>Final Close</strong></td>
+<td>The date the Round is declared closed by the Client or the target Round size is fully subscribed and funded, whichever is earlier</td>
+</tr>
+<tr>
+<td><strong>First Close</strong></td>
+<td>The date on which the first Investment Amount is received in cleared funds into the Client's bank account</td>
+</tr>
+<tr>
+<td><strong>Fixed Fee</strong></td>
+<td>EGP 150,000, payable per Clause 6.1</td>
+</tr>
+<tr>
+<td><strong>Introduced Investor</strong></td>
+<td>An Investor falling within Clause 5.1</td>
+</tr>
+<tr>
+<td><strong>Investment Amount</strong></td>
+<td>The aggregate consideration received by the Client in cleared funds in respect of a Ticket, comprising equity subscription proceeds, and proceeds under convertible or quasi-equity instruments including SAFEs and convertible notes at their face or principal amount. It excludes bank debt, commercial lending, government or institutional grants and non-dilutive soft funding, unless the Parties agree otherwise in writing</td>
+</tr>
+<tr>
+<td><strong>Investor</strong></td>
+<td>Any angel, syndicate, venture capital fund, family office, corporate or strategic investor, accelerator, investment vehicle or other provider of capital</td>
+</tr>
+<tr>
+<td><strong>Investor Log</strong></td>
+<td>The register maintained under Clause 5.2 in the form at Schedule 3</td>
+</tr>
+<tr>
+<td><strong>Phase 1</strong></td>
+<td>The Investment Readiness services at section 5 of the Proposal, summarised at Schedule 1</td>
+</tr>
+<tr>
+<td><strong>Proposal</strong></td>
+<td>The document titled "Investment Readiness &amp; Investment Round Management — Proposal", version 1.0, dated 13 September 2026, issued by the Consultant to the Client and annexed to this Agreement</td>
+</tr>
+<tr>
+<td><strong>Phase 2</strong></td>
+<td>The Investment Round Management services at section 5 of the Proposal, summarised at Schedule 1</td>
+</tr>
+<tr>
+<td><strong>Round</strong></td>
+<td>The pre-seed investment round contemplated by this Agreement</td>
+</tr>
+<tr>
+<td><strong>Services</strong></td>
+<td>Phase 1 and Phase 2 collectively</td>
+</tr>
+<tr>
+<td><strong>Success Fee</strong></td>
+<td>The fee payable under Clause 6.2</td>
+</tr>
+<tr>
+<td><strong>Tail Period</strong></td>
+<td>Twelve (12) months from expiry or termination of this Agreement</td>
+</tr>
+<tr>
+<td><strong>Target Investor Map</strong></td>
+<td>The tiered investor target list delivered under Phase 2 Stage 1</td>
+</tr>
+<tr>
+<td><strong>Ticket</strong></td>
+<td>An individual investment made into the Client as part of or in connection with the Round</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>1.2</strong> Headings are for convenience only. The singular includes the plural. "Including" means "including without limitation". References to a Clause or Schedule are to a clause or schedule of this Agreement.</p>
+<p><strong>1.3</strong> The Proposal is annexed to and forms part of this Agreement. In the event of conflict, the order of precedence is: the clauses of this Agreement, then its Schedules, then the Proposal.</p>
+<hr>
+<h2 id="2-appointment-and-term">2. Appointment and Term</h2>
+<p><strong>2.1 Appointment.</strong> The Client appoints the Consultant to provide the Services, and the Consultant accepts the appointment, on the terms of this Agreement.</p>
+<p><strong>2.2 Term.</strong> This Agreement commences on the Effective Date and continues until the earlier of (a) Final Close of the Round, (b) four (4) months from the Phase 1 Start Date as extended under Clause 7.2, or (c) termination under Clause 8. The Parties may extend by written agreement.</p>
+<p><strong>2.3 Phase 1 Start Date.</strong> Phase 1 commences on the later of (a) the Effective Date, (b) receipt of the M1 down payment under Clause 6.1, and (c) the date the Client Input Pack is received in full.</p>
+<p><strong>2.4 Non-exclusivity of the Consultant.</strong> The Consultant may provide services to other clients, including other companies, provided the Consultant does not act for a direct competitor of the Client in the same fundraising round without the Client's prior written consent.</p>
+<p><strong>2.5 Exclusivity of the Client.</strong> During Phase 2, the Client shall not appoint another advisor, agent, broker or intermediary to perform substantially the same Phase 2 fundraising process management services in respect of the Round, without the Consultant's prior written consent. This does not restrict the Client's own direct fundraising activity, which is expressly permitted and encouraged.</p>
+<hr>
+<h2 id="3-services">3. Services</h2>
+<p><strong>3.1 Scope.</strong> The Consultant shall provide the Services described at section 5 of the Proposal and summarised at Schedule 1, deliver the Deliverables listed at section 7 of, and Annex A to, the Proposal, and conduct the workshop programme at section 6 of, and Annex B to, the Proposal.</p>
+<p><strong>3.2 Standard of performance.</strong> The Consultant shall perform the Services with reasonable skill, care and diligence, in accordance with the standards of a competent professional investment advisor, and in the Client's best interests.</p>
+<p><strong>3.3 Method and personnel.</strong> The Consultant shall determine the manner and method of performing the Services, and may engage subcontractors or specialist support at the Consultant's own cost, remaining fully responsible for their work and bound by Clause 10.</p>
+<p><strong>3.4 Phase 1 completion.</strong> Phase 1 is complete on the earlier of (a) the Client's written sign-off of the diligence readiness review, or (b) five (5) Business Days after the Consultant submits the readiness review, where the Client has not raised specific written objections within that period.</p>
+<p><strong>3.5 Revisions.</strong> Each Deliverable includes two (2) rounds of revision at no additional cost, where requested within ten (10) Business Days of delivery. Further revisions, or revisions arising from a material change in the Client's business, strategy or data after a Deliverable has been approved, are chargeable at EGP <strong><span class="slot">[ ___ ]</span></strong> per hour or by written variation.</p>
+<p><strong>3.6 Variation.</strong> Any change to scope, Deliverables, timeline or fees must be agreed in writing and signed by both Parties.</p>
+<p><strong>3.7 Division of delivery.</strong> The Deliverables are divided between the Parties as follows:</p>
+<ul>
+<li><strong>(a)</strong> the <strong>Consultant prepares the investment documents</strong> — the financial model, the financial expectations pack, the revenue model, the valuation, the cap table, the Use of Funds statement, the market sizing, the competitive analysis, the go-to-market strategy, the key metrics dashboard, the pitch deck, the teaser, the business plan and the term sheet template, being the items marked <strong>C</strong> at Annex A to the Proposal;</li>
+<li><strong>(b)</strong> the <strong>Client delivers the remaining documents together with the Consultant</strong> — the corporate, legal, financial-record, product, traction and customer materials, being the items marked <strong>C+B</strong> (jointly produced) and <strong>B</strong> (Client-provided) at Annex A to the Proposal; and</li>
+<li><strong>(c)</strong> the Consultant is responsible for the preparation and quality of the documents at (a). The Consultant is not responsible for the content, accuracy or timeliness of any document at (b) that the Client has not supplied, and any resulting delay is a Client-caused delay to which Clause 7.2 applies.</li>
+</ul>
+<hr>
+<h2 id="4-client-obligations">4. Client Obligations</h2>
+<p><strong>4.1 Client Input Pack.</strong> The Client shall deliver the Client Input Pack in full within five (5) Business Days of the Effective Date.</p>
+<p><strong>4.2 Information.</strong> The Client shall provide all information, documents, data and access reasonably required by the Consultant, within five (5) Business Days of each request, and shall ensure that all information provided is accurate, complete, current and not misleading.</p>
+<p><strong>4.3 Workshops.</strong> The Client shall ensure that the required attendees listed at Annex B to the Proposal attend each workshop. A workshop may be rescheduled once by either Party on not less than twenty-four (24) hours' notice. A second or subsequent rescheduling by the Client, or non-attendance without notice, is chargeable at fifty percent (50%) of the allocated session value and extends the timeline under Clause 7.2.</p>
+<p><strong>4.4 Approvals.</strong> The Client shall review and either approve or comment on each Deliverable within three (3) Business Days of delivery. A Deliverable not responded to within five (5) Business Days is deemed approved.</p>
+<p><strong>4.5 Point of contact.</strong> The Client shall nominate one individual, empowered to make decisions and give approvals binding on the Client, as the single point of contact for the engagement. Nominated: <strong><span class="slot">[ name ]</span></strong>, <strong><span class="slot">[ title ]</span></strong>, <strong><span class="slot">[ email ]</span></strong>, <strong><span class="slot">[ mobile ]</span></strong>.</p>
+<p><strong>4.6 Accuracy and disclosure.</strong> The Client is solely responsible for the accuracy and completeness of all information it supplies, and for all statements made to Investors. The Client shall disclose to the Consultant any fact, dispute, liability, contingent liability, regulatory matter or circumstance that a reasonable Investor would consider material.</p>
+<p><strong>4.7 Third-party advisors.</strong> The Client shall appoint and pay for its own legal, audit and tax advisors as required, and shall procure their timely cooperation.</p>
+<p><strong>4.8 Cooperation in good faith.</strong> The Client shall not take any step, or omit to take any step, that frustrates the performance of the Services or the progress of the Round.</p>
+<hr>
+<h2 id="5-investor-introductions-client-engagement-and-attribution">5. Investor Introductions, Client Engagement and Attribution</h2>
+<p><strong>5.1 Introduced Investor.</strong> An Investor is an "Introduced Investor" if the Consultant was the effective cause of the Client's contact with that Investor, including where the Consultant:</p>
+<ul>
+<li><strong>(a)</strong> made or arranged an introduction, referral or first contact, directly or through a third party;</li>
+<li><strong>(b)</strong> included the Investor on the Target Investor Map;</li>
+<li><strong>(c)</strong> included the Investor in an outreach wave, communication or campaign conducted under Phase 2;</li>
+<li><strong>(d)</strong> provided the Client with the Investor's identity or contact details in circumstances where the Client was not already in active discussion with that Investor; or</li>
+<li><strong>(e)</strong> materially facilitated, brokered or re-activated the relationship where contact had previously lapsed,</li>
+</ul>
+<p>in each case where the relevant event is recorded in the Investor Log in accordance with Clause 5.2.</p>
+<p><strong>5.2 Investor Log.</strong> The Consultant shall maintain the Investor Log in the form at Schedule 3, recording for each Investor the name, source, date of first contact and attribution. The Investor Log shall be shared with the Client <strong>weekly</strong> with the pipeline report. The Client may dispute any attribution entry by written notice within <strong>seven (7) Business Days</strong> of receipt of the report in which it first appears; absent such notice, the entry is final and binding. This mechanism exists so that attribution is settled contemporaneously and never retrospectively.</p>
+<p><strong>5.3 Engagement Standard.</strong> In respect of every Introduced Investor, the Client shall:</p>
+<ul>
+<li><strong>(a)</strong> respond substantively to any communication within <strong>three (3) Business Days</strong>;</li>
+<li><strong>(b)</strong> attend scheduled meetings, subject to no more than one (1) rescheduling per Investor;</li>
+<li><strong>(c)</strong> provide requested diligence materials within <strong>five (5) Business Days</strong>;</li>
+<li><strong>(d)</strong> notify the Consultant within <strong>two (2) Business Days</strong> of any direct contact with an Introduced Investor, and copy or brief the Consultant on material correspondence; and</li>
+<li><strong>(e)</strong> deal with each Introduced Investor professionally and in good faith.</li>
+</ul>
+<p><strong>5.4 Non-Engagement.</strong> Two (2) or more failures to meet the Engagement Standard, or any single failure continuing for more than ten (10) Business Days, constitutes "<strong>Non-Engagement</strong>". Non-Engagement is treated by the Parties as evidence that the Client is not seriously pursuing the Round. On Non-Engagement, the Consultant may, by written notice:</p>
+<ul>
+<li><strong>(a)</strong> suspend outreach and all Phase 2 activity, so as not to expose the Consultant's investor relationships to an unresponsive counterparty;</li>
+<li><strong>(b)</strong> stop the timeline clock under Clause 7.2, with all affected dates extending day-for-day;</li>
+<li><strong>(c)</strong> require the Client to cure within ten (10) Business Days; and</li>
+<li><strong>(d)</strong> if the Client does not cure, terminate under Clause 8.3, in which case all Fees accrued to the date of termination fall due immediately, and Clauses 6.2 and 9 continue to apply throughout the Tail Period.</li>
+</ul>
+<p><strong>5.5 Non-circumvention.</strong> The Client shall not, and shall procure that its founders, shareholders, officers, employees, affiliates and any entity under common control shall not, directly or indirectly, negotiate with, transact with, or accept investment from an Introduced Investor otherwise than under this Agreement, or in any manner structured to avoid or reduce the Success Fee. Any investment received in breach of this Clause is deemed to attract the Success Fee in full.</p>
+<p><strong>5.6 Attribution survives.</strong> The Success Fee is payable on any Ticket funded by an Introduced Investor whether the Ticket is funded during the Term or at any time within the Tail Period, and whether the final negotiation was conducted by the Consultant or by the Client.</p>
+<p><strong>5.7 No warranty as to Investors.</strong> The Consultant makes no representation or warranty as to the financial standing, willingness, capacity or conduct of any Investor. An introduction is not a recommendation to accept investment, and the Client is responsible for conducting its own diligence on any Investor before accepting funds.</p>
+<p><strong>5.8 Client-sourced investors.</strong> For the avoidance of doubt, an Investor sourced independently by the Client, not appearing on the Target Investor Map, not included in any outreach wave and not otherwise falling within Clause 5.1, is a "Client-Sourced Investor". <strong>No Success Fee is payable on a Client-Sourced Investor's Ticket.</strong> The M4 Closing Milestone under Clause 6.1 remains payable regardless of whether the First Close arises from an Introduced Investor or a Client-Sourced Investor.</p>
+<hr>
+<h2 id="6-fees-and-payment">6. Fees and Payment</h2>
+<p><strong>6.1 Fixed Fee.</strong> The Client shall pay the Consultant a Fixed Fee of <strong>EGP 150,000 (One Hundred and Fifty Thousand Egyptian Pounds)</strong>, as follows:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Milestone</th>
+<th>Trigger</th>
+<th>Amount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>M1 — Down payment</strong></td>
+<td>On signature of this Agreement</td>
+<td><strong>EGP 30,000</strong></td>
+</tr>
+<tr>
+<td><strong>M2 — Readiness</strong></td>
+<td>On completion of Phase 1 under Clause 3.4</td>
+<td><strong>EGP 30,000</strong></td>
+</tr>
+<tr>
+<td><strong>M3 — Round</strong></td>
+<td>On launch of the first outreach wave under Phase 2</td>
+<td><strong>EGP 20,000</strong></td>
+</tr>
+<tr>
+<td><strong>M4 — Closing</strong></td>
+<td>On First Close</td>
+<td><strong>EGP 70,000</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>(a)</strong> The M1 down payment is a non-refundable mobilisation fee and is payable before the Phase 1 Start Date.</p>
+<p><strong>(b)</strong> The M3 Round Milestone Fee of EGP 20,000 shall become due on the date the Consultant launches the first outreach wave under Phase 2 Stage 2, and is payable whether or not any Investor has by then responded, met the Client or begun diligence.</p>
+<p><strong>(c)</strong> The M4 Closing Milestone Fee of EGP 70,000 shall become due upon First Close — being the date on which the first Investment Amount is received in cleared funds into the Client's bank account — irrespective of whether the Round remains open for subsequent tranches, and <strong>irrespective of whether the closing Investor was an Introduced Investor or a Client-Sourced Investor</strong>.</p>
+<p><strong>(d)</strong> If the Round has not reached First Close by the date this Agreement expires or is terminated other than under Clause 8.2, M4 remains payable on the first subsequent close occurring within the Tail Period.</p>
+<p><strong>6.2 Success Fee.</strong> In addition to the Fixed Fee, the Client shall pay the Consultant a Success Fee of <strong>ten percent (10%) of the aggregate Investment Amount funded by Introduced Investors</strong>.</p>
+<ul>
+<li><strong>(a)</strong> The Success Fee accrues per Ticket and is calculated on amounts actually received by the Client in cleared funds. Where a Ticket funds in tranches, the Success Fee is payable pro rata as each tranche is received.</li>
+<li><strong>(b)</strong> No Success Fee is payable in respect of a Client-Sourced Investor.</li>
+<li><strong>(c)</strong> Where consideration is received other than in cash, the Success Fee is calculated on the fair market value of that consideration as at the date of receipt, agreed between the Parties or, failing agreement within ten (10) Business Days, determined by an independent valuer jointly appointed and shared equally in cost.</li>
+<li><strong>(d)</strong> Where an Investment Amount is denominated in a currency other than Egyptian Pounds, it shall be converted at the Central Bank of Egypt mid-market rate on the date the funds are received in cleared funds.</li>
+<li><strong>(e)</strong> The Success Fee applies to Tickets funded during the Term and throughout the Tail Period, in accordance with Clauses 5.6 and 9.</li>
+</ul>
+<p><strong>6.3 Invoicing and payment.</strong> The Consultant shall issue an invoice on each Fee becoming due. Each invoice is payable within <strong>seven (7) Business Days</strong> of receipt, by bank transfer to the account nominated by the Consultant in writing. Payment obligations are not conditional on the Client's receipt of any third-party funds other than as expressly stated in the relevant trigger.</p>
+<p><strong>6.4 Late payment.</strong> Sums unpaid after the due date carry interest at <strong>one and a half percent (1.5%) per month</strong> on the outstanding balance, accruing daily from the due date until payment. Where any invoice remains unpaid for more than fifteen (15) Business Days, the Consultant may suspend the Services on written notice, without prejudice to any other right.</p>
+<p><strong>6.5 No set-off.</strong> All Fees are payable in full without set-off, counterclaim, deduction or withholding, save as required by law.</p>
+<p><strong>6.6 Taxes.</strong> All Fees are stated exclusive of Value Added Tax and any other applicable indirect tax, which the Client shall pay in addition where legally chargeable. Where the Client is required by Egyptian law to deduct withholding tax from a payment, it may do so, shall account for it to the Egyptian Tax Authority, and shall deliver to the Consultant the official withholding certificate within thirty (30) days of deduction. Each Party is responsible for its own income taxes.</p>
+<p><strong>6.7 Expenses.</strong> Fees exclude third-party costs — data room software subscriptions, paid market data, design licences, printing, and travel outside Greater Cairo. Such costs are chargeable at cost, and only where approved by the Client in writing in advance.</p>
+<p><strong>6.8 Currency.</strong> All Fees are payable in Egyptian Pounds unless otherwise agreed in writing.</p>
+<hr>
+<h2 id="7-timeline-and-delay">7. Timeline and Delay</h2>
+<p><strong>7.1 Target timeline.</strong> The Parties target four (4) weeks for Phase 1 from the Phase 1 Start Date, and three (3) months for Phase 2, as set out at section 9 of the Proposal.</p>
+<p><strong>7.2 Client-caused delay.</strong> Where the Client fails to meet any obligation at Clause 4 or Clause 5.3, every affected date and the overall Term extends <strong>day-for-day</strong> by the period of delay, automatically and without the need for notice. The Consultant shall record delays in the weekly report.</p>
+<p><strong>7.3 Timeline is a target.</strong> The Client acknowledges that fundraising duration is materially affected by market conditions, investor availability and investor decision cycles, none of which are within the Consultant's control. The timelines in this Agreement are good-faith targets and are not conditions of the Agreement, warranties or guarantees, and failure to meet them does not of itself constitute a breach by the Consultant.</p>
+<p><strong>7.4 Extension.</strong> If the Round has not closed by the end of the Term, the Parties may extend Phase 2 by written agreement on terms to be agreed. Absent extension, Clauses 6.1(c), 6.2(e), 9 and 10 continue to apply.</p>
+<hr>
+<h2 id="8-suspension-and-termination">8. Suspension and Termination</h2>
+<p><strong>8.1 Termination for convenience.</strong> Either Party may terminate on <strong>thirty (30) days'</strong> written notice.</p>
+<p><strong>8.2 Termination by the Client for cause.</strong> The Client may terminate immediately on written notice if the Consultant commits a material breach that is not remedied within twenty (20) Business Days of written notice specifying the breach.</p>
+<p><strong>8.3 Termination by the Consultant for cause.</strong> The Consultant may terminate immediately on written notice if the Client:</p>
+<ul>
+<li><strong>(a)</strong> fails to pay any undisputed invoice within fifteen (15) Business Days of the due date;</li>
+<li><strong>(b)</strong> fails to cure Non-Engagement under Clause 5.4;</li>
+<li><strong>(c)</strong> breaches Clause 5.5 (non-circumvention);</li>
+<li><strong>(d)</strong> provides information the Consultant reasonably determines to be materially false or misleading; or</li>
+<li><strong>(e)</strong> requires the Consultant to act in a manner that is unlawful, or contrary to professional or ethical standards.</li>
+</ul>
+<p><strong>8.4 Insolvency.</strong> Either Party may terminate immediately if the other becomes insolvent, enters liquidation or bankruptcy, has a receiver appointed, or ceases to carry on business.</p>
+<p><strong>8.5 Consequences of termination.</strong> On termination:</p>
+<ul>
+<li><strong>(a)</strong> all Fees accrued or due to the date of termination become immediately payable, including any milestone already triggered;</li>
+<li><strong>(b)</strong> the M1 down payment is non-refundable in all circumstances;</li>
+<li><strong>(c)</strong> where termination occurs after Phase 1 is complete, M2 is payable in full, and where it occurs after the first outreach wave has launched, M3 is also payable in full;</li>
+<li><strong>(d)</strong> where the Client terminates under Clause 8.1, or the Consultant terminates under Clause 8.3, Clauses 5.5, 5.6, 6.1(d), 6.2 and 9 continue to apply for the Tail Period;</li>
+<li><strong>(e)</strong> where the Client terminates under Clause 8.2 for the Consultant's material breach, no further Fixed Fee milestone accrues after the date of termination, and the Success Fee remains payable only in respect of Tickets from Introduced Investors already recorded in the Investor Log at the date of termination;</li>
+<li><strong>(f)</strong> the Consultant shall deliver to the Client all completed Deliverables for which payment has been received, together with the data room and the Investor Log; and</li>
+<li><strong>(g)</strong> each Party shall return or destroy the other's Confidential Information on request, subject to Clause 10.5.</li>
+</ul>
+<p><strong>8.6 Suspension.</strong> The Consultant may suspend the Services under Clause 5.4(a) or Clause 6.4. Suspension does not relieve the Client of any accrued payment obligation, and the timeline extends by the period of suspension.</p>
+<hr>
+<h2 id="9-tail-period">9. Tail Period</h2>
+<p><strong>9.1</strong> The Success Fee under Clause 6.2 and the Closing Milestone under Clause 6.1(d) remain payable in respect of any Ticket funded during the <strong>Tail Period of twelve (12) months</strong> following expiry or termination of this Agreement, where the Investor is an Introduced Investor recorded in the Investor Log at the date of expiry or termination.</p>
+<p><strong>9.2</strong> The Client shall notify the Consultant in writing within <strong>ten (10) Business Days</strong> of any Ticket funded during the Tail Period, stating the Investor, the amount and the funding date.</p>
+<p><strong>9.3</strong> The Consultant may, not more than twice during the Tail Period, request written confirmation from the Client of the status of the Round and of any Introduced Investor, and the Client shall respond within ten (10) Business Days.</p>
+<hr>
+<h2 id="10-confidentiality">10. Confidentiality</h2>
+<p><strong>10.1 Definition.</strong> "Confidential Information" means all non-public information disclosed by one Party to the other in connection with this Agreement, including business plans, financial data and models, cap tables, customer and user data, product and technical information, investor identities and correspondence, valuations, and the terms of this Agreement.</p>
+<p><strong>10.2 Obligations.</strong> Each Party shall keep the other's Confidential Information confidential, use it only for the purposes of this Agreement, and not disclose it to any third party without prior written consent, save to professional advisors bound by equivalent obligations.</p>
+<p><strong>10.3 Disclosure to Investors.</strong> The Client authorises the Consultant to disclose Client Confidential Information to prospective Investors to the extent necessary to conduct the Round. The Consultant shall use reasonable endeavours to procure that data room access is granted under access control and, where the Client requires it, subject to a non-disclosure undertaking.</p>
+<p><strong>10.4 Exclusions.</strong> Confidential Information does not include information that is or becomes public other than through breach, was lawfully known before disclosure, is independently developed, or is required to be disclosed by law, court or regulator — in which case the disclosing Party shall, where lawful, give prior notice.</p>
+<p><strong>10.5 Duration and retention.</strong> This Clause survives for <strong>three (3) years</strong> after expiry or termination. The Consultant may retain one archival copy of engagement records for professional record-keeping and regulatory purposes, subject to continuing confidentiality.</p>
+<p><strong>10.6 Publicity.</strong> Neither Party shall make any public announcement regarding the Round without the other's prior written consent. <strong>The Client grants the Consultant the right to identify the Client by name and logo as a client, and to describe the engagement in general terms, in the Consultant's portfolio, website and marketing materials, after First Close</strong> — provided no confidential financial detail is disclosed. The Client may withdraw this permission by written notice.</p>
+<hr>
+<h2 id="11-intellectual-property">11. Intellectual Property</h2>
+<p><strong>11.1 Client materials.</strong> All intellectual property in materials supplied by the Client — including its brand, logos, product, screenshots, roadmap and business data — remains the Client's property. The Client grants the Consultant a non-exclusive licence to use those materials for the purposes of this Agreement.</p>
+<p><strong>11.2 Deliverables.</strong> On payment in full of the Fees due in respect of a Deliverable, all right, title and interest in that Deliverable transfers to the Client, and the Client may use, modify and distribute it without restriction.</p>
+<p><strong>11.3 Consultant know-how.</strong> The Consultant retains all rights in its pre-existing intellectual property, methodologies, model architectures, templates, frameworks and know-how, including as embodied in the Deliverables. Nothing in this Agreement transfers those rights. The Consultant grants the Client a perpetual, non-exclusive, royalty-free licence to use them to the extent embedded in a Deliverable, for the Client's own business purposes.</p>
+<p><strong>11.4 Retention of title pending payment.</strong> Until the Fees due in respect of a Deliverable are paid in full, the Consultant retains title in that Deliverable, and the Client shall not use it in any investor-facing communication.</p>
+<hr>
+<h2 id="12-no-guarantee-of-funding-nature-of-the-services">12. No Guarantee of Funding; Nature of the Services</h2>
+<p><strong>12.1 No guarantee.</strong> The Consultant does not guarantee, warrant or represent that the Round will be funded, that any Investor will invest, that any particular valuation will be achieved, or that any specific amount will be raised. Investment outcomes depend on market conditions, investor discretion and the Client's own performance and conduct.</p>
+<p><strong>12.2 Not regulated investment advice.</strong> The Services are commercial advisory, preparation and process-management services. Nothing provided under this Agreement constitutes investment advice, a recommendation to invest, a securities offering, an inducement, or a solicitation to any person to buy or sell securities.</p>
+<p><strong>12.3 Not a licensed intermediary.</strong> The Consultant is not a licensed securities broker, dealer, placement agent, or regulated financial intermediary, and does not hold itself out as such. The Fees payable under Clause 6, including the Success Fee, are consideration for the advisory, preparation, coordination and process-management Services described in this Agreement, and are not consideration for the offer, sale or placement of securities. <strong>Each Party has satisfied itself, and shall be responsible for satisfying itself, as to the treatment of this Agreement under applicable Egyptian financial services regulation, including the rules of the Financial Regulatory Authority, and each Party is advised to take its own independent legal advice on that question.</strong></p>
+<p><strong>12.4 No legal, tax, audit or accounting advice.</strong> The Consultant does not provide legal, tax, audit, accounting or regulatory advice. The Client shall obtain such advice from appropriately licensed professionals. Any commercial commentary the Consultant provides on a term sheet or transaction document is commercial only and is not a substitute for legal advice.</p>
+<p><strong>12.5 Client decisions.</strong> All decisions as to whether to raise, from whom to raise, on what terms, and whether to accept any offer, rest exclusively with the Client.</p>
+<hr>
+<h2 id="13-independent-contractor">13. Independent Contractor</h2>
+<p><strong>13.1</strong> The Consultant is an independent contractor. Nothing in this Agreement creates an employment relationship, partnership, joint venture, agency or fiduciary relationship between the Parties.</p>
+<p><strong>13.2</strong> The Consultant is not authorised to enter into any contract, incur any liability, make any representation or accept any offer on the Client's behalf, unless expressly authorised in writing for a specific purpose.</p>
+<p><strong>13.3</strong> The Consultant is responsible for the Consultant's own taxes, social insurance and statutory contributions.</p>
+<hr>
+<h2 id="14-warranties-and-limitation-of-liability">14. Warranties and Limitation of Liability</h2>
+<p><strong>14.1 Consultant warranty.</strong> The Consultant warrants that it has the right, capacity and skill to provide the Services, and will perform them in accordance with Clause 3.2.</p>
+<p><strong>14.2 Client warranties.</strong> The Client warrants that it is duly incorporated and validly existing; that it has full authority to enter into this Agreement and to raise the Round; that the person signing is duly authorised; and that all information it supplies is accurate, complete and not misleading.</p>
+<p><strong>14.3 Reliance.</strong> The Consultant relies on information supplied by the Client without independent verification. The Consultant is not liable for any loss arising from information that is inaccurate, incomplete, out of date or misleading, and the Client shall indemnify the Consultant against any third-party claim arising from such information, including any claim by an Investor.</p>
+<p><strong>14.4 Cap on liability.</strong> Subject to Clause 14.6, the Consultant's total aggregate liability arising out of or in connection with this Agreement, whether in contract, tort (including negligence), breach of statutory duty or otherwise, shall not exceed <strong>the total Fixed Fee actually paid by the Client to the Consultant under this Agreement</strong>.</p>
+<p><strong>14.5 Excluded loss.</strong> Neither Party is liable for loss of profit, loss of revenue, loss of anticipated savings, loss of business opportunity, loss of funding, dilution, or any indirect or consequential loss.</p>
+<p><strong>14.6 Unlimited liability.</strong> Nothing in this Agreement limits liability for fraud, fraudulent misrepresentation, wilful misconduct, or any liability that cannot lawfully be limited.</p>
+<hr>
+<h2 id="15-force-majeure">15. Force Majeure</h2>
+<p><strong>15.1</strong> Neither Party is liable for failure or delay in performance caused by an event beyond its reasonable control, including act of God, natural disaster, epidemic or pandemic, war, civil unrest, terrorism, governmental action, currency restriction, banking system failure, or prolonged failure of telecommunications or internet infrastructure.</p>
+<p><strong>15.2</strong> The affected Party shall notify the other promptly. Performance is suspended for the duration of the event, and all timelines extend accordingly. If the event continues for more than sixty (60) consecutive days, either Party may terminate on written notice, and Clause 8.5 applies.</p>
+<hr>
+<h2 id="16-notices">16. Notices</h2>
+<p><strong>16.1</strong> Notices under this Agreement shall be in writing and sent to the addresses below by email with confirmed delivery, by hand, or by registered post.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th></th>
+<th>Consultant</th>
+<th>Client</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>For the attention of</strong></td>
+<td>Abdelrhman Soliman</td>
+<td><span class="slot">[ name ]</span></td>
+</tr>
+<tr>
+<td><strong>Email</strong></td>
+<td>abdelrhmansoliman96@gmail.com</td>
+<td><span class="slot">[ email ]</span></td>
+</tr>
+<tr>
+<td><strong>Phone</strong></td>
+<td>+20 109 651 5287</td>
+<td><span class="slot">[ phone ]</span></td>
+</tr>
+<tr>
+<td><strong>Address</strong></td>
+<td>Cairo, Arab Republic of Egypt</td>
+<td><span class="slot">[ address ]</span></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>16.2</strong> A notice is deemed received: if by email, on the next Business Day after sending, absent a delivery failure notification; if by hand, on delivery; if by registered post, five (5) Business Days after posting.</p>
+<p><strong>16.3</strong> Routine operational communication, including weekly reports, the Investor Log and Deliverable delivery, may be conducted by email or the Parties' agreed project channel and does not require formal notice.</p>
+<hr>
+<h2 id="17-general">17. General</h2>
+<p><strong>17.1 Entire agreement.</strong> This Agreement, together with its Schedules and the Proposal annexed to it, constitutes the entire agreement between the Parties and supersedes all prior discussions, understandings and representations, whether written or oral.</p>
+<p><strong>17.2 Amendment.</strong> No amendment is effective unless in writing and signed by both Parties.</p>
+<p><strong>17.3 Waiver.</strong> No failure or delay in exercising a right constitutes a waiver of it. A waiver of one breach is not a waiver of any other.</p>
+<p><strong>17.4 Severability.</strong> If any provision is held invalid, illegal or unenforceable, it shall be modified to the minimum extent necessary to make it enforceable, or if that is not possible, severed. The remaining provisions continue in full force.</p>
+<p><strong>17.5 Assignment.</strong> Neither Party may assign or transfer this Agreement without the other's prior written consent, save that the Client may assign to a successor entity arising from a corporate reorganisation on written notice, provided all obligations under Clauses 5, 6 and 9 transfer with it.</p>
+<p><strong>17.6 Third-party rights.</strong> No person other than a Party has any right to enforce any term of this Agreement.</p>
+<p><strong>17.7 Survival.</strong> Clauses 5.5, 5.6, 6, 8.5, 9, 10, 11, 12, 14, 18 and this Clause 17 survive expiry or termination.</p>
+<p><strong>17.8 Counterparts and electronic signature.</strong> This Agreement may be executed in counterparts, each of which is an original and which together constitute one instrument. The Parties agree that signatures transmitted electronically, and electronic signatures made in accordance with Egyptian Law No. 15 of 2004 on E-Signature, are valid and binding.</p>
+<p><strong>17.9 Language.</strong> This Agreement is executed in English. If an Arabic translation is produced, the Parties shall specify in writing which version prevails; absent such specification, the English version prevails.</p>
+<hr>
+<h2 id="18-governing-law-and-dispute-resolution">18. Governing Law and Dispute Resolution</h2>
+<p><strong>18.1 Governing law.</strong> This Agreement and any dispute arising out of or in connection with it, including non-contractual disputes, are governed by the laws of the <strong>Arab Republic of Egypt</strong>.</p>
+<p><strong>18.2 Amicable settlement.</strong> The Parties shall first attempt in good faith to resolve any dispute by negotiation between senior representatives within <strong>thirty (30) days</strong> of written notice of the dispute.</p>
+<p><strong>18.3 Jurisdiction.</strong> If the dispute is not resolved under Clause 18.2, it shall be submitted to the exclusive jurisdiction of the <strong>competent Economic Courts of Cairo, Arab Republic of Egypt</strong>.</p>
+<hr>
+<h1 id="schedules">SCHEDULES</h1>
+<h2 id="schedule-1-services-and-deliverables-summary">Schedule 1 — Services and Deliverables Summary</h2>
+<p>This Schedule summarises the Services for ease of reference. The full description is at sections 5, 6 and 7 of, and Annexes A to C to, the Proposal, which prevail over this summary in the event of any inconsistency in detail.</p>
+<h3 id="1-1-phase-1-investment-readiness-4-weeks">1.1 Phase 1 — Investment Readiness (4 weeks)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Workstream</th>
+<th>Covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A — Story, positioning &amp; market</strong></td>
+<td>Investment thesis and narrative; problem/solution framing; TAM, SAM and SOM; competitive analysis; go-to-market strategy; customer development evidence and traction narrative</td>
+</tr>
+<tr>
+<td><strong>B — Financial model, expectations &amp; valuation</strong></td>
+<td>Driver-based model (3–5 years, monthly for years 1–2); revenue model across both product lines; cost structure and headcount from the HR plan; cash flow, burn and runway; financial expectations pack; Use of Funds; pre-seed valuation; cap table and dilution; key metrics dashboard</td>
+</tr>
+<tr>
+<td><strong>C — Data room construction</strong></td>
+<td>Data room architecture, index and naming convention; preparation of every Consultant-owned item and quality control of every Client-provided item in Annex A; gap analysis and remediation; diligence Q&amp;A bank; access control and version discipline; final readiness review</td>
+</tr>
+<tr>
+<td><strong>D — Investor document set</strong></td>
+<td>Pitch deck (10–15 slides); one-page teaser; full business plan; term sheet template; valuation document; investor-standard founder bios; product demo script</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="1-2-phase-2-investment-round-management-3-months">1.2 Phase 2 — Investment Round Management (3 months)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1 — Fundraising strategy</strong> (Weeks 5–6)</td>
+<td>Round architecture — size, instrument, valuation, terms; investor segmentation; Target Investor Map with tiers and warm paths; outreach infrastructure and messaging; pitch rehearsal; round timeline</td>
+</tr>
+<tr>
+<td><strong>2 — Outreach &amp; engagement</strong> (Weeks 7–12)</td>
+<td>Structured outreach waves; warm introductions; controlled distribution of teaser and deck; meeting scheduling, briefs and debriefs; investor feedback analysis; weekly pipeline reporting; iteration of materials against real objections</td>
+</tr>
+<tr>
+<td><strong>3 — Diligence, negotiation &amp; close</strong> (Weeks 13–16)</td>
+<td>Diligence request coordination and response drafting; investor Q&A; term sheet review and negotiation support; valuation and dilution modelling across offers; syndicate construction; coordination with the Client's legal counsel to signing and funding; post-close investor reporting structure</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="1-3-workshop-programme">1.3 Workshop programme</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Workshop</th>
+<th>Week</th>
+<th>Duration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W1</td>
+<td>Discovery &amp; Story Session</td>
+<td>1</td>
+<td>3 hours</td>
+</tr>
+<tr>
+<td>W2</td>
+<td>Financial Modelling — Session 1</td>
+<td>2</td>
+<td>3 hours</td>
+</tr>
+<tr>
+<td>W3</td>
+<td>Financial Modelling — Session 2</td>
+<td>3</td>
+<td>3 hours</td>
+</tr>
+<tr>
+<td>W4</td>
+<td>Full Data Room Workshop</td>
+<td>4</td>
+<td>4 hours</td>
+</tr>
+<tr>
+<td>W5</td>
+<td>Investor Pitch Rehearsal</td>
+<td>5</td>
+<td>2 hours</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="1-4-deliverables">1.4 Deliverables</h3>
+<p>Twenty-four (24) Phase 1 deliverables and thirteen (13) Phase 2 deliverables, itemised with formats and due dates at section 7 of the Proposal. All 36 items of the Client's Pre-Seed Round Data Room Checklist are allocated to an owner at Annex A to the Proposal: twelve prepared by the Consultant, twelve jointly produced, and twelve provided by the Client.</p>
+<hr>
+<h2 id="schedule-2-fee-schedule-and-payment-milestones">Schedule 2 — Fee Schedule and Payment Milestones</h2>
+<h3 id="2-1-fixed-fee-egp-150-000">2.1 Fixed Fee — EGP 150,000</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Milestone</th>
+<th>Trigger event</th>
+<th>Evidence of trigger</th>
+<th>Amount (EGP)</th>
+<th>Invoice issued</th>
+<th>Payment due</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>M1 — Down payment</strong></td>
+<td>Signature of this Agreement</td>
+<td>Executed Agreement</td>
+<td><strong>30,000</strong></td>
+<td>On signature</td>
+<td>Within 7 Business Days, and before the Phase 1 Start Date</td>
+</tr>
+<tr>
+<td><strong>M2 — Readiness</strong></td>
+<td>Completion of Phase 1 under Clause 3.4</td>
+<td>Client sign-off of the diligence readiness review, or deemed sign-off after 5 Business Days</td>
+<td><strong>30,000</strong></td>
+<td>On completion</td>
+<td>Within 7 Business Days</td>
+</tr>
+<tr>
+<td><strong>M3 — Round</strong></td>
+<td>Launch of the first outreach wave under Phase 2 Stage 2</td>
+<td>The outreach wave recorded in the Investor Log and weekly pipeline report</td>
+<td><strong>20,000</strong></td>
+<td>On launch</td>
+<td>Within 7 Business Days</td>
+</tr>
+<tr>
+<td><strong>M4 — Closing</strong></td>
+<td>First Close</td>
+<td>Confirmation of funds received in cleared funds, from any Investor, Introduced or Client-Sourced</td>
+<td><strong>70,000</strong></td>
+<td>On First Close</td>
+<td>Within 7 Business Days</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><strong>Total Fixed Fee</strong></td>
+<td><strong>150,000</strong></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="2-2-success-fee-10">2.2 Success Fee — 10%</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Term</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rate</strong></td>
+<td>10% of the Investment Amount</td>
+</tr>
+<tr>
+<td><strong>Base</strong></td>
+<td>Aggregate Investment Amount funded by <strong>Introduced Investors</strong> only</td>
+</tr>
+<tr>
+<td><strong>Excluded</strong></td>
+<td>Tickets from Client-Sourced Investors (Clause 5.8)</td>
+</tr>
+<tr>
+<td><strong>Included instruments</strong></td>
+<td>Equity subscriptions; SAFEs and convertible notes at face or principal amount; quasi-equity</td>
+</tr>
+<tr>
+<td><strong>Excluded instruments</strong></td>
+<td>Bank debt, commercial lending, government or institutional grants, non-dilutive soft funding — unless agreed in writing</td>
+</tr>
+<tr>
+<td><strong>Trigger</strong></td>
+<td>Receipt of funds in cleared funds; payable pro rata per tranche</td>
+</tr>
+<tr>
+<td><strong>Invoice</strong></td>
+<td>Within 5 Business Days of each tranche being received</td>
+</tr>
+<tr>
+<td><strong>Payment due</strong></td>
+<td>Within 7 Business Days of invoice</td>
+</tr>
+<tr>
+<td><strong>Non-cash consideration</strong></td>
+<td>Valued at fair market value on receipt (Clause 6.2(c))</td>
+</tr>
+<tr>
+<td><strong>Foreign currency</strong></td>
+<td>Converted at the CBE mid-market rate on the date of receipt (Clause 6.2(d))</td>
+</tr>
+<tr>
+<td><strong>Tail</strong></td>
+<td>Payable on Introduced Investor Tickets funded within 12 months of expiry or termination (Clause 9)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="2-3-payment-details">2.3 Payment details</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Payee</td>
+<td>Abdelrhman Soliman</td>
+</tr>
+<tr>
+<td>Bank</td>
+<td><span class="slot">[ ]</span></td>
+</tr>
+<tr>
+<td>Account number / IBAN</td>
+<td><span class="slot">[ ]</span></td>
+</tr>
+<tr>
+<td>SWIFT</td>
+<td><span class="slot">[ ]</span></td>
+</tr>
+<tr>
+<td>Currency</td>
+<td>EGP</td>
+</tr>
+<tr>
+<td>Payment method</td>
+<td>Bank transfer</td>
+</tr>
+<tr>
+<td>Payment terms</td>
+<td>7 Business Days from invoice</td>
+</tr>
+<tr>
+<td>Late payment interest</td>
+<td>1.5% per month (Clause 6.4)</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2 id="schedule-3-investor-log">Schedule 3 — Investor Log</h2>
+<p>Maintained by the Consultant, issued to Btakka weekly with the pipeline report. Attribution entries not disputed within seven (7) Business Days of first appearing are final (Clause 5.2).</p>
+<h3 id="3-1-log-format">3.1 Log format</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Investor name</th>
+<th>Type</th>
+<th>Attribution</th>
+<th>First contact date</th>
+<th>Source / warm path</th>
+<th>Status</th>
+<th>Ticket (EGP)</th>
+<th>Funded date</th>
+<th>Success Fee due</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td></td>
+<td>Angel / Syndicate / VC / Family office / Corporate / Accelerator</td>
+<td><strong>Introduced</strong> / <strong>Client-Sourced</strong></td>
+<td></td>
+<td></td>
+<td>Contacted / Engaged / Meeting held / Diligence / Term sheet / Committed / Funded / Passed</td>
+<td></td>
+<td></td>
+<td>Yes / No</td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="3-2-status-definitions">3.2 Status definitions</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Contacted</strong></td>
+<td>Outreach sent, no reply yet</td>
+</tr>
+<tr>
+<td><strong>Engaged</strong></td>
+<td>Investor has responded and is in dialogue</td>
+</tr>
+<tr>
+<td><strong>Meeting held</strong></td>
+<td>First meeting completed</td>
+</tr>
+<tr>
+<td><strong>Diligence</strong></td>
+<td>Investor has requested data room access or diligence materials</td>
+</tr>
+<tr>
+<td><strong>Term sheet</strong></td>
+<td>Investor has issued or indicated terms</td>
+</tr>
+<tr>
+<td><strong>Committed</strong></td>
+<td>Investor has signed and committed capital</td>
+</tr>
+<tr>
+<td><strong>Funded</strong></td>
+<td>Funds received in cleared funds — Success Fee trigger</td>
+</tr>
+<tr>
+<td><strong>Passed</strong></td>
+<td>Investor has declined; reason recorded</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="3-3-weekly-pipeline-report">3.3 Weekly pipeline report</h3>
+<p>Issued every week during Phase 2, covering: new investors contacted; responses received; meetings held and outcomes; investors in diligence; term sheets received; capital committed and funded to date against target; investor objections and how the materials were updated in response; Client actions outstanding; and any delay recorded under Clause 7.2.</p>
+<hr>
+<h1 id="execution">EXECUTION</h1>
+<p><strong>IN WITNESS WHEREOF</strong> the Parties have executed this Agreement on the Effective Date first written above.</p>
+<p><br></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th><strong>THE CONSULTANT</strong></th>
+<th><strong>THE CLIENT</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ABDELRHMAN SOLIMAN</strong></td>
+<td><strong><span class="slot">[ FULL REGISTERED LEGAL NAME ]</span></strong> trading as <strong>Btakka</strong></td>
+</tr>
+<tr>
+<td>Business &amp; Investment Consultant</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Signature: .............................................</td>
+<td>Signature: .............................................</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Name: Abdelrhman Soliman</td>
+<td>Name: ......................................................</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Title: Consultant</td>
+<td>Title: .........................................................</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Date: .......................................................</td>
+<td>Date: .......................................................</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Company stamp:</td>
+</tr>
+</tbody>
+</table></div>
+<p><br></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-b"><h4>Consultant</h4><p><strong>Abdelrhman Soliman</strong><br>Independent Investment Advisor &amp; Consultant<br>Cairo, Arab Republic of Egypt</p></div>
+    <div class="foot-b"><h4>Contact</h4><p><a href="mailto:abdelrhmansoliman96@gmail.com">abdelrhmansoliman96@gmail.com</a><br>+20 109 651 5287</p></div>
+    <div class="foot-b"><h4>Status</h4><p>Version 1.0 — for client review.<br>This is an unexecuted draft. Fields marked in brass remain to be completed before signature.</p></div>
+    <p class="stamp">Consulting Agreement · Document 2 of 2 · Btakka × Abdelrhman Soliman · 13 September 2026</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var map = {};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+  var targets = Object.keys(map).map(function(id){ return document.getElementById(id); }).filter(Boolean);
+  if (!targets.length || !('IntersectionObserver' in window)) return;
+  var visible = {};
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ visible[e.target.id] = e.isIntersecting; });
+    var current = null;
+    for (var i = 0; i < targets.length; i++){
+      if (visible[targets[i].id]) { current = targets[i].id; break; }
+    }
+    if (!current){
+      for (var j = targets.length - 1; j >= 0; j--){
+        if (targets[j].getBoundingClientRect().top < 120) { current = targets[j].id; break; }
+      }
+    }
+    links.forEach(function(a){ a.classList.remove('on'); });
+    if (current && map[current]) {
+      map[current].classList.add('on');
+      var rail = document.querySelector('.rail');
+      if (rail && rail.scrollHeight > rail.clientHeight){
+        var r = map[current].getBoundingClientRect(), rr = rail.getBoundingClientRect();
+        if (r.top < rr.top + 40 || r.bottom > rr.bottom - 40){
+          rail.scrollTop += (r.top - rr.top) - rail.clientHeight * 0.4;
+        }
+      }
+    }
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+  targets.forEach(function(t){ io.observe(t); });
+  var md = document.querySelector('details.m-toc');
+  if (md && window.matchMedia('(max-width:900px)').matches) md.open = false;
+  document.querySelectorAll('details.m-toc a').forEach(function(a){
+    a.addEventListener('click', function(){
+      if (window.matchMedia('(max-width:900px)').matches) md.open = false;
+    });
+  });
+})();
+</script>
