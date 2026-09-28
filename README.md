@@ -337,7 +337,7 @@ builders now go through the same helpers, and all 24 `.docx` in `output/` pass.
 
 Five guided toolkits a founder fills in, three mini whitepapers that each explain one
 thing, eight reports that read a framework from the brand book as an operating tool, and
-one partner review. **139 pages**, all English, all vector, built for the `/resources` page and for
+one partner review. **130 pages**, all English, all vector, built for the `/resources` page and for
 printing.
 
 | # | Document | Missions | Pages |
@@ -445,7 +445,7 @@ metadata reads as StartPad rather than as the browser that rendered it, that no
 forbidden phrase from the voice rules appears in the copy, that every report cites the
 book it derives from, and that no figure exceeds the ordinal ramp's step ceiling.
 
-    17 documents, 139 pages, 0 with problems
+    17 documents, 130 pages, 0 with problems
 
 ## Programme reviews
 
@@ -455,20 +455,33 @@ than published, so `PUBLIC` excludes them from the resources bundle.
 
 | # | Review | Source document | Pages |
 |---|---|---|---|
-| RV 01 | One Account, Five Students | Entrepreneurship Camp Learner Journey, GrowthLabs × Cognify Academy, Sept 2026 | 12 |
+| RV 01 | Two Ideas, One Fortnight | Entrepreneurship Camp Learner Journey, GrowthLabs × Cognify Academy, Sept 2026 | 3 |
 
-Feedback on the Future Founders camp and its StartPad integration: what the pack gets
-right, and nine gaps between where it stands and every student learning from the
-platform. Every figure is taken from the pack or checked against
-`startpad/missions.py` — including the finding that **seven of the ten mission names
-in the pack do not match what a student will see on screen**, and that the pack's
-names are the better ones, so the product should adopt them rather than the reverse.
+Feedback on the Future Founders camp and its StartPad integration, written against the
+delivery plan rather than the pack alone: the platform is open for **one month** and
+**every student gets their own account**, which is better than the pack's shared team
+account and moves the problem rather than removing it. The collision it creates — a
+team venture and a personal idea competing for the same fortnight — is the subject,
+with six things to settle before Day 1. Every figure is from the pack or checked
+against `startpad/missions.py`, including the finding that **seven of the ten mission
+names in the pack do not match what a student will see on screen**, and that the
+pack's names are the better ones, so the product should adopt them.
+
+It uses a **brief layout**: a masthead instead of a full-bleed cover and a closing
+band instead of the About StartPad page, because on a three-page document those two
+would be two thirds of it. `check_pdfs.py` knows the difference — a brief may be
+short, and names its source in the text rather than carrying a citation panel.
 
 Writing it narrowed one voice rule: `unlock` was on the forbidden list as marketing
 jargon, but it is also the platform's real mechanic — missions unlock in order, which
 is the pack's own wording. The rule now matches the jargon collocations (`unlock your`,
 `unlock growth`) rather than the bare verb, so a document is not forced into a worse
 word for a real product behaviour.
+
+It also fixed a print bug the long documents had been hiding: tables carried
+`break-inside: avoid`, so a table too tall for the space left jumped whole to the next
+page and left half a page empty behind it. Tables now break between rows, rows still
+never break, and `thead` repeats on the continuation page.
 
 ## What still needs a human
 

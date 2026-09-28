@@ -72,7 +72,9 @@ def check(doc):
     # Every report is derived from a framework in the brand book, so the book has to
     # be named on the page rather than assumed.
     if doc["kind"] in ("report", "review"):
-        if not any(b[0] == "bookref" for b in doc["blocks"]):
+        # A brief names its source in the text: a full citation panel would cost
+        # a tenth of a three-page document, so only long form is required to carry one.
+        if doc.get("layout") != "brief" and not any(b[0] == "bookref" for b in doc["blocks"]):
             problems.append("report has no citation of the source book")
         named = "brand presentation" if doc["kind"] == "report" else "learner journey"
         if named not in low:
@@ -95,7 +97,10 @@ def check(doc):
         if phrase.lower() in low and not has_table:
             problems.append(f"forbidden phrase in copy: {phrase!r}")
 
-    if pages < 5:
+    # A brief is deliberately short — a partner note, not a publication — so the
+    # floor that catches a truncated long-form document does not apply to it.
+    floor = 2 if doc.get("layout") == "brief" else 5
+    if pages < floor:
         problems.append(f"only {pages} pages")
 
     # The ordinal ramp separates at most six steps. Past that, two adjacent items

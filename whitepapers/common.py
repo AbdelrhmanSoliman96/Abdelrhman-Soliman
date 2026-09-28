@@ -142,10 +142,13 @@ ol li::marker {{ color: {B.ULTRAVIOLET}; font-weight: 700; }}
 .kv .k {{ flex: 0 0 52mm; font-weight: 700; font-size: 9.4pt; }}
 .kv .v {{ flex: 1; color: {B.INK_SECONDARY}; font-size: 9.4pt; }}
 
+/* A table may break between its rows, but never inside one, and its header
+   repeats on the continuation page. Forbidding the break outright pushes a long
+   table whole onto the next page and leaves half a page empty behind it. */
 table {{
   width: 100%; border-collapse: collapse; margin: 0 0 4mm 0; font-size: 9.2pt;
-  break-inside: avoid;
 }}
+thead {{ display: table-header-group; }}
 th {{
   text-align: left; font-weight: 700; font-size: 8pt; letter-spacing: .06em;
   text-transform: uppercase; color: {B.INK_SECONDARY};
@@ -248,6 +251,46 @@ figcaption .src {{ display: block; margin-top: 1mm; color: {B.INK_FAINT}; font-s
 
 .pb {{ break-before: page; page-break-before: always; }}
 .keep {{ break-inside: avoid; }}
+
+/* ------------------------------------------------------------ brief layout
+   A short partner note rather than a publication. It trades the full-bleed cover
+   and the closing About page for a masthead and a footer band, because on a
+   three-page document those two would be two thirds of it. */
+.masthead {{
+  border-top: 5px solid {B.ULTRAVIOLET}; padding-top: 4mm; margin-bottom: 6mm;
+}}
+.masthead .top {{
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 5mm;
+}}
+.masthead .top img {{ width: 32mm; }}
+.masthead .top span {{
+  font-size: 7.6pt; font-weight: 700; letter-spacing: .13em;
+  text-transform: uppercase; color: {B.INK_FAINT}; text-align: right;
+  line-height: 1.7;
+}}
+.masthead h1 {{
+  margin: 0; font-size: 26pt; line-height: 1.08; font-weight: 800;
+  letter-spacing: -0.022em; max-width: 152mm;
+}}
+.masthead .standfirst {{
+  margin-top: 3.5mm; font-size: 10.8pt; line-height: 1.5;
+  color: {B.INK_SECONDARY}; max-width: 152mm;
+}}
+
+.aboutbrief {{
+  margin-top: 4mm; border-top: 2px solid {B.INK}; padding-top: 3mm;
+  break-inside: avoid;
+}}
+.aboutbrief .row {{ display: flex; gap: 6mm; align-items: flex-start; }}
+.aboutbrief .row > div:first-child {{ flex: 0 0 34mm; }}
+.aboutbrief img {{ width: 34mm; display: block; }}
+.aboutbrief p {{ margin: 0; font-size: 8.4pt; line-height: 1.5; color: {B.INK_MUTED}; }}
+.aboutbrief b {{ color: {B.INK}; font-weight: 700; }}
+.aboutbrief .url {{
+  margin-top: 1.5mm; font-size: 11pt; font-weight: 800; color: {B.INK};
+  letter-spacing: -0.01em;
+}}
 
 /* --------------------------------------------------------- closing pages */
 .about {{ break-before: page; page-break-before: always; }}
@@ -476,15 +519,58 @@ def about_page(a):
 </section>"""
 
 
+def masthead(doc, a):
+    """The compact header a brief carries in place of a full-bleed cover."""
+    return f"""
+<section class="masthead">
+  <div class="top">
+    <img src="{a['logo_ink']}" alt="StartPad">
+    <span>{F.esc(doc['series'])} &middot; {F.esc(doc['number'])}<br>{F.esc(doc['cover_foot'])}</span>
+  </div>
+  <h1>{doc['title']}</h1>
+  <div class="standfirst">{doc['standfirst']}</div>
+</section>"""
+
+
+def about_brief(a):
+    """
+    The closing block a brief carries in place of the About StartPad page.
+
+    It makes the same three claims as the full page — what the platform is, what it
+    does, and that it does not take the work — at a size that does not consume a
+    third of a three-page document.
+    """
+    return f"""
+<section class="aboutbrief">
+  <div class="row">
+    <div><img src="{a['logo_ink']}" alt="StartPad"></div>
+    <div>
+      <p><b>About StartPad.</b> A founder-readiness platform for Egypt and the wider
+      MENA region. It takes a young person who has an idea and no company, moves them
+      through fifteen structured missions, and issues verifiable proof of the work.
+      Nothing submitted to a mission is taken from the person who submitted it: it is
+      sealed and timestamped to them, and the seal is the product.</p>
+      <div class="url">{B.URL}</div>
+    </div>
+  </div>
+</section>"""
+
+
 def document_html(doc):
     a = assets()
     body = render_blocks(doc["blocks"])
+    brief = doc.get("layout") == "brief"
+    head = masthead(doc, a) if brief else cover(doc, a)
+    tail = about_brief(a) if brief else about_page(a)
+    # A brief has no full-bleed first page, so the zero margin that suppresses the
+    # running foot under a cover must be put back for it.
+    extra = "@page :first { margin: 19mm 20mm 17mm 20mm; }" if brief else ""
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <title>{F.esc(doc['title'])}</title>
-<style>{stylesheet(a)}</style>
+<style>{stylesheet(a)}{extra}</style>
 </head><body>
-{cover(doc, a)}
+{head}
 <main>{body}</main>
-{about_page(a)}
+{tail}
 </body></html>"""
