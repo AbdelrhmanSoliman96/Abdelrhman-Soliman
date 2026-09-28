@@ -337,7 +337,7 @@ builders now go through the same helpers, and all 24 `.docx` in `output/` pass.
 
 Five guided toolkits a founder fills in, three mini whitepapers that each explain one
 thing, eight reports that read a framework from the brand book as an operating tool, and
-one partner review. **128 pages**, all English, all vector, built for the `/resources` page and for
+one partner review. **129 pages**, all English, all vector, built for the `/resources` page and for
 printing.
 
 | # | Document | Missions | Pages |
@@ -445,7 +445,7 @@ metadata reads as StartPad rather than as the browser that rendered it, that no
 forbidden phrase from the voice rules appears in the copy, that every report cites the
 book it derives from, and that no figure exceeds the ordinal ramp's step ceiling.
 
-    17 documents, 128 pages, 0 with problems
+    17 documents, 129 pages, 0 with problems
 
 ## Programme reviews
 
@@ -455,17 +455,17 @@ than published, so `PUBLIC` excludes them from the resources bundle.
 
 | # | Review | Source document | Pages |
 |---|---|---|---|
-| RV 01 | Half the Rubric Has No Mission | Entrepreneurship Camp Learner Journey, GrowthLabs × Cognify Academy, Sept 2026 | 1 |
+| RV 01 | The Camp, Matched to the Missions | Entrepreneurship Camp Learner Journey, GrowthLabs × Cognify Academy, Sept 2026 | 2 |
 
-Alignment between the camp's content and the platform's mission sequence, day by day.
-The sequencing is right — teaching order was bent so missions unlock in order — but
-the two cover different content: **four of the seven Bazaar criteria, 50% of the
-score, measure work no mission has a field for** (finance, branding, pitch delivery,
-Q&A), two missions ask for work the camp has not taught yet, and two hand students a
-different tool from the one taught in class hours earlier — mission 05 scores
-solutions on value × *impact* where the camp teaches value × *effort*. Every claim is
-checked against the pack and against `startpad/missions.py`, including the mission
-titles and the questions each mission actually asks.
+A match rather than an argument: each of the camp's twenty deliverables against the
+mission that receives it and the questions that mission actually asks. **Seven match
+directly, four match with a divergence, five have no mission at all** (the financial
+plan, the brand kit, the deck, the pitch and the Q&A card — between them 50% of the
+Bazaar rubric), and four are camp-only by design. Two new missions — Costs and
+Pricing after 08, Brand and Pitch after 10 — close all five from artefacts students
+already make in class. Every row is checked against the pack's per-day deliverable
+list and against `startpad/missions.py`, so the counts in the opening paragraph are
+countable from the table below them.
 
 It ships as **PDF and Word**, both rendered from the same `DOC` dictionary by
 `build_whitepapers.py` and `build_review_docx.py`, so the words cannot drift between

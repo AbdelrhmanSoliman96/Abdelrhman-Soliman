@@ -1,79 +1,124 @@
 """
-Review 01 — where the camp content and the platform journey do not line up.
+Review 01 — the camp's content matched to the StartPad missions.
 
-A one-page partner note, not a published founder resource. It stays out of the public
+A partner note, not a published founder resource. It stays out of the public
 resources bundle and is addressed to GrowthLabs, Cognify Academy and the host
 university.
 
-Scope is deliberately narrow: content and journey only. Every claim is checked
-against the camp's design pack and `startpad/missions.py` — the mission titles, the
-questions each mission actually asks, and the Bazaar rubric's published weights.
-
-It is written to one page, which is a hard constraint rather than a style: the
-content below was cut to fit it, and anything added has to displace something.
+It is a map rather than an argument: every deliverable the camp's design pack lists,
+against the mission that receives it and the questions that mission actually asks.
+Checked against `startpad/missions.py` — titles and question sets — and against the
+pack's own per-day deliverable list, so the counts at the top are countable from the
+table below them.
 """
 
 PACK = "Entrepreneurship Camp Learner Journey, GrowthLabs Group × Cognify Academy, September 2026"
 
 DOC = {
     "slug": "rv01-camp-integration",
-    "file": "StartPad_Review_01_Content_Journey_Gap",
+    "file": "StartPad_Review_01_Content_Match",
     "kind": "review",
     "layout": "brief",
-    # A hard limit, enforced by scripts/check_pdfs.py: anything added here has to
-    # displace something, or the build fails.
-    "max_pages": 1,
+    "max_pages": 2,
     "series": "StartPad Programme Review",
     "number": "No. 01",
-    "title": "Half the Rubric Has No Mission",
-    "standfirst": "Where the camp's content and the platform's journey part company — "
-                  "and the three changes that close it.",
-    "standfirst_plain": "Content and journey alignment between the Future Founders "
-                        "camp and the StartPad mission sequence.",
+    "title": "The Camp, Matched to the Missions",
+    "standfirst": "Every deliverable the camp produces, against the mission that "
+                  "receives it — and what to do about the four that have nowhere to go.",
+    "standfirst_plain": "Each Future Founders camp deliverable matched to the "
+                        "StartPad mission that receives it.",
     "cover_foot": "For GrowthLabs, Cognify Academy and the university",
-    "keywords": ["curriculum alignment", "StartPad missions", "entrepreneurship "
+    "keywords": ["curriculum mapping", "StartPad missions", "entrepreneurship "
                  "education", "camp content", "GrowthLabs"],
     "missions": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     "blocks": [
 
-        ("p", "The sequencing is right — teaching order was bent so missions unlock "
-              "in order. The problem is content, not order. Four of the seven Bazaar "
-              "criteria, <b>50% of the score</b>, measure work no mission has a field "
-              "for; two missions ask for work the camp has not taught yet; and two "
-              "hand students a different tool from the one they were given in class "
-              "three hours earlier."),
+        ("p", "The camp's twenty deliverables were matched one by one to the fifteen "
+              "missions and to the questions each mission actually asks. <b>Seven "
+              "match directly</b> and need nothing. <b>Four match with a "
+              "divergence</b> the facilitator should know about before Day 1. "
+              "<b>Five have no mission and should</b> — between them they are 50% "
+              "of the Bazaar rubric. The remaining four are camp-only by design and "
+              "need no mission at all."),
 
-        ("table", ["Day", "What the camp produces", "Missions", "Where content and journey part"], [
-            ["1", "Impact × Frequency matrix, persona", "01–03",
-             "We call the same matrix <b>Importance</b>/Frequency. Mission 01 also asks what solutions exist and their limits — competitor work the camp never teaches."],
-            ["2", "Problem statement, solution on value × <b>effort</b>, value proposition, test plan", "04–06, 07",
-             "Mission 05 scores solutions on value × <b>impact</b> — a different axis, the same evening. Mission 06 wants 3–5 product features; product work is Day 4."],
-            ["3", "Unit cost, price, margin, break-even", "08",
-             "<b>No mission records finance.</b> The canvas has one Revenue Streams box. Four hours and 15% of the rubric land nowhere."],
-            ["4", "Prototype, user test, brand kit", "09–10",
-             "<b>No mission records branding</b> — an hour of Day 4 and 10% of the rubric. Mission 09 asks what technology stack was used, of students building in cardboard."],
-            ["5", "Pitch deck, rehearsed pitch, Q&amp;A", "catch-up only",
-             "<b>No mission records the pitch.</b> A whole day and 25% of the rubric: the largest gap in the map."],
+        ("table", ["Day", "What the camp produces", "Mission", "What that mission asks for", "Match"], [
+            ["1", "Problem cards", "01 Problem Analysis",
+             "Area, the problem, who is affected, what solutions exist and their limits", "Partial"],
+            ["1", "Chosen problem on Impact × Frequency", "03 Importance/Frequency Matrix",
+             "Three problems, each scored for importance and frequency", "Direct"],
+            ["1", "First persona", "02 Problem Definition",
+             "Primary user, characteristics, the problem, when and where, how often", "Direct"],
+            ["1", "Team charter", "—", "Roles and working rules stay in the workbook", "Camp only"],
+            ["2", "Interview log", "—",
+             "Feeds mission 04; no mission stores the interviews themselves", "Camp only"],
+            ["2", "Testable problem statement", "04 Problem Statements",
+             "The statement, who faces it, its impact, how success is measured", "Direct"],
+            ["2", "Chosen solution, value × effort", "05 Idea Selection",
+             "Three ideas, each scored for value and <b>impact</b>", "Partial"],
+            ["2", "Value proposition", "06 Idea Description",
+             "Value proposition, 3–5 key features, benefits, differentiation, assumptions", "Partial"],
+            ["2", "Assumption test plan", "07 Solution Hypothesis Test",
+             "The hypothesis, how it will be tested, what would prove it", "Direct"],
+            ["3", "Test verdict", "07 Solution Hypothesis Test",
+             "Test results and what was learned — the same mission, finished", "Direct"],
+            ["3", "Simplified Business Model Canvas", "08 Business Model Canvas",
+             "Value propositions, segments, channels, relationships, revenue, resources", "Direct"],
+            ["3", "One-page financial plan", "<b>none</b>",
+             "Unit cost, price, margin and break-even have no field anywhere in the fifteen", "<b>Missing</b>"],
+            ["4", "Prototype", "09 Build Prototype",
+             "Type of prototype, features, user flows, <b>tools and technology used</b>", "Partial"],
+            ["4", "User-test notes", "10 Solution Hypothesis Test (Prototype)",
+             "How many tested it, how, key findings, feedback, improvements", "Direct"],
+            ["4", "Brand kit", "<b>none</b>",
+             "Name, logo, colours and tagline have no mission", "<b>Missing</b>"],
+            ["5", "Pitch deck", "<b>none</b>", "No mission records a deck", "<b>Missing</b>"],
+            ["5", "Rehearsed pitch", "<b>none</b>",
+             "No mission records the pitch itself", "<b>Missing</b>"],
+            ["5", "Q&amp;A card", "<b>none</b>",
+             "No mission records the three prepared answers", "<b>Missing</b>"],
+            ["6", "Public pitch", "—", "The Bazaar itself; judged live", "Camp only"],
+            ["6", "Booth", "—", "Built and judged on the day, nothing to store", "Camp only"],
         ]),
+
+        ("h2", "The four partial matches, and what to tell facilitators"),
+
+        ("table", ["Deliverable", "The divergence", "What to say on the day"], [
+            ["Problem cards → 01",
+             "Mission 01 also asks what solutions already exist and their limits. The camp does not teach competitor work.",
+             "Answer from what you already know; you will revisit it after the interviews."],
+            ["Chosen solution → 05",
+             "The camp plots value × <b>effort</b>. Mission 05 asks for value and <b>impact</b> scores.",
+             "Give your value score; for impact, use how much it would help the person you interviewed."],
+            ["Value proposition → 06",
+             "Mission 06 asks for 3–5 key features. Product work is Day 4.",
+             "Write what the thing would do, not how it is built. You will revise it after the prototype."],
+            ["Prototype → 09",
+             "Mission 09 asks what tools and technology were used, of students building with paper and card.",
+             "Cardboard, paper and scissors is a complete answer to that question."],
+        ]),
+
+        ("h2", "Closing the five that are missing"),
 
         ("num", [
-            ("01", "Add the two missions the camp already does the work for",
-             "<b>Costs and Pricing</b> after mission 08, <b>Brand and Pitch</b> after "
-             "10. Both fill from artefacts made in class, so neither adds homework, "
-             "and together they take the unrecorded half of the rubric to nothing."),
-            ("02", "Change mission 05 from value × impact to value × effort",
-             "The camp's axis is the better one: a fifteen-year-old can estimate "
-             "effort and cannot estimate impact before collecting the evidence."),
-            ("03", "Move the competitor questions from mission 01 to mission 04",
-             "On night one they are guesswork. After the interviews they are "
-             "answerable, and the camp has taught something to answer them with."),
+            ("01", "Add a Costs and Pricing mission after 08",
+             "Unit cost, price with its justification, margin and break-even — the "
+             "exact artefacts Day 3 already produces. It also fills a hole we have "
+             "outside this camp: there is no finance mission anywhere in the fifteen."),
+            ("02", "Add a Brand and Pitch mission after 10",
+             "Name, logo, tagline, the deck outline and the three Q&amp;A answers — "
+             "four of the five missing deliverables in one mission. Day 4 and Day 5 "
+             "already produce all of it, so neither mission adds homework."),
+            ("03", "Adopt the pack's mission names",
+             "Seven of the ten titles in the pack are not what a student sees on "
+             "screen, and the pack's are clearer — adopting them also fixes our own "
+             "collision, where 07 and 10 both read as “Solution Hypothesis Test”."),
         ]),
 
-        ("note", "Also: seven of the ten mission titles in the pack are not what a "
-                 "student sees on screen, and the pack's are clearer. Missions 11–15 "
-                 "are never taught, and two do not fit this age as written. Checked "
-                 "against the <b>Entrepreneurship Camp Learner Journey</b> pack, "
-                 "September 2026, and our own mission and question list; the 50% is "
-                 "the published Bazaar weights for finance, brand, pitch and Q&amp;A."),
+        ("note", "Matched against the <b>Entrepreneurship Camp Learner Journey</b> "
+                 "pack, September 2026, and our own mission titles and question sets. "
+                 "The twenty deliverables are the pack's own per-day lists. The 50% is "
+                 "the published Bazaar weights for business and finance logic, brand "
+                 "and booth, pitch delivery, and Q&amp;A. Missions 11–15 sit outside "
+                 "the camp and are not matched here."),
     ],
 }
