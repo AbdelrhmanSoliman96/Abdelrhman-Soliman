@@ -133,8 +133,11 @@ ol li::marker {{ color: {B.ULTRAVIOLET}; font-weight: 700; }}
   line-height: 1.1; letter-spacing: -0.03em;
 }}
 .numlist .b {{ flex: 1; }}
-.numlist .b b {{ display: block; font-weight: 700; margin-bottom: 0.6mm; }}
+/* Direct child only: a <b> inside the description is emphasis within a sentence,
+   and turning it into a block puts it on a line of its own. */
+.numlist .b > b {{ display: block; font-weight: 700; margin-bottom: 0.6mm; }}
 .numlist .b span {{ color: {B.INK_SECONDARY}; }}
+.numlist .b span b {{ color: {B.INK}; font-weight: 700; }}
 
 .kv {{ margin: 0 0 4mm 0; border-top: 1px solid {B.HAIRLINE}; }}
 .kv .row {{ display: flex; gap: 6mm; padding: 2.2mm 0; border-bottom: 1px solid {B.HAIRLINE};
@@ -282,14 +285,14 @@ figcaption .src {{ display: block; margin-top: 1mm; color: {B.INK_FAINT}; font-s
   margin-top: 4mm; border-top: 2px solid {B.INK}; padding-top: 3mm;
   break-inside: avoid;
 }}
-.aboutbrief .row {{ display: flex; gap: 6mm; align-items: flex-start; }}
-.aboutbrief .row > div:first-child {{ flex: 0 0 34mm; }}
-.aboutbrief img {{ width: 34mm; display: block; }}
-.aboutbrief p {{ margin: 0; font-size: 8.4pt; line-height: 1.5; color: {B.INK_MUTED}; }}
+.aboutbrief .row {{ display: flex; gap: 6mm; align-items: center; }}
+.aboutbrief .row > div:first-child {{ flex: 0 0 30mm; }}
+.aboutbrief img {{ width: 30mm; display: block; }}
+.aboutbrief p {{ margin: 0; font-size: 8.4pt; line-height: 1.45; color: {B.INK_MUTED}; }}
 .aboutbrief b {{ color: {B.INK}; font-weight: 700; }}
 .aboutbrief .url {{
-  margin-top: 1.5mm; font-size: 11pt; font-weight: 800; color: {B.INK};
-  letter-spacing: -0.01em;
+  flex: 0 0 auto; font-size: 11pt; font-weight: 800; color: {B.INK};
+  letter-spacing: -0.01em; white-space: nowrap;
 }}
 
 /* --------------------------------------------------------- closing pages */
@@ -519,6 +522,35 @@ def about_page(a):
 </section>"""
 
 
+# Applied on top of the main stylesheet for briefs only. Body stays at 9.4pt, which
+# is an ordinary reading size in print; nothing here drops type below what a memo
+# would normally be set in.
+BRIEF_DENSITY = f"""
+@page {{ margin: 15mm 17mm 14mm 17mm; }}
+@page :first {{ margin: 15mm 17mm 14mm 17mm; }}
+body {{ font-size: 9.4pt; line-height: 1.5; }}
+.masthead {{ border-top-width: 4px; padding-top: 3mm; margin-bottom: 4.5mm; }}
+.masthead .top {{ margin-bottom: 3.5mm; }}
+.masthead .top img {{ width: 27mm; }}
+.masthead h1 {{ font-size: 20pt; }}
+.masthead .standfirst {{ font-size: 9.6pt; margin-top: 2.5mm; max-width: 170mm; }}
+p {{ margin-bottom: 2.6mm; max-width: 176mm; }}
+h2 {{ font-size: 12pt; margin: 4.5mm 0 2mm 0; }}
+table {{ font-size: 8.5pt; margin-bottom: 3mm; }}
+th {{ font-size: 7.4pt; padding: 1.4mm 2.5mm 1.2mm 0; }}
+td {{ padding: 1.6mm 2.5mm 1.6mm 0; }}
+.numlist .row {{ margin-bottom: 2.4mm; gap: 4mm; }}
+.numlist .n {{ flex-basis: 7mm; font-size: 13pt; }}
+.numlist .b {{ font-size: 8.8pt; }}
+.note {{ font-size: 7.9pt; padding-top: 1.6mm; margin-bottom: 0; }}
+.callout {{ padding: 3mm 4mm; margin-bottom: 3mm; }}
+.aboutbrief {{ margin-top: 3.5mm; padding-top: 2.5mm; }}
+.aboutbrief p {{ font-size: 7.9pt; line-height: 1.45; }}
+.aboutbrief img {{ width: 30mm; }}
+.aboutbrief .url {{ font-size: 10pt; }}
+"""
+
+
 def masthead(doc, a):
     """The compact header a brief carries in place of a full-bleed cover."""
     return f"""
@@ -536,22 +568,21 @@ def about_brief(a):
     """
     The closing block a brief carries in place of the About StartPad page.
 
-    It makes the same three claims as the full page — what the platform is, what it
-    does, and that it does not take the work — at a size that does not consume a
-    third of a three-page document.
+    It keeps the three claims the full page makes — what the platform is, what it
+    does, and that it does not take the work — compressed to a footer band, because
+    on a one-page note the full page would be the note.
     """
     return f"""
 <section class="aboutbrief">
   <div class="row">
     <div><img src="{a['logo_ink']}" alt="StartPad"></div>
     <div>
-      <p><b>About StartPad.</b> A founder-readiness platform for Egypt and the wider
-      MENA region. It takes a young person who has an idea and no company, moves them
-      through fifteen structured missions, and issues verifiable proof of the work.
-      Nothing submitted to a mission is taken from the person who submitted it: it is
-      sealed and timestamped to them, and the seal is the product.</p>
-      <div class="url">{B.URL}</div>
+      <p><b>StartPad</b> is a founder-readiness platform for Egypt and MENA. It moves a
+      young person with an idea and no company through fifteen structured missions and
+      issues verifiable proof of the work. Nothing submitted is taken from the person
+      who submitted it — it is sealed and timestamped to them.</p>
     </div>
+    <div class="url">{B.URL}</div>
   </div>
 </section>"""
 
@@ -563,8 +594,11 @@ def document_html(doc):
     head = masthead(doc, a) if brief else cover(doc, a)
     tail = about_brief(a) if brief else about_page(a)
     # A brief has no full-bleed first page, so the zero margin that suppresses the
-    # running foot under a cover must be put back for it.
-    extra = "@page :first { margin: 19mm 20mm 17mm 20mm; }" if brief else ""
+    # running foot under a cover has to be put back for it. It is also set tighter
+    # than a publication throughout: a partner note is read once, at a desk, and the
+    # generosity that makes a sixteen-page toolkit pleasant costs a one-page note the
+    # page it has to fit on.
+    extra = BRIEF_DENSITY if brief else ""
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <title>{F.esc(doc['title'])}</title>

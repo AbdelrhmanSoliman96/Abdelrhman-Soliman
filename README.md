@@ -337,7 +337,7 @@ builders now go through the same helpers, and all 24 `.docx` in `output/` pass.
 
 Five guided toolkits a founder fills in, three mini whitepapers that each explain one
 thing, eight reports that read a framework from the brand book as an operating tool, and
-one partner review. **130 pages**, all English, all vector, built for the `/resources` page and for
+one partner review. **128 pages**, all English, all vector, built for the `/resources` page and for
 printing.
 
 | # | Document | Missions | Pages |
@@ -445,7 +445,7 @@ metadata reads as StartPad rather than as the browser that rendered it, that no
 forbidden phrase from the voice rules appears in the copy, that every report cites the
 book it derives from, and that no figure exceeds the ordinal ramp's step ceiling.
 
-    17 documents, 130 pages, 0 with problems
+    17 documents, 128 pages, 0 with problems
 
 ## Programme reviews
 
@@ -455,22 +455,28 @@ than published, so `PUBLIC` excludes them from the resources bundle.
 
 | # | Review | Source document | Pages |
 |---|---|---|---|
-| RV 01 | Two Ideas, One Fortnight | Entrepreneurship Camp Learner Journey, GrowthLabs × Cognify Academy, Sept 2026 | 3 |
+| RV 01 | Half the Rubric Has No Mission | Entrepreneurship Camp Learner Journey, GrowthLabs × Cognify Academy, Sept 2026 | 1 |
 
-Feedback on the Future Founders camp and its StartPad integration, written against the
-delivery plan rather than the pack alone: the platform is open for **one month** and
-**every student gets their own account**, which is better than the pack's shared team
-account and moves the problem rather than removing it. The collision it creates — a
-team venture and a personal idea competing for the same fortnight — is the subject,
-with six things to settle before Day 1. Every figure is from the pack or checked
-against `startpad/missions.py`, including the finding that **seven of the ten mission
-names in the pack do not match what a student will see on screen**, and that the
-pack's names are the better ones, so the product should adopt them.
+Alignment between the camp's content and the platform's mission sequence, day by day.
+The sequencing is right — teaching order was bent so missions unlock in order — but
+the two cover different content: **four of the seven Bazaar criteria, 50% of the
+score, measure work no mission has a field for** (finance, branding, pitch delivery,
+Q&A), two missions ask for work the camp has not taught yet, and two hand students a
+different tool from the one taught in class hours earlier — mission 05 scores
+solutions on value × *impact* where the camp teaches value × *effort*. Every claim is
+checked against the pack and against `startpad/missions.py`, including the mission
+titles and the questions each mission actually asks.
 
-It uses a **brief layout**: a masthead instead of a full-bleed cover and a closing
-band instead of the About StartPad page, because on a three-page document those two
-would be two thirds of it. `check_pdfs.py` knows the difference — a brief may be
-short, and names its source in the text rather than carrying a citation panel.
+It ships as **PDF and Word**, both rendered from the same `DOC` dictionary by
+`build_whitepapers.py` and `build_review_docx.py`, so the words cannot drift between
+the two formats.
+
+It uses a **brief layout**: a masthead instead of a full-bleed cover, a footer band
+instead of the About StartPad page, and denser type throughout — a partner note is
+read once at a desk, and the generosity that makes a sixteen-page toolkit pleasant
+costs a one-page note the page it has to fit on. `max_pages` in the document makes the
+length a build gate: `check_pdfs.py` fails if a brief grows past the page count it was
+written to, so anything added has to displace something.
 
 Writing it narrowed one voice rule: `unlock` was on the forbidden list as marketing
 jargon, but it is also the platform's real mechanic — missions unlock in order, which

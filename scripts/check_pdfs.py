@@ -97,10 +97,15 @@ def check(doc):
         if phrase.lower() in low and not has_table:
             problems.append(f"forbidden phrase in copy: {phrase!r}")
 
-    # A brief is deliberately short — a partner note, not a publication — so the
-    # floor that catches a truncated long-form document does not apply to it.
-    floor = 2 if doc.get("layout") == "brief" else 5
-    if pages < floor:
+    # A brief is deliberately short — a partner note, not a publication — and may be
+    # a single page, so the floor that catches a truncated long-form document does
+    # not apply to it. What matters for a brief is the opposite: that it did not
+    # silently grow past the page count it was written to.
+    if doc.get("layout") == "brief":
+        cap = doc.get("max_pages")
+        if cap and pages > cap:
+            problems.append(f"{pages} pages, written to fit {cap}")
+    elif pages < 5:
         problems.append(f"only {pages} pages")
 
     # The ordinal ramp separates at most six steps. Past that, two adjacent items

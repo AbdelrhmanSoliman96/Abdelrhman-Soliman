@@ -163,3 +163,37 @@ def tr_height(row, cm, rule="atLeast"):
 
 def sect_rtl(section):
     insert_ordered(section._sectPr, "w:bidi", SECTPR, {"w:val": "1"})
+
+
+def para_border_top(paragraph, color="0B0E14", sz=12):
+    """
+    A rule above a paragraph, used as a masthead or footer band.
+
+    `w:pBdr` sits early in the paragraph-property sequence — before `w:spacing`
+    and `w:jc` — so it goes in through insert_ordered like everything else.
+    """
+    pbdr = insert_ordered(paragraph._p.get_or_add_pPr(), "w:pBdr", PPR)
+    for child in list(pbdr):
+        pbdr.remove(child)
+    top = OxmlElement("w:top")
+    top.set(qn("w:val"), "single")
+    top.set(qn("w:sz"), str(sz))
+    top.set(qn("w:space"), "2")
+    top.set(qn("w:color"), color)
+    pbdr.append(top)
+    return pbdr
+
+
+def tc_borders_bottom(cell, color="E2E4EA", sz=6):
+    """A single rule under a table cell, for a header row or a row separator."""
+    borders = insert_ordered(cell._tc.get_or_add_tcPr(), "w:tcBorders", TCPR)
+    for child in list(borders):
+        if child.tag == qn("w:bottom"):
+            borders.remove(child)
+    bottom = OxmlElement("w:bottom")
+    bottom.set(qn("w:val"), "single")
+    bottom.set(qn("w:sz"), str(sz))
+    bottom.set(qn("w:space"), "0")
+    bottom.set(qn("w:color"), color)
+    borders.append(bottom)
+    return borders
