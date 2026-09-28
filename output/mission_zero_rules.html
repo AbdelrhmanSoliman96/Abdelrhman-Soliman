@@ -1,0 +1,157 @@
+<title>Mission Zero Rulebook</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Sora:wght@600;700&family=Karla:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --plum:#3B1B4D; --plum-deep:#2A1238; --citron:#C9E23F; --citron-ink:#5C6B12;
+  --ground:#FBFAFC; --panel:#F2EFF5; --ink:#1A1220; --body:#3B3244;
+  --muted:#6E6478; --rule:#E2DCE8; --rule-soft:#EFEAF3;
+  --link:#6A2E8C; --warn:#9A5B12; --warn-wash:#F8EEDF;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --plum:#2B1338; --plum-deep:#1C0C26; --citron:#C9E23F; --citron-ink:#D7EC6B;
+  --ground:#151019; --panel:#1E1725; --ink:#F2EDF6; --body:#CFC6D6;
+  --muted:#958BA0; --rule:#2E2537; --rule-soft:#221B2A;
+  --link:#D0A6E6; --warn:#DDA85C; --warn-wash:#2A1F10;
+}}
+:root[data-theme="dark"]{
+  --plum:#2B1338; --plum-deep:#1C0C26; --citron:#C9E23F; --citron-ink:#D7EC6B;
+  --ground:#151019; --panel:#1E1725; --ink:#F2EDF6; --body:#CFC6D6;
+  --muted:#958BA0; --rule:#2E2537; --rule-soft:#221B2A;
+  --link:#D0A6E6; --warn:#DDA85C; --warn-wash:#2A1F10;
+}
+
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--body);
+  font-family:"Karla","Cairo",system-ui,sans-serif;font-size:17px;line-height:1.65;
+  -webkit-font-smoothing:antialiased}
+[dir="rtl"]{font-family:"Cairo",system-ui,sans-serif;line-height:1.95}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:20;background:var(--plum);
+  border-bottom:1px solid rgba(201,226,63,.28)}
+.bar-in{max-width:46rem;margin:0 auto;padding:.6rem 1.15rem;display:flex;
+  align-items:center;justify-content:space-between;gap:.8rem}
+.bar .mark{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--citron)}
+.langbtn{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.08em;
+  padding:.32rem .7rem;border-radius:100px;cursor:pointer;
+  border:1px solid rgba(201,226,63,.5);background:transparent;color:#F3EFF7}
+.langbtn:hover{background:rgba(201,226,63,.14)}
+.langbtn:focus-visible{outline:2px solid var(--citron);outline-offset:2px}
+
+/* hero */
+.hero{background:var(--plum);color:#F4F0F8;padding:3rem 1.15rem 2.6rem}
+.hero>*{max-width:46rem;margin-inline:auto}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--citron);margin:0 0 1rem}
+[dir="rtl"] .eyebrow{font-family:"Cairo",sans-serif;letter-spacing:0;font-size:.82rem}
+.hero h1{font-family:"Sora",system-ui,sans-serif;font-weight:700;
+  font-size:clamp(2.6rem,10vw,4.2rem);line-height:.98;letter-spacing:-.03em;
+  margin:0 0 .5rem;color:#fff}
+[dir="rtl"] .hero h1{font-family:"Cairo",sans-serif;font-weight:700;line-height:1.2;
+  letter-spacing:0;font-size:clamp(2.3rem,9vw,3.6rem)}
+.tagline{font-size:1.08rem;color:var(--citron);margin:0 0 1.5rem;font-weight:600}
+.sub{font-size:1.12rem;color:#E4DCEC;margin:0 0 1.5rem;max-width:34rem}
+.points{list-style:none;padding:0;margin:0 0 1.9rem;max-width:36rem;display:grid;
+  gap:.7rem}
+.points li{position:relative;padding-inline-start:1.5rem;font-size:1rem;color:#EDE7F2}
+.points li::before{content:"";position:absolute;inset-inline-start:0;top:.62em;
+  width:.62rem;height:.62rem;background:var(--citron);border-radius:2px}
+.cta{display:inline-block;background:var(--citron);color:#2A3305;font-weight:700;
+  font-size:1.02rem;padding:.75rem 1.9rem;border-radius:100px;text-decoration:none;
+  font-family:inherit}
+.cta:hover{background:#D8EE5C}
+.cta:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.reassure{margin:1.2rem 0 0;font-size:.93rem;color:#C9BDD4;max-width:34rem}
+
+/* document */
+.doc{max-width:46rem;margin:0 auto;padding:2.4rem 1.15rem 4.5rem}
+.stamp{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.08em;
+  color:var(--muted);margin:0 0 2rem;text-transform:uppercase}
+[dir="rtl"] .stamp{font-family:"Cairo",sans-serif;letter-spacing:0;text-transform:none;
+  font-size:.82rem}
+h2{font-family:"Sora",system-ui,sans-serif;font-weight:600;font-size:1.3rem;
+  line-height:1.3;color:var(--ink);margin:2.6rem 0 .6rem;padding-top:1.2rem;
+  border-top:1px solid var(--rule);text-wrap:balance;position:relative}
+h2::after{content:"";position:absolute;top:-1px;inset-inline-start:0;width:2.4rem;
+  height:2px;background:var(--citron)}
+[dir="rtl"] h2{font-family:"Cairo",sans-serif;font-weight:700;line-height:1.6;
+  font-size:1.35rem}
+.doc p{margin:0 0 1rem}
+ul,ol{margin:0 0 1.2rem;padding-inline-start:1.3rem}
+li{margin-bottom:.5rem}
+li::marker{color:var(--link);font-weight:600}
+b,strong{color:var(--ink)}
+
+/* schedule */
+.cal{list-style:none;padding:0;margin:.4rem 0 1.6rem;
+  border-top:1px solid var(--rule-soft)}
+.cal li{display:grid;grid-template-columns:7.5rem minmax(0,1fr);gap:0 1rem;
+  padding:.75rem 0;border-bottom:1px solid var(--rule-soft);margin:0}
+.cal .when{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--link);
+  font-weight:500;padding-top:.12rem}
+[dir="rtl"] .cal .when{font-family:"Cairo",sans-serif;font-size:.92rem}
+.cal .what b{display:block;color:var(--ink);font-weight:600}
+.cal .what em{font-style:normal;font-size:.92rem;color:var(--muted)}
+
+/* tables */
+.tw{overflow-x:auto;margin:.6rem 0 1.6rem;border:1px solid var(--rule);
+  border-radius:4px}
+table{border-collapse:collapse;width:100%;font-size:.93rem;min-width:30rem}
+th,td{text-align:start;padding:.62rem .8rem;border-bottom:1px solid var(--rule-soft);
+  vertical-align:top}
+thead th{background:var(--panel);font-family:"IBM Plex Mono",monospace;font-size:.66rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
+[dir="rtl"] thead th{font-family:"Cairo",sans-serif;letter-spacing:0;
+  text-transform:none;font-size:.85rem;font-weight:600}
+tbody tr:last-child td{border-bottom:0}
+tbody td:first-child{color:var(--ink);font-weight:600}
+
+.todo{background:var(--warn-wash);color:var(--warn);padding:.05em .35em;
+  border-radius:2px;border-bottom:1px dashed var(--warn);font-weight:600}
+
+[data-lang-block][hidden]{display:none!important}
+
+@media (max-width:560px){
+  body{font-size:16px}
+  .cal li{grid-template-columns:minmax(0,1fr);gap:.15rem}
+  .hero{padding:2.2rem 1.15rem 2.2rem}
+}
+@media print{.bar{display:none}[data-lang-block]{display:block!important}
+  .hero{background:none;color:#000}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="bar">
+  <div class="bar-in">
+    <span class="mark">Mission Zero &nbsp;×&nbsp; Techne</span>
+    <div role="group" aria-label="Language">
+      <button class="langbtn" type="button" data-set="ar" aria-pressed="true">العربية</button>
+      <button class="langbtn" type="button" data-set="en" aria-pressed="false">English</button>
+    </div>
+  </div>
+</header>
+
+<div class="page" dir="rtl" lang="ar" data-lang-block="ar"><section class="hero"><p class="eyebrow">بالشراكة مع تكني سميت الإسكندرية</p><h1>المهمة صفر</h1><p class="tagline">من فكرة… إلى شركة قابلة للاستثمار في شهر واحد</p><p class="sub">تحدٍّ وطني لرواد الأعمال الشباب: أكمل مهام StartPad الخمس عشرة في شهر، واصعد على المسرح.</p><ul class="points"><li>١٥ مهمة موجَّهة تنقلك من «عندي فكرة» إلى «عندي دليل».</li><li>أكثر من ١٢٠ أداة، وتقييم يقيس ما أثبتّه لا ما تظنّه.</li><li>جوائز بقيمة ١٠٠,٠٠٠ جنيه، ومقعد احتضان، ودخول مضمون لمسار المنافسة في تكني سميت 2027.</li></ul><a class="cta" href="https://startpad.me/" target="_blank" rel="noopener">سجّل مجانًا</a><p class="reassure">المشاركة مجانية. فكرتك تظل ملكك. ولا يختار الفائزين برنامج آلي.</p></section><main class="doc"><p class="stamp">قواعد المسابقة ومعايير التقييم &nbsp;·&nbsp; الإصدار 1.0 — 13 سبتمبر 2026</p><h2>ما هي المهمة صفر</h2><p>«المهمة صفر» تحدٍّ وطني مفتوح لرواد الأعمال الشباب في مصر. المشاركة فيه ليست بعرض تقديمي، بل بإنجاز: تُكمل مهام منصة StartPad الخمس عشرة خلال شهر واحد، من تحليل المشكلة حتى الانطلاق إلى السوق. من يُكملها جميعًا يدخل التقييم، وأفضل عشرة يعرضون مشاريعهم أمام لجنة تحكيم في يوم العرض النهائي.</p><p>أُطلق التحدي من على مسرح تكني سميت الإسكندرية، وتنظّمه StartPad التابعة لمجموعة GrowthLabs.</p><h2>التواريخ</h2><ol class="cal"><li><span class="when">21 سبتمبر</span><span class="what"><b>فتح التسجيل</b><em>التسجيل مجاني عبر startpad.me</em></span></li><li><span class="when">3–5 أكتوبر</span><span class="what"><b>الإطلاق من الإسكندرية</b><em>جناح التحدي طوال أيام القمة، وورشة «المهمة الأولى مباشرة»</em></span></li><li><span class="when">4 أكتوبر</span><span class="what"><b>بدء المهام</b><em>تُفتح المهام الخمس عشرة لجميع المسجَّلين</em></span></li><li><span class="when">4 نوفمبر</span><span class="what"><b>الموعد النهائي للتسليم</b><em>11:59 مساءً بتوقيت القاهرة — لا تمديد</em></span></li><li><span class="when">5–12 نوفمبر</span><span class="what"><b>التقييم</b><em>فرز آلي، ثم لجنة بشرية، ثم تحقق هاتفي</em></span></li><li><span class="when">أواخر نوفمبر</span><span class="what"><b>يوم العرض والجوائز</b><em>عشرة عروض، وثلاثة فائزين</em></span></li></ol><h2>من يحق له المشاركة</h2><div class="tw"><table><thead><tr><th>الشرط</th><th>التفصيل</th></tr></thead><tbody><tr><td>العمر</td><td>من 18 إلى 30 عامًا في تاريخ إغلاق التسجيل</td></tr><tr><td>الإقامة</td><td>مقيم في جمهورية مصر العربية</td></tr><tr><td>الفريق</td><td>من فرد واحد إلى أربعة، مع قائد واحد مُسمّى يملك الحساب</td></tr><tr><td>مرحلة المشروع</td><td>بدون شركة مسجَّلة، وبدون تمويل خارجي، وبدون إيرادات — هذا تحدٍّ لمن لم يبدأ بعد</td></tr><tr><td>عدد المشاركات</td><td>مشاركة واحدة لكل شخص</td></tr><tr><td>رسوم الاشتراك</td><td>لا توجد. المشاركة مجانية بالكامل</td></tr></tbody></table></div><p>لا يحق المشاركة لموظفي StartPad وGrowthLabs وتكني وأفراد أسرهم المباشرين، ولا لأعضاء لجنة التحكيم.</p><h2>كيف تشارك</h2><ol><li>سجّل عبر startpad.me — بريد إلكتروني ورقم هاتف وبيانات أساسية.</li><li>أنشئ حسابك وابدأ المهمة الأولى.</li><li>أكمل المهام الخمس عشرة قبل الموعد النهائي.</li><li>اضغط «تسليم نهائي». لا تُقيَّم المشاركة قبل التسليم، حتى لو اكتملت المهام.</li></ol><h2>الشهر: أربعة أسابيع</h2><div class="tw"><table><thead><tr><th>الأسبوع</th><th>المهام</th><th>نقطة المراجعة</th><th>الجلسة المباشرة</th></tr></thead><tbody><tr><td>الأول<br>4–11 أكتوبر</td><td>1–5 · تحليل المشكلة حتى اختيار الفكرة</td><td>بيان مشكلة مدعوم بـ 5 مقابلات موثَّقة</td><td>«كيف تُجري مقابلة مع شخص لا تعرفه»</td></tr><tr><td>الثاني<br>12–18 أكتوبر</td><td>6–8 · وصف الفكرة حتى نموذج العمل</td><td>نموذج عمل مكتمل</td><td>«نموذج عملك يجب أن ينبع من أدلتك»</td></tr><tr><td>الثالث<br>19–26 أكتوبر</td><td>9–12 · النموذج الأولي حتى التحقق من السوق</td><td>نموذج أولي تفاعلي جُرِّب مع 5 مستخدمين</td><td>«نموذج أولي بلا برمجة، في عطلة أسبوع»</td></tr><tr><td>الرابع<br>27 أكتوبر – 4 نوفمبر</td><td>13–15 · المنتج الأدنى حتى الانطلاق للسوق</td><td>التسليم النهائي</td><td>«منتج أدنى يدوي، وكيف تعرض في ثلاث دقائق»</td></tr></tbody></table></div><p>نقاط المراجعة ليست استبعادًا. من تأخّر يستطيع اللحاق والتسليم في موعده. وظيفتها أن تمنحك إيقاعًا أسبوعيًا واضحًا، وأن تُظهر لك موقعك على لوحة المتصدرين.</p><h2>ما الذي يُحتسب إنجازًا</h2><p>أربع مهام تحتاج تعريفًا دقيقًا حتى لا يظن أحد أن المطلوب بناء تطبيق كامل في شهر. هذا ما نقبله — وهو ما يفعله المؤسس الرشيق في هذه المرحلة فعلًا:</p><div class="tw"><table><thead><tr><th>المهمة</th><th>يُقبل</th><th>غير مطلوب</th></tr></thead><tbody><tr><td>9 · بناء النموذج الأولي</td><td>نموذج تفاعلي (Figma أو أي أداة بلا برمجة)، أو نموذج ورقي مصوَّر، أو عرض مُخطَّط — مع عرضه على 5 أشخاص على الأقل</td><td>أي كود مكتوب</td></tr><tr><td>13 · بناء المنتج الأدنى</td><td>منتج أدنى يدوي: صفحة هبوط بتسجيلات حقيقية، أو خدمة تُقدَّم يدويًا، أو خدمة عبر واتساب أو نموذج — مع 10 مستخدمين أو تسجيلات حقيقية على الأقل</td><td>منتج منشور، أو تطبيق على المتاجر، أو مدفوعات</td></tr><tr><td>14 · اختبار ملاءمة المنتج للسوق</td><td>اختبار إشارة طلب على 20 مستخدمًا مستهدفًا: سؤال شون إيليس، أو تحويل طلب مسبق أو قائمة انتظار، أو اختبار نية شرائية</td><td>درجة ملاءمة حقيقية — لا أحد يحقق ملاءمة المنتج للسوق في أربعة أسابيع، ولن نطلب منك تقييم نفسك من عشرة</td></tr><tr><td>15 · الانطلاق إلى السوق</td><td>خطة 90 يومًا بقناة واحدة محددة وميزانية وهدف — مع اختبار قناة واحدة فعليًا خلال الشهر</td><td>حملات منفَّذة أو إنفاق إعلاني</td></tr></tbody></table></div><h2>كيف تُقيَّم المشاركات</h2><p>التقييم مصمَّم على افتراض أن البعض سيحاول الكتابة لإرضاء المُقيِّم الآلي بدل التحدث إلى عملاء حقيقيين. لذلك:</p><ol><li>التقييم الآلي يفرز ولا يحكم. يُمرّر نحو 25% من المشاركات إلى المراجعة البشرية، ولا يختار الفائزين.</li><li>الأدلة مطلوبة كسجلات لا كنصوص: كل مقابلة تُسجَّل باسم أول ومدينة وتاريخ وقناة تواصل وإقرار موافقة. بلا سجل، لا درجة على هذا السؤال.</li><li>نتصل هاتفيًا بعيّنة عشوائية (10%) من الأشخاص الذين قابلهم المتأهلون للنهائيات، للتأكد من أن المقابلة جرت فعلًا.</li><li>نفحص التكرار والتشابه بين المشاركات.</li><li>لجنة بشرية تقيّم القائمة القصيرة دون معرفة الأسماء أو الجامعات.</li><li>العرض المباشر هو الفيصل: ثلاث دقائق عرض، وأربع دقائق أسئلة.</li></ol><h2>معايير التقييم المعلنة</h2><div class="tw"><table><thead><tr><th>المعيار</th><th>الوزن</th><th>ما الذي يمنح الدرجة</th></tr></thead><tbody><tr><td>قوة الأدلة</td><td>30%</td><td>محادثات حقيقية مع أشخاص حقيقيين، موثَّقة — وكم غيّرت إجاباتهم رأيك</td></tr><tr><td>ما بنيته واختبرته</td><td>20%</td><td>نموذج أولي ومنتج أدنى يدوي وُضعا فعلًا أمام مستخدمين، وماذا كانت النتيجة</td></tr><tr><td>عمق إنجاز المهام</td><td>20%</td><td>خمس عشرة مهمة مُجابة بعمق، لا خمس عشرة إجابة من سطر</td></tr><tr><td>وضوح المشكلة وتماسك النموذج</td><td>15%</td><td>شخص محدد بمشكلة محددة، ونموذج عمل ينبع من الأدلة لا يسبقها</td></tr><tr><td>العرض والإجابات</td><td>15%</td><td>في النهائيات فقط: الوضوح تحت الأسئلة</td></tr></tbody></table></div><h2>الجوائز</h2><div class="tw"><table><thead><tr><th>المركز</th><th>الجائزة النقدية</th><th>ما هو أهم من النقود</th></tr></thead><tbody><tr><td>الأول</td><td>50,000 جنيه</td><td>مقعد في دفعة الاحتضان القادمة لدى GrowthLabs · دخول مضمون لمسار المنافسة في تكني سميت 2027 · مساحة عرض في قمة 2027 · ست جلسات إرشاد</td></tr><tr><td>الثاني</td><td>30,000 جنيه</td><td>دخول مضمون لمسار المنافسة 2027 · أربع جلسات إرشاد · تذاكر قمة 2027</td></tr><tr><td>الثالث</td><td>20,000 جنيه</td><td>أربع جلسات إرشاد · تذاكر قمة 2027</td></tr><tr><td>العشرة الأوائل</td><td>—</td><td>العرض على مسرح تكني · ملف موثَّق على Startup Gate · جلسة إرشاد</td></tr><tr><td>كل من أكمل المهام</td><td>—</td><td>شهادة موقَّعة من تكني وStartPad، وملف أدلة موثَّق دائم</td></tr></tbody></table></div><p>تُدفع الجوائز النقدية بتحويل بنكي لقائد الفريق المُسمّى، مقابل بطاقة رقم قومي سارية وإيصال موقَّع. توزيع الجائزة داخل الفريق مسؤولية الفريق وحده. وقد تخضع الجوائز لأي استقطاعات يفرضها القانون المصري.</p><p>تُمنح كذلك جائزتان تقديريتان: «أفضل جامعة» و«أفضل محافظة»، وتُحتسبان بنسبة الإكمال لا بعدد الفائزين.</p><h2>فكرتك ملكك — دائمًا</h2><p>كل ما ترفعه على المنصة يظل ملكك أنت. لا تتنازل عن أي حق من حقوق الملكية الفكرية بمشاركتك، ولا يوجد في هذه القواعد حق أولوية أو أفضلية لنا أو لشركائنا في الاستثمار في مشروعك أو الحصول على حصة فيه.</p><p>ما نطلبه فقط هو إذن باستخدام اسمك وصورتك واسم مشروعك ووصفه العام في التغطية الإعلامية للتحدي ونتائجه. ولا نشارك بيانات تواصلك مع أي راعٍ أو طرف ثالث.</p><h2>بياناتك</h2><p>نجمع الاسم وتاريخ الميلاد والبريد الإلكتروني ورقم الهاتف والمحافظة والجامعة (اختياري)، وإجاباتك على المهام. تخضع المعالجة لقانون حماية البيانات الشخصية المصري رقم 151 لسنة 2020.</p><ul><li>الغرض: إدارة التحدي، والتواصل معك، والتقييم، وإعلان النتائج.</li><li>مدة الاحتفاظ: 24 شهرًا من تاريخ يوم العرض، ثم تُحذف بيانات التواصل.</li><li>بيانات من قابلتهم: تُستخدم للتحقق فقط، ولا تُستخدم للتسويق إطلاقًا — ويجب أن تحصل على موافقتهم قبل تسجيل بياناتهم.</li><li>حقوقك: الاطلاع والتصحيح والحذف وسحب الموافقة، عبر بريد التحدي.</li></ul><h2>أسباب الاستبعاد</h2><ul><li>تقديم بيانات شخصية غير صحيحة، أو عدم استيفاء شروط الأهلية.</li><li>اختلاق مقابلات أو أدلة — وهذا هو السبب الأول والأخطر.</li><li>نسخ مشاركة أخرى أو محتوى منشورًا دون إسناد.</li><li>أكثر من مشاركة واحدة للشخص نفسه.</li><li>إساءة معاملة المشاركين الآخرين أو فريق التحدي أو لجنة التحكيم.</li></ul><p>قرار الاستبعاد يُبلَّغ كتابةً مع السبب، ويخضع لحق التظلّم أدناه.</p><h2>التظلّم</h2><p>لك أن تتظلّم من النتيجة أو من قرار الاستبعاد خلال 72 ساعة من إعلانه، برسالة إلى بريد التحدي تشرح الأساس. يُنظر التظلّم من شخص لم يشارك في القرار الأصلي، ويُرد عليه خلال 7 أيام. قرار لجنة التحكيم في الجولة النهائية نهائي.</p><h2>تعديل القواعد</h2><p>قد نضطر لتعديل هذه القواعد. أي تعديل يُنشر على الصفحة نفسها مع تاريخه ويُرسل إلى كل المسجَّلين. ولن يُعدَّل معيار تقييم أو شرط إكمال بعد بدء التقييم — وإن اقتضى الأمر تخفيف شرط الإكمال، يُعلن ذلك مبكرًا وللجميع، لا عند التحكيم.</p><h2>أسئلة متكررة</h2><div class="tw"><table><thead><tr><th>السؤال</th><th>الإجابة</th></tr></thead><tbody><tr><td>هل أحتاج فكرة جاهزة قبل التسجيل؟</td><td>لا. المهام من 1 إلى 5 مصمَّمة لمن يصل بلا فكرة محددة.</td></tr><tr><td>هل أحتاج أن أعرف البرمجة؟</td><td>لا. ولا سطر واحد. راجع «ما الذي يُحتسب إنجازًا».</td></tr><tr><td>هل يمكنني المشاركة وأنا طالب؟</td><td>نعم، وهذا هو الجمهور الأساسي للتحدي.</td></tr><tr><td>هل يمكن لفريقي أن يكون من محافظات مختلفة؟</td><td>نعم.</td></tr><tr><td>ماذا لو تأخرت أسبوعًا؟</td><td>تستطيع اللحاق. لا يوجد استبعاد قبل الموعد النهائي.</td></tr><tr><td>هل تأخذون حصة من شركتي؟</td><td>لا. لا حصة ولا حق أولوية ولا أي التزام.</td></tr><tr><td>هل التقييم بالذكاء الاصطناعي وحده؟</td><td>لا. التقييم الآلي يفرز فقط؛ لجنة بشرية تقيّم القائمة القصيرة، والعرض المباشر هو الفيصل.</td></tr></tbody></table></div><h2>التواصل</h2><p>بريد التحدي: <mark class="todo">[البريد الإلكتروني]</mark> · واتساب: <mark class="todo">[الرقم]</mark> · startpad.me</p></main></div>
+<div class="page" dir="ltr" lang="en" data-lang-block="en" hidden><section class="hero"><p class="eyebrow">In partnership with Techne Summit Alexandria</p><h1>Mission Zero</h1><p class="tagline">From an idea to an investable company, in one month</p><p class="sub">A national challenge for young founders: finish all fifteen StartPad missions in one month, and earn the stage.</p><ul class="points"><li>15 guided missions that take you from “I have an idea” to “I have evidence”.</li><li>120+ tools, and scoring that measures what you proved rather than what you believe.</li><li>EGP 100,000 in prizes, an incubation seat, and guaranteed entry to the Techne Summit 2027 competition track.</li></ul><a class="cta" href="https://startpad.me/" target="_blank" rel="noopener">Enter free</a><p class="reassure">Free to enter. Your idea stays yours. And no software picks the winners.</p></section><main class="doc"><p class="stamp">Competition rules and judging criteria &nbsp;·&nbsp; Version v1.0 — 13 September 2026</p><h2>What Mission Zero is</h2><p>Mission Zero is a national challenge open to young founders in Egypt. You do not enter with a pitch — you enter by finishing. Complete all fifteen StartPad missions within one month, from problem analysis through to go-to-market. Everyone who finishes is judged; the best ten pitch to a panel at Demo Day.</p><p>The challenge is launched from the Techne Summit Alexandria stage and run by StartPad, a GrowthLabs company.</p><h2>Dates</h2><ol class="cal"><li><span class="when">21 Sept</span><span class="what"><b>Registration opens</b><em>Free, at startpad.me</em></span></li><li><span class="when">3–5 Oct</span><span class="what"><b>Launch, in Alexandria</b><em>Challenge stand across all three summit days, plus the “Mission 1 Live” workshop</em></span></li><li><span class="when">4 Oct</span><span class="what"><b>Missions open</b><em>All fifteen unlock for every registered entrant</em></span></li><li><span class="when">4 Nov</span><span class="what"><b>Submission deadline</b><em>23:59 Cairo time — no extension</em></span></li><li><span class="when">5–12 Nov</span><span class="what"><b>Judging</b><em>Automated filter, then a human panel, then verification calls</em></span></li><li><span class="when">Late Nov</span><span class="what"><b>Demo Day and prizes</b><em>Ten pitches, three winners</em></span></li></ol><h2>Who can enter</h2><div class="tw"><table><thead><tr><th>Rule</th><th>Detail</th></tr></thead><tbody><tr><td>Age</td><td>18 to 30 on the closing date</td></tr><tr><td>Residency</td><td>Resident in the Arab Republic of Egypt</td></tr><tr><td>Team</td><td>One to four people, with one named lead who holds the account</td></tr><tr><td>Stage</td><td>No registered company, no external funding, no revenue — this challenge is for people who have not started yet</td></tr><tr><td>Entries</td><td>One per person</td></tr><tr><td>Entry fee</td><td>None. Free to enter, always</td></tr></tbody></table></div><p>Employees of StartPad, GrowthLabs and Techne, their immediate families, and members of the judging panel may not enter.</p><h2>How to enter</h2><ol><li>Register at startpad.me — email, phone and a few basic details.</li><li>Create your account and start Mission 1.</li><li>Complete all fifteen missions before the deadline.</li><li>Press “Final submission”. Nothing is judged until you submit, even if every mission is finished.</li></ol><h2>The month: four weeks</h2><div class="tw"><table><thead><tr><th>Week</th><th>Missions</th><th>Checkpoint</th><th>Live clinic</th></tr></thead><tbody><tr><td>1<br>4–11 Oct</td><td>1–5 · problem analysis to idea selection</td><td>A problem statement backed by 5 logged interviews</td><td>“How to interview a stranger”</td></tr><tr><td>2<br>12–18 Oct</td><td>6–8 · idea description to business model</td><td>A completed Business Model Canvas</td><td>“Your canvas has to follow from your evidence”</td></tr><tr><td>3<br>19–26 Oct</td><td>9–12 · prototype to market validation</td><td>A clickable prototype tested with 5 users</td><td>“Prototyping without code, in a weekend”</td></tr><tr><td>4<br>27 Oct – 4 Nov</td><td>13–15 · MVP to go-to-market</td><td>Final submission</td><td>“Manual MVPs, and how to pitch in three minutes”</td></tr></tbody></table></div><p>Checkpoints are not eliminations. If you fall behind you can catch up and still submit on time. They exist to give the month a visible weekly rhythm and to show you where you stand on the leaderboard.</p><h2>What counts as complete</h2><p>Four missions need a precise definition so nobody thinks they must build a finished app in a month. Here is what we accept — and it is what a lean founder should actually be doing at this stage:</p><div class="tw"><table><thead><tr><th>Mission</th><th>Accepted</th><th>Not required</th></tr></thead><tbody><tr><td>9 · Build Prototype</td><td>A clickable prototype (Figma or any no-code builder), a photographed paper prototype, or a scripted walkthrough — shown to at least 5 people</td><td>Any written code</td></tr><tr><td>13 · Build MVP</td><td>A manual MVP: a landing page with real sign-ups, a concierge service delivered by hand, or a WhatsApp or form-based service — with at least 10 real users or sign-ups</td><td>A deployed product, an app store listing, payments</td></tr><tr><td>14 · Product-Market Fit Test</td><td>A demand-signal test on 20 target users: the Sean Ellis question, a pre-order or waitlist conversion, or a paid-intent test</td><td>A real PMF score — nobody has product-market fit in four weeks, and we will not ask you to rate yourself out of ten</td></tr><tr><td>15 · Go to Market</td><td>A 90-day plan with one named channel, a budget and a target — plus one channel actually tested during the month</td><td>Executed campaigns or ad spend</td></tr></tbody></table></div><h2>How entries are judged</h2><p>Judging is built on the assumption that some entrants will write for the automated scorer instead of talking to real customers. So:</p><ol><li>Automated scoring filters, it does not decide. It passes roughly 25% of entries to human review and picks no winners.</li><li>Evidence is required as logs, not prose: every interview carries a first name, city, date, channel and a consent confirmation. No log, no marks on that question.</li><li>We telephone a random 10% of the people interviewed by finalists, to confirm the interview actually happened.</li><li>We check for duplicate and templated entries.</li><li>A human panel scores the shortlist without names or universities attached.</li><li>The live pitch decides: three minutes to present, four minutes of questions.</li></ol><h2>The published rubric</h2><div class="tw"><table><thead><tr><th>Pillar</th><th>Weight</th><th>What earns the marks</th></tr></thead><tbody><tr><td>Evidence</td><td>30%</td><td>Real conversations with real people, logged — and how much their answers changed your mind</td></tr><tr><td>Built and tested</td><td>20%</td><td>A prototype and a manual MVP actually put in front of users, and what came back</td></tr><tr><td>Depth of mission completion</td><td>20%</td><td>Fifteen missions answered at depth, not fifteen one-line answers</td></tr><tr><td>Problem clarity and model coherence</td><td>15%</td><td>A specific person with a specific problem, and a business model that follows from the evidence rather than preceding it</td></tr><tr><td>Pitch and answers</td><td>15%</td><td>Finals only: clarity under questioning</td></tr></tbody></table></div><h2>Prizes</h2><div class="tw"><table><thead><tr><th>Place</th><th>Cash</th><th>What matters more</th></tr></thead><tbody><tr><td>First</td><td>EGP 50,000</td><td>A seat in the next GrowthLabs incubation cohort · guaranteed entry to the Techne Summit 2027 competition track · exhibition space at Summit 2027 · six mentor sessions</td></tr><tr><td>Second</td><td>EGP 30,000</td><td>Guaranteed 2027 track entry · four mentor sessions · Summit 2027 passes</td></tr><tr><td>Third</td><td>EGP 20,000</td><td>Four mentor sessions · Summit 2027 passes</td></tr><tr><td>Top ten</td><td>—</td><td>Pitch on a Techne stage · a verified profile on Startup Gate · one mentor session</td></tr><tr><td>Everyone who finishes</td><td>—</td><td>A certificate co-signed by Techne and StartPad, and a permanent verified evidence profile</td></tr></tbody></table></div><p>Cash prizes are paid by bank transfer to the named team lead, against a valid national ID and a signed receipt. How a team splits its prize is the team&#x27;s own business. Prizes may be subject to any deductions Egyptian law requires.</p><p>Two further recognitions are awarded on completion rate rather than on winners: Best University and Best Governorate.</p><h2>Your idea is yours — always</h2><p>Everything you put on the platform remains yours. Entering assigns no intellectual property, and nothing in these rules gives us or our partners any right of first refusal, any option to invest, or any claim to equity in what you build.</p><p>All we ask is permission to use your name, photograph, and your project&#x27;s name and general description in coverage of the challenge and its results. We do not share your contact details with any sponsor or third party.</p><h2>Your data</h2><p>We collect your name, date of birth, email, phone number, governorate, university (optional), and your mission answers. Processing is governed by Egypt&#x27;s Personal Data Protection Law 151 of 2020.</p><ul><li>Purpose: running the challenge, contacting you, judging, and announcing results.</li><li>Retention: 24 months from Demo Day, after which contact details are deleted.</li><li>People you interviewed: used for verification only, never for marketing — and you must obtain their consent before logging their details.</li><li>Your rights: access, correction, deletion and withdrawal of consent, through the challenge email.</li></ul><h2>Grounds for disqualification</h2><ul><li>False personal details, or failing the eligibility rules.</li><li>Fabricated interviews or evidence — the first and most serious ground.</li><li>Copying another entry, or published material, without attribution.</li><li>More than one entry by the same person.</li><li>Abuse of other entrants, the challenge team, or the judges.</li></ul><p>Disqualification is communicated in writing with the reason, and is subject to the appeal below.</p><h2>Appeals</h2><p>You may appeal a result or a disqualification within 72 hours of it being announced, by email to the challenge address, setting out the grounds. The appeal is reviewed by someone who took no part in the original decision and answered within 7 days. The panel&#x27;s decision in the final round is final.</p><h2>Changes to these rules</h2><p>We may have to change these rules. Any change is published on this page with its date and sent to every registered entrant. No judging criterion or completion requirement will be changed once judging has begun — and if a completion requirement has to be relaxed, it will be announced early and to everyone, never at judging time.</p><h2>Frequently asked</h2><div class="tw"><table><thead><tr><th>Question</th><th>Answer</th></tr></thead><tbody><tr><td>Do I need an idea before I register?</td><td>No. Missions 1 to 5 are designed for people who arrive without one.</td></tr><tr><td>Do I need to know how to code?</td><td>No — not one line. See “What counts as complete”.</td></tr><tr><td>Can I enter as a student?</td><td>Yes. Students are the core audience.</td></tr><tr><td>Can my team be spread across governorates?</td><td>Yes.</td></tr><tr><td>What if I fall a week behind?</td><td>You can catch up. Nobody is eliminated before the deadline.</td></tr><tr><td>Do you take equity in my company?</td><td>No. No equity, no right of first refusal, no obligation of any kind.</td></tr><tr><td>Is it judged by AI alone?</td><td>No. Automated scoring only filters; a human panel scores the shortlist, and the live pitch decides.</td></tr></tbody></table></div><h2>Contact</h2><p>Challenge email: <mark class="todo">[EMAIL]</mark> · WhatsApp: <mark class="todo">[NUMBER]</mark> · startpad.me</p></main></div>
+
+<script>
+(function () {
+  var blocks = document.querySelectorAll("[data-lang-block]");
+  var buttons = document.querySelectorAll(".langbtn");
+  function show(lang) {
+    blocks.forEach(function (b) { b.hidden = b.getAttribute("data-lang-block") !== lang; });
+    buttons.forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-set") === lang));
+    });
+    try { localStorage.setItem("mission-zero-lang", lang); } catch (e) {}
+  }
+  buttons.forEach(function (b) {
+    b.addEventListener("click", function () { show(b.getAttribute("data-set")); });
+  });
+  var saved = null;
+  try { saved = localStorage.getItem("mission-zero-lang"); } catch (e) {}
+  show(saved === "en" ? "en" : "ar");
+})();
+</script>
