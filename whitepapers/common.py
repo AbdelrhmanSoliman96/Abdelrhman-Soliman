@@ -368,10 +368,14 @@ def render_blocks(blocks):
                 f"<span>{d}</span></div></div>" for t, d in blk[1])
             out.append(f'<div class="check">{rows}</div>')
         elif kind == "bookref":
-            _, line, where = blk
-            out.append(f'<div class="bookref"><div class="src">From the book</div>'
+            # A fourth element names a different source document; without it the
+            # citation is the brand book, which is what the report series argues from.
+            line, where = blk[1], blk[2]
+            source = blk[3] if len(blk) > 3 else BOOK
+            heading = blk[4] if len(blk) > 4 else "From the book"
+            out.append(f'<div class="bookref"><div class="src">{heading}</div>'
                        f'<div class="line">“{line}”</div>'
-                       f'<div class="where">{BOOK} · {where}</div></div>')
+                       f'<div class="where">{source} · {where}</div></div>')
         elif kind == "note":
             out.append(f'<p class="note">{blk[1]}</p>')
         elif kind == "sources":

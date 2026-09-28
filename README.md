@@ -333,11 +333,11 @@ builders now go through the same helpers, and all 24 `.docx` in `output/` pass.
 
 ---
 
-# Founder resource library — sixteen PDFs
+# Founder resource library — seventeen PDFs
 
 Five guided toolkits a founder fills in, three mini whitepapers that each explain one
-thing, and eight reports that read a framework from the brand book as an operating
-tool. **127 pages**, all English, all vector, built for the `/resources` page and for
+thing, eight reports that read a framework from the brand book as an operating tool, and
+one partner review. **139 pages**, all English, all vector, built for the `/resources` page and for
 printing.
 
 | # | Document | Missions | Pages |
@@ -445,7 +445,30 @@ metadata reads as StartPad rather than as the browser that rendered it, that no
 forbidden phrase from the voice rules appears in the copy, that every report cites the
 book it derives from, and that no figure exceeds the ordinal ramp's step ceiling.
 
-    16 documents, 127 pages, 0 with problems
+    17 documents, 139 pages, 0 with problems
+
+## Programme reviews
+
+`REVIEWS` holds feedback on a partner programme. These build and get checked by the
+same pipeline as everything else, but they are addressed to a named partner rather
+than published, so `PUBLIC` excludes them from the resources bundle.
+
+| # | Review | Source document | Pages |
+|---|---|---|---|
+| RV 01 | One Account, Five Students | Entrepreneurship Camp Learner Journey, GrowthLabs × Cognify Academy, Sept 2026 | 12 |
+
+Feedback on the Future Founders camp and its StartPad integration: what the pack gets
+right, and nine gaps between where it stands and every student learning from the
+platform. Every figure is taken from the pack or checked against
+`startpad/missions.py` — including the finding that **seven of the ten mission names
+in the pack do not match what a student will see on screen**, and that the pack's
+names are the better ones, so the product should adopt them rather than the reverse.
+
+Writing it narrowed one voice rule: `unlock` was on the forbidden list as marketing
+jargon, but it is also the platform's real mechanic — missions unlock in order, which
+is the pack's own wording. The rule now matches the jargon collocations (`unlock your`,
+`unlock growth`) rather than the bare verb, so a document is not forced into a worse
+word for a real product behaviour.
 
 ## What still needs a human
 

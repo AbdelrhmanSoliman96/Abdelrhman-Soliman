@@ -1,13 +1,15 @@
 """
 The resource library.
 
-Sixteen documents in three series, all rendered by the same pipeline:
+Seventeen documents in four series, all rendered by the same pipeline:
 
 * **Toolkits** (5) — a founder fills them in. Worksheets, logs, decisions.
 * **Whitepapers** (3) — each explains one thing, with no worksheet.
 * **Reports** (8) — each takes one framework from the StartPad brand book and reads
   it as an operating tool for founders rather than as a design rule. Every one names
   the book on the page it argues from.
+* **Reviews** (1) — feedback on a partner programme. Built and checked like the rest,
+  but addressed to a named partner rather than published, so excluded from `PUBLIC`.
 
 Every document is a plain dictionary of metadata plus a list of content blocks, so
 the words live apart from the design and either can change without touching the other.
@@ -18,6 +20,7 @@ from . import wp01_gap, wp02_sizing, wp03_idea
 from . import (r01_requirement_gap_route, r02_truth_readiness_proof, r03_four_words,
                r04_progress_is_a_colour, r05_believed_or_shared, r06_one_idea_only,
                r07_speaks_the_way_they_speak, r08_warm_candour)
+from . import rv01_camp_integration
 
 LIBRARY = [
     # whitepapers and toolkits, in the order a founder meets them
@@ -38,8 +41,16 @@ LIBRARY = [
     r04_progress_is_a_colour.DOC,
     r05_believed_or_shared.DOC,
     r07_speaks_the_way_they_speak.DOC,
+    # reviews: partner feedback, built by the same pipeline but not published
+    # alongside the founder resources
+    rv01_camp_integration.DOC,
 ]
 
 TOOLKITS = [d for d in LIBRARY if d["kind"] == "toolkit"]
 WHITEPAPERS = [d for d in LIBRARY if d["kind"] == "whitepaper"]
 REPORTS = [d for d in LIBRARY if d["kind"] == "report"]
+REVIEWS = [d for d in LIBRARY if d["kind"] == "review"]
+
+# What ships on the resources page. Reviews are addressed to a named partner, so
+# they build and get checked like everything else but stay out of the public bundle.
+PUBLIC = [d for d in LIBRARY if d["kind"] != "review"]

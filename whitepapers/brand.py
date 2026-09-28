@@ -129,12 +129,18 @@ TYPE_SCALE = {
 # Kept next to the design tokens because they are enforced the same way: by being
 # written down. From ch. 05, SAY / NEVER SAY.
 
+# The first four are the book's own NEVER SAY column, verbatim. The rest are
+# marketing jargon the voice refuses. They are collocations rather than bare words
+# on purpose: "unlock" is the platform's actual mechanic — missions unlock in
+# order — and a checker that forbids the word outright forces a document to use a
+# worse one for a real product behaviour.
 NEVER_SAY = [
     "You've got this",
     "Your journey starts here",
     "Your idea is safe with us",
     "We built a founder",
-    "unlock", "empower", "revolutionary", "game-changing",
+    "unlock your", "unlock the potential", "unlock growth", "unlock value",
+    "empower", "revolutionary", "game-changing", "game changing",
 ]
 
 LOGO_INK = "brand/logo/startpad_horizontal_ink.png"

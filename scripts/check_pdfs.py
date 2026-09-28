@@ -71,11 +71,12 @@ def check(doc):
 
     # Every report is derived from a framework in the brand book, so the book has to
     # be named on the page rather than assumed.
-    if doc["kind"] == "report":
+    if doc["kind"] in ("report", "review"):
         if not any(b[0] == "bookref" for b in doc["blocks"]):
             problems.append("report has no citation of the source book")
-        if "brand presentation" not in low:
-            problems.append("the source book is not named in the text")
+        named = "brand presentation" if doc["kind"] == "report" else "learner journey"
+        if named not in low:
+            problems.append(f"the source document ({named}) is not named in the text")
 
     # Every figure must have reached the page: count the captions, which only exist
     # where a figure rendered.
