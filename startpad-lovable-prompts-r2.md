@@ -1,0 +1,1021 @@
+# StartPad — Lovable Prompts (Round 2)
+
+Fifteen prompts from the screen-by-screen review of 11 Aug 2026, grouped by **the page they fix**.
+
+Each set opens with a framing note and closes with a **Why this order**. Paste one prompt per message — never concatenate them, and let each finish before sending the next.
+
+**Run Set 1 · Prompt A first.** It's the only thing in here that's actively lying to users.
+
+| Set | Page | Prompts |
+|---|---|---|
+| 1 | Mentoring | A, B, C |
+| 2 | Collaboration Hub | A, B |
+| 3 | Community | A, B, C |
+| 4 | Homepage / Landing | A, B |
+| 5 | Global shell (every page) | A, B |
+| 6 | Journey history | A |
+| 7 | Whole app — Arabic & mobile | A, B |
+
+Design tokens referenced throughout: navy `#0A1D34` for headlines, green `#047857` for accents and primary CTAs, white rounded cards with soft shadows.
+
+---
+---
+
+# Set 1 — Mentoring Page
+
+Three changes to `/mentoring`. **Prompt A is the most urgent fix in the entire product** — the page currently shows sessions from May and June as "upcoming" in August. Prompt B is the structural rebuild, Prompt C is the session card detail. Paste as separate messages, in order.
+
+## PROMPT A — Fix the Session Status Bug
+
+```text
+PAGE: Mentoring (/mentoring) — the "Your Upcoming Sessions" section.
+
+THE PROBLEM
+Today is 11 August 2026. The page currently displays these three cards:
+
+  Emily Rodriguez — Fundraising      — May 27th, 2026,   10:00 AM — badge "upcoming"
+  Sarah Johnson  — Product Strategy  — June 9th, 2026,   1:30 PM  — badge "upcoming"
+  Sarah Johnson  — Product Strategy  — August 13th, 2026, 1:30 PM — badge "pending"
+
+The first two sessions are two and a half months in the PAST and are still
+badged "upcoming" under a heading that says "Your Upcoming Sessions." The only
+genuinely future session is badged "pending." Status is clearly being read from
+a stored database field that was never recomputed, rather than derived from the
+session timestamp.
+
+A founder who sees their calendar showing the past as the future stops trusting
+the booking system entirely. This is worse than having no calendar.
+
+THE FIX
+
+1. Never read status from a stored field for time-based state. Derive it at
+   render time by comparing the session datetime to now:
+
+     function deriveSessionState(session, now = new Date()) {
+       if (session.cancelledAt) return "cancelled";
+       if (session.endsAt < now) {
+         return session.attended ? "completed" : "no_show";
+       }
+       if (session.startsAt <= now && now <= session.endsAt) return "live";
+       if (!session.confirmedAt) return "awaiting_confirmation";
+       return "confirmed";
+     }
+
+2. Split the page into two sections:
+     "Upcoming sessions"  — states: live, confirmed, awaiting_confirmation
+                            sorted ascending (soonest first)
+     "Past sessions"      — states: completed, no_show, cancelled
+                            sorted descending (most recent first), collapsed
+                            behind a "Show past sessions (3)" toggle
+
+   Hide either section entirely when it is empty. Do not render an empty
+   heading.
+
+3. Replace the current two badges — "upcoming" and "pending," which are both
+   green, both use the same tick icon, and are never explained — with six
+   distinct states. Each needs its own colour AND its own icon shape, so the
+   difference survives for colour-blind users:
+
+     live                  → green pulse dot     "Live now"
+     confirmed             → green tick          "Confirmed"
+     awaiting_confirmation → amber clock         "Waiting for [mentor] to confirm"
+     completed             → grey tick           "Completed"
+     no_show               → grey slash          "Didn't take place"
+     cancelled             → grey cross          "Cancelled"
+
+4. Any state that needs the founder to act must carry the action on the card.
+   "Waiting for Sarah to confirm" gets a "Send a reminder" button, disabled for
+   24h after each nudge.
+
+Report back which of the three existing sessions moved to the Past section.
+```
+
+## PROMPT B — Rebuild Mentoring Around Finding a Mentor
+
+```text
+PAGE: Mentoring (/mentoring) — the whole page.
+
+THE PROBLEM
+The page is called "Mentoring" and its subtitle promises "Connect with
+experienced mentors who can guide your startup journey." But the entire page
+is a list of sessions the founder has already booked. There is no directory,
+no browse, no search, and no "Book a session" button anywhere on screen.
+
+The page can therefore only be used by someone who has already booked — which
+is nobody, on their first visit. A new founder lands here, sees an empty
+column, and leaves.
+
+Separately: the mentors currently shown are Emily Rodriguez and Sarah Johnson.
+The homepage promises mentors who understand the MENA market, in a product
+whose tagline is "Built in Cairo. Designed for the entire Arab world." A
+founder in Cairo or Riyadh sees no mentor from their region and no indication
+anyone speaks Arabic. This contradicts the core positioning on the exact page
+where it has to land.
+
+THE FIX — restructure the page top to bottom:
+
+1. HEADER
+   Keep "Mentoring" and the existing subtitle.
+   Add a primary CTA in the header, right-aligned: "Find a mentor"
+   (green #047857, same style as other primary buttons).
+
+2. YOUR SESSIONS  (secondary, not primary)
+   The Upcoming / Past structure from Prompt A. When the founder has zero
+   sessions, replace this whole block with an empty state:
+     Heading: "No sessions yet"
+     Body:    "Book a 30-minute call with a mentor who's built in your market."
+     Button:  "Browse mentors"
+
+3. MENTOR DIRECTORY  (the new centre of the page)
+   A card grid, with filters above it:
+     - Country
+     - Language  (Arabic / English / Both)
+     - Expertise (Fundraising, Product Strategy, Growth, Ops, Tech, Legal)
+     - Startup stage
+     - "Available this week" toggle
+
+   Each mentor card carries, in this order:
+     - Photo (required — no name-only cards)
+     - Name, role, and company
+     - Country with flag
+     - Language chips — Arabic and English shown explicitly
+     - 2-3 expertise chips
+     - "Usually replies in ~4h"
+     - Next available slot: "Next free: Thu 14 Aug, 2:00 PM"
+     - Button: "Book a session"
+
+   Sort the default view to surface MENA-based and Arabic-speaking mentors
+   first. Language and country must be visible without opening the card —
+   for this audience they are the primary filter, not a detail.
+
+4. PAGE FOOTER
+   Never let the page end in empty space. Below the directory, show
+   "Mentors matched to your stage" based on the founder's profile.
+
+If the current mentor rows are placeholder/seed data, replace them with real
+MENA mentors — even five is better than two Western placeholders.
+```
+
+## PROMPT C — Make Session Cards Actually Usable
+
+```text
+PAGE: Mentoring (/mentoring) — the individual session cards.
+
+THE PROBLEM
+The current cards show four things: mentor name, topic, date, time. That's it.
+No timezone, no duration, no language, no join link, no calendar export, no
+way to reschedule or cancel, no mentor photo, and nothing on the card appears
+clickable.
+
+The timezone omission is the serious one. StartPad serves a region spanning
+GMT+1 (Morocco) to GMT+4 (UAE). A card reading "1:30 PM" with no timezone is
+a missed call waiting to happen — this is the single most common failure mode
+in every mentoring product ever built.
+
+THE FIX
+
+Every session card must carry all six of these:
+
+  1. WHEN, in the founder's own timezone, with the zone named explicitly:
+       "Thu 13 Aug · 1:30 PM your time (GMT+3)"
+     Detect the timezone from the browser, let the user override it in
+     profile settings, and store bookings in UTC. If the mentor is in a
+     different zone, add a muted second line:
+       "4:30 PM for Sarah (GMT+6)"
+
+  2. HOW LONG:     "30 minutes"
+  3. WHAT LANGUAGE: "In English" / "In Arabic" / "Arabic or English"
+  4. MENTOR PHOTO, alongside the name — not a name-only row.
+
+  5. ONE PRIMARY ACTION, which changes by state:
+       confirmed, >1h away  → "Add to calendar" (.ics download)
+       confirmed, <15m away → "Join call" (green, prominent)
+       live                 → "Join call" (green, pulsing)
+       awaiting confirmation→ "Send a reminder"
+       completed            → "Leave feedback"
+
+  6. AN OVERFLOW MENU (⋯) containing Reschedule and Cancel. These are
+     secondary — never full-width buttons.
+
+The whole card is a click target opening a session detail view.
+
+PREP AND FOLLOW-UP (build these too — they are the cheapest possible upgrade
+to perceived mentor quality):
+
+  24 HOURS BEFORE
+   - Auto-generate a one-page brief from the founder's mission progress —
+     which of the 15 missions they've completed, their current mission, their
+     problem statement — and email it to the mentor.
+   - Show the founder three suggested questions on the session card, drawn
+     from where they're stuck: "You're on Mission 4 (Validation). Ask Sarah
+     how she found her first 10 interviewees."
+
+  AFTER THE CALL
+   - Prompt the founder to rate the session and capture three action items.
+   - Push those three items into their current mission as tasks, so the
+     mentoring loop feeds back into the journey instead of dead-ending.
+```
+
+**Why this order.** A fixes a live lie about dates — do it today, on its own, and confirm the May and June sessions have moved before touching anything else. B is the real build and needs review time. C only makes sense once B has settled the page structure, since it changes components B may have rewritten.
+
+---
+---
+
+# Set 2 — Collaboration Hub
+
+Two changes to `/collaboration`. Prompt A is a ten-minute cleanup that removes the single worst first impression in the product. Prompt B is the card rebuild.
+
+## PROMPT A — Purge Test Data and Demote the Delete Button
+
+```text
+PAGE: Collaboration Hub (/collaboration) — the Projects tab.
+
+THE PROBLEM — TWO ISSUES, BOTH VISIBLE RIGHT NOW
+
+1. The page's entire content is test data. It shows exactly two projects:
+     "projx"  — description: "No description." — 2/5 members — Aug 5, 2026
+     "dasd"   — description: "dsad"            — 1/5 members — Jun 4, 2026
+   Any real founder landing here sees keyboard-mash project names and reads
+   the product as abandoned. This is the worst first impression on the site.
+
+2. The Delete button on the second card is a full-width, fully-saturated red
+   primary button at the bottom of the card. It is the single most visually
+   dominant element on the entire page — larger and louder than "Join," which
+   is the action you actually want people to take. A destructive action should
+   never outrank a primary one, and on mobile it sits one mis-tap away from
+   ordinary controls.
+
+THE FIX
+
+1. Delete the seeded rows "projx" and "dasd" from the database. Add a guard so
+   seed data cannot ship to production.
+
+2. Build a real empty state for when no projects exist:
+     Icon:    the same style as the Journey history empty state
+     Heading: "No projects yet"
+     Body:    "Start one and find people to build it with — or join a project
+              that needs your skills."
+     Button:  "+ New Project" (green #047857)
+
+   An honest empty state is far better than fake activity. Do not seed
+   placeholder projects to fill the grid.
+
+3. Move Delete out of the card body entirely:
+     - Put it in an overflow menu (⋯) in the card's top-right corner,
+       alongside "Project settings."
+     - Style it as tertiary text in the danger colour — never a filled button.
+     - Add a confirm dialog that names the consequence and the blast radius:
+
+         Title:   Delete "projx"?
+         Body:    This permanently removes the project, its files, and its
+                  chat history for all 2 members. This cannot be undone.
+         Confirm: "Delete project"  (danger, and NOT the default focus)
+         Cancel:  "Keep project"    (default focus)
+
+     - For projects with other members, require the owner to type the project
+       name to confirm.
+```
+
+## PROMPT B — One Project Card, Not Two Different Ones
+
+```text
+PAGE: Collaboration Hub (/collaboration) — the project card component.
+
+THE PROBLEM
+The two project cards on this page have completely different anatomy for the
+same object type:
+
+  Card 1 ("projx")  — one giant full-width green "Join" button, nothing else.
+  Card 2 ("dasd")   — five small buttons in a grid (Team, Files, Whiteboard,
+                      Video calls, Activity) plus a full-width red Delete.
+
+Different heights, different internal rhythm, no shared structure. The user is
+never told why — the difference is that they own the second one, but nothing
+on the card says so. It reads as inconsistency rather than as roles.
+
+THE FIX
+
+1. ONE CARD COMPONENT. These elements are always present, always in the same
+   position, regardless of who's looking:
+     - Project name
+     - Status badge ("Active")
+     - Description
+     - Member count with an avatar stack: "2 of 5 members"
+     - Activity date, LABELLED and relative: "Active 3 days ago"
+       (currently it's a bare "Aug 5, 2026" with no label — created? deadline?
+       last active? Nobody can tell. Relative recency is what a prospective
+       joiner actually needs.)
+     - "Looking for" chips — see point 3
+     - One primary action
+
+   Only the action area changes by viewer role:
+     Not a member  → "Join" (primary green)
+     Member        → "Open project" (primary)
+     Owner         → "Open project" + a "Your project" badge in the header
+                     + the ⋯ menu from Prompt A
+
+   All cards in the grid must be equal height regardless of description length.
+
+2. THE FIVE BUTTONS BECOME TABS INSIDE THE PROJECT.
+   Team, Files, Whiteboard, Video calls and Activity do not belong on a card
+   in a list. Move them to tabs within the project detail view, reached by
+   "Open project."
+
+   IMPORTANT: if any of those five are not actually built yet, remove the
+   entry entirely. A dead button costs far more trust than a missing feature.
+   Tell me which of the five are real.
+
+3. ADD "LOOKING FOR" CHIPS — this is the missing point of the whole page.
+   The page promises "Find collaborators," but no project says what it needs.
+   Every project gets role chips set by its owner at creation:
+     Designer · Developer · Marketer · Co-founder · Researcher
+
+   Then add filters above the grid on those chips, plus country and startup
+   stage, plus a search box. Sort "projects needing your skills" to the top
+   using the founder's profile.
+
+4. "No description." is a dead end. For the owner, make it an inline prompt:
+   "Add a description so people know what you're building →". For everyone
+   else, hide the line entirely rather than advertising the gap.
+```
+
+**Why this order.** A is cosmetic surgery on data and one button — safe to ship immediately and it removes the thing making the page look dead. B is a component rewrite; do it once A has proven the empty state renders correctly.
+
+---
+---
+
+# Set 3 — Community Page
+
+Three changes to `/community`. Prompt A is a quick fix removing two things that actively discourage posting. Prompt B fixes Arabic rendering — the highest-value item on this page for a MENA audience. Prompt C is the structural change.
+
+## PROMPT A — Stop Advertising That Nobody Is Here
+
+```text
+PAGE: Community (/community) — the stat card row and post metadata.
+
+THE PROBLEM
+The page currently opens with four large stat cards reading:
+
+     1              1              0              0
+  Total Posts   Discussions    Questions      Answered
+
+Plus a "Top Contributors" sidebar card listing one person with "1 posts," and
+per-post metadata reading "4 views · 1 like · 0 comments" on the only post,
+which is 19 days old.
+
+A newcomer's first impression is a ghost town, stated numerically, six
+different ways. Every one of these elements is working against you: they tell
+a prospective poster that writing here is shouting into a void.
+
+There is also a pluralisation bug: "1 Total Posts."
+
+THE FIX
+
+1. Delete the four-card stat row entirely. Do not replace it with different
+   numbers — replace it with presence:
+     - "12 founders online now" (live count, only shown when > 5)
+     - Or a compact row of avatars of founders active this week.
+   If neither is above threshold, render nothing. Empty space beats a zero.
+
+2. Hide the "Top Contributors" sidebar card until there are at least 10
+   contributors. Hide "Trending Tags" until at least 5 tags have 3+ posts.
+
+3. Hide per-post view/like/comment counts below a threshold — say, hide views
+   under 10 and comments under 1. Show them only once they flatter the post
+   rather than deter the next reader from replying.
+
+4. Fix pluralisation everywhere in the app using Intl.PluralRules, not string
+   concatenation with "s":
+
+     const fmt = new Intl.NumberFormat(locale);
+     const pr  = new Intl.PluralRules(locale);
+     const label = { one: "post", other: "posts" }[pr.select(n)];
+
+   Note this matters beyond English: Arabic has SIX plural forms (zero, one,
+   two, few, many, other). Any hardcoded "s" suffix will break the moment the
+   interface is localised.
+
+5. Fix the layout collapse. With one post, the feed column is two-thirds empty
+   while the right sidebar runs on past it. When the feed has fewer than 3
+   posts, drop the sidebar below the content and let the feed run full width.
+```
+
+## PROMPT B — Fix Arabic Post Rendering
+
+```text
+PAGE: Community (/community) — the post card component.
+
+THE PROBLEM
+Arabic posts render inside a left-to-right container. Look at the existing
+post "الأغذيه الصحيه من الأرض للفضاء" by Waseem Al-harby:
+
+  - The Arabic body text is correctly right-aligned.
+  - But the card around it is not. The "Help & Support" category chip, the
+    author row, the timestamp, the hashtag chips, and the view/like/comment
+    icons all stay left-aligned.
+  - The result reads as two competing layouts fighting inside one card.
+  - The hashtag chip renders the "#" on the wrong side of the Arabic text,
+    with a stranded full stop.
+
+Direction is being applied to the text node instead of to the card.
+
+Given that this platform is built for MENA, Arabic posts will be the majority
+of content. This has to be right.
+
+THE FIX
+
+1. Detect the dominant script of each post at render time and set dir on the
+   ENTIRE post card — not on the text node:
+
+     function detectDir(text) {
+       const rtl = (text.match(/[؀-ۿݐ-ݿࢠ-ࣿ]/g) || []).length;
+       const ltr = (text.match(/[A-Za-z]/g) || []).length;
+       return rtl > ltr ? "rtl" : "ltr";
+     }
+
+     <article dir={detectDir(post.body)} className="post-card">
+
+2. Replace every physical CSS property inside the card with a logical one, so
+   the card mirrors as a single unit:
+     margin-left      → margin-inline-start
+     padding-right    → padding-inline-end
+     text-align: left → text-align: start
+     left: 0          → inset-inline-start: 0
+     border-left      → border-inline-start
+
+   Once direction is set on the card and spacing is logical, the hashtag "#"
+   placement corrects itself automatically.
+
+3. Wrap mixed-direction fragments in <bdi>. An English product name inside an
+   Arabic sentence — or a Latin @handle — will scramble the surrounding line
+   without it:
+
+     <bdi>{post.authorHandle}</bdi>
+
+4. Give Arabic text its own type treatment. Never rely on a Latin font's
+   Arabic fallback:
+     - Font family: IBM Plex Sans Arabic, Noto Sans Arabic, or Cairo
+     - Size: ~1.1x the Latin equivalent
+     - Line height: ~1.2x the Latin equivalent
+   Arabic script has taller ascenders and deeper descenders; at matched Latin
+   metrics it looks cramped and reads as lower quality.
+
+5. KEEP the existing "Translate to English" toggle with its "AR" language
+   badge — this is genuinely excellent and rare, and it directly removes the
+   main reason bilingual users avoid posting in Arabic. Two improvements:
+     - Make it more prominent (it's currently easy to miss).
+     - Add the reverse direction: show "ترجم إلى العربية" on English posts
+       when the viewer's locale is Arabic.
+
+Test with the existing Arabic post, and with a post that mixes Arabic prose
+and an English startup name in the same sentence.
+```
+
+## PROMPT C — Scope the Feed to Missions
+
+```text
+PAGE: Community (/community) — the feed structure and composer.
+
+THE PROBLEM
+The Community feed has no connection to what founders are actually doing.
+A founder working on Mission 4 opens this page and sees a single unrelated
+post about space food, from 19 days ago. There is nothing linking the
+community to the 15-mission journey that is the rest of the product.
+
+This is the structural miss. Mission context is the only thing that makes a
+small, early community feel alive — it converts "1 post" into "3 founders are
+on Mission 3 right now."
+
+THE FIX
+
+1. FEED SCOPING — replace the current Discussions / Q&A / Groups tabs with:
+
+     "My mission"  (DEFAULT) — posts from founders currently on the same
+                               mission as the viewer
+     "My circle"             — founders who started within the same 2 weeks
+     "All"                   — everything
+
+   Keep Q&A as a filter within these, not as a competing top-level tab.
+
+2. Every post shows the author's current mission as a chip next to their name:
+     "Mission 4 · Validation"
+   This single change does more for perceived activity than any amount of
+   seeding, because it turns strangers into peers at the same stage.
+
+3. COMPOSER — the page currently offers FOUR routes to create a post: a
+   centred "+ New Post" button, plus three Quick Actions in the sidebar (Ask
+   a Question / Share an Idea / Showcase Project).
+
+   Keep the three intent-led actions — they're the better pattern — and drop
+   the generic "New Post" button, or make it a container that opens those
+   three as a choice.
+
+   Each intent opens a SHORT STRUCTURED FORM, never a blank box:
+     Ask a Question   → What are you stuck on? · What have you tried? · Which
+                        mission is this for? (pre-filled)
+     Share an Idea    → The idea in one sentence · Who it's for · What you
+                        want feedback on
+     Showcase Project → What you built · Link · What kind of feedback you want
+
+   Category is set automatically by the intent. Right now the one existing
+   post — an idea pitch — is filed under "Help & Support" because the user
+   had to guess from a dropdown. Structured composers beat taxonomies users
+   must interpret.
+
+4. SEEDING — auto-post a weekly mission-linked prompt so the feed is never
+   empty, tagged to the relevant mission:
+     "Everyone on Mission 3: what surprised you most in your first customer
+      interview?"
+   These appear in "My mission" for exactly the founders they apply to.
+
+5. Never end the page in empty space. Below the feed, show founders on the
+   same mission the viewer could follow.
+```
+
+**Why this order.** A and B are independent of each other and both safe — ship them together if you like. C restructures the feed and will touch the post card that B just fixed, so do it last and re-check Arabic rendering afterwards.
+
+---
+---
+
+# Set 4 — Homepage / Landing Page
+
+Two changes to `/`. Prompt A is two contained bugs. Prompt B is the restructure — a bigger job, and the one that matters most for conversion.
+
+## PROMPT A — Two Landing Page Bugs
+
+```text
+PAGE: Homepage (/) — the final CTA band, and the route itself.
+
+THE PROBLEM — TWO ISSUES
+
+1. BLANK BUTTON. In the final CTA band ("Your startup starts here" on the dark
+   green gradient), there are two buttons. The first says "Go to dashboard →".
+   The second is a white button with NO LABEL AT ALL — an empty rounded
+   rectangle. It's the last thing a visitor sees before the footer. This is
+   either a missing translation string or a conditional render returning an
+   empty node.
+
+2. LOGGED-IN USERS GET THE MARKETING PAGE. A signed-in founder who is 63%
+   through their profile currently lands on the full public pitch — hero,
+   stat band, feature cards, mission & vision, "Why we built this," "Built
+   different," MENA market stats, final CTA, footer. That's roughly eight
+   screens of scroll selling a product they already signed up for.
+
+THE FIX
+
+1. Find the unlabelled button in the final CTA band. Either give it its
+   correct label — if it's meant to be a secondary action, "See how it works"
+   pointing at the How It Works page — or remove it. Then add a guard so a
+   button with an empty or missing label never renders at all:
+
+     if (!label?.trim()) return null;
+
+2. Redirect authenticated users from / to /dashboard. Keep the marketing
+   homepage reachable at / for logged-out visitors and via an explicit
+   "Home" link, but it should not be the default destination for someone
+   who's already signed in.
+
+3. While you're in there: the profile-completion banner ("You're 63% there —
+   let's finish your profile") is currently rendering on the PUBLIC marketing
+   homepage. It must never appear there. Gate it to authenticated app routes
+   only.
+```
+
+## PROMPT B — Restructure the Landing Page
+
+```text
+PAGE: Homepage (/) — full page restructure.
+
+THE PROBLEM
+The copy on this page is genuinely strong, but it's in the wrong order, and
+the product is completely invisible.
+
+  - The best sentence on the entire site — "We grew up watching brilliant
+    ideas die in group chats" — sits about 60% down the page inside "Why we
+    built this," where almost nobody reaches. Meanwhile the hero headline is
+    "StartPad turns ideas into startups," which could describe forty products.
+
+  - There is not ONE screenshot, mission map, or interactive element on the
+    entire page. Four feature cards, a mission statement, a vision statement,
+    a founding story, three "built different" cards, and market stats — and a
+    visitor still cannot picture what using StartPad is actually like.
+
+  - The numbers contradict each other. The stat band says "15+" missions. The
+    feature card below says "15 step-by-step missions." The story section says
+    "Fifteen real missions." Three different figures for the same fact, on one
+    page.
+
+THE FIX
+
+1. LEAD WITH THE GROUP-CHATS LINE.
+   Rebuild the hero around "We grew up watching brilliant ideas die in group
+   chats." Keep the "MADE IN EGYPT · BUILT FOR MENA" eyebrow above it — that
+   works well. Demote or replace the current generic headline.
+   Compress the three-line subhead to one line:
+     "From your first idea to your first customer, in 15 missions."
+   The eyebrow already carries the MENA framing; the subhead doesn't need to
+   repeat it.
+
+2. SHOW THE PRODUCT — add both of these:
+
+   a) An interactive hero element, working with NO account: the visitor types
+      their idea in one sentence and gets a live AI response — one strength,
+      one risk, and which mission they'd start on. This is a 30-second proof
+      that the AI Co-Founder is real, and it's worth more than every feature
+      card on the page combined.
+
+   b) The 15-mission path as a visual, replacing the "Our mission / Our
+      vision" block. Show all 15 missions grouped into their 8 phases
+      (Discovery, Analysis, Ideation, Validation, Business Model, Development,
+      Strategy, Launch), each with its point value, first one unlocked and the
+      rest in a subtle locked treatment. A visitor should be able to see the
+      shape of the journey — structured and sequential — before signing up.
+
+3. MOVE MISSION & VISION TO /about.
+   "To democratise startup building..." and "To make StartPad the #1 startup
+   platform in the Arab world" are written for grant committees, not for a
+   21-year-old deciding whether to click. They also currently sit ABOVE the
+   founding story, which is far more compelling. Move both off the homepage.
+
+4. FIX THE NUMBERS.
+   - Use "15" everywhere. Not "15+". The "+" reads as padding and costs you
+     the credibility a precise number buys.
+   - The stat band currently reads 15+ / 24-7 / 100% / MENA. "MENA" is not a
+     statistic — it's a word in a number slot, and it breaks the pattern.
+     Replace it with a real figure: countries served, founders enrolled, or
+     missions completed this month.
+   - Add source lines under the market stats (400M+ people, 70% under 35,
+     $3.5B VC funding 2024). One small line each. It costs nothing and turns
+     a claim into evidence.
+
+5. PRICING. The stat band says "100% FREE TO START." The word "start" implies
+   something later costs money, and there is no pricing link anywhere on the
+   page or in the footer. For the most fraud-literate cohort on the internet,
+   an implied paid tier with hidden pricing reads as a trap. Either say
+   "100% free, permanently" and mean it, or ship /pricing and link it in both
+   the nav and the footer.
+
+6. FOOTER SOCIAL. Currently LinkedIn, Instagram, Facebook. For MENA Gen Z the
+   order should be Instagram, TikTok, WhatsApp channel, X — with LinkedIn kept
+   for mentors and partners. Facebook is close to irrelevant for under-25s in
+   this region.
+
+KEEP — these all work and shouldn't change:
+   - The "MADE IN EGYPT · BUILT FOR MENA" eyebrow
+   - The two-tone green headline treatment
+   - "Built in Cairo. Designed for the entire Arab world."
+   - The type pairing and the restraint of the green palette
+   - The "Why we built this" copy itself — it's just in the wrong place
+```
+
+**Why this order.** A is two contained fixes with no design decisions in them — ship today. B is the biggest build in this document and deserves its own review cycle; the interactive hero element in particular should be reviewed on its own before the mission path is added.
+
+---
+---
+
+# Set 5 — Global Shell (Every Page)
+
+Two changes to the layout that wraps every authenticated page. These are the highest-leverage prompts in the set because they touch all ten screens at once.
+
+## PROMPT A — Navigation and Banner Diet
+
+```text
+PAGE: Global — the top navigation bar and profile banner, present on every
+authenticated page (Dashboard, Journey, Community, Mentoring, Collaboration
+Hub, Journey history, and currently the public homepage too).
+
+THE PROBLEM
+There is roughly 180px of fixed chrome before any content on every single
+page: an ~88px navigation bar plus a ~90px profile-completion banner. On a
+laptop that's a quarter of the viewport. On a phone it would be close to half.
+
+The nav currently holds NINE top-level items:
+  StartPad logo · Dashboard · My Startup Journey · Resources · Loadout ·
+  AI Tools · More ▾ · ENGLISH · 🔔 · Abdelrhman · Sign out
+
+Two specific problems in there:
+  - "Sign out" is a permanent top-level item, at the same visual weight as
+    your core product, sitting one target away from the user's own name. It's
+    the action people want roughly once a month.
+  - "More ▾" renders with a filled green active-state pill on EVERY page,
+    including pages that live inside it. So the nav never actually tells you
+    which page you're on.
+
+And the banner ("You're 63% there — let's finish your profile") asks for three
+things: Country, Industry, Startup stage. Three dropdowns. About thirty
+seconds of work — presented as a persistent progress bar with a checklist
+button, a snooze button, and a dismiss button. You are spending permanent
+screen space on every page to defer a half-minute task.
+
+THE FIX
+
+1. REDUCE THE NAV TO FIVE ITEMS:
+     Dashboard · Journey · Community · Mentors · Resources
+   Everything else — Loadout, AI Tools, settings, language, and Sign out —
+   moves into the avatar dropdown menu.
+
+2. MOVE "SIGN OUT" into the avatar dropdown, at the bottom, separated by a
+   divider. It should never be a top-level nav item.
+
+3. FIX THE ACTIVE STATE. Active styling belongs on the current page only. If
+   the current page lives inside a dropdown, highlight it inside the open
+   dropdown — do not permanently highlight the dropdown container.
+
+4. "LOADOUT" — this label doesn't communicate. It's gaming vocabulary (the kit
+   you equip before a match), and as a Gen-Z-native metaphor it's a defensible
+   choice, but nobody can guess what's inside it, and it sits next to plain
+   labels like "Resources" and "AI Tools" so it reads as inconsistency rather
+   than as a deliberate wink. Either rename it to what it actually contains,
+   or keep the name and add a one-line description in the dropdown and the
+   mobile menu.
+
+5. ONE LANGUAGE SWITCHER. There are currently two — "ENGLISH" in the nav and
+   "English" in the footer — with inconsistent casing. Keep one, in the avatar
+   menu.
+
+6. THE BANNER — solve the task instead of nagging about it:
+     - Put the three missing fields INLINE IN THE BANNER as dropdowns.
+       Country, Industry, Startup stage. Three taps, banner gone forever.
+     - Remove the "Open checklist" button — there's nothing to check off that
+       doesn't fit in the banner itself.
+     - "Remind me later" persists for 7 days. The X persists for the session
+       at minimum, not until the next page load.
+     - Once above 80% complete, collapse to a single slim line.
+     - NEVER render it on the public marketing homepage.
+
+7. MOBILE: the five nav items become a bottom tab bar. Everything else goes
+   into a sheet behind the avatar. The banner becomes one slim dismissible
+   line, never a stacked block.
+```
+
+## PROMPT B — Colour Hierarchy Pass
+
+```text
+PAGE: Global — every screen in the app.
+
+THE PROBLEM
+One green (#047857) is currently doing about eleven different jobs: primary
+buttons, active nav states, links, stat figures, tag chips, status badges,
+icons, progress bar fills, and section eyebrows are all the same saturated
+green.
+
+When everything is emphasised, nothing leads. The clearest symptom: on the
+Collaboration Hub, a red Delete button wins the entire screen — because
+nothing else has a hierarchy for it to compete against. On Mentoring, the
+"upcoming" and "pending" badges are both green with the same tick icon, so
+two genuinely different states look identical.
+
+THE FIX
+
+1. ESTABLISH THREE ACTION TIERS:
+     Primary   — filled green #047857. EXACTLY ONE per screen. Nothing else.
+     Secondary — outlined, green text on transparent.
+     Tertiary  — plain text, no container, no fill.
+
+   Audit every screen after this change. There should be exactly one obvious
+   "what do I do here" target per page. If you can't identify it, the page has
+   a hierarchy problem, not a colour problem.
+
+2. DE-GREEN THE NON-ACTIONS:
+     - Tag chips, eyebrows, and metadata → neutral grey, not green.
+     - Stat figures → navy #0A1D34, not green. Let size and a tabular
+       monospace face carry the weight instead of colour.
+     - Section labels and icons → neutral unless they're interactive.
+
+3. SEPARATE SEMANTIC COLOURS FROM BRAND COLOUR.
+   Success / warning / danger are a distinct set, used ONLY to signal state,
+   never for emphasis. Green-as-brand and green-as-success must be visually
+   distinguishable, or every confirmed state reads as a button.
+
+4. DESTRUCTIVE ACTIONS ARE NEVER FILLED BUTTONS.
+   Danger-coloured text or outline, inside an overflow menu, with a confirm
+   dialog that names the consequence. See Set 2 Prompt A.
+
+5. NEVER RELY ON COLOUR ALONE for state. Every status badge needs a distinct
+   ICON SHAPE as well as a distinct colour — see the six mentoring states in
+   Set 1 Prompt A.
+
+6. CHECK CONTRAST. Verify white text on #047857 meets 4.5:1. Check the actual
+   computed value rather than assuming — this is a common failure at this
+   saturation. Same for the green-on-white used for links and stat figures.
+```
+
+**Why this order.** A first — it's structural and affects what's on screen. B is a styling pass that should run over the reduced nav rather than the current one, or you'll be recolouring components you're about to delete.
+
+---
+---
+
+# Set 6 — Journey History
+
+One change to `/journey/history`. This is already the best-built page in the product — correct empty state anatomy with an icon, a plain heading, one explanatory line, and one clear action. These are refinements, not repairs.
+
+## PROMPT A — Polish Journey History
+
+```text
+PAGE: Journey history (/journey/history).
+
+CONTEXT
+This page is already the best-executed screen in StartPad. Its empty state —
+icon, "No submissions yet," "Submit your first mission and its recap will be
+saved here," and a single "Go to my journey →" button — is exactly the pattern
+every other empty state in the app should copy. Three refinements only.
+
+THE FIXES
+
+1. REMOVE THE "REFRESH" BUTTON.
+   A manual refresh control tells the user the app doesn't know when its own
+   data changed. Replace it with automatic refetching:
+     - on window focus
+     - after any mission submission
+     - on route entry
+   If a manual control is genuinely needed for long sessions, make it a small
+   icon button, not a bordered control sitting at the same visual weight as
+   the page title.
+
+2. FIX THE VOCABULARY DRIFT.
+   Two words describe the same object in two consecutive lines:
+     Subtitle:    "Every RECAP you submitted, with the answers and evidence..."
+     Empty state: "No SUBMISSIONS yet"
+   Pick one word. Use it in the nav label, the page title, the subtitle, the
+   empty state, and every button. Then build a short glossary and enforce it
+   across all copy in the app — vocabulary drift is how a product starts
+   feeling improvised.
+
+3. MAKE THE EMPTY STATE SELL THE FEATURE.
+   Below the existing message, add a greyed-out SAMPLE recap card showing what
+   a real one looks like: the mission name, the founder's answers, the AI
+   score, and the evidence attached. Label it "Example."
+   Empty states that demonstrate value outperform empty states that only
+   explain absence — and right now a founder has no idea what they're being
+   asked to work toward.
+
+4. RELATED (information architecture, may need its own pass):
+   "Dashboard," "My Startup Journey," and "Journey history" are three
+   destinations with overlapping names, and a founder can't predict which
+   holds what. History should be a TAB INSIDE Journey, not a separate
+   top-level destination:
+     Dashboard → what to do right now, one next-action card
+     Journey   → the 15 missions, with "History" as a tab within it
+   Tell me if this conflicts with existing routing before you change it.
+```
+
+**Why this order.** Standalone — no dependencies. Point 4 touches routing, so raise it before implementing if the route structure is load-bearing elsewhere.
+
+---
+---
+
+# Set 7 — Whole App: Arabic and Mobile
+
+Two audits rather than two builds. Both span every page. **These two are worth more than anything else in this document**, because they cover the two conditions most of your actual users are in — on a phone, and possibly in Arabic — and neither has been verified at all.
+
+## PROMPT A — Verify the Arabic Interface End to End
+
+```text
+PAGE: Every page in the app, in Arabic.
+
+CONTEXT
+StartPad has a language switcher labelled "ENGLISH" in the nav, and per-post
+content translation in Community ("Translate to English" with an AR badge).
+So content translation clearly exists. But INTERFACE translation is unverified
+— I have never seen a single screen in Arabic.
+
+For a product positioned as "Built in Cairo. Designed for the entire Arab
+world," this is the single most important thing on the whole review list after
+the outright bugs. Half-working RTL is worse than English-only, because it
+signals the Arabic experience was an afterthought.
+
+THE TASK
+Switch the app to Arabic, walk every screen, and report what breaks. Check all
+of the following, then fix what fails:
+
+1. COVERAGE
+   Does the ENTIRE interface translate, or only some strings? List every
+   screen and component still rendering English. Include: nav, the profile
+   banner, buttons, form labels, placeholder text, empty states, error
+   messages, toasts, modals, date labels, and the footer.
+
+2. DIRECTION
+   Does dir="rtl" apply to the whole document — nav, banner, cards, forms,
+   dropdowns, modals, toasts, the floating chat bubble? Or only to body text?
+   Every physical CSS property must be logical (margin-inline-start,
+   padding-inline-end, text-align: start, inset-inline-start).
+
+3. ICON MIRRORING
+   These MUST mirror: arrows, chevrons, back buttons, progress bar fill
+   direction, the mission path direction, breadcrumb separators.
+   These must NOT mirror: the StartPad logo, clock faces, media play buttons,
+   phone numbers, email addresses, code blocks.
+
+4. TYPOGRAPHY
+   Is an Arabic-native font actually loaded — IBM Plex Sans Arabic, Noto Sans
+   Arabic, or Cairo — at its own scale (~1.1x size, ~1.2x line-height versus
+   Latin)? Never rely on a Latin font's Arabic fallback; it looks cheap and
+   it's the fastest way to signal the Arabic version is second-class.
+
+5. FORMATTING
+   Are dates, numbers, and currency formatted per locale via Intl.DateTimeFormat
+   and Intl.NumberFormat? Confirm which numeral system you're using — Eastern
+   Arabic (٠١٢٣) or Western (0123) — and be consistent. Most MENA tech
+   products use Western numerals; pick one deliberately.
+
+6. MIXED DIRECTION
+   Do strings mixing scripts render correctly — an English startup name inside
+   an Arabic sentence, a Latin @handle, a URL? These need <bdi> wrappers.
+
+7. PLURALS
+   Arabic has six plural forms. Confirm Intl.PluralRules is used everywhere,
+   not string concatenation. See Set 3 Prompt A.
+
+8. ROUTING
+   Is the locale in the URL (/ar/*)? Is the choice persisted per user account,
+   not just in localStorage? Are hreflang tags present for SEO?
+
+9. Consolidate the two language switchers (nav "ENGLISH", footer "English")
+   into one, per Set 5 Prompt A.
+
+Report screen by screen. I'd rather have a complete list of what's broken than
+a partial fix.
+```
+
+## PROMPT B — Mobile Audit at 390px
+
+```text
+PAGE: Every page in the app, at 390px viewport width (iPhone 14/15 standard).
+
+CONTEXT
+Every screen I have reviewed is desktop — ten screens across two rounds, all
+of them wide. StartPad's audience is MENA founders aged roughly 18-30, who are
+overwhelmingly mobile-first. The desktop review cannot stand in for this.
+
+THE TASK
+Audit every screen at 390px and fix what breaks. Specific things I expect to
+find, based on the desktop layouts:
+
+1. CHROME — currently ~180px of fixed header (88px nav + 90px profile banner).
+   At 390x844 that's over 20% of the viewport before any content, and it's on
+   every page. Per Set 5 Prompt A: nav becomes a 5-item bottom tab bar, banner
+   becomes one slim dismissible line.
+
+2. COLLABORATION HUB — the 5-button grid on the project card (Team, Files,
+   Whiteboard, Video calls, Activity) cannot shrink to fit. It must reflow, or
+   better, move into the project detail view entirely per Set 2 Prompt B.
+
+3. COMMUNITY — the 4-card stat row must reflow, not shrink to unreadable. Per
+   Set 3 Prompt A it should be removed anyway. The right sidebar (Trending
+   Tags, Top Contributors, Quick Actions) must drop below the feed, not
+   compress alongside it.
+
+4. MENTORING — session cards must stack with the date, time, TIMEZONE, and
+   the primary action all visible without horizontal scroll. Per Set 1
+   Prompt C.
+
+5. TAP TARGETS — every interactive element at least 44x44px with real spacing
+   between adjacent targets. Specifically: the Delete action must not sit
+   adjacent to any common action, and the banner's three controls (Open
+   checklist / Remind me later / X) must not be crammed together.
+
+6. MODALS — convert every centred desktop modal to a bottom sheet, draggable
+   to dismiss. Centred modals on mobile put the primary action under the
+   thumb-unreachable zone.
+
+7. FLOATING CHAT BUBBLE — it currently overlaps the Trending Tags card on
+   desktop Community. On mobile it must not collide with the bottom tab bar or
+   any primary action. Give it a safe-area inset and shrink or hide it on
+   scroll.
+
+8. LANDING PAGE — it's already very long on desktop (roughly eight screens).
+   On mobile it will be enormous. Compress it per Set 4 Prompt B, and add a
+   sticky bottom CTA so the primary action is always reachable.
+
+9. NO HORIZONTAL PAGE SCROLL anywhere. Wide content (tables, the mission path,
+   code blocks) scrolls inside its own container, never the body.
+
+10. Check the same screens at 360px (common Android) and with the OS text size
+    set to large — a Gen Z audience uses accessibility text sizing far more
+    than most teams assume.
+
+Report each screen with a before/after and a list of what you changed.
+```
+
+**Why this order.** Run A and B as separate audits, not together — each produces a long findings list and combining them makes both harder to review. If you only have time for one, run **B** first: more of your users are on a phone than are on Arabic today, but both matter and both are currently unverified.
+
+---
+
+## Suggested sequence across all seven sets
+
+| Order | What | Why |
+|---|---|---|
+| 1 | Set 1 · A | The only thing actively lying to users |
+| 2 | Set 2 · A | Ten minutes, removes the worst first impression |
+| 3 | Set 4 · A | Two contained bugs, no design decisions |
+| 4 | Set 3 · A | Quick, stops the page discouraging posts |
+| 5 | Set 5 · A | Structural, affects every page below |
+| 6 | Set 3 · B | Arabic rendering — highest value per hour |
+| 7 | Set 7 · B | Mobile audit, before building more surface |
+| 8 | Set 1 · B, C | Mentoring rebuild |
+| 9 | Set 2 · B | Project card rebuild |
+| 10 | Set 4 · B | Landing restructure — biggest build |
+| 11 | Set 3 · C | Feed scoping |
+| 12 | Set 5 · B, Set 6 · A, Set 7 · A | Polish and audits |
+
+Items 1–4 are all same-day fixes and could ship in a single session.

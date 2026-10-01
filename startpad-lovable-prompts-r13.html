@@ -1,0 +1,447 @@
+<title>StartPad — Rebrand</title>
+<style>
+  :root{--paper:#F2F3F8;--surface:#FFFFFF;--surface-2:#EAEBF3;--ink:#14131C;--ink-soft:#4E4C60;--ink-faint:#7B7990;
+  --rule:#D9DAE6;--rule-soft:#E7E8F0;--accent:#4530E8;--accent-ink:#2E1FB0;--on-accent:#FFFFFF;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0F0E16;--surface:#191823;--surface-2:#221F30;
+  --ink:#ECEBF3;--ink-soft:#A9A7BC;--ink-faint:#7D7B92;--rule:#2E2B3D;--rule-soft:#24222F;--accent:#9A88FF;
+  --accent-ink:#C3B8FF;--on-accent:#14131C;}}
+  :root[data-theme="dark"]{--paper:#0F0E16;--surface:#191823;--surface-2:#221F30;--ink:#ECEBF3;--ink-soft:#A9A7BC;
+  --ink-faint:#7D7B92;--rule:#2E2B3D;--rule-soft:#24222F;--accent:#9A88FF;--accent-ink:#C3B8FF;--on-accent:#14131C;}
+  *{box-sizing:border-box}html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+  body{margin:0;background:var(--paper);color:var(--ink);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Arabic",Arial,sans-serif}
+  .wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem 6rem}
+  h1,h2,h3{text-wrap:balance;margin:0;line-height:1.15;letter-spacing:-.025em}
+  h1{font-size:clamp(2.1rem,5.5vw,3.2rem);font-weight:800;letter-spacing:-.04em;padding-block:3.25rem 1rem}
+  h2{font-size:clamp(1.5rem,3.2vw,2rem);font-weight:800;margin-top:3rem;padding-top:2.25rem;border-top:2px solid var(--ink)}
+  h3{font-size:1.12rem;font-weight:700;margin-top:2.5rem;color:var(--accent-ink);
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:-.01em}
+  p{margin:.85rem 0}
+  blockquote{margin:.9rem 0;padding:.2rem 0 .2rem 1rem;border-inline-start:3px solid var(--accent);color:var(--ink-soft)}
+  a{color:var(--accent);text-underline-offset:2px}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+  hr{border:0;border-top:1px solid var(--rule-soft);margin:2.5rem 0}
+  strong{font-weight:680}
+  em{color:var(--ink-soft)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--surface-2);
+  padding:.1em .35em;border-radius:2px}
+  .table-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:2px;background:var(--surface);margin:1.25rem 0}
+  table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+  th,td{text-align:start;padding:.6rem .8rem;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+  th{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-faint);font-weight:600;background:var(--surface-2)}
+  tbody tr:last-child td{border-bottom:0}
+  .prompt{border:1px solid var(--rule);border-radius:3px;background:var(--surface);overflow:hidden;margin:1rem 0 2rem}
+  .prompt>header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.6rem .9rem;
+  background:var(--surface-2);border-bottom:1px solid var(--rule)}
+  .prompt>header .label{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.7rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-faint);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .prompt>header .label b{color:var(--accent-ink);font-weight:700}
+  .copy{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+  background:transparent;border:1px solid var(--rule);color:var(--ink-soft);padding:.25rem .55rem;border-radius:2px;
+  cursor:pointer;white-space:nowrap;transition:background .15s ease,color .15s ease}
+  .copy:hover{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+  pre{margin:0;padding:1rem .9rem;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:.79rem;line-height:1.56;color:var(--ink);white-space:pre;background:var(--surface)}
+  pre code{background:none;padding:0;font-size:inherit}
+</style>
+<div class="wrap">
+<h1>StartPad — Lovable Prompts (Round 13)</h1>
+<p>Four prompts: token migration, component rollout, social assets, and the font pipeline.</p>
+<p>Extracted from the brand guidelines PDF you uploaded. (The Google Drive folder is blocked by this environment's network policy, so everything below comes from the PDF itself — if the folder holds additional rules, send them and I'll fold them in.)</p>
+<hr>
+<h2>What the guidelines contain</h2>
+<p><strong>Two typefaces: Satoshi for Latin, Zain for Arabic.</strong> The PDF only embedded Zain, so my first read of this was wrong — the font packages settle it. Verified from the font binaries:</p>
+<div class="table-scroll"><table><thead><tr><th></th><th>Satoshi</th><th>Zain</th></tr></thead><tbody><tr><td>Latin A–Z a–z</td><td>100%</td><td>100%</td></tr><tr><td>Latin Extended-A</td><td>89.8%</td><td>7.8%</td></tr><tr><td><strong>Arabic (U+0600–06FF)</strong></td><td><strong>0%</strong></td><td>42.6%</td></tr><tr><td>Arabic Presentation Forms-B</td><td>0%</td><td>61.8%</td></tr><tr><td>Arabic-Indic digits</td><td>0%</td><td>100%</td></tr><tr><td>Styles supplied</td><td>10 (incl. italics)</td><td>8</td></tr><tr><td>Shaping tables (GSUB/GPOS)</td><td>present</td><td>present</td></tr><tr><td>Licence</td><td><strong>ITF / Fontshare — proprietary</strong></td><td>SIL OFL 1.1</td></tr></tbody></table></div>
+<p>Satoshi has no Arabic at all, and its geometric letterforms match the new <code>STARTPAD</code> wordmark. Zain has the Arabic and the Arabic-Indic digits. So it's a bilingual pairing, not one family doing both.</p>
+<p><strong>Palette</strong>, by frequency of use in the document:</p>
+<div class="table-scroll"><table><thead><tr><th>Role</th><th>Hex</th><th>Notes</th></tr></thead><tbody><tr><td>Brand lime</td><td><code>#CBF24A</code></td><td>The mark. 66 uses.</td></tr><tr><td>Ink / near-black</td><td><code>#0B0D10</code></td><td>Wordmark and headings. 198 uses.</td></tr><tr><td>White</td><td><code>#FFFFFF</code></td><td>237 uses.</td></tr><tr><td>Indigo</td><td><code>#3418E0</code></td><td>Secondary accent. 59 uses — a real system colour, not decoration.</td></tr><tr><td>Grey 500</td><td><code>#8A8F98</code></td><td>58 uses.</td></tr><tr><td>Paper</td><td><code>#F4F4F2</code></td><td>Off-white page ground.</td></tr><tr><td>Surface</td><td><code>#EDEDEA</code></td><td></td></tr><tr><td>Grey 400</td><td><code>#A5A9AF</code></td><td></td></tr><tr><td>Grey 600</td><td><code>#5B6068</code></td><td></td></tr><tr><td>Grey 700</td><td><code>#3D424A</code></td><td></td></tr><tr><td>Cyan</td><td><code>#00D4F0</code> / <code>#00A8C4</code></td><td>Sparingly used.</td></tr></tbody></table></div>
+<p>There's also a gradient running indigo → blue → cyan → teal → green → lime (<code>#3418E0</code> … <code>#CBF24A</code>), appearing once as a single swatch.</p>
+<hr>
+<h2>The one thing that will break if you miss it</h2>
+<p><strong>Lime on white is a contrast ratio of 1.29:1.</strong> WCAG AA requires 4.5:1 for text. Lime text on a white background is very close to invisible, and lime is your primary brand colour — so the natural instinct (make the buttons lime, make the links lime) produces an unusable site.</p>
+<p>The numbers:</p>
+<div class="table-scroll"><table><thead><tr><th>Pairing</th><th>Ratio</th><th>Verdict</th></tr></thead><tbody><tr><td>Lime <code>#CBF24A</code> on white</td><td><strong>1.29:1</strong></td><td>Fails everything. Never use.</td></tr><tr><td>Lime on ink <code>#0B0D10</code></td><td><strong>15.1:1</strong></td><td>Excellent</td></tr><tr><td>Ink <code>#0B0D10</code> on lime</td><td><strong>15.1:1</strong></td><td>Excellent — this is the button</td></tr><tr><td>Indigo <code>#3418E0</code> on white</td><td><strong>8.9:1</strong></td><td>Excellent</td></tr><tr><td>White on indigo</td><td><strong>8.9:1</strong></td><td>Excellent</td></tr></tbody></table></div>
+<p>So the working system is:</p>
+<p>- <strong>Lime is a surface, not ink.</strong> It fills things — buttons, highlights, badges — and always carries <strong>near-black text on top</strong>. It is never text, never a border on white, never an icon on white. - <strong>Indigo is the accessible action colour.</strong> White on indigo, or indigo as a link on white. It carries anything lime can't. - <strong>Near-black is the body ink.</strong></p>
+<p>That's not a limitation of the brand — the logo already does exactly this, lime mark beside near-black wordmark. It just has to be stated explicitly or it will be got wrong across forty components.</p>
+<hr>
+<hr>
+<h2>PROMPT A — Migrate the Design Tokens</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT A</b> · </span><button class="copy" type="button">Copy</button></header><pre><code>TASK: The brand has changed. Replace the entire colour and type system with
+the new one. Tokens first — no component work in this prompt.
+
+OLD (remove every trace):
+  navy    #0A1D34
+  green   #047857
+  and any hardcoded variants of them
+
+NEW PALETTE — define as CSS custom properties in one file, and mirror into the
+Tailwind config so utilities are generated:
+
+  BRAND
+    --lime            #CBF24A     primary brand — a SURFACE colour, see rules
+    --ink             #0B0D10     near-black, body and headings
+    --indigo          #3418E0     accessible action colour
+    --cyan            #00D4F0     accent, sparing
+    --cyan-deep       #00A8C4
+
+  NEUTRALS
+    --white           #FFFFFF
+    --paper           #F4F4F2     page background
+    --surface         #EDEDEA     cards, raised areas
+    --grey-400        #A5A9AF
+    --grey-500        #8A8F98     secondary text
+    --grey-600        #5B6068
+    --grey-700        #3D424A
+
+  GRADIENT (one swatch, from the guidelines)
+    --gradient-brand: linear-gradient(90deg, #3418E0, #2B6BFF, #12B2F5,
+                      #06DCC5, #4CE885, #CBF24A);
+
+CONTRAST RULES — encode these, don't leave them to judgement:
+
+  1. LIME IS NEVER TEXT AND NEVER AN ICON ON A LIGHT BACKGROUND.
+     Lime on white measures 1.29:1. WCAG AA needs 4.5:1. It is effectively
+     invisible.
+  2. LIME IS A FILL. Anything lime carries --ink on top of it (15.1:1).
+     Primary button = lime background, near-black label.
+  3. INDIGO IS THE ACCESSIBLE ACTION COLOUR — white on indigo, or indigo as a
+     link on white, both 8.9:1. Use it wherever a coloured element must sit on
+     a light ground: links, focus rings, inline actions, chart series.
+  4. Never place lime on cyan, lime on paper, or lime on any neutral lighter
+     than --grey-600.
+
+  Add a build-time or lint check that fails on --lime used as a text or border
+  colour against a light background. This rule will otherwise be broken within
+  a week.
+
+SEMANTIC TOKENS — map roles, so components never reference raw brand colours:
+
+    --bg-page          --paper
+    --bg-surface       --white
+    --bg-raised        --surface
+    --text-primary     --ink
+    --text-secondary   --grey-500
+    --text-muted       --grey-400
+    --border           --surface
+    --action-primary-bg      --lime
+    --action-primary-text    --ink
+    --action-secondary-bg    --indigo
+    --action-secondary-text  --white
+    --link             --indigo
+    --focus-ring       --indigo
+
+  Keep success / warning / danger as a SEPARATE semantic set. Do not press lime
+  into service as "success" — a brand colour doing double duty as a state
+  colour is how the previous green ended up meaning eleven different things.
+
+TYPOGRAPHY — two self-hosted families, resolved automatically by script.
+
+  Satoshi carries Latin. Zain carries Arabic. Satoshi contains ZERO Arabic
+  glyphs, so an Arabic page set in Satoshi renders as empty boxes.
+
+  Do NOT branch fonts per locale in components. Use ONE family name and let
+  unicode-range pick the right file per character — this also handles mixed
+  strings (an English product name inside an Arabic sentence) correctly, with
+  no conditional logic anywhere:
+
+    /* Latin → Satoshi */
+    @font-face {
+      font-family: 'StartPad Sans';
+      src: url('/fonts/Satoshi-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+      unicode-range: U+0000-05FF, U+2000-206F, U+20A0-20CF, U+2100-214F;
+    }
+    /* Arabic → Zain */
+    @font-face {
+      font-family: 'StartPad Sans';
+      src: url('/fonts/Zain-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+      unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF,
+                     U+FB50-FDFF, U+FE70-FEFF;
+    }
+    /* repeat both blocks for every weight used */
+
+    --font-display: 'StartPad Sans', system-ui, sans-serif;
+    --font-body:    'StartPad Sans', system-ui, sans-serif;
+
+  USE ONLY WEIGHTS BOTH FAMILIES HAVE. Satoshi ships Light 300, Regular 400,
+  Medium 500, Bold 700, Black 900. Zain ships ExtraLight 200, Light 300,
+  Regular 400, Bold 700, ExtraBold 800, Black 900 — it has NO 500. If the UI
+  uses Medium, Arabic will synthesise or snap to another weight and look
+  visibly different from the English.
+    Permitted weights: 300, 400, 700, 900. Do not use 500.
+
+  - Remove every previous Arabic stack — IBM Plex Sans Arabic, Noto Sans
+    Arabic, Cairo. Zain replaces all of them.
+  - Arabic still needs its own size and leading scale (~1.1x size, ~1.2x
+    line-height) — set it on [lang="ar"], not in the font declaration.
+  - Satoshi is NOT on Google Fonts and Zain must match it, so BOTH are
+    self-hosted. Do not load either from a CDN.
+  - The wordmark is ALL CAPS with wide tracking ("STARTPAD"). That is the LOGO
+    lockup only — do not apply caps-and-tracking to headings.
+
+DARK MODE
+  Ink #0B0D10 becomes the page ground, paper and surface invert to dark greys,
+  and lime stays lime — it is designed for dark grounds and performs best there.
+  Indigo needs lightening on dark to stay legible; derive a --indigo-light
+  rather than reusing #3418E0 on near-black.
+
+DELIVERABLE FOR THIS PROMPT: the token files and the Tailwind config only,
+plus a single swatch page at /styleguide rendering every token with its hex,
+its contrast ratio against the grounds it is allowed on, and a pass/fail mark.
+Do not touch components yet.</code></pre></div>
+<hr>
+<hr>
+<h2>PROMPT B — Roll the Brand Through the Product</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT B</b> · </span><button class="copy" type="button">Copy</button></header><pre><code>TASK: Apply the new tokens across every component and page. Audit-driven —
+find every hardcoded colour first, then replace.
+
+STEP 1 — AUDIT
+  Search the codebase and both locale files for:
+    #0A1D34, #047857, and every near variant
+    any hex literal in a component (they should all be tokens)
+    "navy", "emerald", "green-" utility classes
+    inline style colour values
+    SVG fills in icons and illustrations
+    chart colour arrays
+    email template colours
+    the OG share image generator
+  List every hit with file and line BEFORE changing anything. Report the count.
+
+STEP 2 — LOGO REPLACEMENT
+  The mark and wordmark have both changed. The old mark was a navy road/arrow
+  forming an S with a teal leaf; the new one is a lime interlocking S/P form.
+  The wordmark changed from "StartPad" title case to "STARTPAD" all caps.
+
+  Replace every instance:
+    - Public nav and app nav
+    - Footer
+    - Favicon and all touch icons (16, 32, 180, 192, 512)
+    - The auth pages
+    - The PDF export template (Round 11 Prompt B)
+    - Email templates
+    - OG / social share images
+    - Loading and splash states
+    - The manifest and any app-store assets
+
+  Produce and store: SVG primary, SVG horizontal lockup, SVG mark-only,
+  and a mono version. Check nothing still references the old asset path.
+
+STEP 3 — COMPONENT MAPPING
+  Work through these in order, using semantic tokens only:
+
+    Buttons     primary   = lime bg + ink text
+                secondary = indigo bg + white text
+                tertiary  = ink text, no fill
+                destructive stays in the danger set, never lime
+    Links       indigo, underline on hover
+    Focus rings indigo, 2px, 2px offset — visible on every interactive element
+    Nav         ink on paper; active item marked with a lime underline or a
+                lime pill carrying ink text, never lime text
+    Cards       white on paper, --surface border
+    Badges      lime bg + ink text for positive; the semantic set for states
+    Progress    lime fill on a --surface track
+    Charts      indigo → cyan → lime as the series order; that is the
+                gradient's own sequence and it stays distinguishable in
+                greyscale
+    Inputs      --surface border, indigo focus ring
+    Mission
+    roadmap     completed = lime fill; current = indigo outline;
+                locked = grey. Keep the two lock states distinct (Round 12).
+
+STEP 4 — THE GRADIENT
+  Use it sparingly — a hero band, the OG image, a report cover. Never behind
+  body text. Never as a button fill; a gradient button cannot guarantee a
+  contrast ratio across its own width.
+
+STEP 5 — VERIFY
+  - Run an automated contrast check across every rendered page. Report any
+    pairing below 4.5:1 for text or 3:1 for UI. Zero failures is the bar.
+  - Confirm no lime text or lime icon sits on any light ground anywhere.
+  - Check both light and dark, both English and Arabic.
+  - Screenshot every page before and after and report the list.
+
+STEP 6 — ANYTHING WITH THE OLD BRAND BAKED IN
+  Illustrations, the Knowledge Hub cover images, the AI Tools gradient header
+  (which is currently purple and was already off-system), the empty-state
+  icons. List what needs redrawing rather than recolouring.</code></pre></div>
+<hr>
+<hr>
+<h2>PROMPT C — Social Media Assets and Profiles</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT C</b> · </span><button class="copy" type="button">Copy</button></header><pre><code>TASK: Produce the social profile assets and copy for the new brand, and list
+what needs uploading where.
+
+CURRENT CHANNELS: Instagram, TikTok, X, LinkedIn (per the site footer).
+
+═══════════════════════════════════════════════════════════════
+1. PROFILE IMAGE — one design, all platforms
+═══════════════════════════════════════════════════════════════
+
+  The lime mark alone, centred, on near-black #0B0D10.
+  - Mark occupies ~60% of the frame; the rest is breathing room
+  - Every platform crops to a circle — keep the mark well inside a centred
+    circular safe area, and test it cropped, not square
+  - Never put the full wordmark in a profile image; "STARTPAD" is unreadable
+    at 40px
+  - Export at 1000×1000 PNG, plus 400×400 and 200×200
+
+═══════════════════════════════════════════════════════════════
+2. COVER IMAGES — per platform, exact dimensions
+═══════════════════════════════════════════════════════════════
+
+  LinkedIn company banner    1128 × 191   (very wide, very short)
+  X header                   1500 × 500
+  Facebook (if used)         820 × 312
+  YouTube (if used)          2560 × 1440, safe area 1546 × 423
+
+  DESIGN, one concept adapted per ratio:
+    Ground:   near-black #0B0D10
+    Element:  the brand gradient as a thin band or an abstract path across
+              the lower third — this is where the gradient earns its place
+    Left:     horizontal lockup — lime mark + white "STARTPAD"
+    Right:    one line, in Zain Black, white:
+                "From idea to launched startup — in 15 guided missions"
+    Optional: a small lime chip reading "Built in Cairo · For MENA founders"
+
+  RULES
+    - LinkedIn's 1128×191 is extremely short. Do not shrink the wide design
+      into it — lay it out separately, logo left, one short line right.
+    - Every platform overlays the profile picture on the cover, usually lower
+      left. Keep that corner empty in every version.
+    - Mobile crops covers harder than desktop. Keep all content inside the
+      centre 60% horizontally.
+    - Produce an Arabic version of each with the layout mirrored RTL.
+
+═══════════════════════════════════════════════════════════════
+3. BIO COPY — written to each platform's character limit
+═══════════════════════════════════════════════════════════════
+
+  INSTAGRAM (150 chars)
+    From idea to launched startup — 15 guided missions, AI feedback, and
+    mentors who know MENA. Built in Cairo 🇪🇬
+    → startpad.me
+
+  TIKTOK (80 chars)
+    15 missions from idea to launch. Built in Cairo, for MENA founders.
+
+  X (160 chars)
+    Turning ideas into startups across MENA — 15 guided missions with AI
+    feedback and real mentors. Built in Cairo. startpad.me
+
+  LINKEDIN TAGLINE (120 chars)
+    The guided path from idea to launched startup, built for MENA founders.
+
+  LINKEDIN ABOUT (~2,000 chars — write in full, structured as):
+    Para 1  the group-chats origin line, adapted
+    Para 2  what StartPad is: 15 missions, AI evaluation, mentors, community
+    Para 3  who it's for and where
+    Para 4  what's free and what's paid — be accurate, see Round 12
+    Close   startpad.me
+
+  Produce an Arabic version of every bio. Not a translation of the English —
+  written natively, at the same character limits, which are tighter in Arabic
+  than a word-for-word rendering allows.
+
+═══════════════════════════════════════════════════════════════
+4. POST TEMPLATES — so the brand survives daily posting
+═══════════════════════════════════════════════════════════════
+
+  Three reusable templates, each in 1080×1080 and 1080×1920:
+    a) Quote / insight  — near-black ground, lime accent rule, Zain Black text
+    b) Data point       — one big number in lime on near-black, source line
+                          beneath (ties to the first-party data work)
+    c) Founder feature  — photo, name, city, their mission number
+
+  Every template: logo bottom-left, generous margins, and text large enough
+  to read in a feed at thumbnail size. Deliver as editable files, not flats.
+
+═══════════════════════════════════════════════════════════════
+5. UPLOAD CHECKLIST
+═══════════════════════════════════════════════════════════════
+
+  Per platform: profile image · cover image · bio · link in bio · pinned post.
+  Also update: the OG share image the site generates, the favicon set, the PDF
+  template logo, email header logo, and any app-store listing.
+
+  Report which assets you produced and which need a designer.</code></pre></div>
+<hr>
+<hr>
+<hr>
+<h2>PROMPT D — Build the Font Pipeline</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT D</b> · </span><button class="copy" type="button">Copy</button></header><pre><code>TASK: Prepare and self-host both font families. The supplied packages are
+desktop formats — shipping them to the browser as-is would be a mistake.
+
+WHAT WAS SUPPLIED
+  Zain      8 TTF files   (SIL OFL 1.1, OFL.txt included)
+  Satoshi  10 OTF files   (Indian Type Foundry / Fontshare, NO licence file)
+  2.0 MB total, no WOFF2.
+
+1. CONVERT TO WOFF2 — required, not optional.
+   TTF and OTF on the web are roughly 2x the size of WOFF2 and are not the web
+   format. Your audience is mobile-first on 4G in MENA; this is the single
+   biggest performance item in the rebrand.
+     woff2_compress Satoshi-Regular.otf   → Satoshi-Regular.woff2
+   Convert only the weights actually used: 300, 400, 700, 900 for each family,
+   plus italics only if the design genuinely uses them. Eight files, not
+   eighteen.
+
+2. SUBSET.
+   Satoshi: keep Latin, Latin Extended-A, punctuation, currency symbols.
+   Zain: keep Arabic, Arabic Presentation Forms-B, Arabic-Indic digits, and
+   basic Latin (Arabic pages still contain Latin product names and URLs).
+   Drop unused blocks. Subsetting plus WOFF2 should take the total web payload
+   from ~2 MB to roughly 150-250 KB across all weights.
+
+   CAUTION: do not over-subset Zain. Arabic shaping needs the GSUB and GPOS
+   tables and the full set of contextual forms — a naive subset that strips
+   them produces disconnected letterforms, which is the classic broken-Arabic
+   bug. Use a subsetter with layout-feature awareness (pyftsubset with
+   --layout-features='*') and verify visually afterwards.
+
+3. PRELOAD only the two files needed for first paint — Satoshi Regular and
+   Satoshi Black — with &lt;link rel="preload" as="font" crossorigin&gt;. Do not
+   preload the Arabic files on an English page; unicode-range already prevents
+   them downloading.
+
+4. LICENSING — resolve before launch.
+   Zain is SIL OFL 1.1. Ship OFL.txt alongside the font files in the deployed
+   asset directory. That is a condition of the licence.
+
+   Satoshi is NOT open source. Its embedded licence reads: "This Font Software
+   is protected under domestic and international trademark and copyright law."
+   It comes from Indian Type Foundry via Fontshare, whose terms permit free
+   personal and commercial use including web embedding — but:
+     - No licence file was included in the package. Download the Fontshare
+       licence from fontshare.com/terms and keep it with the fonts.
+     - Confirm self-hosting and web embedding are covered for commercial use
+       before shipping, and keep a dated copy of the terms you relied on.
+     - Satoshi cannot be redistributed the way an OFL font can, so do not
+       commit it to a public repository without checking that first.
+   Flag this to whoever owns legal. It is a five-minute check now and an
+   awkward one later.
+
+5. VERIFY, in the browser, not just in the build:
+     - An English page renders in Satoshi
+     - An Arabic page renders in Zain, correctly SHAPED and CONNECTED
+     - A mixed string ("StartPad — منصة رواد الأعمال") renders each script in
+       its own family, on one line, with correct bidirectional order
+     - Arabic-Indic digits render if you use them
+     - No FOIT: text is visible during load via font-display: swap
+     - Network panel: only the needed files download per locale
+     - Total font payload under 300 KB
+
+  Report the final file list, per-file sizes, and the total.</code></pre></div>
+<hr>
+<h2>Two things worth confirming</h2>
+<p><strong>Is the AI Tools purple header staying?</strong> It was already outside the old system, and the new brand has its own indigo <code>#3418E0</code>. Simplest path is to fold that page into the new tokens and drop the bespoke gradient — otherwise you have two unrelated purples.</p>
+<p><strong>Weight scale.</strong> Satoshi and Zain overlap on 300 / 400 / 700 / 900 only — Zain has no Medium 500. Decide now whether the UI lives inside those four weights, because adding 500 later means Arabic silently diverges from English on every screen that uses it.</p>
+</div>
+<script>document.querySelectorAll(".prompt").forEach(function(b){var t=b.querySelector(".copy"),p=b.querySelector("pre");
+if(!t||!p)return;t.addEventListener("click",function(){var x=p.textContent,d=function(){t.textContent="Copied";
+setTimeout(function(){t.textContent="Copy"},1600)};if(navigator.clipboard&&navigator.clipboard.writeText){
+navigator.clipboard.writeText(x).then(d,function(){t.textContent="Press \u2318C"})}else{var a=document.createElement("textarea");
+a.value=x;document.body.appendChild(a);a.select();try{document.execCommand("copy");d()}catch(e){t.textContent="Press \u2318C"}
+document.body.removeChild(a)}})});</script>
