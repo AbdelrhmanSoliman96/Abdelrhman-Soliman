@@ -1,0 +1,927 @@
+<title>مسار — الواجهة الجديدة</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap">
+<style>
+/* Layout: RTL marketplace — sticky header, 1280px content rail, 12-col grid, 8pt spacing scale.
+   Tokens carry the Masar system: ink navy (trust), brass (distinction, 3% of surface), emerald (action, one per screen). */
+:root{
+  --bg:#F6F1E8;
+  --surface:#FDFCFA;
+  --surface-2:#FFFFFF;
+  --fg:#0E2240;
+  --fg-muted:#5B6775;
+  --fg-faint:#8A7F6E;
+  --line:#E3DCD0;
+  --ink:#0E2240;
+  --ink-2:#16365F;
+  --ink-deep:#081729;
+  --on-ink:#FDFCFA;
+  --on-ink-muted:#B9C6D8;
+  --brass:#C08A3E;
+  --brass-soft:#F3E6D0;
+  --emerald:#0E8F6E;
+  --emerald-dark:#0B7558;
+  --danger:#B3261E;
+  --danger-soft:#FBF0EE;
+  --shadow-1:0 2px 8px rgba(14,34,64,.06);
+  --shadow-2:0 8px 24px rgba(14,34,64,.10);
+  --r-field:8px; --r-btn:12px; --r-card:16px;
+  --rail:1280px;
+  --font-display:'Readex Pro','Segoe UI',Tahoma,sans-serif;
+  --font-body:'IBM Plex Sans Arabic','Segoe UI',Tahoma,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#081729; --surface:#0E2240; --surface-2:#132C4D;
+  --fg:#E8EEF6; --fg-muted:#9FB0C6; --fg-faint:#7D8FA6;
+  --line:#22405F; --ink:#060F1C; --ink-2:#132C4D; --ink-deep:#040B14;
+  --on-ink:#E8EEF6; --on-ink-muted:#9FB0C6;
+  --brass:#D7A75C; --brass-soft:#2A2113;
+  --emerald:#17A883; --emerald-dark:#139976;
+  --danger:#F2857C; --danger-soft:#2E1715;
+  --shadow-1:0 2px 8px rgba(0,0,0,.35); --shadow-2:0 8px 24px rgba(0,0,0,.45);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#081729; --surface:#0E2240; --surface-2:#132C4D;
+  --fg:#E8EEF6; --fg-muted:#9FB0C6; --fg-faint:#7D8FA6;
+  --line:#22405F; --ink:#060F1C; --ink-2:#132C4D; --ink-deep:#040B14;
+  --on-ink:#E8EEF6; --on-ink-muted:#9FB0C6;
+  --brass:#D7A75C; --brass-soft:#2A2113;
+  --emerald:#17A883; --emerald-dark:#139976;
+  --danger:#F2857C; --danger-soft:#2E1715;
+  --shadow-1:0 2px 8px rgba(0,0,0,.35); --shadow-2:0 8px 24px rgba(0,0,0,.45);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.8;direction:rtl;text-align:right;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--font-display);margin:0;line-height:1.2;text-wrap:balance;font-weight:600}
+p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--brass);outline-offset:2px;border-radius:4px}
+img{max-width:100%}
+.rail{width:100%;max-width:var(--rail);margin-inline:auto;padding-inline:20px}
+.num{font-variant-numeric:tabular-nums;font-family:var(--font-display)}
+
+/* ---------- notice ---------- */
+.notice{background:var(--ink-deep);color:var(--on-ink-muted);font-size:13px;padding-block:9px;text-align:center}
+.notice b{color:var(--brass);font-weight:600}
+
+/* ---------- header ---------- */
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hdr-in{display:flex;align-items:center;gap:20px;height:72px}
+.brand{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.brand-name{font-family:var(--font-display);font-size:24px;font-weight:600;letter-spacing:-.2px}
+.nav{display:flex;gap:4px;flex:1;min-width:0}
+.nav button{padding:9px 16px;border-radius:var(--r-field);font-size:16px;font-weight:500;color:var(--fg-muted);white-space:nowrap}
+.nav button:hover{color:var(--fg);background:var(--bg)}
+.nav button[aria-current="page"]{color:var(--fg);background:var(--bg);font-weight:600}
+.hdr-tools{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.locale{display:flex;align-items:center;gap:7px;padding:8px 13px;border:1px solid var(--line);border-radius:var(--r-field);font-size:14px;font-weight:500;background:var(--surface)}
+.icon-btn{position:relative;width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:var(--r-field);background:var(--surface)}
+.icon-btn:hover{border-color:var(--fg-muted)}
+.badge-count{position:absolute;inset-block-start:-6px;inset-inline-start:-6px;min-width:20px;height:20px;padding-inline:5px;display:grid;place-items:center;background:var(--emerald);color:#fff;border-radius:999px;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
+.burger{display:none}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:0 24px;height:52px;border-radius:var(--r-btn);font-weight:600;font-size:17px;transition:background .15s,border-color .15s;white-space:nowrap}
+.btn-sm{height:44px;font-size:15px;padding:0 18px}
+.btn-primary{background:var(--emerald);color:#fff}
+.btn-primary:hover{background:var(--emerald-dark)}
+.btn-secondary{background:var(--ink);color:var(--on-ink)}
+.btn-secondary:hover{background:var(--ink-2)}
+.btn-outline{border:2px solid var(--fg);color:var(--fg)}
+.btn-outline:hover{background:var(--fg);color:var(--surface)}
+.btn-ghost{color:var(--fg);text-decoration:underline;text-underline-offset:4px;padding:0 6px}
+.btn-block{width:100%}
+
+/* ---------- shared ---------- */
+.section{padding-block:72px}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:32px;flex-wrap:wrap}
+.eyebrow{font-size:14px;font-weight:600;color:var(--brass);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.h-sec{font-size:clamp(28px,3.4vw,40px)}
+.lede{color:var(--fg-muted);font-size:18px;max-width:62ch;margin-top:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 13px;border-radius:999px;background:var(--bg);color:var(--fg-muted);font-size:13px;font-weight:500;border:1px solid var(--line)}
+.page{display:none}
+.page.is-active{display:block}
+
+/* ---------- hero ---------- */
+.hero{background:var(--ink);color:var(--on-ink);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset-block-start:-180px;inset-inline-start:-180px;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(192,138,62,.20),transparent 68%);pointer-events:none}
+.hero-in{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding-block:76px;position:relative;z-index:1}
+.hero h1{font-size:clamp(34px,4.6vw,58px);line-height:1.18;color:var(--on-ink)}
+.hero h1 em{font-style:normal;color:var(--brass)}
+.hero-sub{color:var(--on-ink-muted);font-size:19px;margin-top:20px;max-width:54ch}
+.hero-cta{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
+.hero-proof{display:flex;align-items:center;gap:14px;margin-top:28px;flex-wrap:wrap;color:var(--on-ink-muted);font-size:15px}
+.avatars{display:flex}
+.avatars span{width:34px;height:34px;border-radius:50%;border:2px solid var(--ink);margin-inline-start:-11px;display:grid;place-items:center;font-size:13px;font-weight:600;color:var(--ink);background:var(--brass)}
+.avatars span:first-child{margin-inline-start:0}
+.stars{color:var(--brass);letter-spacing:2px}
+
+/* file mock — a real screenshot stands here in production */
+.filemock{background:var(--surface-2);border-radius:var(--r-card);box-shadow:var(--shadow-2);overflow:hidden;border:1px solid var(--line)}
+.fm-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;background:var(--bg);border-bottom:1px solid var(--line)}
+.fm-dot{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.fm-name{margin-inline-start:auto;font-size:12px;color:var(--fg-faint);font-weight:500}
+.fm-body{padding:16px;display:grid;gap:10px;background:var(--surface-2)}
+.fm-row{display:grid;grid-template-columns:1.6fr repeat(4,1fr);gap:6px}
+.fm-cell{height:22px;border-radius:4px;background:var(--bg)}
+.fm-cell.h{background:var(--ink);opacity:.9}
+.fm-cell.v{background:color-mix(in srgb,var(--brass) 26%,transparent)}
+.fm-chart{display:flex;align-items:flex-end;gap:7px;height:96px;padding-top:8px}
+.fm-chart i{flex:1;border-radius:3px 3px 0 0;background:var(--ink-2)}
+.fm-chart i:nth-child(4),.fm-chart i:nth-child(6){background:var(--brass)}
+.fm-float{position:absolute;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px;box-shadow:var(--shadow-2);font-size:14px;font-weight:600;display:flex;align-items:center;gap:9px;color:var(--fg)}
+.hero-visual{position:relative}
+
+/* ---------- trust bar ---------- */
+.trustbar{background:var(--surface);border-block:1px solid var(--line)}
+.trustbar ul{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding-block:22px}
+.trustbar li{display:flex;align-items:center;gap:12px;justify-content:center;font-size:15px;font-weight:500;padding-inline:10px}
+.trustbar svg{color:var(--brass);flex-shrink:0}
+
+/* ---------- stats ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:26px}
+.stat b{display:block;font-family:var(--font-display);font-size:40px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+.stat span{display:block;color:var(--fg-muted);font-size:15px;margin-top:9px}
+
+/* ---------- sectors ---------- */
+.sectors{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.sector{display:flex;align-items:center;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:20px 22px;transition:border-color .15s,transform .15s}
+.sector:hover{border-color:var(--brass);transform:translateY(-2px)}
+.sector-ic{width:46px;height:46px;border-radius:10px;display:grid;place-items:center;background:var(--brass-soft);color:var(--brass);flex-shrink:0}
+.sector b{display:block;font-weight:600;font-size:17px}
+.sector span{color:var(--fg-muted);font-size:14px}
+.sector .arrow{margin-inline-start:auto;color:var(--fg-faint)}
+
+/* ---------- product card ---------- */
+.grid-products{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.pcard{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;transition:border-color .15s,box-shadow .15s,transform .15s}
+.pcard:hover{border-color:var(--brass);box-shadow:var(--shadow-2);transform:translateY(-3px)}
+.pcard-media{position:relative;aspect-ratio:16/10;background:var(--ink);overflow:hidden;max-width:100%}
+.pcard-media .fm-mini{position:absolute;inset:14px 14px auto 14px;background:var(--surface-2);border-radius:8px;padding:10px;display:grid;gap:6px}
+.pcard-media .fm-mini i{height:9px;border-radius:3px;background:var(--bg);display:block}
+.pcard-media .fm-mini i.w1{width:62%}.pcard-media .fm-mini i.w2{width:88%}.pcard-media .fm-mini i.w3{width:44%;background:color-mix(in srgb,var(--brass) 45%,transparent)}
+.pcard-flag{position:absolute;inset-block-start:12px;inset-inline-end:12px;background:var(--brass);color:#1A1203;font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px}
+.pcard-type{position:absolute;inset-block-end:12px;inset-inline-start:12px;background:var(--ink-deep);color:#FDFCFA;font-size:12px;font-weight:600;padding:5px 12px;border-radius:6px;font-variant-numeric:tabular-nums}
+.pcard-body{padding:20px;display:flex;flex-direction:column;gap:12px;flex:1;min-width:0}
+.pcard-tags{display:flex;gap:7px;flex-wrap:wrap}
+.pcard h3{font-family:var(--font-body);font-size:19px;font-weight:600;line-height:1.45}
+.pcard-desc{color:var(--fg-muted);font-size:14.5px;line-height:1.65}
+.pcard-proof{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--fg-muted);flex-wrap:wrap}
+.pcard-proof b{color:var(--brass);font-weight:600}
+.pcard-price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:4px}
+.price-now{font-family:var(--font-display);font-size:26px;font-weight:600;font-variant-numeric:tabular-nums}
+.price-old{color:var(--fg-faint);text-decoration:line-through;font-size:15px;font-variant-numeric:tabular-nums}
+.price-save{background:var(--danger-soft);color:var(--danger);font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:6px}
+.pcard-actions{display:flex;gap:9px}
+.pcard-actions .btn-primary{flex:2}
+.pcard-actions .btn-outline{flex:1}
+
+/* ---------- steps ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;counter-reset:s}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:30px;position:relative}
+.step b{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--on-ink);font-family:var(--font-display);font-size:19px;font-weight:600;margin-bottom:18px}
+.step h3{font-size:21px;margin-bottom:10px}
+.step p{color:var(--fg-muted);font-size:15.5px}
+
+/* ---------- quote ---------- */
+.quote{background:var(--ink);color:var(--on-ink);border-radius:var(--r-card);padding:48px;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:start}
+.quote-mark{font-family:var(--font-display);font-size:68px;line-height:.7;color:var(--brass)}
+.quote p{font-size:23px;line-height:1.65}
+.quote footer{margin-top:22px;color:var(--on-ink-muted);font-size:15px}
+.quote footer b{color:var(--on-ink);display:block;font-weight:600;font-size:16px}
+
+/* ---------- cta band ---------- */
+.ctaband{background:var(--brass);border-radius:var(--r-card);padding:48px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;color:#1A1203}
+.ctaband h2{font-size:clamp(24px,3vw,34px);color:#1A1203}
+.ctaband p{color:#3A2808;margin-top:10px;font-size:17px}
+.ctaband .btn-secondary{background:#1A1203;color:#F6F1E8}
+.ctaband .btn-secondary:hover{background:#000}
+
+/* ---------- footer ---------- */
+.ftr{background:var(--ink-deep);color:var(--on-ink-muted);margin-top:80px;padding-block:56px 28px}
+.ftr-grid{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:40px}
+.ftr h4{color:var(--on-ink);font-family:var(--font-body);font-size:16px;margin-bottom:16px;font-weight:600}
+.ftr li{margin-bottom:10px;font-size:15px}
+.ftr li a:hover{color:var(--brass)}
+.ftr-bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:40px;padding-top:22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14px}
+.pay{display:flex;gap:8px;flex-wrap:wrap}
+.pay span{border:1px solid rgba(255,255,255,.18);border-radius:6px;padding:4px 11px;font-size:12.5px;font-weight:600;color:var(--on-ink)}
+
+/* ---------- page header (inner pages) ---------- */
+.phead{background:var(--ink);color:var(--on-ink);padding-block:44px}
+.phead h1{font-size:clamp(28px,3.6vw,40px);color:var(--on-ink)}
+.phead p{color:var(--on-ink-muted);margin-top:10px;font-size:17px}
+.crumbs{display:flex;gap:9px;align-items:center;font-size:14px;color:var(--on-ink-muted);margin-bottom:14px}
+
+/* ---------- store ---------- */
+.store-layout{display:grid;grid-template-columns:280px 1fr;gap:32px;align-items:start}
+.filters{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:24px;position:sticky;top:104px}
+.fgroup{padding-block:18px;border-bottom:1px solid var(--line)}
+.fgroup:first-of-type{padding-top:0}
+.fgroup:last-of-type{border-bottom:0;padding-bottom:0}
+.fgroup h4{font-family:var(--font-body);font-size:15px;font-weight:600;margin-bottom:12px}
+.fopt{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:15px;color:var(--fg-muted);cursor:pointer}
+.fopt input{accent-color:var(--emerald);width:17px;height:17px;flex-shrink:0}
+.fopt:hover{color:var(--fg)}
+.fopt .count{margin-inline-start:auto;font-size:13px;color:var(--fg-faint);font-variant-numeric:tabular-nums}
+.searchbox{display:flex;align-items:center;gap:11px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-btn);padding:0 18px;height:56px;max-width:640px}
+.searchbox input{flex:1;min-width:0;border:0;background:none;font:inherit;color:var(--fg);outline:none}
+.store-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.applied{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.applied .chip{background:var(--surface)}
+.applied .chip button{color:var(--fg-faint);font-size:15px;line-height:1}
+.sortsel{display:flex;align-items:center;gap:9px;font-size:15px;color:var(--fg-muted)}
+.sortsel select{font:inherit;padding:9px 13px;border:1px solid var(--line);border-radius:var(--r-field);background:var(--surface);color:var(--fg)}
+.store-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+
+/* ---------- product page ---------- */
+.pdp{display:grid;grid-template-columns:1fr 420px;gap:40px;align-items:start;padding-block:40px}
+.pdp-gallery{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden}
+.pdp-stage{aspect-ratio:16/10;background:var(--ink);padding:26px;display:grid;max-width:100%}
+.pdp-thumbs{display:flex;gap:10px;padding:14px;border-top:1px solid var(--line);overflow-x:auto}
+.pdp-thumb{width:84px;height:56px;border-radius:7px;background:var(--ink-2);border:2px solid transparent;flex-shrink:0}
+.pdp-thumb[aria-pressed="true"]{border-color:var(--brass)}
+.buybox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:26px;position:sticky;top:104px;display:grid;gap:18px}
+.buybox .price-now{font-size:40px}
+.vat{color:var(--fg-muted);font-size:14px}
+.buybox-trust{display:grid;gap:11px;padding-top:16px;border-top:1px solid var(--line)}
+.buybox-trust li{display:flex;align-items:center;gap:11px;font-size:14.5px;color:var(--fg-muted)}
+.buybox-trust svg{color:var(--emerald);flex-shrink:0}
+.pdp-title{font-size:clamp(26px,3.2vw,36px);margin-block:14px 12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:28px;margin-top:20px}
+.panel h2{font-size:23px;margin-bottom:18px}
+.checklist{display:grid;grid-template-columns:1fr 1fr;gap:12px 24px}
+.checklist li{display:flex;align-items:flex-start;gap:11px;font-size:15.5px}
+.checklist svg{color:var(--emerald);flex-shrink:0;margin-top:4px}
+.sheet-table{width:100%;border-collapse:collapse;font-size:15px}
+.sheet-table th,.sheet-table td{text-align:right;padding:13px 14px;border-bottom:1px solid var(--line)}
+.sheet-table th{background:var(--bg);font-weight:600;font-size:14px;color:var(--fg-muted)}
+.sheet-table td:last-child{color:var(--fg-muted)}
+.tablewrap{overflow-x:auto}
+.who{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.who div{background:var(--bg);border-radius:12px;padding:18px}
+.who b{display:block;margin-bottom:6px;font-size:16px}
+.who span{color:var(--fg-muted);font-size:14.5px}
+.rev-head{display:flex;align-items:center;gap:28px;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:20px;flex-wrap:wrap}
+.rev-score{font-family:var(--font-display);font-size:52px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+.bars{flex:1;min-width:220px;display:grid;gap:6px}
+.bar{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--fg-muted)}
+.bar i{flex:1;height:8px;border-radius:4px;background:var(--bg);overflow:hidden;display:block}
+.bar i em{display:block;height:100%;background:var(--brass);border-radius:4px}
+.review{padding-block:18px;border-bottom:1px solid var(--line)}
+.review:last-child{border-bottom:0;padding-bottom:0}
+.review-top{display:flex;align-items:center;gap:12px;margin-bottom:9px;flex-wrap:wrap}
+.review-av{width:40px;height:40px;border-radius:50%;background:var(--brass);color:#1A1203;display:grid;place-items:center;font-weight:700;font-size:15px;flex-shrink:0}
+.verified{color:var(--emerald);font-size:13px;font-weight:600}
+.faq details{border-bottom:1px solid var(--line);padding-block:16px}
+.faq details:last-child{border-bottom:0}
+.faq summary{font-weight:600;font-size:17px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:14px;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--brass);font-size:22px;font-weight:400}
+.faq details[open] summary::after{content:"−"}
+.faq p{color:var(--fg-muted);margin-top:12px;font-size:15.5px}
+
+/* ---------- cart & checkout ---------- */
+.cart-layout{display:grid;grid-template-columns:1fr 400px;gap:32px;align-items:start;padding-block:40px}
+.citem{display:grid;grid-template-columns:120px 1fr auto;gap:18px;padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);margin-bottom:14px;align-items:center}
+.citem-media{aspect-ratio:16/10;border-radius:10px;background:var(--ink);max-width:100%}
+.citem h3{font-family:var(--font-body);font-size:17px;font-weight:600;margin-bottom:5px}
+.citem .meta{color:var(--fg-muted);font-size:14px}
+.citem .side{display:grid;gap:8px;justify-items:end}
+.summary{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:26px;position:sticky;top:104px;display:grid;gap:16px}
+.srow{display:flex;justify-content:space-between;font-size:16px;color:var(--fg-muted)}
+.srow b{color:var(--fg);font-variant-numeric:tabular-nums}
+.stotal{display:flex;justify-content:space-between;align-items:baseline;padding-top:16px;border-top:1px solid var(--line);font-weight:600}
+.stotal .price-now{font-size:30px}
+.promo{display:flex;gap:9px}
+.promo input{flex:1;min-width:0;border:1px solid var(--line);border-radius:var(--r-field);padding:0 14px;height:48px;font:inherit;background:var(--bg);color:var(--fg)}
+.steps-bar{display:flex;align-items:center;gap:12px;margin-bottom:28px;flex-wrap:wrap}
+.step-pill{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--fg-muted)}
+.step-pill b{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--bg);border:1px solid var(--line);font-size:14px;font-weight:600}
+.step-pill.done b{background:var(--emerald);color:#fff;border-color:var(--emerald)}
+.step-pill.now{color:var(--fg);font-weight:600}
+.step-pill.now b{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
+.field{display:grid;gap:7px;margin-bottom:16px}
+.field label{font-size:14.5px;font-weight:500}
+.field input{height:52px;border:1px solid var(--line);border-radius:var(--r-field);padding:0 15px;font:inherit;background:var(--bg);color:var(--fg)}
+.field input:focus{outline:none;border-color:var(--emerald);box-shadow:0 0 0 3px color-mix(in srgb,var(--emerald) 18%,transparent)}
+.field .hint{font-size:13px;color:var(--fg-faint)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.paylist{display:grid;gap:11px}
+.payopt{display:flex;align-items:center;gap:13px;padding:17px 18px;border:2px solid var(--line);border-radius:var(--r-btn);cursor:pointer;background:var(--bg)}
+.payopt input{accent-color:var(--emerald);width:19px;height:19px;flex-shrink:0}
+.payopt b{font-size:16px;font-weight:600}
+.payopt .tag{margin-inline-start:auto;font-size:12.5px;font-weight:600;color:var(--fg-muted);background:var(--surface);border:1px solid var(--line);padding:3px 10px;border-radius:999px}
+.payopt:has(input:checked){border-color:var(--emerald);background:color-mix(in srgb,var(--emerald) 7%,var(--surface))}
+.secure{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--fg-muted);margin-top:16px}
+
+/* ---------- responsive ---------- */
+@media (max-width:1080px){
+  .hero-in{grid-template-columns:1fr;gap:40px}
+  .grid-products,.store-grid{grid-template-columns:repeat(2,1fr)}
+  .pdp,.cart-layout{grid-template-columns:1fr}
+  .buybox,.summary,.filters{position:static}
+  .store-layout{grid-template-columns:1fr}
+  .ftr-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:760px){
+  .nav{display:none}
+  .burger{display:grid}
+  .nav.is-open{display:flex;position:absolute;inset-block-start:72px;inset-inline:0;flex-direction:column;background:var(--surface);border-bottom:1px solid var(--line);padding:12px;gap:2px}
+  .nav.is-open button{text-align:right;padding:13px 16px}
+  .trustbar ul,.stats,.sectors,.steps,.who,.checklist{grid-template-columns:1fr 1fr}
+  .section{padding-block:52px}
+  .quote{grid-template-columns:1fr;padding:30px}
+  .locale span.full{display:none}
+}
+@media (max-width:560px){
+  .grid-products,.store-grid,.stats,.sectors,.steps,.trustbar ul,.who,.checklist,.two,.ftr-grid{grid-template-columns:1fr}
+  .citem{grid-template-columns:1fr;gap:14px}
+  .citem .side{justify-items:start}
+  .ctaband,.panel,.quote{padding:26px}
+  .hero-in{padding-block:48px}
+  .fm-float{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="notice">نموذج تصميمي لمراجعة الهوية الجديدة · <b>الأسعار والأرقام والتقييمات توضيحية</b> وتُستبدل ببيانات المنصة الحقيقية</div>
+
+<header class="hdr">
+  <div class="rail hdr-in">
+    <a class="brand" href="#top">
+      <svg width="40" height="40" viewBox="0 0 120 120" aria-label="شعار مسار"><rect width="120" height="120" rx="30" fill="var(--ink)"/><path d="M94 86 L70 58 L54 70 L30 34" fill="none" stroke="var(--brass)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="30" cy="34" r="11" fill="var(--brass)"/></svg>
+      <span class="brand-name">مسار</span>
+    </a>
+    <nav class="nav" id="nav">
+      <button data-go="home" aria-current="page">الرئيسية</button>
+      <button data-go="store">المتجر</button>
+      <button data-go="product">نموذج مالي — عيادة أسنان</button>
+      <button data-go="cart">السلّة والدفع</button>
+    </nav>
+    <div class="hdr-tools">
+      <button class="locale" id="locale">🇸🇦 <span class="full">السعودية ·</span> ر.س</button>
+      <button class="icon-btn burger" id="burger" aria-label="القائمة"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <button class="icon-btn" data-go="cart" aria-label="السلّة"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h2.5l2.3 11.4a2 2 0 0 0 2 1.6h8.4a2 2 0 0 0 2-1.6L21 7H5.2"/></svg><span class="badge-count">2</span></button>
+      <button class="btn btn-secondary btn-sm">تسجيل الدخول</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ======================= HOME ======================= -->
+<section class="page is-active" id="page-home">
+
+  <div class="hero">
+    <div class="rail hero-in">
+      <div>
+        <p class="chip" style="background:rgba(192,138,62,.16);border-color:rgba(192,138,62,.4);color:var(--brass)">43 نموذجاً · 9 أسواق عربية</p>
+        <h1 style="margin-top:18px">نموذجك المالي جاهز للعرض<br>على مستثمر <em>خلال ساعة</em></h1>
+        <p class="hero-sub">نماذج إكسل وعروض استثمارية ودراسات جدوى مبنية على معايير السوق الخليجي — تحمّلها، تضع أرقامك، وتعرضها. لا استشاري ولا أسبوع عمل.</p>
+        <div class="hero-cta">
+          <button class="btn btn-primary" data-go="store">تصفّح النماذج
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="btn btn-outline" style="border-color:var(--on-ink-muted);color:var(--on-ink)" data-go="product">شاهد نموذجاً كاملاً</button>
+        </div>
+        <div class="hero-proof">
+          <span class="avatars"><span>م</span><span>ن</span><span>ع</span><span> س</span></span>
+          <span class="stars">★★★★★</span>
+          <span><b style="color:var(--on-ink)">4.8 من 5</b> — 1,240 تقييماً موثّقاً</span>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="filemock">
+          <div class="fm-bar"><i class="fm-dot"></i><i class="fm-dot"></i><i class="fm-dot"></i><span class="fm-name">نموذج-مالي-عيادة-أسنان.xlsx</span></div>
+          <div class="fm-body">
+            <div class="fm-row"><i class="fm-cell h"></i><i class="fm-cell h"></i><i class="fm-cell h"></i><i class="fm-cell h"></i><i class="fm-cell h"></i></div>
+            <div class="fm-row"><i class="fm-cell"></i><i class="fm-cell"></i><i class="fm-cell v"></i><i class="fm-cell"></i><i class="fm-cell v"></i></div>
+            <div class="fm-row"><i class="fm-cell"></i><i class="fm-cell v"></i><i class="fm-cell"></i><i class="fm-cell"></i><i class="fm-cell"></i></div>
+            <div class="fm-row"><i class="fm-cell"></i><i class="fm-cell"></i><i class="fm-cell"></i><i class="fm-cell v"></i><i class="fm-cell"></i></div>
+            <div class="fm-chart"><i style="height:38%"></i><i style="height:54%"></i><i style="height:46%"></i><i style="height:78%"></i><i style="height:62%"></i><i style="height:96%"></i></div>
+          </div>
+        </div>
+        <div class="fm-float" style="inset-block-end:-18px;inset-inline-start:-14px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--emerald)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          نقطة التعادل: الشهر 14
+        </div>
+        <div class="fm-float" style="inset-block-start:-16px;inset-inline-end:-12px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--brass)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h8l-1 8 10-12h-8z"/></svg>
+          تنزيل فوري بعد الدفع
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trustbar">
+    <ul class="rail">
+      <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h8l-1 8 10-12h-8z"/></svg> تسليم فوري بعد الدفع</li>
+      <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> دفع آمن · مدى وآبل باي</li>
+      <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg> مبنية على المعايير المحلية</li>
+      <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> دعم بالعربية خلال ساعتين</li>
+    </ul>
+  </div>
+
+  <div class="rail section">
+    <div class="stats">
+      <div class="stat"><b>43</b><span>نموذجاً احترافياً</span></div>
+      <div class="stat"><b>23,514</b><span>عملية تنزيل</span></div>
+      <div class="stat"><b>9</b><span>أسواق عربية</span></div>
+      <div class="stat"><b style="color:var(--brass)">4.8<span style="font-size:20px;color:var(--fg-muted)"> / 5</span></b><span>متوسط التقييم</span></div>
+    </div>
+  </div>
+
+  <div class="rail section" style="padding-top:0">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">ابدأ من قطاعك</p>
+        <h2 class="h-sec">اختر القطاع، ونعرض لك ما يناسب مرحلتك</h2>
+        <p class="lede">كل نموذج مبني لقطاع محدّد — المصاريف والمؤشّرات والافتراضات مختلفة تماماً بين عيادة ومتجر إلكتروني.</p>
+      </div>
+    </div>
+    <div class="sectors">
+      <a class="sector" href="#" data-go="store"><span class="sector-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg></span><span><b>الرعاية الصحية</b><span>9 نماذج</span></span><span class="arrow">←</span></a>
+      <a class="sector" href="#" data-go="store"><span class="sector-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h2.5l2.3 11.4a2 2 0 0 0 2 1.6h8.4a2 2 0 0 0 2-1.6L21 7H5.2"/></svg></span><span><b>التجارة الإلكترونية</b><span>7 نماذج</span></span><span class="arrow">←</span></a>
+      <a class="sector" href="#" data-go="store"><span class="sector-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></span><span><b>العقارات</b><span>6 نماذج</span></span><span class="arrow">←</span></a>
+      <a class="sector" href="#" data-go="store"><span class="sector-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-5 3 3 5-7"/></svg></span><span><b>التقنية المالية</b><span>5 نماذج</span></span><span class="arrow">←</span></a>
+      <a class="sector" href="#" data-go="store"><span class="sector-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16M6 20V9l6-5 6 5v11"/><path d="M10 20v-5h4v5"/></svg></span><span><b>السياحة والضيافة</b><span>5 نماذج</span></span><span class="arrow">←</span></a>
+      <a class="sector" href="#" data-go="store"><span class="sector-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="14" height="11" rx="2"/><path d="M16 11h3.5L22 14v4h-6"/></svg></span><span><b>اللوجستيات والنقل</b><span>4 نماذج</span></span><span class="arrow">←</span></a>
+    </div>
+  </div>
+
+  <div class="rail section" style="padding-top:0">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">الأكثر طلباً هذا الشهر</p>
+        <h2 class="h-sec">نماذج يشتريها المؤسّسون قبل جولة التمويل</h2>
+      </div>
+      <button class="btn btn-outline btn-sm" data-go="store">كل النماذج (43) ←</button>
+    </div>
+    <div class="grid-products" id="home-products"></div>
+  </div>
+
+  <div class="rail section" style="padding-top:0">
+    <div class="section-head"><div><p class="eyebrow">كيف تعمل</p><h2 class="h-sec">ثلاث خطوات بين الشراء والعرض</h2></div></div>
+    <div class="steps">
+      <div class="step"><b>1</b><h3>اختر النموذج المناسب لقطاعك</h3><p>فلتر بالقطاع والمرحلة والدولة. كل نموذج له معاينة مجانية لأول ثلاث أوراق قبل الشراء.</p></div>
+      <div class="step"><b>2</b><h3>حمّله فوراً بصيغته الأصلية</h3><p>إكسل أو بوربوينت أو وورد، قابل للتعديل بالكامل، يصلك رابط التنزيل خلال ثوانٍ من إتمام الدفع.</p></div>
+      <div class="step"><b>3</b><h3>ضع أرقامك واعرضه</h3><p>الخلايا المطلوب تعبئتها ملوّنة، والباقي معادلات مترابطة تُحدِّث القوائم والمؤشّرات تلقائياً.</p></div>
+    </div>
+  </div>
+
+  <div class="rail section" style="padding-top:0">
+    <div class="quote">
+      <div class="quote-mark">”</div>
+      <div>
+        <p>كنت سأدفع 18 ألف ريال لمكتب استشاري مقابل نموذج مالي ودراسة جدوى. حمّلت النموذج من مسار، عدّلت الافتراضات في مساء واحد، وعرضته على المستثمر في اليوم التالي. المعادلات كانت مبنية بشكل صحيح وهذا ما فاجأني.</p>
+        <footer><b>نورة العتيبي</b> مؤسِّسة · سلسلة عيادات أسنان، الرياض</footer>
+      </div>
+    </div>
+  </div>
+
+  <div class="rail section" style="padding-top:0">
+    <div class="ctaband">
+      <div>
+        <h2>لا تعرف أي نموذج يناسب مشروعك؟</h2>
+        <p>أرسل لنا فكرة المشروع ومرحلته، ونرشّح لك النموذج المناسب خلال ساعتين — بدون التزام بالشراء.</p>
+      </div>
+      <button class="btn btn-secondary">تواصل عبر واتساب</button>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= STORE ======================= -->
+<section class="page" id="page-store">
+  <div class="phead">
+    <div class="rail">
+      <div class="crumbs"><span>الرئيسية</span><span>/</span><span style="color:var(--on-ink)">المتجر</span></div>
+      <h1>المتجر</h1>
+      <p>43 نموذجاً احترافياً جاهزاً للتنزيل والتعديل</p>
+      <div class="searchbox" style="margin-top:22px;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--brass)" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" placeholder="ابحث عن نموذج أو قطاع أو دولة…" style="color:var(--on-ink)">
+        <kbd style="font-size:12px;color:var(--on-ink-muted);border:1px solid rgba(255,255,255,.2);border-radius:5px;padding:2px 7px">↵</kbd>
+      </div>
+    </div>
+  </div>
+
+  <div class="rail section" style="padding-block:32px 0">
+    <div class="store-layout">
+      <aside class="filters">
+        <div class="fgroup">
+          <h4>القطاع</h4>
+          <label class="fopt"><input type="checkbox" checked> الرعاية الصحية <span class="count">9</span></label>
+          <label class="fopt"><input type="checkbox"> التجارة الإلكترونية <span class="count">7</span></label>
+          <label class="fopt"><input type="checkbox"> العقارات <span class="count">6</span></label>
+          <label class="fopt"><input type="checkbox"> التقنية المالية <span class="count">5</span></label>
+          <label class="fopt"><input type="checkbox"> السياحة والضيافة <span class="count">5</span></label>
+        </div>
+        <div class="fgroup">
+          <h4>مرحلة المشروع</h4>
+          <label class="fopt"><input type="checkbox" checked> تأسيس <span class="count">18</span></label>
+          <label class="fopt"><input type="checkbox"> نمو مبدئي <span class="count">12</span></label>
+          <label class="fopt"><input type="checkbox"> مبيعات محقّقة <span class="count">8</span></label>
+          <label class="fopt"><input type="checkbox"> نمو وتوسّع <span class="count">5</span></label>
+        </div>
+        <div class="fgroup">
+          <h4>نوع الملف</h4>
+          <label class="fopt"><input type="checkbox"> إكسل (XLSX) <span class="count">24</span></label>
+          <label class="fopt"><input type="checkbox"> بوربوينت (PPTX) <span class="count">13</span></label>
+          <label class="fopt"><input type="checkbox"> وورد (DOCX) <span class="count">6</span></label>
+        </div>
+        <div class="fgroup">
+          <h4>السوق</h4>
+          <label class="fopt"><input type="checkbox" checked> السعودية <span class="count">21</span></label>
+          <label class="fopt"><input type="checkbox"> الإمارات <span class="count">14</span></label>
+          <label class="fopt"><input type="checkbox"> قطر <span class="count">6</span></label>
+          <label class="fopt"><input type="checkbox"> الكويت <span class="count">4</span></label>
+        </div>
+        <div class="fgroup">
+          <h4>السعر</h4>
+          <label class="fopt"><input type="checkbox"> أقل من 500 ر.س <span class="count">11</span></label>
+          <label class="fopt"><input type="checkbox"> 500 – 1,000 ر.س <span class="count">19</span></label>
+          <label class="fopt"><input type="checkbox"> أكثر من 1,000 ر.س <span class="count">13</span></label>
+        </div>
+      </aside>
+
+      <div>
+        <div class="store-bar">
+          <div class="applied">
+            <span style="font-size:15px;color:var(--fg-muted)"><b id="count" style="color:var(--fg)">12</b> نتيجة</span>
+            <span class="chip">الرعاية الصحية <button aria-label="إزالة">×</button></span>
+            <span class="chip">تأسيس <button aria-label="إزالة">×</button></span>
+            <span class="chip">السعودية <button aria-label="إزالة">×</button></span>
+            <button class="btn-ghost" style="font-size:14px">مسح الكل</button>
+          </div>
+          <div class="sortsel">
+            <label for="sort">ترتيب حسب</label>
+            <select id="sort"><option>الأكثر مبيعاً</option><option>الأعلى تقييماً</option><option>الأحدث</option><option>السعر: من الأقل</option><option>السعر: من الأعلى</option></select>
+          </div>
+        </div>
+        <div class="store-grid" id="store-products"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= PRODUCT ======================= -->
+<section class="page" id="page-product">
+  <div class="rail pdp">
+    <div>
+      <div class="crumbs" style="color:var(--fg-muted)"><span>المتجر</span><span>/</span><span>الرعاية الصحية</span><span>/</span><span style="color:var(--fg)">نموذج مالي — عيادة أسنان</span></div>
+
+      <div class="pdp-gallery">
+        <div class="pdp-stage">
+          <div class="filemock" style="box-shadow:none">
+            <div class="fm-bar"><i class="fm-dot"></i><i class="fm-dot"></i><i class="fm-dot"></i><span class="fm-name">ورقة 3 من 14 — التوقّعات المالية</span></div>
+            <div class="fm-body">
+              <div class="fm-row"><i class="fm-cell h"></i><i class="fm-cell h"></i><i class="fm-cell h"></i><i class="fm-cell h"></i><i class="fm-cell h"></i></div>
+              <div class="fm-row"><i class="fm-cell"></i><i class="fm-cell v"></i><i class="fm-cell"></i><i class="fm-cell v"></i><i class="fm-cell"></i></div>
+              <div class="fm-row"><i class="fm-cell"></i><i class="fm-cell"></i><i class="fm-cell v"></i><i class="fm-cell"></i><i class="fm-cell v"></i></div>
+              <div class="fm-chart"><i style="height:30%"></i><i style="height:44%"></i><i style="height:40%"></i><i style="height:68%"></i><i style="height:58%"></i><i style="height:92%"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="pdp-thumbs">
+          <button class="pdp-thumb" aria-pressed="true" aria-label="ورقة الافتراضات"></button>
+          <button class="pdp-thumb" aria-label="قائمة الدخل"></button>
+          <button class="pdp-thumb" aria-label="التدفقات النقدية"></button>
+          <button class="pdp-thumb" aria-label="نقطة التعادل"></button>
+          <button class="pdp-thumb" aria-label="لوحة المؤشّرات"></button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>ما الذي ستحصل عليه بالضبط</h2>
+        <ul class="checklist">
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> 14 ورقة إكسل مترابطة بالمعادلات</li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> توقّعات شهرية لخمس سنوات كاملة</li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> حساب الزكاة وضريبة القيمة المضافة 15%</li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> جدول إهلاك المعدّات الطبية</li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> نقطة التعادل وتحليل الحساسية</li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> لوحة مؤشّرات جاهزة للطباعة</li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> دليل استخدام بالعربية (12 صفحة)</li>
+          <li><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> تحديثات مجانية لمدة سنة</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h2>محتويات الملف — ورقة بورقة</h2>
+        <div class="tablewrap">
+          <table class="sheet-table">
+            <thead><tr><th style="width:22%">الورقة</th><th style="width:44%">ماذا تحتوي</th><th style="width:34%">ما الذي تملؤه أنت</th></tr></thead>
+            <tbody>
+              <tr><td>الافتراضات</td><td>أسعار الخدمات، عدد الكراسي، ساعات العمل، معدّل الإشغال</td><td>22 خلية ملوّنة بالأصفر</td></tr>
+              <tr><td>الإيرادات</td><td>توزيع الإيراد على 9 خدمات أسنان بسعر ومعدّل لكل خدمة</td><td>لا شيء — محسوبة تلقائياً</td></tr>
+              <tr><td>التكاليف التشغيلية</td><td>الرواتب، الإيجار، المستهلكات، التسويق، الصيانة</td><td>14 بنداً قابلاً للتعديل</td></tr>
+              <tr><td>المعدّات</td><td>قائمة 28 معدّة طبية بأسعار السوق السعودي وجدول الإهلاك</td><td>الكميات فقط</td></tr>
+              <tr><td>قائمة الدخل</td><td>شهرية وسنوية لخمس سنوات بهامش الربح الإجمالي والصافي</td><td>لا شيء</td></tr>
+              <tr><td>التدفّقات النقدية</td><td>التشغيلية والاستثمارية والتمويلية مع الرصيد التراكمي</td><td>لا شيء</td></tr>
+              <tr><td>نقطة التعادل</td><td>الشهر المتوقّع للتعادل مع رسم بياني وتحليل حساسية ±20%</td><td>لا شيء</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="color:var(--fg-muted);font-size:14.5px;margin-top:14px">والسبع المتبقّية: الزكاة والضريبة، التمويل والقروض، الموظفون، المخزون، لوحة المؤشّرات، ملخّص تنفيذي، ومسرد المصطلحات.</p>
+      </div>
+
+      <div class="panel">
+        <h2>لمن هذا النموذج</h2>
+        <div class="who">
+          <div><b>مناسب لك إذا</b><span>كنت تؤسّس عيادة أسنان أو مركزاً طبياً في السعودية أو الإمارات وتحتاج نموذجاً مالياً لعرضه على بنك أو مستثمر.</span></div>
+          <div><b>مناسب أيضاً إذا</b><span>كنت تملك عيادة قائمة وتريد تقييم التوسّع بفرع ثانٍ أو إضافة كراسي جديدة.</span></div>
+          <div><b>ليس لك إذا</b><span>كنت تبحث عن نموذج لمستشفى متعدّد التخصّصات — لذلك نموذج منفصل أوسع نطاقاً.</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>التقييمات</h2>
+        <div class="rev-head">
+          <div>
+            <div class="rev-score">4.8</div>
+            <div class="stars" style="font-size:17px">★★★★★</div>
+            <div style="color:var(--fg-muted);font-size:14px;margin-top:4px">126 تقييماً</div>
+          </div>
+          <div class="bars">
+            <div class="bar"><span>5 ★</span><i><em style="width:82%"></em></i><span>103</span></div>
+            <div class="bar"><span>4 ★</span><i><em style="width:13%"></em></i><span>16</span></div>
+            <div class="bar"><span>3 ★</span><i><em style="width:4%"></em></i><span>5</span></div>
+            <div class="bar"><span>2 ★</span><i><em style="width:1%"></em></i><span>1</span></div>
+            <div class="bar"><span>1 ★</span><i><em style="width:1%"></em></i><span>1</span></div>
+          </div>
+        </div>
+        <div class="review">
+          <div class="review-top"><span class="review-av">خ</span><b>خالد الدوسري</b><span class="verified">✓ شراء موثّق</span><span style="color:var(--fg-faint);font-size:13px;margin-inline-start:auto">قبل أسبوعين</span></div>
+          <div class="stars" style="font-size:14px;margin-bottom:7px">★★★★★</div>
+          <p style="color:var(--fg-muted);font-size:15.5px">المعادلات مبنية بشكل صحيح وليست مجرّد أرقام ثابتة — غيّرت معدّل الإشغال فتحدّث كل شيء بما فيه نقطة التعادل. وفّر عليّ أسبوعين على الأقل.</p>
+        </div>
+        <div class="review">
+          <div class="review-top"><span class="review-av">ر</span><b>ريم الشمري</b><span class="verified">✓ شراء موثّق</span><span style="color:var(--fg-faint);font-size:13px;margin-inline-start:auto">قبل شهر</span></div>
+          <div class="stars" style="font-size:14px;margin-bottom:7px">★★★★☆</div>
+          <p style="color:var(--fg-muted);font-size:15.5px">ممتاز، وأسعار المعدّات محدّثة فعلاً للسوق السعودي. كنت أتمنّى لو كان هناك سيناريو إضافي للتمويل عبر صندوق التنمية.</p>
+        </div>
+      </div>
+
+      <div class="panel faq">
+        <h2>أسئلة قبل الشراء</h2>
+        <details open><summary>هل الملف قابل للتعديل بالكامل؟</summary><p>نعم. ملف إكسل مفتوح بلا حماية ولا خلايا مقفلة، تعدّل فيه أي معادلة أو بند أو تضيف أوراقاً جديدة.</p></details>
+        <details><summary>متى يصلني الملف؟</summary><p>خلال ثوانٍ من إتمام الدفع، عبر رابط تنزيل في الصفحة وفي بريدك. الرابط يبقى فعّالاً في حسابك بشكل دائم.</p></details>
+        <details><summary>هل أحصل على فاتورة ضريبية؟</summary><p>نعم، فاتورة ضريبية سعودية بالرقم الضريبي لمنشأتك تُصدر تلقائياً عند الشراء.</p></details>
+        <details><summary>ماذا لو لم يناسبني النموذج؟</summary><p>استرجاع كامل خلال 7 أيام إذا لم يكن محتوى الملف مطابقاً لما هو موصوف في هذه الصفحة.</p></details>
+      </div>
+    </div>
+
+    <aside class="buybox">
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span class="chip" style="background:var(--brass);color:#1A1203;border-color:var(--brass);font-weight:700">الأكثر مبيعاً</span>
+        <span class="chip">الرعاية الصحية</span>
+        <span class="chip">السعودية</span>
+      </div>
+      <h1 class="pdp-title">نموذج مالي متكامل — عيادة أسنان</h1>
+      <p style="color:var(--fg-muted);font-size:16px">توقّعات 5 سنوات وحسابات المعدّات والموظفين ونقطة التعادل، بمعايير الزكاة والضريبة السعودية.</p>
+      <div class="pcard-proof" style="font-size:15px">
+        <span class="stars">★★★★★</span><b>4.8</b><span>(126 تقييماً)</span><span>·</span><span>412 تنزيلاً</span>
+      </div>
+      <div>
+        <div class="pcard-price" style="margin:0">
+          <span class="price-now">749 ر.س</span>
+          <span class="price-old">1,480</span>
+          <span class="price-save">وفّر 49%</span>
+        </div>
+        <p class="vat">شامل ضريبة القيمة المضافة · دفعة واحدة، بلا اشتراك</p>
+      </div>
+      <button class="btn btn-primary btn-block">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h2.5l2.3 11.4a2 2 0 0 0 2 1.6h8.4a2 2 0 0 0 2-1.6L21 7H5.2"/></svg>
+        أضف للسلّة — تنزيل فوري
+      </button>
+      <button class="btn btn-outline btn-block">معاينة مجانية لأول 3 أوراق</button>
+      <ul class="buybox-trust">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> XLSX · 14 ورقة · 2.4 ميجابايت</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> رابط التنزيل دائم في حسابك</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> استرجاع كامل خلال 7 أيام</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> فاتورة ضريبية سعودية</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> آخر تحديث: 2 أكتوبر 2026</li>
+      </ul>
+      <div class="pay" style="padding-top:14px;border-top:1px solid var(--line)">
+        <span style="border-color:var(--line);color:var(--fg-muted)">مدى</span>
+        <span style="border-color:var(--line);color:var(--fg-muted)">Apple&nbsp;Pay</span>
+        <span style="border-color:var(--line);color:var(--fg-muted)">VISA</span>
+        <span style="border-color:var(--line);color:var(--fg-muted)">تابي</span>
+        <span style="border-color:var(--line);color:var(--fg-muted)">تمارا</span>
+      </div>
+    </aside>
+  </div>
+
+  <div class="rail section" style="padding-top:20px">
+    <div class="section-head"><div><p class="eyebrow">يُشترى معه عادةً</p><h2 class="h-sec">أكمل ملف مشروعك</h2></div></div>
+    <div class="grid-products" id="related-products"></div>
+  </div>
+</section>
+
+<!-- ======================= CART / CHECKOUT ======================= -->
+<section class="page" id="page-cart">
+  <div class="phead">
+    <div class="rail">
+      <h1>السلّة والدفع</h1>
+      <p>منتجان · التنزيل متاح فور إتمام الدفع</p>
+    </div>
+  </div>
+
+  <div class="rail cart-layout">
+    <div>
+      <div class="steps-bar">
+        <span class="step-pill done"><b>✓</b> السلّة</span>
+        <span style="color:var(--fg-faint)">←</span>
+        <span class="step-pill now"><b>2</b> الدفع</span>
+        <span style="color:var(--fg-faint)">←</span>
+        <span class="step-pill"><b>3</b> التنزيل</span>
+      </div>
+
+      <div class="citem">
+        <div class="citem-media"></div>
+        <div>
+          <h3>نموذج مالي متكامل — عيادة أسنان</h3>
+          <p class="meta">XLSX · 14 ورقة · الرعاية الصحية · السعودية</p>
+          <p class="meta" style="color:var(--emerald);font-weight:600;margin-top:4px">✓ تنزيل فوري بعد الدفع</p>
+        </div>
+        <div class="side">
+          <span class="price-now" style="font-size:22px">749 ر.س</span>
+          <span class="price-old">1,480</span>
+          <button class="btn-ghost" style="font-size:14px;color:var(--fg-muted)">إزالة</button>
+        </div>
+      </div>
+
+      <div class="citem">
+        <div class="citem-media"></div>
+        <div>
+          <h3>عرض استثماري — قطاع الرعاية الصحية</h3>
+          <p class="meta">PPTX · 24 شريحة · الرعاية الصحية · السعودية</p>
+          <p class="meta" style="color:var(--emerald);font-weight:600;margin-top:4px">✓ تنزيل فوري بعد الدفع</p>
+        </div>
+        <div class="side">
+          <span class="price-now" style="font-size:22px">595 ر.س</span>
+          <span class="price-old">1,190</span>
+          <button class="btn-ghost" style="font-size:14px;color:var(--fg-muted)">إزالة</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>بيانات الفاتورة</h2>
+        <div class="two">
+          <div class="field"><label for="f-name">الاسم الكامل</label><input id="f-name" value="نورة العتيبي"></div>
+          <div class="field"><label for="f-mail">البريد الإلكتروني</label><input id="f-mail" type="email" value="noura@example.com"><span class="hint">رابط التنزيل يصلك على هذا البريد</span></div>
+        </div>
+        <div class="two">
+          <div class="field"><label for="f-co">اسم المنشأة (اختياري)</label><input id="f-co" placeholder="للفاتورة الضريبية"></div>
+          <div class="field"><label for="f-vat">الرقم الضريبي (اختياري)</label><input id="f-vat" placeholder="15 رقماً" inputmode="numeric"></div>
+        </div>
+
+        <h2 style="margin-top:28px">طريقة الدفع</h2>
+        <div class="paylist">
+          <label class="payopt"><input type="radio" name="pay" checked><b>مدى</b><span class="tag">الأكثر استخداماً</span></label>
+          <label class="payopt"><input type="radio" name="pay"><b>Apple&nbsp;Pay</b><span class="tag">أسرع خيار</span></label>
+          <label class="payopt"><input type="radio" name="pay"><b>بطاقة ائتمانية</b><span class="tag">VISA · Mastercard</span></label>
+          <label class="payopt"><input type="radio" name="pay"><b>تابي — قسّمها على 4 دفعات</b><span class="tag">336 ر.س شهرياً</span></label>
+        </div>
+        <div class="secure">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--emerald)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          الدفع مشفّر بالكامل. لا نحفظ بيانات بطاقتك على خوادمنا.
+        </div>
+      </div>
+    </div>
+
+    <aside class="summary">
+      <h2 style="font-size:21px">ملخّص الطلب</h2>
+      <div class="srow"><span>المجموع قبل الخصم</span><b>2,670 ر.س</b></div>
+      <div class="srow"><span style="color:var(--emerald)">خصم الباقة (منتجان)</span><b style="color:var(--emerald)">− 1,326 ر.س</b></div>
+      <div class="srow"><span>ضريبة القيمة المضافة 15%</span><b>مشمولة</b></div>
+      <div class="promo">
+        <input id="promo" placeholder="رمز الخصم" aria-label="رمز الخصم">
+        <button class="btn btn-outline btn-sm">تطبيق</button>
+      </div>
+      <div class="stotal"><span>الإجمالي</span><span class="price-now">1,344 ر.س</span></div>
+      <button class="btn btn-primary btn-block">ادفع وحمّل الآن</button>
+      <ul class="buybox-trust" style="padding-top:14px">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> روابط التنزيل تظهر فوراً بعد الدفع</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> استرجاع كامل خلال 7 أيام</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> فاتورة ضريبية فور الشراء</li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+</main>
+
+<footer class="ftr">
+  <div class="rail">
+    <div class="ftr-grid">
+      <div>
+        <div class="brand" style="margin-bottom:14px">
+          <svg width="36" height="36" viewBox="0 0 120 120" aria-label="شعار مسار"><rect width="120" height="120" rx="30" fill="var(--brass)"/><path d="M94 86 L70 58 L54 70 L30 34" fill="none" stroke="#081729" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="30" cy="34" r="11" fill="#081729"/></svg>
+          <span class="brand-name" style="color:var(--on-ink)">مسار</span>
+        </div>
+        <p style="font-size:15px;max-width:38ch">نماذج مالية ودراسات جدوى وعروض استثمارية جاهزة، مبنية على معايير الأسواق العربية. من الفكرة إلى العرض على مستثمر.</p>
+        <div class="pay" style="margin-top:20px"><span>مدى</span><span>Apple&nbsp;Pay</span><span>VISA</span><span>Mastercard</span><span>تابي</span><span>تمارا</span></div>
+      </div>
+      <div><h4>المتجر</h4><ul><li><a href="#">كل النماذج</a></li><li><a href="#">النماذج المالية</a></li><li><a href="#">دراسات الجدوى</a></li><li><a href="#">العروض الاستثمارية</a></li><li><a href="#">الخطط الاستراتيجية</a></li></ul></div>
+      <div><h4>مركز المعرفة</h4><ul><li><a href="#">دليل التمويل في الخليج</a></li><li><a href="#">كيف تبني نموذجاً مالياً</a></li><li><a href="#">تقييم الشركات الناشئة</a></li><li><a href="#">كل المقالات</a></li></ul></div>
+      <div><h4>الشركة</h4><ul><li><a href="#">من نحن</a></li><li><a href="#">تواصل معنا</a></li><li><a href="#">سياسة الاسترجاع</a></li><li><a href="#">الشروط والأحكام</a></li><li><a href="#">سياسة الخصوصية</a></li></ul></div>
+    </div>
+    <div class="ftr-bottom">
+      <span>© 2026 مسار. جميع الحقوق محفوظة.</span>
+      <span>السعودية · الإمارات · قطر · الكويت · البحرين · عُمان · مصر · الأردن · العراق</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var PRODUCTS = [
+    {t:"نموذج مالي متكامل — عيادة أسنان", d:"توقّعات 5 سنوات ونقطة التعادل، بمعايير الزكاة والضريبة السعودية.", tags:["الرعاية الصحية","السعودية"], type:"XLSX · 14 ورقة", flag:"الأكثر مبيعاً", rate:"4.8", revs:126, dl:412, now:"749", old:"1,480", save:49, go:"product"},
+    {t:"عرض استثماري — قطاع الرعاية الصحية", d:"24 شريحة جاهزة بهيكل يطلبه المستثمرون في المنطقة، مع نموذج السوق.", tags:["الرعاية الصحية","السعودية"], type:"PPTX · 24 شريحة", flag:"", rate:"4.9", revs:88, dl:287, now:"595", old:"1,190", save:50},
+    {t:"دراسة جدوى — مشروع عقاري سكني", d:"تحليل سوقي ومالي وتشغيلي كامل مع سيناريوهات التمويل العقاري.", tags:["العقارات","الإمارات"], type:"XLSX + DOCX", flag:"محدَّث", rate:"4.7", revs:64, dl:672, now:"1,190", old:"2,380", save:50},
+    {t:"نموذج مالي — متجر إلكتروني", d:"يحسب تكلفة اكتساب العميل والقيمة الدائمة ودورة المخزون شهرياً.", tags:["التجارة الإلكترونية","السعودية"], type:"XLSX · 11 ورقة", flag:"", rate:"4.8", revs:95, dl:538, now:"649", old:"1,290", save:50},
+    {t:"خطة استراتيجية — شركة تقنية مالية", d:"تحليل PESTEL وخارطة طريق 3 سنوات ومؤشّرات أداء قابلة للقياس.", tags:["التقنية المالية","الإمارات"], type:"PPTX · 32 شريحة", flag:"", rate:"4.6", revs:41, dl:203, now:"890", old:"1,780", save:50},
+    {t:"نموذج مالي — مطعم ومقهى", d:"هامش الطبق وتكلفة المواد ومعدّل دوران الطاولات في اليوم.", tags:["السياحة والضيافة","السعودية"], type:"XLSX · 12 ورقة", flag:"", rate:"4.9", revs:112, dl:764, now:"579", old:"1,150", save:50},
+    {t:"دراسة جدوى — شركة شحن ولوجستيات", d:"تكلفة الكيلومتر وأسطول المركبات وخطة التوسّع الإقليمي.", tags:["اللوجستيات","السعودية"], type:"XLSX · 13 ورقة", flag:"", rate:"4.5", revs:37, dl:423, now:"799", old:"1,590", save:50},
+    {t:"قائمة مستثمرين — السعودية والإمارات", d:"قاعدة بيانات 240 مستثمراً وصندوقاً بقطاعاتهم ومتوسّط حجم الاستثمار.", tags:["التمويل","الخليج"], type:"XLSX · 240 صفاً", flag:"جديد", rate:"4.7", revs:58, dl:1234, now:"449", old:"890", save:50},
+    {t:"نموذج مالي — صالة رياضية", d:"إيراد الاشتراكات ومعدّل التسرّب الشهري وتكلفة المعدّات.", tags:["السياحة والضيافة","الكويت"], type:"XLSX · 10 أوراق", flag:"", rate:"4.6", revs:29, dl:188, now:"529", old:"1,050", save:50},
+    {t:"عرض استثماري — شركة تقنية ناشئة", d:"هيكل العرض الذي يستخدمه المؤسّسون في جولات ما قبل البذرة.", tags:["التقنية المالية","الخليج"], type:"PPTX · 18 شريحة", flag:"", rate:"4.8", revs:143, dl:921, now:"495", old:"990", save:50},
+    {t:"دراسة جدوى — مصنع أغذية", d:"خط الإنتاج والطاقة الاستيعابية وسلسلة التوريد وتكلفة الوحدة.", tags:["الأغذية","السعودية"], type:"XLSX · 15 ورقة", flag:"", rate:"4.7", revs:46, dl:356, now:"1,090", old:"2,180", save:50},
+    {t:"نموذج مالي — مشروع زراعي", d:"دورة المحصول والري والتكاليف الموسمية وتحليل الحساسية للأسعار.", tags:["الأغذية","مصر"], type:"XLSX · 12 ورقة", flag:"", rate:"4.5", revs:22, dl:167, now:"629", old:"1,250", save:50}
+  ];
+
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+  function card(p){
+    return '<article class="pcard">'
+      + '<div class="pcard-media">'
+      +   '<div class="fm-mini"><i class="w2"></i><i class="w1"></i><i class="w3"></i><i class="w2"></i><i class="w1"></i></div>'
+      +   (p.flag ? '<span class="pcard-flag">' + esc(p.flag) + '</span>' : '')
+      +   '<span class="pcard-type">' + esc(p.type) + '</span>'
+      + '</div>'
+      + '<div class="pcard-body">'
+      +   '<div class="pcard-tags">' + p.tags.map(function(t){ return '<span class="chip">' + esc(t) + '</span>'; }).join('') + '</div>'
+      +   '<h3>' + esc(p.t) + '</h3>'
+      +   '<p class="pcard-desc">' + esc(p.d) + '</p>'
+      +   '<div class="pcard-proof"><span class="stars">★</span><b>' + esc(p.rate) + '</b><span>(' + p.revs + ')</span><span>·</span><span>' + p.dl + ' تنزيلاً</span></div>'
+      +   '<div class="pcard-price"><span class="price-now">' + esc(p.now) + ' ر.س</span><span class="price-old">' + esc(p.old) + '</span><span class="price-save">وفّر ' + p.save + '%</span></div>'
+      +   '<div class="pcard-actions">'
+      +     '<button class="btn btn-primary btn-sm">أضف للسلّة</button>'
+      +     '<button class="btn btn-outline btn-sm" data-go="' + (p.go || 'product') + '">معاينة</button>'
+      +   '</div>'
+      + '</div></article>';
+  }
+
+  function fill(id, list){
+    var el = document.getElementById(id);
+    if (el) el.innerHTML = list.map(card).join('');
+  }
+  fill('home-products', PRODUCTS.slice(0, 4));
+  fill('store-products', PRODUCTS);
+  fill('related-products', PRODUCTS.slice(1, 5));
+
+  var nav = document.getElementById('nav');
+  function show(name){
+    var pages = document.querySelectorAll('.page');
+    for (var i = 0; i < pages.length; i++) pages[i].classList.toggle('is-active', pages[i].id === 'page-' + name);
+    var btns = nav.querySelectorAll('button');
+    for (var j = 0; j < btns.length; j++){
+      if (btns[j].getAttribute('data-go') === name) btns[j].setAttribute('aria-current', 'page');
+      else btns[j].removeAttribute('aria-current');
+    }
+    nav.classList.remove('is-open');
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+
+  document.addEventListener('click', function(e){
+    var t = e.target.closest('[data-go]');
+    if (!t) return;
+    e.preventDefault();
+    show(t.getAttribute('data-go'));
+  });
+
+  var burger = document.getElementById('burger');
+  if (burger) burger.addEventListener('click', function(){ nav.classList.toggle('is-open'); });
+
+  var LOCALES = [
+    { flag: '🇸🇦', name: 'السعودية', cur: 'ر.س' },
+    { flag: '🇦🇪', name: 'الإمارات', cur: 'د.إ' },
+    { flag: '🇶🇦', name: 'قطر', cur: 'ر.ق' },
+    { flag: '🇰🇼', name: 'الكويت', cur: 'د.ك' }
+  ];
+  var li = 0, locale = document.getElementById('locale');
+  if (locale) locale.addEventListener('click', function(){
+    li = (li + 1) % LOCALES.length;
+    var L = LOCALES[li];
+    locale.innerHTML = L.flag + ' <span class="full">' + L.name + ' ·</span> ' + L.cur;
+  });
+})();
+</script>
