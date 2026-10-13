@@ -1,0 +1,52 @@
+{
+  "v": 4,
+  "createdOnFiles": { "v": 1, "at": "2026-10-13T09:00:00Z" },
+  "lists": "css",
+  "title": "مسار — دليل الهوية البصرية",
+  "order": [
+    "cover",
+    "audit",
+    "problems",
+    "core",
+    "personality",
+    "logo-concept",
+    "logo-lockups",
+    "logo-clearspace",
+    "logo-misuse",
+    "color-palette",
+    "color-usage",
+    "color-contrast",
+    "type-families",
+    "type-scale",
+    "grid",
+    "comp-buttons",
+    "comp-cards",
+    "iconography",
+    "imagery",
+    "voice",
+    "rtl-locale",
+    "before-after",
+    "roadmap"
+  ],
+  "sections": {
+    "s1": { "description": "لماذا نعيد بناء الهوية: تشخيص التصميم الحالي", "start": "cover" },
+    "s2": { "description": "جوهر العلامة وشخصيتها", "start": "core" },
+    "s3": { "description": "الشعار: المفهوم والاستخدامات والممنوعات", "start": "logo-concept" },
+    "s4": { "description": "نظام الألوان والتباين", "start": "color-palette" },
+    "s5": { "description": "الطباعة والشبكة", "start": "type-families" },
+    "s6": { "description": "المكونات والأيقونات والصور", "start": "comp-buttons" },
+    "s7": { "description": "نبرة الصوت والتوطين الخليجي", "start": "voice" },
+    "s8": { "description": "التطبيق وخارطة التنفيذ", "start": "before-after" }
+  },
+  "faces": {
+    "readex-pro": {
+      "family": "Readex Pro",
+      "href": "https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200..700&display=swap"
+    },
+    "ibm-plex-sans-arabic": {
+      "family": "IBM Plex Sans Arabic",
+      "href": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap"
+    }
+  },
+  "designSystems": []
+}
