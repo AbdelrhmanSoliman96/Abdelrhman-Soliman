@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;font-family:'IBM Plex Sans Arabic','IBM Plex Sans',sans-serif;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "surface-variant": "#dae2fd",
+        "tertiary-container": "#002113",
+        "secondary-fixed": "#ffdcc3",
+        "on-secondary-fixed-variant": "#6e3900",
+        "on-tertiary-container": "#009668",
+        "surface-tint": "#565d79",
+        "on-primary": "#ffffff",
+        "surface-container": "#eaedff",
+        "on-surface-variant": "#45464d",
+        "on-background": "#131b2e",
+        "secondary-container": "#fe932c",
+        "error-container": "#ffdad6",
+        "surface-container-low": "#f2f3ff",
+        "error": "#ba1a1a",
+        "on-secondary": "#ffffff",
+        "primary-fixed": "#dbe1ff",
+        "on-tertiary-fixed-variant": "#005236",
+        "on-error": "#ffffff",
+        "outline-variant": "#c6c6ce",
+        "secondary": "#904d00",
+        "primary-fixed-dim": "#bec5e5",
+        "tertiary": "#000000",
+        "on-error-container": "#93000a",
+        "secondary-fixed-dim": "#ffb77d",
+        "surface-container-high": "#e2e7ff",
+        "on-tertiary": "#ffffff",
+        "surface-container-lowest": "#ffffff",
+        "inverse-primary": "#bec5e5",
+        "surface-bright": "#faf8ff",
+        "inverse-surface": "#283044",
+        "surface-dim": "#d2d9f4",
+        "surface-container-highest": "#dae2fd",
+        "on-primary-fixed": "#131a33",
+        "tertiary-fixed-dim": "#4edea3",
+        "inverse-on-surface": "#eef0ff",
+        "primary-container": "#131a33",
+        "on-primary-fixed-variant": "#3e4660",
+        "on-tertiary-fixed": "#002113",
+        "surface": "#faf8ff",
+        "outline": "#76767e",
+        "tertiary-fixed": "#6ffbbe",
+        "on-secondary-fixed": "#2f1500",
+        "primary": "#000000",
+        "on-surface": "#131b2e",
+        "background": "#faf8ff",
+        "on-secondary-container": "#663500",
+        "on-primary-container": "#7b83a0"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-lg": "1.5rem",
+        "margin": "3rem",
+        "gutter": "1.5rem",
+        "gutter-mobile": "1rem",
+        "space-xs": "0.25rem",
+        "space-xl": "2.5rem",
+        "space-sm": "0.5rem",
+        "margin-mobile": "1.25rem",
+        "space-md": "1rem"
+      },
+      "fontFamily": {
+        "title-md": ["IBM Plex Sans"],
+        "body-lg": ["IBM Plex Sans"],
+        "metric-xl": ["IBM Plex Sans"],
+        "display-lg": ["IBM Plex Sans"],
+        "headline-md": ["IBM Plex Sans"],
+        "body-sm": ["IBM Plex Sans"],
+        "headline-lg-mobile": ["IBM Plex Sans"],
+        "headline-lg": ["IBM Plex Sans"],
+        "display-lg-mobile": ["IBM Plex Sans"],
+        "body-md": ["IBM Plex Sans"],
+        "label-sm": ["IBM Plex Sans"],
+        "title-lg": ["IBM Plex Sans"],
+        "label-md": ["IBM Plex Sans"]
+      },
+      "fontSize": {
+        "title-md": ["1.125rem", {"lineHeight": "1.625rem", "fontWeight": "500"}],
+        "body-lg": ["1.125rem", {"lineHeight": "1.75rem", "fontWeight": "400"}],
+        "metric-xl": ["2.75rem", {"lineHeight": "3rem", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+        "display-lg": ["3.5rem", {"lineHeight": "4.25rem", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+        "headline-md": ["1.5rem", {"lineHeight": "2rem", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+        "body-sm": ["0.875rem", {"lineHeight": "1.375rem", "fontWeight": "400"}],
+        "headline-lg-mobile": ["1.75rem", {"lineHeight": "2.25rem", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+        "headline-lg": ["2.25rem", {"lineHeight": "2.875rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "display-lg-mobile": ["2.25rem", {"lineHeight": "2.75rem", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+        "body-md": ["1rem", {"lineHeight": "1.5rem", "fontWeight": "400"}],
+        "label-sm": ["0.75rem", {"lineHeight": "1rem", "letterSpacing": "0.05em", "fontWeight": "600"}],
+        "title-lg": ["1.25rem", {"lineHeight": "1.75rem", "fontWeight": "600"}],
+        "label-md": ["0.875rem", {"lineHeight": "1.25rem", "letterSpacing": "0.025em", "fontWeight": "600"}]
+      }
+    }
+  }
+}</script><title>مسار | Masar</title><link rel="icon" href="assets/logo.svg"><script defer src="assets/site.js"></script></head><body data-page="knowledge" class="bg-surface text-on-surface antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed"><header class="fixed top-0 w-full z-50 bg-primary-container shadow-[0_1px_8px_rgba(0,0,0,0.12)]"><div class="h-20 max-w-[1280px] mx-auto px-gutter flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><a class="flex items-center gap-space-sm" data-path="digital-store" href="index.html"><img alt="Modern luxury tech logo for 'Masar' (مسار) - an upscale Gulf fintech and business planning digital platform. Sleek geometric letterform 'M' combined with an upward trajectory arrow / path dynamic symbol. Minimalist, premium, gold metallic and royal navy contrast, sharp vector precision.. Brand logo" class="h-8 w-auto object-contain" src="assets/logo.svg"/><div class="flex flex-col"><span class="font-title-lg text-title-lg font-bold text-on-primary tracking-wide">مسار</span><span class="font-label-sm text-label-sm text-secondary-container tracking-widest uppercase">MASAR FINTECH</span></div></a><nav class="hidden xl:flex items-center gap-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-title-md rounded-lg shadow-[0_8px_20px_-4px_rgba(217,119,6,0.35)]"><a class="px-space-md py-space-sm rounded-lg font-body-md text-body-md text-inverse-on-surface hover:text-secondary-fixed hover:bg-surface-variant/10 transition-colors" data-path="digital-store" href="store.html">متجر النماذج الرقمية</a><a class="px-space-md py-space-sm rounded-lg font-body-md text-body-md text-inverse-on-surface hover:text-secondary-fixed hover:bg-surface-variant/10 transition-colors" data-path="cart-checkout" href="checkout.html">سلة الشراء</a><a aria-current="page" class="px-space-md py-space-sm transition-colors bg-secondary-container text-on-secondary-container font-title-md rounded-lg shadow-[0_8px_20px_-4px_rgba(217,119,6,0.35)]" data-path="knowledge-hub" href="knowledge.html">مركز المعرفة والمدونة</a><a class="px-space-md py-space-sm rounded-lg font-body-md text-body-md text-inverse-on-surface hover:text-secondary-fixed hover:bg-surface-variant/10 transition-colors" data-path="about-contact" href="about.html">من نحن وتواصل معنا</a></nav></div><div class="flex items-center gap-space-md"><div class="hidden md:flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface/10 text-inverse-on-surface text-label-sm font-label-sm"><span class="material-symbols-outlined text-[16px] text-secondary-container">payments</span><span class="font-medium">SAR (ر.س)</span></div><a class="relative flex items-center justify-center p-space-sm rounded-lg text-inverse-on-surface hover:text-secondary-fixed hover:bg-surface-variant/10 transition-colors" data-path="cart-checkout" href="checkout.html" title="سلة الشراء"><span class="material-symbols-outlined text-[24px]">shopping_bag</span><span class="absolute -top-1 -right-1 bg-secondary-container text-on-secondary-container font-label-sm text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-[0_2px_8px_rgba(254,147,44,0.4)]">3</span></a><div class="hidden sm:flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-tertiary-container text-on-tertiary-container text-label-sm font-label-sm"><span class="material-symbols-outlined text-[15px]">verified</span><span class="font-semibold">معتمد GCC</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Luxury Hero Section -->
+<section class="relative w-full bg-primary-container text-inverse-on-surface overflow-hidden py-space-xl">
+<!-- Subtle Architectural Background Grids & Glows -->
+<div class="absolute inset-0 bg-gradient-to-b from-primary-container via-surface-container-highest/10 to-primary-container pointer-events-none"></div>
+<div class="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-secondary-container/15 blur-3xl pointer-events-none"></div>
+<div class="absolute top-1/2 -right-40 w-96 h-96 rounded-full bg-tertiary-fixed/10 blur-3xl pointer-events-none"></div>
+<div class="relative max-w-[1280px] mx-auto px-gutter flex flex-col gap-space-lg">
+<!-- Breadcrumb & Authority Badge -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-primary-container">
+<span>الرئيسية</span>
+<span class="material-symbols-outlined text-[14px]">chevron_left</span>
+<span class="text-secondary-fixed">مركز المعرفة والتقارير الاستثمارية</span>
+</div>
+<div class="flex items-center gap-space-xs px-space-md py-1 rounded-full bg-surface-container-highest/20 text-secondary-fixed font-label-sm text-label-sm shadow-sm backdrop-blur">
+<span class="material-symbols-outlined text-secondary-container text-[16px]">verified</span>
+<span>تقارير مالية محكّمة لمجتمع الاستثمار الخليجي (GCC Capital)</span>
+</div>
+</div>
+<!-- Main Headline Block -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-lg pt-space-xs">
+<div class="max-w-3xl flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs font-label-md text-label-md text-secondary-container tracking-wider uppercase">
+<span class="w-8 h-[2px] bg-secondary-container inline-block"></span>
+<span>بوابة التحليلات ورأس المال الجريء</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-primary leading-tight font-bold">
+            مركز المعرفة الاستراتيجية والتقارير الاستثمارية
+          </h1>
+<p class="font-body-lg text-body-lg text-inverse-on-surface/80 max-w-2xl pt-space-xs">
+            أبحاث معمّقة، دراسات حالة ميدانية، وأدلة حوكمة مصممة خصيصاً للمؤسسين، مديري صناديق الاستثمار الجريء، والمكاتب العائلية في السعودية ودول مجلس التعاون.
+          </p>
+</div>
+<!-- Quick Stats Pill Box -->
+<div class="flex items-center gap-space-md bg-surface-container-highest/15 p-space-md rounded-xl backdrop-blur shadow-md self-start md:self-end">
+<div class="flex flex-col">
+<span class="font-metric-xl text-metric-xl text-secondary-fixed leading-none">140+</span>
+<span class="font-label-sm text-label-sm text-inverse-on-surface/70 mt-1">تقرير ودراسة مالية</span>
+</div>
+<div class="w-[1px] h-10 bg-surface-variant/20"></div>
+<div class="flex flex-col">
+<span class="font-metric-xl text-metric-xl text-tertiary-fixed-dim leading-none">99.4%</span>
+<span class="font-label-sm text-label-sm text-inverse-on-surface/70 mt-1">دقة مصفوفات التقييم</span>
+</div>
+</div>
+</div>
+<!-- Strategic Search & Filter Engine Bar -->
+<div class="mt-space-md bg-surface-container-lowest text-on-surface rounded-xl p-space-md shadow-xl flex flex-col gap-space-md">
+<div class="flex flex-col lg:flex-row items-center gap-space-md">
+<!-- Live Search Input -->
+<div class="relative w-full lg:flex-1">
+<span class="absolute right-space-md top-1/2 -translate-y-1/2 text-on-surface-variant material-symbols-outlined text-[22px]">manage_search</span>
+<input class="w-full pr-12 pl-space-md py-3 bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/60 focus:bg-surface-container-lowest focus:outline-none transition-all" placeholder="ابحث عن نموذج مالي، قطاع استثماري، تقييم الشركات، أو دراسة حالة..." type="text"/>
+</div>
+<!-- Secondary Filter dropdowns -->
+<div class="flex flex-wrap sm:flex-nowrap items-center gap-space-sm w-full lg:w-auto">
+<div class="flex items-center gap-space-xs bg-surface-container-low px-space-md py-3 rounded-lg font-label-md text-label-md text-on-surface flex-1 sm:flex-initial justify-between">
+<span class="text-on-surface-variant">المنطقة:</span>
+<span class="font-bold">المملكة والخليج</span>
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container-low px-space-md py-3 rounded-lg font-label-md text-label-md text-on-surface flex-1 sm:flex-initial justify-between">
+<span class="text-on-surface-variant">النوع:</span>
+<span class="font-bold">كافة الإصدارات</span>
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</div>
+</div>
+</div>
+<!-- Quick Filter Tags -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1 pt-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap pl-space-sm">التصنيفات السريعة:</span>
+<button class="px-space-md py-1.5 rounded-full font-label-md text-label-md bg-primary text-on-primary shadow-sm whitespace-nowrap">
+            الكل
+          </button>
+<button class="px-space-md py-1.5 rounded-full font-label-md text-label-md bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container whitespace-nowrap transition-colors">
+            التقنية المالية (Fintech)
+          </button>
+<button class="px-space-md py-1.5 rounded-full font-label-md text-label-md bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container whitespace-nowrap transition-colors">
+            التقييم وجولات التمويل
+          </button>
+<button class="px-space-md py-1.5 rounded-full font-label-md text-label-md bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container whitespace-nowrap transition-colors">
+            الحوكمة والأنظمة (FinGov)
+          </button>
+<button class="px-space-md py-1.5 rounded-full font-label-md text-label-md bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container whitespace-nowrap transition-colors">
+            نماذج دراسات الجدوى
+          </button>
+<button class="px-space-md py-1.5 rounded-full font-label-md text-label-md bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container whitespace-nowrap transition-colors">
+            استراتيجيات الـ SaaS
+          </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Featured Executive Insight Hero Card -->
+<section class="max-w-[1280px] w-full mx-auto px-gutter -mt-8 z-10">
+<div class="bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden">
+<div class="grid grid-cols-1 lg:grid-cols-12">
+<!-- Visual Column -->
+<div class="lg:col-span-5 relative min-h-[300px] lg:min-h-full">
+<img class="w-full h-full object-cover" data-alt="Modern executive boardroom in Riyadh overlooking illuminated city skyline with financial analysts inspecting holographic startup valuation data charts. Luxurious deep obsidian navy, subtle warm amber ambient lights, crisp reflections, photorealistic high-end venture capital atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9KxCy2d5gaexTb0_pvkKXVE_dgBoaVbktKlLDXGangVv5oQHnVQlfxxYZ_CUiLmzw4mi6sEfF3HirloiHmulQMMlyaNGod5xZXSFP7azQt8kCFQ8krDU4YnLjHiTlv49TuaGA5bp7DvLNoS4BpquEqDVGcOghsxSXExRHLF9_GfBfu-WWU3VuIwvB_VNgMeLKAiLzKV1detr1jJMGYQUI0sEBMsTV--BtmRg5EsgX6vZAd37aQi3n"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary-container/80 via-transparent to-transparent lg:hidden"></div>
+<!-- Floating Status Badge -->
+<div class="absolute top-space-md right-space-md bg-surface-container-lowest/95 backdrop-blur px-space-md py-1 rounded-full shadow-md flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-secondary font-bold">تقرير الربع الأول 2025</span>
+</div>
+<div class="absolute bottom-space-md right-space-md left-space-md text-inverse-on-surface lg:hidden">
+<span class="px-space-sm py-0.5 rounded bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm font-semibold">
+              تقرير تحليلي معتمد
+            </span>
+</div>
+</div>
+<!-- Content Column -->
+<div class="lg:col-span-7 p-space-lg lg:p-space-xl flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-sm">
+<div class="hidden lg:flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-md py-1 rounded-full bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+                  تقرير تحليلي معتمد
+                </span>
+<span class="px-space-md py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-sm text-label-sm font-bold">
+                  رأس المال الجريء والتقييم
+                </span>
+</div>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>وقت القراءة: 7 دقائق</span>
+</div>
+</div>
+<!-- Title -->
+<a class="group" href="article.html">
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface group-hover:text-secondary transition-colors leading-snug">
+                دليل جولات الاستثمار الملائكي ورأس المال الجريء في المملكة والخليج لعام 2025: مضاعفات التقييم ومعدلات النمو
+              </h2>
+</a>
+<!-- Excerpt -->
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              تحليل إحصائي يستند إلى 180+ صفقة استثمارية تمت في منطقة الشرق الأوسط وشمال أفريقيا، موضحاً الفجوة السعرية بين التقييمات التقديرية والفحص الميداني، مع مصفوفة قطاعية دقيقة للتقنية المالية والذكاء الاصطناعي وخدمات البرمجيات المؤسسية.
+            </p>
+<!-- Key Insight Matrix Snippet -->
+<div class="grid grid-cols-3 gap-space-sm p-space-md rounded-lg bg-surface-container-low mt-space-xs">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">متوسط جولة Seed</span>
+<span class="font-title-lg text-title-lg font-bold text-on-surface">3.8M <span class="text-label-sm font-normal text-on-surface-variant">SAR</span></span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">مضاعف الإيرادات المتكررة</span>
+<span class="font-title-lg text-title-lg font-bold text-secondary-container">8.4x – 12.1x</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">نمو صفقات الرياض</span>
+<span class="font-title-lg text-title-lg font-bold text-on-tertiary-container">+41.2%</span>
+</div>
+</div>
+</div>
+<!-- Card Bottom Action & Author Row -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md pt-space-md border-t-0 bg-surface-container-low/50 -mx-space-lg lg:-mx-space-xl -mb-space-lg lg:-mb-space-xl px-space-lg lg:px-space-xl py-space-md">
+<!-- Author Profile -->
+<div class="flex items-center gap-space-sm">
+<div class="w-11 h-11 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold font-title-md">
+                م.س
+              </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-bold text-on-surface">د. مشعل السبيعي</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">شريك استثماري وخبير حوكمة الصناديق السيادية</span>
+</div>
+</div>
+<!-- Action CTAs -->
+<div class="flex items-center gap-space-xs">
+<a class="px-space-md py-2.5 rounded-lg font-label-md text-label-md bg-secondary-container text-on-primary font-bold shadow-md hover:bg-secondary transition-all flex items-center gap-space-xs" href="article.html">
+<span>قراءة التقرير بالكامل</span>
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+</a>
+<button class="px-space-md py-2.5 rounded-lg font-label-md text-label-md bg-surface-container hover:bg-surface-variant text-on-surface font-semibold transition-colors flex items-center gap-space-xs" title="تنزيل الملخص التنفيذي">
+<span class="material-symbols-outlined text-[18px] text-secondary">download</span>
+<span class="hidden sm:inline">تنزيل PDF مجاناً</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Strategic Articles & Guides (6 Curated Cards Grid) -->
+<section class="max-w-[1280px] w-full mx-auto px-gutter py-space-xl flex flex-col gap-space-lg">
+<!-- Header of the Grid -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-space-sm">
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-md text-label-md text-secondary font-bold uppercase tracking-wider">رؤى وأدلة استراتيجية</span>
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface">أحدث التحليلات والبحوث المالية</h2>
+</div>
+<div class="flex items-center gap-space-xs font-label-md text-label-md text-on-surface-variant">
+<span>عرض الأحدث أولاً</span>
+<span class="material-symbols-outlined text-[20px]">sort</span>
+</div>
+</div>
+<!-- 6 Strategic Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
+<!-- Card 1 -->
+<article class="flex flex-col bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group">
+<div class="relative h-48 w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="High tech financial model spreadsheet on multi-screen trading desk with cashflow projection matrices in deep royal navy and glowing amber accents. Minimal clean corporate aesthetic with precision data charts." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLjPrcQYDyvSB7Ux8KQvlYMEm8Tqk9H0zrgALNa06BXqSLUczsXpa41Gvnyr4sBURGhFSfnMX_0cYZwxcn7rHysT0cq5VjmeE_QmPMH2xTOKRH7wCAFuZ74exbWG_ke1zzl-fmYP62GwGUH1D9p8-S9_ZHescMY3EWkV6D0JMyL_lTKdTD8aeFE6ogQhg44Bf9Q8cdD8gsolYE1meF7YPLc6MB-2b7ThUXlAz-dfSezquTOXNvyu6l"/>
+<div class="absolute top-space-sm right-space-sm">
+<span class="px-space-sm py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur font-label-sm text-label-sm text-secondary font-bold shadow-sm">
+              نماذج التقييم (Valuation)
+            </span>
+</div>
+<div class="absolute bottom-space-sm left-space-sm">
+<span class="px-space-sm py-0.5 rounded bg-tertiary-container/90 text-on-tertiary-container font-label-sm text-label-sm font-semibold">
+              مؤشر الفائدة: 98%
+            </span>
+</div>
+</div>
+<div class="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>12 مارس 2025</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>8 دقائق</span>
+</span>
+</div>
+<a class="group-hover:text-secondary transition-colors" href="article.html">
+<h3 class="font-title-lg text-title-lg font-bold text-on-surface leading-snug">
+                كيف تبني نموذج التدفقات النقدية المتوقعة (DCF) لاجتياز الفحص النافي للجهالة (Due Diligence)
+              </h3>
+</a>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              خطوات تفصيلية لحساب متوسط تكلفة رأس المال (WACC)، ومعالجة معدلات الخصم للمخاطر السيادية ونموذج القيمة المتبقية لمشاريع التقنية.
+            </p>
+</div>
+<div class="pt-space-sm border-t-0 flex items-center justify-between bg-surface-container-low/40 -mx-space-lg -mb-space-lg p-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-bold text-label-sm">
+                ع.ن
+              </div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">عمر النجدي</span>
+<span class="text-[11px] text-on-surface-variant">مدير الفحص المالي (Big 4)</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
+</div>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="flex flex-col bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group">
+<div class="relative h-48 w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Islamic fintech geometric patterns fused with modern corporate debt structuring graphs. Clean contrast between gold investment emblems and deep navy corporate background with Gulf architectural backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6m-Gj2-OXhP8-zbcuzml1VAtQ2RRJ0QEGRZqsfbSjoP19Jj_qhGTou-ndeViukYzw-6LgGJcrnFYKZhOctBeCx5Kp7bsbCmdQbPBB88P_e-VzfWcgb-R-poeziDf9lLests0ANVEJ0PXP27HSawOgrBzfAb13zsWC1bjdPVTvtWNP8DR94kQrPuAvDleanuDKJ-KPRFuuQ1__US9ky7Ar23p1OmozgOcTwECSA_QHVR2VuCLJ-1L3"/>
+<div class="absolute top-space-sm right-space-sm">
+<span class="px-space-sm py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur font-label-sm text-label-sm text-secondary font-bold shadow-sm">
+              أدوات التمويل الإسلامي
+            </span>
+</div>
+<div class="absolute bottom-space-sm left-space-sm">
+<span class="px-space-sm py-0.5 rounded bg-tertiary-container/90 text-on-tertiary-container font-label-sm text-label-sm font-semibold">
+              مؤشر الفائدة: 94%
+            </span>
+</div>
+</div>
+<div class="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>9 مارس 2025</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>6 دقائق</span>
+</span>
+</div>
+<a class="group-hover:text-secondary transition-colors" href="article.html">
+<h3 class="font-title-lg text-title-lg font-bold text-on-surface leading-snug">
+                مقارنة بين صكوك الدين والتمويل بالحصص (Equity vs Debt) للمشاريع الواعدة
+              </h3>
+</a>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              متى يكون التمويل عبر الصكوك أفضل خيار لحماية هيكل الملكية (Cap Table) وتجنب التخفيف المفرط لأسهم المؤسسين في جولات Growth.
+            </p>
+</div>
+<div class="pt-space-sm border-t-0 flex items-center justify-between bg-surface-container-low/40 -mx-space-lg -mb-space-lg p-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-bold text-label-sm">
+                س.م
+              </div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">سارة المعجل</span>
+<span class="text-[11px] text-on-surface-variant">مستشارة أسواق المال والصكوك</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
+</div>
+</div>
+</article>
+<!-- Card 3 -->
+<article class="flex flex-col bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group">
+<div class="relative h-48 w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Digital executive KPI dashboard with CAC, LTV, and Churn rates metrics shining in neon emerald and amber against a sleek glass slate interface in modern Riyadh tech hub office." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsE5fdY0-JigjanyYblAX7yURS1mV0AWlYsDH3jbXAE-IBr1q1jhBXa8jkJs5laumo6VXqviWHsko2DYfBXoCSHZS-HcIFCaq32bsjaZiYDbwDNJg6-ocEDdg_10hUqwZuyrI_It4lsu2zeHH2S8rCU5S0ZRlL4ChYLi-pgyRelN97jnU5P6PmnxjgUYh5iSmTBv-kRK03iUiMm0cHAFy_EBeAglv-gmrzmWqlPFsIfHru_s0YMoIq"/>
+<div class="absolute top-space-sm right-space-sm">
+<span class="px-space-sm py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur font-label-sm text-label-sm text-secondary font-bold shadow-sm">
+              مؤشرات الأداء (KPIs)
+            </span>
+</div>
+<div class="absolute bottom-space-sm left-space-sm">
+<span class="px-space-sm py-0.5 rounded bg-tertiary-container/90 text-on-tertiary-container font-label-sm text-label-sm font-semibold">
+              مؤشر الفائدة: 99%
+            </span>
+</div>
+</div>
+<div class="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>4 مارس 2025</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>5 دقائق</span>
+</span>
+</div>
+<a class="group-hover:text-secondary transition-colors" href="article.html">
+<h3 class="font-title-lg text-title-lg font-bold text-on-surface leading-snug">
+                أهم 10 مؤشرات يقيسها المستثمر الجريء في لوحة تحكم الشركات الناشئة
+              </h3>
+</a>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              تفكيك مقاييس Burn Multiple، وNet Revenue Retention (NRR)، وMagic Number للتحقق من كفاءة رأس المال وقدرة الشركة على التوسع الإقليمي.
+            </p>
+</div>
+<div class="pt-space-sm border-t-0 flex items-center justify-between bg-surface-container-low/40 -mx-space-lg -mb-space-lg p-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-bold text-label-sm">
+                ف.ق
+              </div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">فهد القحطاني</span>
+<span class="text-[11px] text-on-surface-variant">شريك في صندوق Venture Capital</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
+</div>
+</div>
+</article>
+<!-- Card 4 -->
+<article class="flex flex-col bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group">
+<div class="relative h-48 w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="SaaS subscription revenue modeling diagram on tablet with customer cohort analysis graphics and pricing tier simulations. Elegant office setting in Dubai DIFC, premium warm lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMoLgaIPSS68RTYXJHUjurxvep0rNQ5fu7MLWb_MqjbMSEXNYNwG113vjQSabWCDmq8SCSmY3J6mVwBtOL-4FteSRsU9p0Qst6wn8BPw1IiU0ukuKiyoCdXE-1OUJnXkEMIwbXqMBGfu018hYV2J0tEazwzX9aBRYcs-l9KnLNv85651LP70lZsFx7aLvDIsYgHvFnQQ24cp4V7C_7-WzQbNNJt9ZgbMDzFOpWQjJqR5kXTDeUmBzr"/>
+<div class="absolute top-space-sm right-space-sm">
+<span class="px-space-sm py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur font-label-sm text-label-sm text-secondary font-bold shadow-sm">
+              استراتيجيات SaaS
+            </span>
+</div>
+<div class="absolute bottom-space-sm left-space-sm">
+<span class="px-space-sm py-0.5 rounded bg-tertiary-container/90 text-on-tertiary-container font-label-sm text-label-sm font-semibold">
+              مؤشر الفائدة: 91%
+            </span>
+</div>
+</div>
+<div class="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>28 فبراير 2025</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>9 دقائق</span>
+</span>
+</div>
+<a class="group-hover:text-secondary transition-colors" href="article.html">
+<h3 class="font-title-lg text-title-lg font-bold text-on-surface leading-snug">
+                استراتيجيات تسعير المنتجات الرقمية والاشتراكات لرفع القيمة الحالية للعميل (LTV)
+              </h3>
+</a>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              كيف تنتقل بنجاح من نموذج التسعير الثابت إلى التسعير القائم على القيمة والمخرجات (Value-Based Pricing) لتعظيم هوامش الأرباح الإجمالية.
+            </p>
+</div>
+<div class="pt-space-sm border-t-0 flex items-center justify-between bg-surface-container-low/40 -mx-space-lg -mb-space-lg p-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-bold text-label-sm">
+                ط.ز
+              </div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">طارق الزهراني</span>
+<span class="text-[11px] text-on-surface-variant">مستشار تسعير ونمو الشركات</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
+</div>
+</div>
+</article>
+<!-- Card 5 -->
+<article class="flex flex-col bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group">
+<div class="relative h-48 w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Legal regulatory compliance books and corporate stamps on executive dark mahogany desk with GCC flags and Capital Market Authority official documentation. Photorealistic, deep navy, gold insignia." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0e1ZXqqfZFf7iZXBK79IIKW8jFCR2eyij4quoAWfXaD7_LUnvc634CBQT5rbO3Ns4Y0VqQKa44sFilT-KA_wIWnM3UnEeJwX-jXPMXM7Mxuotc_BeXE2diNnTk_ryiqYYNS19p92UY1gms7dtnaxQj1DzNpDZnT6eirAJTWGEOJpXQqnJbfIw-vUgtSl3FljiEUI8C1SV-mPBx4eCHdPugcN8PzvCTq8F9oUY7zZlzoXC0mmhQdPQ"/>
+<div class="absolute top-space-sm right-space-sm">
+<span class="px-space-sm py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur font-label-sm text-label-sm text-secondary font-bold shadow-sm">
+              الحوكمة والأنظمة (CMA)
+            </span>
+</div>
+<div class="absolute bottom-space-sm left-space-sm">
+<span class="px-space-sm py-0.5 rounded bg-tertiary-container/90 text-on-tertiary-container font-label-sm text-label-sm font-semibold">
+              مؤشر الفائدة: 96%
+            </span>
+</div>
+</div>
+<div class="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>24 فبراير 2025</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>11 دقيقة</span>
+</span>
+</div>
+<a class="group-hover:text-secondary transition-colors" href="article.html">
+<h3 class="font-title-lg text-title-lg font-bold text-on-surface leading-snug">
+                الامتثال للأنظمة الضريبية وهيئة السوق المالية: خطوات تأسيس الشركات في الرياض وأبوظبي
+              </h3>
+</a>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              دليل شامل حول المقرات الإقليمية (RHQ) واللوائح المستحدثة لضريبة الدخل والاستقطاع ومتطلبات الإفصاح المالي للشركات العابرة للحدود.
+            </p>
+</div>
+<div class="pt-space-sm border-t-0 flex items-center justify-between bg-surface-container-low/40 -mx-space-lg -mb-space-lg p-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-bold text-label-sm">
+                م.د
+              </div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">أ. منيرة الدوسري</span>
+<span class="text-[11px] text-on-surface-variant">محامية حوكمة واختصاصية أسواق مال</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
+</div>
+</div>
+</article>
+<!-- Card 6 -->
+<article class="flex flex-col bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group">
+<div class="relative h-48 w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Sovereign wealth fund investment committee review table. High-level executives reviewing gold-embossed leather bound investment memoranda with projected rate of return graphics in Riyadh King Abdullah Financial District." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDlW0jiJgZsBffdL1RW3O9bB7IptABcH27myXLll-pMCejFzHRhUcAPinIRNw94DwsRknH8pSa7EC6NtbkW8rPN_sjnJzgx8kL1-GNlWO-W_3l9YpcX-vwVROTfnYlxnSCiJ8lJjFMbbwArPlCPvY38DAGuyx7rRKFv_pK372xcIYnKN2lgDgTbEAKisJCh5STv2OAK4odKN1ojJiz3bxo0A2NRW_V_g6YOuwqK75z8TXiby0a9LnV"/>
+<div class="absolute top-space-sm right-space-sm">
+<span class="px-space-sm py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur font-label-sm text-label-sm text-secondary font-bold shadow-sm">
+              الصناديق الاستثمارية
+            </span>
+</div>
+<div class="absolute bottom-space-sm left-space-sm">
+<span class="px-space-sm py-0.5 rounded bg-tertiary-container/90 text-on-tertiary-container font-label-sm text-label-sm font-semibold">
+              مؤشر الفائدة: 97%
+            </span>
+</div>
+</div>
+<div class="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>18 فبراير 2025</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>7 دقائق</span>
+</span>
+</div>
+<a class="group-hover:text-secondary transition-colors" href="article.html">
+<h3 class="font-title-lg text-title-lg font-bold text-on-surface leading-snug">
+                كيف تصيغ مذكرة الاستثمار (Investment Memo) بطريقة تجذب الصناديق السيادية
+              </h3>
+</a>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              هندسة الرسائل المالية، تحليل المخاطر الجيواقتصادية، ومصفوفة الـ Downside Protection التي تطلبها لجان الاستثمار المؤسسية قبل توقيع الـ Term Sheet.
+            </p>
+</div>
+<div class="pt-space-sm border-t-0 flex items-center justify-between bg-surface-container-low/40 -mx-space-lg -mb-space-lg p-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-bold text-label-sm">
+                خ.ر
+              </div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">خالد الرويلي</span>
+<span class="text-[11px] text-on-surface-variant">مستشار تمويل صناديق ومصرفي استثماري</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
+</div>
+</div>
+</article>
+</div>
+<!-- Pagination & View All CTA -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-md">
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+        عرض 6 من أصل 48 دراسة ومقال تحليلي
+      </span>
+<div class="flex items-center gap-space-xs">
+<button class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+<button class="w-10 h-10 rounded-lg bg-primary text-on-primary font-bold font-label-md text-label-md">1</button>
+<button class="w-10 h-10 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md hover:bg-surface-container transition-colors">2</button>
+<button class="w-10 h-10 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md hover:bg-surface-container transition-colors">3</button>
+<button class="w-10 h-10 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md hover:bg-surface-container transition-colors">...</button>
+<button class="w-10 h-10 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md hover:bg-surface-container transition-colors">8</button>
+<button class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Section 4: Exclusive Executive Newsletter Banner -->
+<section class="max-w-[1280px] w-full mx-auto px-gutter pb-space-xl">
+<div class="relative bg-primary-container text-inverse-on-surface rounded-xl shadow-2xl p-space-lg lg:p-space-xl overflow-hidden">
+<!-- Glow & Ambient Background Effects -->
+<div class="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-secondary-container/20 blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-tertiary-fixed/15 blur-3xl pointer-events-none"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-surface-container-highest/5 to-transparent pointer-events-none"></div>
+<div class="relative grid grid-cols-1 lg:grid-cols-12 items-center gap-space-xl">
+<!-- Content Column -->
+<div class="lg:col-span-7 flex flex-col gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-md py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold shadow-md">
+              نشرة مسار التنفيذية (Masar Executive Brief)
+            </span>
+<span class="text-tertiary-fixed font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+              محتوى حصري للمستثمرين
+            </span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-primary font-bold leading-tight">
+            ذكاء مالي واستثماري يسبق السوق، مباشرة إلى صندوق بريدك صباح كل أحد
+          </h2>
+<p class="font-body-md text-body-md text-inverse-on-surface/80 leading-relaxed max-w-xl">
+            انضم إلى أكثر من 12,400+ رئيس تنفيذي، شريك استثماري، ورائد أعمال في السعودية والخليج يحصلون على تحليلات الصفقات، مؤشرات التقييم، ونماذج العمل القابلة للتطبيق.
+          </p>
+<!-- Bullet Trust Signals -->
+<div class="flex flex-wrap items-center gap-space-md pt-space-xs text-label-sm font-label-sm text-inverse-on-surface/90">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary-container text-[18px]">check_circle</span>
+<span>خالية تماماً من الإعلانات</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary-container text-[18px]">check_circle</span>
+<span>ملخصات مدعومة بالبيانات والجداول</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary-container text-[18px]">check_circle</span>
+<span>إمكانية إلغاء الاشتراك بنقرة واحدة</span>
+</div>
+</div>
+</div>
+<!-- Form Column -->
+<div class="lg:col-span-5 bg-surface-container-highest/15 backdrop-blur rounded-xl p-space-lg flex flex-col gap-space-md shadow-inner">
+<div class="flex flex-col gap-1">
+<span class="font-title-md text-title-md font-bold text-on-primary">اشترك في النشرة التنفيذية</span>
+<span class="font-body-sm text-body-sm text-inverse-on-surface/70">أدخل بريدك المهني لتصلك نسخة العدد القادم</span>
+</div>
+<form class="flex flex-col gap-space-sm" onsubmit="event.preventDefault();">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-inverse-on-surface/80">البريد الإلكتروني للعمل:</label>
+<div class="relative">
+<span class="absolute right-space-md top-1/2 -translate-y-1/2 text-on-surface-variant material-symbols-outlined text-[20px]">alternate_email</span>
+<input class="w-full pr-11 pl-space-md py-3 bg-surface-container-lowest text-on-surface rounded-lg font-body-md text-body-md placeholder:text-on-surface-variant/50 focus:outline-none shadow-sm text-right" dir="ltr" placeholder="name@company.com" required="" type="email"/>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-inverse-on-surface/80">المجال / الدور المهني:</label>
+<select class="w-full px-space-md py-3 bg-surface-container-lowest text-on-surface rounded-lg font-body-md text-body-md focus:outline-none shadow-sm">
+<option>مؤسس أو رئيس تنفيذي (Founder / CEO)</option>
+<option>مستثمر جريء / مدير صندوق (VC / Fund Manager)</option>
+<option>مستشار مالي أو شريك محاسبي</option>
+<option>مكتب عائلي (Family Office)</option>
+</select>
+</div>
+<button class="w-full mt-space-xs py-3.5 px-space-lg rounded-lg font-label-md text-label-md font-bold bg-secondary-container hover:bg-secondary text-on-primary transition-all shadow-[0_8px_20px_-4px_rgba(217,119,6,0.35)] flex items-center justify-center gap-space-xs" type="submit">
+<span>تأكيد الاشتراك الاستراتيجي</span>
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</button>
+</form>
+<p class="text-[11px] text-inverse-on-surface/60 text-center">
+            بياناتك مشفرة ومحمية وفق سياسة حماية البيانات الصادرة من الهيئة الوطنية للأمن السيبراني.
+          </p>
+</div>
+</div>
+</div>
+</section>
+</div></main><footer class="w-full bg-primary-container text-inverse-on-surface pt-space-xl pb-space-lg"><div class="max-w-[1280px] mx-auto px-gutter"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-xl pb-space-xl"><div class="flex flex-col gap-space-md"><div class="flex items-center gap-space-sm"><img alt="Brand logo" class="h-7 w-auto object-contain" src="assets/logo.svg"/><span class="font-title-lg text-title-lg font-bold text-on-primary">مسار</span></div><p class="font-body-sm text-body-sm text-inverse-on-surface/80 leading-relaxed">المنصة الخليجية الرائدة لحلول ذكاء الأعمال المالي، صياغة دراسات الجدوى المعتمدة ونماذج الاستثمار الموجهة للشركات الناشئة والصناديق السيادية في الشرق الأوسط.</p><div class="flex items-center gap-space-sm pt-space-xs"><span class="px-space-sm py-space-xs rounded-full bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm font-semibold">معتمد بالمملكة والخليج</span></div></div><div class="flex flex-col gap-space-sm"><h4 class="font-title-md text-title-md font-bold text-secondary-fixed mb-space-xs">المنتجات والخدمات</h4><a class="font-body-sm text-body-sm text-inverse-on-surface/75 hover:text-secondary-fixed transition-colors" data-path="digital-store" href="store.html">متجر النماذج الرقمية</a><a class="font-body-sm text-body-sm text-inverse-on-surface/75 hover:text-secondary-fixed transition-colors" data-path="cart-checkout" href="checkout.html">عربة الشراء وإتمام الطلب</a><a class="font-body-sm text-body-sm text-inverse-on-surface/75 hover:text-secondary-fixed transition-colors" data-path="knowledge-hub" href="knowledge.html">مركز المعرفة والمدونة</a><a class="font-body-sm text-body-sm text-inverse-on-surface/75 hover:text-secondary-fixed transition-colors" data-path="about-contact" href="about.html">من نحن وتواصل معنا</a></div><div class="flex flex-col gap-space-sm"><h4 class="font-title-md text-title-md font-bold text-secondary-fixed mb-space-xs">الاعتمادات والتنظيم</h4><div class="flex flex-col gap-space-xs"><div class="flex items-center gap-space-xs text-inverse-on-surface/90 font-body-sm text-body-sm"><span class="material-symbols-outlined text-secondary-container text-[18px]">verified_user</span><span>متوافق مع المعايير المحاسبية IFRS</span></div><div class="flex items-center gap-space-xs text-inverse-on-surface/90 font-body-sm text-body-sm"><span class="material-symbols-outlined text-secondary-container text-[18px]">verified_user</span><span>عضو شبكة الفنتك السعودية (Fintech Saudi)</span></div><div class="flex items-center gap-space-xs text-inverse-on-surface/90 font-body-sm text-body-sm"><span class="material-symbols-outlined text-secondary-container text-[18px]">verified_user</span><span>منظومة الحوكمة المالية الخليجية GCC FinGov</span></div></div></div><div class="flex flex-col gap-space-md"><h4 class="font-title-md text-title-md font-bold text-secondary-fixed">شركاء الدفع المعتمدون</h4><p class="font-body-sm text-body-sm text-inverse-on-surface/80">بوابات دفع مشفرة وآمنة بنسبة 100% تدعم المدفوعات البنكية الفورية الخليجية.</p><div class="flex flex-wrap items-center gap-space-xs"><span class="px-space-md py-space-xs rounded bg-surface/10 text-on-primary font-label-md text-label-md font-bold">مدى (Mada)</span><span class="px-space-md py-space-xs rounded bg-surface/10 text-on-primary font-label-md text-label-md font-bold">Apple Pay</span><span class="px-space-md py-space-xs rounded bg-surface/10 text-on-primary font-label-md text-label-md font-bold">Visa</span><span class="px-space-md py-space-xs rounded bg-surface/10 text-on-primary font-label-md text-label-md font-bold">STC Pay</span></div></div></div><div class="pt-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md text-inverse-on-surface/60 font-body-sm text-body-sm"><p>© 2025 منصة مسار للاستشارات المالية والذكاء الاصطناعي (Masar Platform). جميع الحقوق محفوظة.</p><div class="flex items-center gap-space-lg"><a class="hover:text-secondary-fixed transition-colors" href="legal.html">شروط الخدمة</a><a class="hover:text-secondary-fixed transition-colors" href="legal.html">سياسة الخصوصية وسرية البيانات</a><a class="hover:text-secondary-fixed transition-colors" href="legal.html">التراخيص والامتثال التنظيمي</a></div></div></div></footer></body></html>

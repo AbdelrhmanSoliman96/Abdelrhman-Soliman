@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 240" width="800" height="240" fill="none">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C59B27" />
+      <stop offset="50%" stop-color="#E5C158" />
+      <stop offset="100%" stop-color="#FDF0CD" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5C158" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0A1128" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="subtleGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background Dark Luxury Slate -->
+  <rect width="800" height="240" rx="24" fill="#0B132B"/>
+
+  <!-- Geometric Emblem / Icon -->
+  <g transform="translate(620, 45)">
+    <!-- Ambient aura glow behind emblem -->
+    <circle cx="75" cy="75" r="70" fill="url(#glowGrad)"/>
+
+    <!-- Dynamic Modern 'Path & Growth' Hexagonal / Upward M Geometric Mark -->
+    <!-- Base polygon track -->
+    <path d="M75 15 L135 50 L135 110 L75 145 L15 110 L15 50 Z" stroke="url(#goldGrad)" stroke-width="4" stroke-opacity="0.25" fill="none"/>
+    
+    <!-- Dynamic ascending path ribbon -->
+    <path d="M35 105 L60 65 L85 95 L115 45" stroke="url(#goldGrad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Modern Tech Arrow Head pointing to top-right/growth -->
+    <polygon points="125,35 110,48 118,58" fill="url(#goldGrad)"/>
+
+    <!-- Strategic Core Diamond Accent -->
+    <circle cx="85" cy="95" r="5" fill="#E5C158"/>
+    <circle cx="60" cy="65" r="4" fill="#FDF0CD"/>
+  </g>
+
+  <!-- Typography: Modern Arabic Wordmark + English Subtitle -->
+  <g transform="translate(60, 0)">
+    <!-- Arabic Brand Name: مسار (Masar) -->
+    <text x="520" y="118" text-anchor="end" font-family="'IBM Plex Sans Arabic', 'Tajawal', 'Cairo', sans-serif" font-weight="900" font-size="62" fill="#FFFFFF" letter-spacing="-1">
+      مَسَــار
+    </text>
+
+    <!-- Golden Dot accent on Arabic lettering -->
+    <circle cx="522" cy="74" r="6" fill="url(#goldGrad)"/>
+
+    <!-- Slogan / Sub-brand in Arabic & English -->
+    <text x="520" y="158" text-anchor="end" font-family="'IBM Plex Sans Arabic', 'Tajawal', 'sans-serif'" font-weight="500" font-size="18" fill="#94A3B8">
+      منصة النماذج والأدوات الاستراتيجية الذكية
+    </text>
+
+    <text x="520" y="185" text-anchor="end" font-family="'Inter', sans-serif" font-weight="600" font-size="13" fill="#D4AF37" letter-spacing="3">
+      MASAR PLATFORM • BUSINESS INTELLIGENCE
+    </text>
+  </g>
+
+  <!-- Vertical separator divider with golden gradient accent -->
+  <line x1="595" y1="55" x2="595" y2="185" stroke="#1E293B" stroke-width="2"/>
+  <circle cx="595" cy="120" r="3" fill="#E5C158"/>
+</svg>
