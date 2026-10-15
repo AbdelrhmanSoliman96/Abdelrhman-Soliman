@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;font-family:'IBM Plex Sans Arabic','IBM Plex Sans',sans-serif;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "surface-variant": "#dae2fd",
+        "tertiary-container": "#002113",
+        "secondary-fixed": "#ffdcc3",
+        "on-secondary-fixed-variant": "#6e3900",
+        "on-tertiary-container": "#009668",
+        "surface-tint": "#565d79",
+        "on-primary": "#ffffff",
+        "surface-container": "#eaedff",
+        "on-surface-variant": "#45464d",
+        "on-background": "#131b2e",
+        "secondary-container": "#fe932c",
+        "error-container": "#ffdad6",
+        "surface-container-low": "#f2f3ff",
+        "error": "#ba1a1a",
+        "on-secondary": "#ffffff",
+        "primary-fixed": "#dbe1ff",
+        "on-tertiary-fixed-variant": "#005236",
+        "on-error": "#ffffff",
+        "outline-variant": "#c6c6ce",
+        "secondary": "#904d00",
+        "primary-fixed-dim": "#bec5e5",
+        "tertiary": "#000000",
+        "on-error-container": "#93000a",
+        "secondary-fixed-dim": "#ffb77d",
+        "surface-container-high": "#e2e7ff",
+        "on-tertiary": "#ffffff",
+        "surface-container-lowest": "#ffffff",
+        "inverse-primary": "#bec5e5",
+        "surface-bright": "#faf8ff",
+        "inverse-surface": "#283044",
+        "surface-dim": "#d2d9f4",
+        "surface-container-highest": "#dae2fd",
+        "on-primary-fixed": "#131a33",
+        "tertiary-fixed-dim": "#4edea3",
+        "inverse-on-surface": "#eef0ff",
+        "primary-container": "#131a33",
+        "on-primary-fixed-variant": "#3e4660",
+        "on-tertiary-fixed": "#002113",
+        "surface": "#faf8ff",
+        "outline": "#76767e",
+        "tertiary-fixed": "#6ffbbe",
+        "on-secondary-fixed": "#2f1500",
+        "primary": "#000000",
+        "on-surface": "#131b2e",
+        "background": "#faf8ff",
+        "on-secondary-container": "#663500",
+        "on-primary-container": "#7b83a0"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-lg": "1.5rem",
+        "margin": "3rem",
+        "gutter": "1.5rem",
+        "gutter-mobile": "1rem",
+        "space-xs": "0.25rem",
+        "space-xl": "2.5rem",
+        "space-sm": "0.5rem",
+        "margin-mobile": "1.25rem",
+        "space-md": "1rem"
+      },
+      "fontFamily": {
+        "title-md": ["IBM Plex Sans"],
+        "body-lg": ["IBM Plex Sans"],
+        "metric-xl": ["IBM Plex Sans"],
+        "display-lg": ["IBM Plex Sans"],
+        "headline-md": ["IBM Plex Sans"],
+        "body-sm": ["IBM Plex Sans"],
+        "headline-lg-mobile": ["IBM Plex Sans"],
+        "headline-lg": ["IBM Plex Sans"],
+        "display-lg-mobile": ["IBM Plex Sans"],
+        "body-md": ["IBM Plex Sans"],
+        "label-sm": ["IBM Plex Sans"],
+        "title-lg": ["IBM Plex Sans"],
+        "label-md": ["IBM Plex Sans"]
+      },
+      "fontSize": {
+        "title-md": ["1.125rem", {"lineHeight": "1.625rem", "fontWeight": "500"}],
+        "body-lg": ["1.125rem", {"lineHeight": "1.75rem", "fontWeight": "400"}],
+        "metric-xl": ["2.75rem", {"lineHeight": "3rem", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+        "display-lg": ["3.5rem", {"lineHeight": "4.25rem", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+        "headline-md": ["1.5rem", {"lineHeight": "2rem", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+        "body-sm": ["0.875rem", {"lineHeight": "1.375rem", "fontWeight": "400"}],
+        "headline-lg-mobile": ["1.75rem", {"lineHeight": "2.25rem", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+        "headline-lg": ["2.25rem", {"lineHeight": "2.875rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "display-lg-mobile": ["2.25rem", {"lineHeight": "2.75rem", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+        "body-md": ["1rem", {"lineHeight": "1.5rem", "fontWeight": "400"}],
+        "label-sm": ["0.75rem", {"lineHeight": "1rem", "letterSpacing": "0.05em", "fontWeight": "600"}],
+        "title-lg": ["1.25rem", {"lineHeight": "1.75rem", "fontWeight": "600"}],
+        "label-md": ["0.875rem", {"lineHeight": "1.25rem", "letterSpacing": "0.025em", "fontWeight": "600"}]
+      }
+    }
+  }
+}</script><title>مسار | Masar</title><link rel="icon" href="assets/logo.svg"><script defer src="assets/site.js"></script></head><body data-page="copilot" class="bg-surface text-on-surface antialiased"><aside class="fixed right-0 top-0 h-full w-72 bg-primary-container text-inverse-on-surface z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.12)]"><div class="flex flex-col"><div class="h-20 px-space-lg flex items-center gap-space-sm"><img alt="Masar logo" class="h-7 w-auto object-contain" src="assets/logo.svg"/><div class="flex flex-col"><span class="font-title-md text-title-md font-bold text-on-primary">مسار الذكية</span><span class="font-label-sm text-[10px] text-secondary-container tracking-wider uppercase">EXECUTIVE SUITE</span></div></div><div class="px-space-md py-space-xs"><div class="p-space-sm rounded-lg bg-surface-variant/10 flex items-center justify-between"><span class="font-label-sm text-label-sm text-inverse-on-surface/80">حساب استثماري معتمد</span><span class="material-symbols-outlined text-secondary-container text-[18px]">workspace_premium</span></div></div><nav class="flex flex-col gap-space-xs px-space-md mt-space-sm overflow-y-auto" data-active-classes="bg-secondary-container text-on-secondary-container font-title-md rounded-lg shadow-[0_8px_20px_-4px_rgba(217,119,6,0.35)]"><a class="px-space-md py-space-sm rounded-lg text-inverse-on-surface hover:bg-surface-variant/15 hover:text-secondary-fixed transition-all font-body-md text-body-md" data-path="investor-dashboard" href="dashboard.html">لوحة القيادة الاستثمارية</a><a class="px-space-md py-space-sm rounded-lg text-inverse-on-surface hover:bg-surface-variant/15 hover:text-secondary-fixed transition-all font-body-md text-body-md" data-path="ai-financial-copilot" href="copilot.html">المساعد المالي ومحاكاة السيناريوهات</a><a class="px-space-md py-space-sm rounded-lg text-inverse-on-surface hover:bg-surface-variant/15 hover:text-secondary-fixed transition-all font-body-md text-body-md" data-path="feasibility-wizard" href="dashboard.html">محلل الجدوى المالية</a><a class="px-space-md py-space-sm rounded-lg text-inverse-on-surface hover:bg-surface-variant/15 hover:text-secondary-fixed transition-all font-body-md text-body-md" data-path="valuation-matrix" href="dashboard.html">تقييم الصفقات والشركات</a><a class="px-space-md py-space-sm rounded-lg text-inverse-on-surface hover:bg-surface-variant/15 hover:text-secondary-fixed transition-all font-body-md text-body-md" data-path="admin-cms-operations" href="admin-products.html">إدارة المنتجات والتراخيص الرقمية</a><a class="px-space-md py-space-sm rounded-lg text-inverse-on-surface hover:bg-surface-variant/15 hover:text-secondary-fixed transition-all font-body-md text-body-md" data-path="executive-sales" href="admin.html">لوحة الإدارة التنفيذية والمبيعات</a></nav></div><div class="p-space-md"><div class="p-space-md rounded-xl bg-surface-variant/10 flex flex-col gap-space-xs"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-secondary-fixed">الرصيد التحليلي</span><span class="font-label-sm text-label-sm font-bold text-on-primary">84/100 عملة</span></div><div class="w-full h-1.5 bg-surface-variant/20 rounded-full overflow-hidden"><div class="h-full bg-secondary-container w-[84%]"></div></div></div><a class="mt-space-sm flex items-center justify-center gap-space-xs w-full py-space-sm rounded-lg text-inverse-on-surface hover:bg-surface-variant/10 font-label-md text-label-md transition-colors" data-path="investor-login" href="index.html"><span class="material-symbols-outlined text-[18px]">logout</span><span>تسجيل الخروج</span></a></div></aside><div class="pr-72"><header class="fixed top-0 right-72 left-0 h-20 bg-primary-container z-40 px-gutter flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.12)]"><div class="flex items-center gap-space-sm"><img alt="Masar logo" class="h-8 w-auto object-contain" src="assets/logo.svg"/><span class="font-title-md text-title-md font-bold text-on-primary">بوابة المستثمر والمشرف المؤسسي</span></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]">trending_up</span><span>سوق تاسي: 12,410 (+0.84%)</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="relative pt-20 w-full min-h-screen bg-surface px-8"><div class="flex flex-col w-full pb-space-xl">
+<!-- Top Context Header: Sovereign Glassmorphism Banner -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container-lowest shadow-md p-space-lg mb-space-lg">
+<div class="absolute -right-20 -top-20 w-80 h-80 rounded-full bg-secondary-container/10 blur-3xl pointer-events-none"></div>
+<div class="absolute -left-20 -bottom-20 w-80 h-80 rounded-full bg-surface-variant/40 blur-3xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col xl:flex-row items-start xl:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
+            محرك مسار التحليلي v4.2
+          </span>
+<span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px] text-on-surface-variant">domain</span>
+            مشروع: سند فنتك (Sanad Pay) — Seed Round
+          </span>
+<span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+            بيانات السوق الخليجي 2025 نشطة
+          </span>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface mt-1">
+          مساعد مسار للذكاء المالي الاستراتيجي — الاستشارات التنبؤية ومحاكاة السيناريوهات
+        </h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          نمذجة مالية حية، اختبارات حساسية الضغط النقدي، واستشارات خوارزمية مدعومة بمؤشرات السيولة والـ SaaS لبيئة تاسي والشركات الناشئة في دول مجلس التعاون.
+        </p>
+</div>
+<div class="flex items-center gap-space-sm self-stretch xl:self-auto flex-wrap">
+<button class="flex-1 xl:flex-none flex items-center justify-center gap-space-xs px-space-md py-2.5 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md shadow-sm hover:bg-surface-container-high transition-all" id="syncModelBtn">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+<span>مزامنة مع إكسل الحقيقي</span>
+</button>
+<button class="flex-1 xl:flex-none flex items-center justify-center gap-space-xs px-space-md py-2.5 rounded-lg bg-secondary-container text-on-secondary-container font-label-md text-label-md shadow-md hover:bg-secondary-fixed transition-all" id="exportPdfBtn">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
+<span>تصدير المذكرة التنفيذية</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Main Split Architecture -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Right Column (Consultation Copilot Dialogue - 7 cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<!-- Conversational Workspace Container -->
+<div class="rounded-xl bg-surface-container-lowest shadow-md flex flex-col h-[750px] overflow-hidden">
+<!-- Chat Header Bar -->
+<div class="px-space-md py-space-sm bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-secondary-container shadow-inner">
+<span class="material-symbols-outlined text-[22px]">smart_toy</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md font-bold text-on-surface">خبير الاستثمار والذكاء المالي</span>
+<span class="font-label-sm text-label-sm text-on-tertiary-container flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary-container"></span> جاهز للتحليل متعدد المتغيرات
+              </span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-space-sm py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+              زمن الاستجابة: 0.42 ث
+            </span>
+<button class="w-8 h-8 rounded-lg text-on-surface-variant hover:bg-surface-container flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+</button>
+</div>
+</div>
+<!-- Chat Stream Area -->
+<div class="flex-1 overflow-y-auto p-space-md flex flex-col gap-space-md" id="chatStream">
+<!-- System Prompt Timestamp -->
+<div class="flex justify-center">
+<span class="px-space-sm py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">
+              اليوم، 11:34 صباحاً — تم تحميل نموذج سند فنتك (Q1-2025)
+            </span>
+</div>
+<!-- User Message -->
+<div class="flex items-start gap-space-sm max-w-[90%] self-end flex-row-reverse">
+<div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-on-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]">person</span>
+</div>
+<div class="p-space-md rounded-2xl rounded-tr-none bg-surface-container-high text-on-surface shadow-sm flex flex-col gap-space-xs">
+<div class="flex items-center justify-between gap-space-md">
+<span class="font-label-md text-label-md font-bold text-on-surface">عبدالعزيز — الشريك المؤسس والمدير التنفيذي</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">11:35 ص</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">
+                كيف نرفع تقييم جولتنا القادمة (Series A) مع خفض معدل الحرق الشهري بنسبة 15% دون الإضرار بنمو الإيرادات المتكررة السنوية (ARR)؟
+              </p>
+</div>
+</div>
+<!-- AI Copilot Response -->
+<div class="flex items-start gap-space-sm max-w-[98%] self-start">
+<div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center text-secondary-container flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+</div>
+<div class="flex-1 p-space-md rounded-2xl rounded-tl-none bg-surface-container-low text-on-surface shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="font-title-md text-title-md font-bold text-on-surface">تشخيص الاستشاري الخوارزمي المالي</span>
+<span class="px-space-xs py-0.5 rounded bg-tertiary-container text-on-tertiary-container font-label-sm text-[10px]">
+                    تحليل مؤكد 98.4%
+                  </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">11:36 ص</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface">
+                أهلاً عبدالعزيز. قمنا بتحليل أداء سند فنتك الحالي مقارنة ببيانات 42 شركة فنتك خليجية مماثلة أغلقت جولات Series A في 2024-2025. الإجابة المختصرة: <strong>إعادة توجيه موازنة التسويق إلى القنوات المؤسسية (B2B API Integration) وتطبيق تسعير مركب يحقق المستهدفين معاً.</strong>
+</p>
+<!-- KPI Comparison Matrix Tiles -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-xs">
+<div class="p-space-xs rounded-lg bg-surface-container-lowest shadow-sm flex flex-col">
+<span class="font-label-sm text-[11px] text-on-surface-variant">فترة البقاء (Runway)</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-title-lg text-title-lg font-bold text-on-tertiary-container">+5.2 شهر</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant line-through">14.1 شهر</span>
+</div>
+<span class="font-label-sm text-[10px] text-on-tertiary-container">ترتفع إلى 19.3 شهر</span>
+</div>
+<div class="p-space-xs rounded-lg bg-surface-container-lowest shadow-sm flex flex-col">
+<span class="font-label-sm text-[11px] text-on-surface-variant">مضاعف التقييم (Multiple)</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-title-lg text-title-lg font-bold text-secondary-container">14.2x</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">ARR</span>
+</div>
+<span class="font-label-sm text-[10px] text-secondary">أعلى من وسيط السوق (11.5x)</span>
+</div>
+<div class="p-space-xs rounded-lg bg-surface-container-lowest shadow-sm flex flex-col">
+<span class="font-label-sm text-[11px] text-on-surface-variant">تكلفة الاستحواذ (CAC)</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-title-lg text-title-lg font-bold text-on-surface">480 ر.س</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant line-through">580</span>
+</div>
+<span class="font-label-sm text-[10px] text-on-tertiary-container">انخفاض 17.2%</span>
+</div>
+<div class="p-space-xs rounded-lg bg-surface-container-lowest shadow-sm flex flex-col">
+<span class="font-label-sm text-[11px] text-on-surface-variant">استرداد التكلفة (Payback)</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-title-lg text-title-lg font-bold text-on-surface">6.8 شهر</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">سريع</span>
+</div>
+<span class="font-label-sm text-[10px] text-on-tertiary-container">معيار ممتاز للـ VC</span>
+</div>
+</div>
+<!-- Comparative Metric Table -->
+<div class="rounded-lg bg-surface-container-lowest overflow-hidden shadow-sm">
+<div class="px-space-sm py-2 bg-surface-container-high flex items-center justify-between">
+<span class="font-label-md text-label-md font-bold text-on-surface">مصفوفة محاكاة المقارنة الاستراتيجية قبل وبعد التحسين</span>
+<span class="font-label-sm text-label-sm text-secondary">تأثير صافي إيجابي</span>
+</div>
+<div class="p-space-sm overflow-x-auto">
+<table class="w-full text-right font-body-sm text-body-sm">
+<thead>
+<tr class="text-on-surface-variant font-label-sm text-label-sm">
+<th class="pb-2">المؤشر المحوري</th>
+<th class="pb-2">الوضع الراهن (Base)</th>
+<th class="pb-2">السيناريو المحسن (Optimized)</th>
+<th class="pb-2">الأثر على تقييم Series A</th>
+</tr>
+</thead>
+<tbody class="divide-y-0">
+<tr>
+<td class="py-1.5 font-medium text-on-surface">حرق السيولة الشهري (Burn Rate)</td>
+<td class="py-1.5 text-error">185,000 ر.س</td>
+<td class="py-1.5 font-bold text-on-tertiary-container">157,250 ر.س (-15%)</td>
+<td class="py-1.5 text-on-tertiary-container font-semibold">حماية السيولة وتفادي التخفيف القسري</td>
+</tr>
+<tr class="bg-surface-container/30">
+<td class="py-1.5 font-medium text-on-surface">نسبة القيمة إلى التكلفة (LTV/CAC)</td>
+<td class="py-1.5 text-on-surface-variant">5.8x</td>
+<td class="py-1.5 font-bold text-secondary">8.75x (+50.8%)</td>
+<td class="py-1.5 text-secondary font-semibold">جاذبية استثنائية لصناديق Tier-1</td>
+</tr>
+<tr>
+<td class="py-1.5 font-medium text-on-surface">الإيراد المتكرر السنوي المتوقع (ARR)</td>
+<td class="py-1.5 text-on-surface-variant">2.4 مليون ر.س</td>
+<td class="py-1.5 font-bold text-on-surface">2.92 مليون ر.س (+21.6%)</td>
+<td class="py-1.5 text-on-surface font-semibold">رفع التقييم المستهدف إلى 41.5M ر.س</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- 3 Strategic Recommendations -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-md text-label-md font-bold text-on-surface">3 توصيات استراتيجية قابلة للتنفيذ الفوري:</span>
+<div class="flex items-start gap-space-xs p-space-xs rounded bg-surface-container-lowest">
+<span class="w-5 h-5 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-sm text-[11px] font-bold flex-shrink-0">1</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">التحول لنموذج الاشتراكات السنوية المدفوعة مقدماً (Annual Upfront Contracts)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">تحفيز عملاء الشركات الكبرى بخصم 12% مقابل الدفع السنوي، مما يضخ كاش تشغيلي فوري يُعفي من الحرق الشهري.</span>
+</div>
+</div>
+<div class="flex items-start gap-space-xs p-space-xs rounded bg-surface-container-lowest">
+<span class="w-5 h-5 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-sm text-[11px] font-bold flex-shrink-0">2</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">أتمتة عمليات الـ Onboarding لتقليص تكلفة الدعم الفني</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">خفض مخصصات دعم العملاء بنسبة 22% عبر واجهات API مسار المحدثة دون انخفاض معدل الاحتفاظ (Retention).</span>
+</div>
+</div>
+<div class="flex items-start gap-space-xs p-space-xs rounded bg-surface-container-lowest">
+<span class="w-5 h-5 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-sm text-[11px] font-bold flex-shrink-0">3</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">إعادة تسعير ميزات الامتثال الفوري للبنك المركزي (SAMA Compliance Suite)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">تقديمها كإضافة ممتازة (Premium Add-on) ترفع هامش الربح الإجمالي للعميل بنسبة 18%.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Prompt Suggestions Chips -->
+<div class="px-space-md py-space-xs bg-surface-container-lowest flex items-center gap-space-xs overflow-x-auto flex-nowrap">
+<button class="prompt-chip px-space-sm py-1 rounded-full bg-surface-container-low text-on-surface font-label-sm text-label-sm whitespace-nowrap hover:bg-surface-container transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">bolt</span>
+<span>محاكاة أثر ركود السوق (Stress-Test)</span>
+</button>
+<button class="prompt-chip px-space-sm py-1 rounded-full bg-surface-container-low text-on-surface font-label-sm text-label-sm whitespace-nowrap hover:bg-surface-container transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-on-tertiary-container">description</span>
+<span>توليد مذكرة الاستثمار لصناديق الـ VC</span>
+</button>
+<button class="prompt-chip px-space-sm py-1 rounded-full bg-surface-container-low text-on-surface font-label-sm text-label-sm whitespace-nowrap hover:bg-surface-container transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">corporate_fare</span>
+<span>إعادة هيكلة خطط اشتراكات المؤسسات Enterprise</span>
+</button>
+</div>
+<!-- Chat Input Bar -->
+<div class="p-space-md bg-surface-container-low">
+<div class="flex items-center gap-space-xs bg-surface-container-lowest rounded-xl p-space-xs shadow-inner">
+<button class="w-10 h-10 rounded-lg text-on-surface-variant hover:bg-surface-container flex items-center justify-center transition-colors" title="إرفاق ملفات مالية أو جداول إكسل">
+<span class="material-symbols-outlined text-[20px]">attach_file</span>
+</button>
+<button class="w-10 h-10 rounded-lg text-on-surface-variant hover:bg-surface-container flex items-center justify-center transition-colors" title="إدخال صوتي استشاري">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</button>
+<input class="flex-1 bg-transparent px-space-xs text-on-surface font-body-md text-body-md focus:outline-none placeholder:text-on-surface-variant/60" id="copilotInput" placeholder="اطلب سيناريو مالي بديل، أو استفسر عن مضاعفات صفقات الاستحواذ المماثلة..." type="text"/>
+<button class="h-10 px-space-md rounded-lg bg-secondary-container text-on-secondary-container font-label-md text-label-md flex items-center justify-center gap-1 shadow-md hover:bg-secondary-fixed transition-all" id="sendPromptBtn">
+<span>تحليل</span>
+<span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Left Column (Live Scenario Simulator Lab & Sensitivity Gauges - 5 cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<!-- Scenario Control Sliders Card -->
+<div class="rounded-xl bg-surface-container-lowest shadow-md p-space-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</div>
+<div>
+<h2 class="font-title-md text-title-md font-bold text-on-surface">مختبر حساسية المتغيرات الحية</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">تعديل فوري للمعايير المالية الحاكمة للنموذج</p>
+</div>
+</div>
+<button class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface flex items-center gap-1" id="resetParamsBtn">
+<span class="material-symbols-outlined text-[15px]">restart_alt</span>
+            إعادة تعيين
+          </button>
+</div>
+<!-- Slider 1: Growth Rate MoM -->
+<div class="flex flex-col gap-1.5 p-space-sm rounded-lg bg-surface-container-low">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md font-medium text-on-surface">معدل نمو المبيعات الشهري (MoM)</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[15px] cursor-help" title="معدل نمو الإيرادات المحققة شهرياً">info</span>
+</div>
+<span class="font-title-md text-title-md font-bold text-on-tertiary-container" id="growthVal">16.5%</span>
+</div>
+<input class="w-full accent-secondary-container cursor-pointer" id="sliderGrowth" max="25" min="8" step="0.5" type="range" value="16.5"/>
+<div class="flex justify-between font-label-sm text-[11px] text-on-surface-variant">
+<span>متحفظ (8%)</span>
+<span>الهدف الحالي (15%)</span>
+<span>عدواني (25%)</span>
+</div>
+</div>
+<!-- Slider 2: CAC -->
+<div class="flex flex-col gap-1.5 p-space-sm rounded-lg bg-surface-container-low">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md font-medium text-on-surface">تكلفة الاستحواذ على العميل (CAC)</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[15px] cursor-help" title="متوسط تكلفة كسب عميل نشط جديد">info</span>
+</div>
+<span class="font-title-md text-title-md font-bold text-on-surface" id="cacVal">480 ر.س</span>
+</div>
+<input class="w-full accent-secondary-container cursor-pointer" id="sliderCac" max="750" min="300" step="10" type="range" value="480"/>
+<div class="flex justify-between font-label-sm text-[11px] text-on-surface-variant">
+<span>كفاءة عالية (300)</span>
+<span>الأساس (580)</span>
+<span>مرتفع (750)</span>
+</div>
+</div>
+<!-- Slider 3: LTV -->
+<div class="flex flex-col gap-1.5 p-space-sm rounded-lg bg-surface-container-low">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md font-medium text-on-surface">القيمة الدائمة للعميل (LTV)</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[15px] cursor-help" title="إجمالي القيمة التقديرية لعائد العميل طوال فترة اشتراكه">info</span>
+</div>
+<span class="font-title-md text-title-md font-bold text-on-tertiary-container" id="ltvVal">4,200 ر.س</span>
+</div>
+<input class="w-full accent-secondary-container cursor-pointer" id="sliderLtv" max="6500" min="2500" step="100" type="range" value="4200"/>
+<div class="flex justify-between font-label-sm text-[11px] text-on-surface-variant">
+<span>2,500 ر.س</span>
+<span>الأساس (3,400)</span>
+<span>6,500 ر.س</span>
+</div>
+</div>
+<!-- Slider 4: OPEX Reduction -->
+<div class="flex flex-col gap-1.5 p-space-sm rounded-lg bg-surface-container-low">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md font-medium text-on-surface">خفض المصروفات التشغيلية (OPEX)</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[15px] cursor-help" title="نسبة التوفير في التكاليف الثابتة والإدارية">info</span>
+</div>
+<span class="font-title-md text-title-md font-bold text-secondary" id="opexVal">15.0%</span>
+</div>
+<input class="w-full accent-secondary-container cursor-pointer" id="sliderOpex" max="30" min="0" step="1" type="range" value="15"/>
+<div class="flex justify-between font-label-sm text-[11px] text-on-surface-variant">
+<span>0% (بدون خفض)</span>
+<span>15% (الموصى به)</span>
+<span>30% (انكماش شديد)</span>
+</div>
+</div>
+</div>
+<!-- Live Calculated Impact Metrics Card -->
+<div class="rounded-xl bg-surface-container-lowest shadow-md p-space-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<h2 class="font-title-md text-title-md font-bold text-on-surface">المخرجات التقديرية اللحظية (Pre-Series A)</h2>
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded bg-tertiary-container text-on-tertiary-container font-label-sm text-[11px]">
+<span class="material-symbols-outlined text-[13px]">bolt</span>
+            تحديث فوري
+          </span>
+</div>
+<!-- Metric Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
+<div class="p-space-sm rounded-lg bg-surface-container flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">فترة البقاء التقديرية</span>
+<div class="my-1">
+<span class="font-headline-md text-headline-md font-bold text-on-tertiary-container" id="metricRunway">23.8</span>
+<span class="font-label-sm text-label-sm text-on-surface">شهراً</span>
+</div>
+<span class="font-label-sm text-[11px] text-on-tertiary-container flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">shield</span> نطاق آمن استثمارياً
+            </span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">التقييم المستهدف (Pre-Money)</span>
+<div class="my-1">
+<span class="font-headline-md text-headline-md font-bold text-on-surface" id="metricValuation">41.5</span>
+<span class="font-label-sm text-label-sm text-on-surface">مليون ر.س</span>
+</div>
+<span class="font-label-sm text-[11px] text-secondary flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> مضاعف 14.2x
+            </span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">العائد الداخلي المتوقع (IRR)</span>
+<div class="my-1">
+<span class="font-headline-md text-headline-md font-bold text-secondary-container" id="metricIrr">37.8%</span>
+</div>
+<span class="font-label-sm text-[11px] text-on-tertiary-container flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">stars</span> جاذب جداً للـ VC
+            </span>
+</div>
+</div>
+<!-- Inline SVG Visualization: 12-Month Runway Projection Sparkline -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-space-xs">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface font-semibold">مسار التدفق النقدي المتراكم (12 شهراً القادمة)</span>
+<span class="text-on-tertiary-container font-bold">+1.84M ر.س فائض ختامي</span>
+</div>
+<div class="w-full h-24 flex items-end">
+<svg class="w-full h-full text-secondary-container" fill="none" preserveaspectratio="none" viewbox="0 0 360 80">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="currentColor" stop-opacity="0.35"></stop>
+<stop offset="100%" stop-color="currentColor" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<path d="M0,65 Q45,62 90,52 T180,38 T270,22 T360,8 L360,80 L0,80 Z" fill="url(#chartGradient)"></path>
+<path d="M0,65 Q45,62 90,52 T180,38 T270,22 T360,8" stroke="currentColor" stroke-linecap="round" stroke-width="2.5"></path>
+<circle cx="90" cy="52" fill="currentColor" r="3.5"></circle>
+<circle cx="180" cy="38" fill="currentColor" r="3.5"></circle>
+<circle cx="270" cy="22" fill="currentColor" r="3.5"></circle>
+<circle cx="360" cy="8" fill="#10B981" r="4.5"></circle>
+</svg>
+</div>
+<div class="flex justify-between font-label-sm text-[10px] text-on-surface-variant">
+<span>الشهر الحالي</span>
+<span>الربع الثاني</span>
+<span>الربع الثالث</span>
+<span>إغلاق Series A</span>
+</div>
+</div>
+<!-- Algorithmic Safe-Boundary Alert -->
+<div class="p-space-sm rounded-lg bg-tertiary-container/10 flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-on-tertiary-container text-[20px] flex-shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">إشعار الأمان الخوارزمي: الحدود ضمن النطاق الأمثل</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+              خفض المصروفات التشغيلية المحدد لا يؤثر سلباً على وتيرة استقطاب المطورين أو سلاسة المنتج، بينما يضمن فترة بقاء نقدية تزيد عن 18 شهراً كشرط تفاوضي مسبق.
+            </span>
+</div>
+</div>
+<!-- Action Trigger -->
+<button class="w-full py-3 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md shadow-md hover:bg-primary transition-all flex items-center justify-center gap-space-xs" id="applyScenarioBtn">
+<span class="material-symbols-outlined text-[18px] text-secondary-container">save</span>
+<span>تطبيق السيناريو على النموذج المالي وحفظه</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function () {
+    // Dynamic recalculation of Financial Simulator
+    const sliderGrowth = document.getElementById('sliderGrowth');
+    const sliderCac = document.getElementById('sliderCac');
+    const sliderLtv = document.getElementById('sliderLtv');
+    const sliderOpex = document.getElementById('sliderOpex');
+
+    const growthVal = document.getElementById('growthVal');
+    const cacVal = document.getElementById('cacVal');
+    const ltvVal = document.getElementById('ltvVal');
+    const opexVal = document.getElementById('opexVal');
+
+    const metricRunway = document.getElementById('metricRunway');
+    const metricValuation = document.getElementById('metricValuation');
+    const metricIrr = document.getElementById('metricIrr');
+
+    function updateCalculations() {
+      const g = parseFloat(sliderGrowth.value);
+      const c = parseFloat(sliderCac.value);
+      const l = parseFloat(sliderLtv.value);
+      const op = parseFloat(sliderOpex.value);
+
+      // Labels
+      growthVal.textContent = g.toFixed(1) + '%';
+      cacVal.textContent = Math.round(c) + ' ر.س';
+      ltvVal.textContent = Math.round(l).toLocaleString('en-US') + ' ر.س';
+      opexVal.textContent = op.toFixed(1) + '%';
+
+      // Simulation formulas
+      // Base runway: 14.1 months. OPEX reduction extends runway, CAC reduction slows burn
+      const runwayCalc = 14.1 + (op * 0.45) + ((580 - c) * 0.018);
+      metricRunway.textContent = Math.max(12, runwayCalc).toFixed(1);
+
+      // Valuation formula based on ARR projection and multiple
+      const baseVal = 32.0;
+      const valCalc = baseVal * (1 + (g - 12) * 0.04) * (1 + ((l / c) - 5.8) * 0.035);
+      metricValuation.textContent = Math.max(25, valCalc).toFixed(1);
+
+      // IRR calculation
+      const irrCalc = 28.0 + (g * 0.45) + (op * 0.22);
+      metricIrr.textContent = irrCalc.toFixed(1) + '%';
+    }
+
+    if (sliderGrowth && sliderCac && sliderLtv && sliderOpex) {
+      [sliderGrowth, sliderCac, sliderLtv, sliderOpex].forEach(input => {
+        input.addEventListener('input', updateCalculations);
+      });
+    }
+
+    const resetBtn = document.getElementById('resetParamsBtn');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function () {
+        sliderGrowth.value = 16.5;
+        sliderCac.value = 480;
+        sliderLtv.value = 4200;
+        sliderOpex.value = 15;
+        updateCalculations();
+      });
+    }
+
+    // Interactive Copilot Input
+    const sendBtn = document.getElementById('sendPromptBtn');
+    const copilotInput = document.getElementById('copilotInput');
+    const chatStream = document.getElementById('chatStream');
+
+    function appendUserMessage(text) {
+      const userBubble = document.createElement('div');
+      userBubble.className = "flex items-start gap-space-sm max-w-[90%] self-end flex-row-reverse";
+      userBubble.innerHTML = `
+        <div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-on-primary flex-shrink-0">
+          <span class="material-symbols-outlined text-[18px]">person</span>
+        </div>
+        <div class="p-space-md rounded-2xl rounded-tr-none bg-surface-container-high text-on-surface shadow-sm flex flex-col gap-space-xs">
+          <div class="flex items-center justify-between gap-space-md">
+            <span class="font-label-md text-label-md font-bold text-on-surface">عبدالعزيز</span>
+            <span class="font-label-sm text-label-sm text-on-surface-variant">الآن</span>
+          </div>
+          <p class="font-body-md text-body-md text-on-surface">${text}</p>
+        </div>
+      `;
+      chatStream.appendChild(userBubble);
+      chatStream.scrollTop = chatStream.scrollHeight;
+
+      // Simulate Copilot processing response
+      setTimeout(function () {
+        const aiBubble = document.createElement('div');
+        aiBubble.className = "flex items-start gap-space-sm max-w-[98%] self-start";
+        aiBubble.innerHTML = `
+          <div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center text-secondary-container flex-shrink-0">
+            <span class="material-symbols-outlined text-[20px]">analytics</span>
+          </div>
+          <div class="p-space-md rounded-2xl rounded-tl-none bg-surface-container-low text-on-surface shadow-sm flex flex-col gap-space-xs flex-1">
+            <div class="flex items-center justify-between">
+              <span class="font-title-md text-title-md font-bold text-on-surface">استجابة محرك مسار الاستثماري</span>
+              <span class="font-label-sm text-label-sm text-on-surface-variant">الآن</span>
+            </div>
+            <p class="font-body-sm text-body-sm text-on-surface">
+              تم احتساب أثر: <strong>"${text}"</strong> على جداول التدفق النقدي الحر (FCF) لسند فنتك. تم تعديل مؤشر الحساسية وتوليد نسخة مسودة في المذكرة التنفيذية الاستثمارية.
+            </p>
+          </div>
+        `;
+        chatStream.appendChild(aiBubble);
+        chatStream.scrollTop = chatStream.scrollHeight;
+      }, 700);
+    }
+
+    if (sendBtn && copilotInput) {
+      sendBtn.addEventListener('click', function () {
+        const text = copilotInput.value.trim();
+        if (text) {
+          appendUserMessage(text);
+          copilotInput.value = '';
+        }
+      });
+
+      copilotInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+          const text = copilotInput.value.trim();
+          if (text) {
+            appendUserMessage(text);
+            copilotInput.value = '';
+          }
+        }
+      });
+    }
+
+    // Prompt Chips click integration
+    const chips = document.querySelectorAll('.prompt-chip');
+    chips.forEach(chip => {
+      chip.addEventListener('click', function () {
+        const query = this.textContent.trim();
+        appendUserMessage(query);
+      });
+    });
+
+    // Toast Notification helper for action buttons
+    function showNotification(msg) {
+      const toast = document.createElement('div');
+      toast.className = "fixed bottom-6 left-6 z-50 px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary shadow-xl font-label-md text-label-md flex items-center gap-2 border border-secondary-container/40 transition-all";
+      toast.innerHTML = `<span class="material-symbols-outlined text-secondary-container text-[18px]">check_circle</span><span>${msg}</span>`;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 400);
+      }, 2600);
+    }
+
+    const applyScenarioBtn = document.getElementById('applyScenarioBtn');
+    if (applyScenarioBtn) {
+      applyScenarioBtn.addEventListener('click', () => {
+        showNotification('تم حفظ وتطبيق السيناريو المحسن على النموذج المالي الأساسي بنجاح');
+      });
+    }
+
+    const syncModelBtn = document.getElementById('syncModelBtn');
+    if (syncModelBtn) {
+      syncModelBtn.addEventListener('click', () => {
+        showNotification('جاري المزامنة اللحظية مع جداول Google Sheets / Excel Live Model...');
+      });
+    }
+
+    const exportPdfBtn = document.getElementById('exportPdfBtn');
+    if (exportPdfBtn) {
+      exportPdfBtn.addEventListener('click', () => {
+        showNotification('جاري تجميع التقرير التنفيذي الاستثماري المعتمد كملف PDF...');
+      });
+    }
+  })();
+</script></main></div></body></html>
