@@ -456,13 +456,13 @@ def cover(doc):
 
     para(doc, "A gamified, AI-native venture-building platform that takes MENA "
               "founders from a raw idea to a live product in fifteen guided "
-              "missions — and the institutional business built around it.",
+              "missions — and the six institutional engines built around it.",
          size=11.4, colour=INK, after=20, line=1.42)
 
     kpi(doc, [(K.money(K.M["tam"]), "Total addressable market, Egypt and KSA"),
               (K.money(K.M["sam"]), "Serviceable available market"),
-              (K.money(K.R["total"]), "Year-one revenue"),
-              (K.money(K.FUND["rounded"]), "Capital required")])
+              (K.money(K.R1["total"]), "Year-one revenue"),
+              (K.pct(K.R1["institutional_share"]), "Institutional revenue")])
 
     para(doc, "", size=9, after=28)
     t = doc.add_table(rows=1, cols=2)
@@ -487,40 +487,47 @@ def contents(doc):
     rule(doc, UV_HEX, "10", before=0, after=10)
     t = doc.add_table(rows=len(K.SECTIONS), cols=3)
     X.tbl_borders(t, color="FFFFFF", sz="2")
+    tbl_fixed(t, [0.95, 6.45, 9.2])
     blurbs = {
-        "Executive summary": "The business in six sentences, and three findings "
-                             "that change what to do",
-        "The company and the product": "What StartPad is, and why a gated "
-                                       "sequence beats a library of templates",
-        "Market study": "TAM, SAM and SOM, built bottom-up from counted students "
-                        "and counted institutions",
-        "Competition and positioning": "What a founder uses instead, and why it "
-                                       "does not close the gap",
-        "Business model and pricing": "Two engines, the price list, and the unit "
-                                      "economics of each",
-        "Go-to-market plan": "Five moves, four phases, two markets, and how a "
-                             "deal actually happens",
-        "Marketing plan": "Ten channels, what each returns, and the one that "
-                          "should be capped",
-        "NGO, government and ecosystem initiatives":
-            "The national million-founder programmes, and what we supply them",
+        "Executive summary": "Six engines, what each is worth, and why "
+                             "subscriptions are the smallest",
+        "The company and the product": "What StartPad is, and what makes it "
+                                       "sellable to an institution",
+        "Market study": "TAM and SAM built per engine, from the organisations "
+                        "that sign the contract",
+        "The six revenue engines": "What each sells, who signs, what it is worth "
+                                   "and how it scales",
+        "Engine 1 — University cohorts and licences":
+            "The flagship: pilot to cohort to parallel groups to faculty licence",
+        "Engine 2 — Sponsored seats in national initiatives":
+            "The scale engine: million-founder programmes with no delivery capacity",
+        "Engine 3 — Sponsored competitions":
+            "Why a competition is a revenue line, not a marketing cost",
+        "Competition and positioning": "What a buyer uses instead, and why it does "
+                                       "not close the gap",
+        "Go-to-market plan": "Five moves, four phases, two markets, and the "
+                             "institutional pipeline",
+        "Demand generation": "Making a dean take the meeting — not buying "
+                             "consumers",
         "Organisation and HR plan": "Every role, when it is hired, what it costs "
                                     "and why in that order",
         "Operational plan": "What has to be true for the go-to-market plan to be "
                             "deliverable",
         "Financial plan": "Three years of revenue, cost and cash, and the raise",
-        "Risks": "The five most likely to break this, and what absorbs each",
+        "Risks": "The ones most likely to break this, and what absorbs each",
         "Milestones": "What has to be true at the end of each quarter",
         "Appendix — assumptions and sources": "Every input, so the inputs can be "
                                               "argued with",
     }
     for i, (name, _) in enumerate(K.SECTIONS):
         row = t.rows[i]
-        row.cells[0].width = Cm(1.3)
-        row.cells[1].width = Cm(6.2)
-        row.cells[2].width = Cm(9.1)
+        row.cells[0].width = Cm(0.95)
+        row.cells[1].width = Cm(6.45)
+        row.cells[2].width = Cm(9.2)
         for cell in row.cells:
-            X.tc_margins(cell, top=0.14, start=0.0, bottom=0.14, end=0.2)
+            X.tc_margins(cell, top=0.10, start=0.0, bottom=0.10, end=0.25)
+        # The blurb column needs its own left inset or it touches the title above it.
+        X.tc_margins(row.cells[2], top=0.10, start=0.22, bottom=0.10, end=0.0)
         p = row.cells[0].paragraphs[0]
         p.paragraph_format.space_after = Pt(0)
         write(p, f"{i+1:02d}", 11, UV, bold=True)
