@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>دليل الهوية البصرية ونظام التصميم — منصة مسار</title>
+<!-- Google Fonts: IBM Plex Sans Arabic -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700;800&amp;family=Cinzel:wght@600;800&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            masar: {
+              navy: '#0B132B',
+              slate: '#111D42',
+              card: '#15224D',
+              border: 'rgba(229, 193, 88, 0.22)',
+              gold: '#E5C158',
+              goldDark: '#C59B27',
+              goldLight: '#FDF0CD',
+              emerald: '#10B981',
+              muted: '#94A3B8',
+              subtle: '#64748B'
+            }
+          },
+          fontFamily: {
+            sans: ['"IBM Plex Sans Arabic"', 'sans-serif'],
+            display: ['"Cinzel"', 'serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          boxShadow: {
+            'gold-glow': '0 0 35px -5px rgba(229, 193, 88, 0.25)',
+            'gold-subtle': '0 4px 20px -2px rgba(229, 193, 88, 0.15)'
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Design Styles -->
+<style data-purpose="base-styling">
+    body {
+      background-color: #070C1C;
+      color: #F8FAFC;
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      scroll-behavior: smooth;
+    }
+    
+    /* Subtle grid pattern background */
+    .bg-grid-pattern {
+      background-image: radial-gradient(rgba(229, 193, 88, 0.08) 1px, transparent 1px), radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 36px 36px;
+      background-position: 0 0, 18px 18px;
+    }
+
+    /* Metallic Gold Gradient Text */
+    .text-gold-gradient {
+      background: linear-gradient(135deg, #FDF0CD 0%, #E5C158 50%, #C59B27 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Metallic Gold Gradient Border */
+    .border-gold-gradient {
+      border-image: linear-gradient(to bottom left, #E5C158, rgba(229, 193, 88, 0.2), #C59B27) 1;
+    }
+
+    /* Slide transition effects */
+    .slide-panel {
+      transition: all 0.3s ease-in-out;
+    }
+  </style>
+<style data-purpose="component-accents">
+    /* Subtle glow tags and glassmorphism */
+    .glass-card {
+      background: rgba(17, 29, 66, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(229, 193, 88, 0.18);
+    }
+    
+    .glass-card-hover {
+      transition: all 0.25s ease-out;
+    }
+    .glass-card-hover:hover {
+      border-color: rgba(229, 193, 88, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(229, 193, 88, 0.12);
+    }
+  </style>
+<!-- END: Custom Design Styles -->
+</head>
+<body data-page="brand-guide" class="bg-grid-pattern min-h-screen text-slate-100 selection:bg-masar-gold selection:text-masar-navy antialiased">
+<!-- BEGIN: MasterStickyNavigator -->
+<!-- Top Executive Control Bar & Slide Tracker -->
+<header class="sticky top-0 z-50 bg-[#070C1C]/90 backdrop-blur-md border-b border-masar-gold/20 px-4 lg:px-8 py-3.5 transition-all">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+<!-- Brand & Document Title Meta -->
+<div class="flex items-center gap-3.5 w-full md:w-auto justify-between md:justify-start">
+<div class="flex items-center gap-2.5">
+<span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-masar-gold/15 text-masar-gold border border-masar-gold/30 text-xs font-bold font-mono">
+            M2
+          </span>
+<div>
+<h1 class="text-sm font-bold text-white tracking-wide">منصة مسار | وثيقة معايير الهوية المؤسسية والتصميم</h1>
+<p class="text-[11px] text-masar-muted">Brand Design System &amp; UI Architecture • Version 2.4 (Enterprise Edition)</p>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/25 md:hidden">
+          معتمد رسميـاً
+        </span>
+</div>
+<!-- Jump Navigator Pills (Presentation Slides Index) -->
+<nav aria-label="أقسام الدليل" class="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 md:pb-0 scrollbar-none text-xs font-medium">
+<a class="px-3 py-1.5 rounded-lg bg-masar-gold/15 text-masar-gold border border-masar-gold/40 hover:bg-masar-gold/25 transition whitespace-nowrap" href="#slide-cover">الغلاف التنفيذي</a>
+<a class="px-3 py-1.5 rounded-lg bg-masar-navy text-slate-300 hover:text-white hover:border-masar-gold/30 border border-slate-700/60 transition whitespace-nowrap" href="#slide-audit">تشخيص التحول</a>
+<a class="px-3 py-1.5 rounded-lg bg-masar-navy text-slate-300 hover:text-white hover:border-masar-gold/30 border border-slate-700/60 transition whitespace-nowrap" href="#slide-core">التموضع الاستراتيجي</a>
+<a class="px-3 py-1.5 rounded-lg bg-masar-navy text-slate-300 hover:text-white hover:border-masar-gold/30 border border-slate-700/60 transition whitespace-nowrap" href="#slide-logo">نظام الشعار</a>
+<a class="px-3 py-1.5 rounded-lg bg-masar-navy text-slate-300 hover:text-white hover:border-masar-gold/30 border border-slate-700/60 transition whitespace-nowrap" href="#slide-colors">لوحة الألوان</a>
+<a class="px-3 py-1.5 rounded-lg bg-masar-navy text-slate-300 hover:text-white hover:border-masar-gold/30 border border-slate-700/60 transition whitespace-nowrap" href="#slide-typography">الطباعة والخطوط</a>
+<a class="px-3 py-1.5 rounded-lg bg-masar-navy text-slate-300 hover:text-white hover:border-masar-gold/30 border border-slate-700/60 transition whitespace-nowrap" href="#slide-ui">عناصر الواجهة (UI)</a>
+</nav>
+<!-- Security / Status Tag -->
+<div class="hidden md:flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          وثيقة اعتماد نهائية
+        </span>
+</div>
+</div>
+</header>
+<!-- END: MasterStickyNavigator -->
+<!-- BEGIN: MasterDeckContent -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-24">
+<!-- BEGIN: Slide1Cover -->
+<!-- SLIDE 1: Cover / Executive Master Slide -->
+<section class="relative rounded-3xl overflow-hidden border border-masar-gold/30 bg-gradient-to-br from-[#0B132B] via-[#0D183A] to-[#070C1C] p-8 sm:p-14 lg:p-20 shadow-2xl shadow-masar-navy/60" data-purpose="slide-cover" id="slide-cover">
+<!-- Ambient Background Glows -->
+<div class="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-masar-gold/10 blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-masar-navy blur-3xl pointer-events-none"></div>
+<div class="relative z-10 space-y-10">
+<!-- Header Indicators & Metadata -->
+<div class="flex flex-wrap items-center justify-between gap-4 border-b border-masar-gold/20 pb-6 text-xs text-masar-muted">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 rounded bg-masar-gold/10 border border-masar-gold/30 text-masar-gold font-mono font-bold tracking-wider">
+              DECK ID: MSR-DS-2025
+            </span>
+<span>قطاع التقنية المالية والاستشارات الاستراتيجية • مجلس التعاون الخليجي</span>
+</div>
+<div class="flex items-center gap-4">
+<span>تاريخ الاعتماد: ربيع الأول ١٤٤٦هـ</span>
+<span class="text-slate-500">|</span>
+<span>النسخة: 2.4.0 (Enterprise)</span>
+</div>
+</div>
+<!-- Main Title Group -->
+<div class="grid lg:grid-cols-12 gap-10 items-center">
+<div class="lg:col-span-7 space-y-6">
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-masar-gold/10 border border-masar-gold/30 text-masar-gold text-xs font-semibold">
+<span class="text-sm">✦</span> المعايير التصميمية ومنظومة التحول البصري للعلامة التجارية
+            </div>
+<h2 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-white">
+              دليل الهوية البصرية <br/>
+<span class="text-gold-gradient">لمنصة مَسَـــار الاستراتيجية</span>
+</h2>
+<p class="text-base sm:text-lg text-slate-300 leading-relaxed font-light max-w-2xl">
+              الإطار الموحد للهوية الرقمية، التموضع المؤسسي، وتجربة المستخدم لنماذج الأعمال ودراسات الجدوى الموجهة للشركات الناشئة ورواد الأعمال وصناديق الاستثمار في السوق الخليجي.
+            </p>
+<div class="pt-2 flex flex-wrap items-center gap-4 text-xs">
+<div class="bg-masar-card/80 border border-slate-700/70 rounded-xl px-4 py-3 flex items-center gap-3">
+<div class="w-2.5 h-2.5 rounded-full bg-masar-gold"></div>
+<div>
+<div class="text-slate-400">المرجعية السوقية</div>
+<div class="font-bold text-white text-sm">المملكة العربية السعودية &amp; الخليج</div>
+</div>
+</div>
+<div class="bg-masar-card/80 border border-slate-700/70 rounded-xl px-4 py-3 flex items-center gap-3">
+<div class="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
+<div>
+<div class="text-slate-400">معدل رفع الثقة والتحويل المتوقع</div>
+<div class="font-bold text-white text-sm">+240% للنماذج الاستثمارية</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Featured New Logo Showcase Card -->
+<div class="lg:col-span-5">
+<div class="glass-card rounded-2xl p-6 border-masar-gold/30 shadow-gold-glow">
+<div class="flex items-center justify-between pb-4 border-b border-white/10 mb-5">
+<span class="text-xs uppercase tracking-widest text-masar-gold font-mono font-semibold">Approved Master Identity</span>
+<span class="text-[11px] text-slate-400 font-mono">1600 × 480 px</span>
+</div>
+<!-- Clean Logo Display -->
+<div class="bg-[#0B132B] rounded-xl p-3 border border-masar-gold/25 flex items-center justify-center overflow-hidden">
+<img alt="الشعار الرسمي المعتمد لمنصة مسار الاستراتيجية" class="w-full h-auto object-contain rounded-lg shadow-inner" height="240" src="https://lh3.googleusercontent.com/aida/AEtjO1UufB6Q6JtCXEsaXGzGPuZHCofroYAMVbmRtWRwjCZfYpZaWceG3pH8jAFXYyn7nb9RADigfwPITmvA52LrWCXpZBLLK4nd_Lp9m-1oxLzbKsuMw5FJazGFhgRjKdzIeTO4-FZ_8vWLLWySRLzBltRRclXGRFYWCBK7uhddiMQbIOENQgwWpVX17-EfR8cFt56dRLp68c5eO4Qq5hF6_2mqHSl3BKA6TxDxYpY-aWRlGdJtNE3TqXkyGnc" width="800"/>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-xs text-masar-muted">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+<span>الرمز الصاعد + تايبوغرافي عربي هندسي متقن</span>
+</div>
+<span class="font-mono text-masar-gold">SVG Vector Clean</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide Footer Metadata Ribbon -->
+<div class="pt-6 border-t border-masar-gold/15 flex flex-wrap items-center justify-between text-xs text-slate-400 gap-4">
+<div>جهة الإعداد: فريق الاستراتيجية والتجربة الرقمية | مسار تك</div>
+<div class="flex items-center gap-6">
+<span>المرجعية البصرية: معايير الهوية الفاخرة للتقنية المالية</span>
+<span class="font-mono text-masar-gold">SLIDE: 01 / 07</span>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Slide1Cover -->
+<!-- BEGIN: Slide2DiagnosisAudit -->
+<!-- SLIDE 2: Audit & Strategic Transformation (قبل وبعد / تشخيص الهوية السابقة) -->
+<section class="space-y-8" data-purpose="slide-audit" id="slide-audit">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800 pb-5">
+<div>
+<div class="text-xs font-semibold text-masar-gold uppercase tracking-wider mb-1">02 • تشخيص الوضع السابق ومبررات التطوير</div>
+<h3 class="text-2xl sm:text-3xl font-bold text-white">التحول الجذري: من نموذج أولي إلى منصة خليجية كبرى</h3>
+</div>
+<p class="text-sm text-masar-muted max-w-md">
+          تحليل الفجوات في الواجهات وتدفقات العمل السابقة التي أثرت سلباً على مصداقية المنصة وحجم التحويل التجاري.
+        </p>
+</div>
+<!-- Comparative Grid -->
+<div class="grid lg:grid-cols-12 gap-8 items-start">
+<!-- Left: Old Audit (Flaws & Weaknesses) -->
+<div class="lg:col-span-6 space-y-5">
+<div class="glass-card rounded-2xl p-6 border-red-500/30 bg-[#0E1528]/80">
+<div class="flex items-center justify-between mb-4 pb-3 border-b border-red-500/20">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-red-500/20 text-red-400 text-xs font-bold">✕</span>
+<span class="font-bold text-red-300 text-sm">الوضع السابق (Legacy Prototype)</span>
+</div>
+<span class="text-xs text-slate-400 font-mono">الإصدار 1.0 التجريبي</span>
+</div>
+<!-- Legacy Images Thumbnails for context -->
+<div class="grid grid-cols-2 gap-3 mb-5">
+<div class="rounded-xl overflow-hidden border border-slate-700 bg-slate-900 group relative">
+<img alt="الواجهة السابقة لموقع مسار" class="w-full h-44 object-cover object-top opacity-70 group-hover:opacity-100 transition" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGS8Adl7zHyKzG-RAvisaB4Rn5spaUlU6O_BUzorBCz5TnJrgBnok0Tj6jm_0UwUwWRM7BLCGF-IgzjTytflZ532YeHiKZi5s3V7jyOH6iHBTsnVFGXB95akO9VjXmHjdR4-miDMkys8kmJAmUT5C_0uSlvSrumRxxBCH3G2M9YZti5NlJpPFdYiWoIKnCj2SclDaQnjT6x0EZQQGOP8JUExMM7-BczmeFEPhhrW1dUbi5StXYgcN_nGY6-ByeBIL96w"/>
+<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-2 text-[11px] text-slate-300">
+                  واجهة المتجر الأولية: تباين لوني ضعيف
+                </div>
+</div>
+<div class="rounded-xl overflow-hidden border border-slate-700 bg-slate-900 group relative">
+<img alt="مخطط سير العمل القديم" class="w-full h-44 object-cover object-top opacity-70 group-hover:opacity-100 transition" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfcIzLivfxBjqqwlgo3EF0zf_xVQitcvMk-6SoJwkBLQet4gvjK6jrM8DFFj4Otjc6ATzQl3kp94oMyAUggON0fGRGYvUN39T_G9oNoRhfuqjTxin2vhHSNpZEUNBw7ypl_BtpzgQ2q0xSCEtHJ6BybkclwuLWSK5RvyJvJGLRBY0gObvQmP39bXTqVpypFwISU_UGS0BKxIELInV_wksAwCCCeQB20XBZQvxaLhVeLyPSSa4VBcB1Nc3Xz0ZReeKONw"/>
+<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-2 text-[11px] text-slate-300">
+                  مسار التدفق: عشوائية التعقيد والخطوات
+                </div>
+</div>
+</div>
+<!-- Bulleted Critique -->
+<div class="space-y-3 text-xs leading-relaxed text-slate-300">
+<div class="flex items-start gap-2.5 p-2.5 rounded-lg bg-red-950/20 border border-red-900/40">
+<span class="text-red-400 font-bold">•</span>
+<p><strong class="text-red-200">فقدان الهيبة المالية:</strong> استخدام درجات أصفر مسطحة مع تدرجات زرقاء مفرطة لا توحي بفخامة المنصات المالية ذات الموثوقية العالية في الخليج العربي.</p>
+</div>
+<div class="flex items-start gap-2.5 p-2.5 rounded-lg bg-red-950/20 border border-red-900/40">
+<span class="text-red-400 font-bold">•</span>
+<p><strong class="text-red-200">ضعف الشعار القديم:</strong> خطوط عربية غير مسبوكة هندسياً، مع غياب رمز تجريدي يعبر عن الصعود المالي وتتبع مؤشرات الأداء.</p>
+</div>
+<div class="flex items-start gap-2.5 p-2.5 rounded-lg bg-red-950/20 border border-red-900/40">
+<span class="text-red-400 font-bold">•</span>
+<p><strong class="text-red-200">إرباك مسار الشراء:</strong> تعقيد مسارات التحميل المباشر وتشتيت العميل بين النماذج المجانية والمدفوعة بدون إبراز عينات المعاينة.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: New Identity Transformation (The Solution) -->
+<div class="lg:col-span-6 space-y-5">
+<div class="glass-card rounded-2xl p-6 border-masar-gold/40 bg-masar-navy/90 shadow-gold-subtle">
+<div class="flex items-center justify-between mb-4 pb-3 border-b border-masar-gold/25">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold">✓</span>
+<span class="font-bold text-masar-gold text-sm">منظومة الهوية المطورة (Strategic System v2.4)</span>
+</div>
+<span class="text-xs text-emerald-400 font-mono">الاعتماد التجاري الجديد</span>
+</div>
+<!-- Focus Transformation Points -->
+<div class="grid grid-cols-2 gap-3 mb-5">
+<div class="p-3.5 rounded-xl bg-slate-900/80 border border-masar-gold/20">
+<div class="text-masar-gold text-sm font-bold mb-1">اللون الكحلي الإمبراطوري</div>
+<div class="text-[11px] text-slate-300">Obsidian Navy (#0B132B) يعزز هيبة الثقة المصرفية والاستثمارية.</div>
+</div>
+<div class="p-3.5 rounded-xl bg-slate-900/80 border border-masar-gold/20">
+<div class="text-masar-gold text-sm font-bold mb-1">الذهب الشامباني المعدني</div>
+<div class="text-[11px] text-slate-300">Champagne Gold (#E5C158) لرفع رغبة الشراء وحصرية المنتجات.</div>
+</div>
+<div class="p-3.5 rounded-xl bg-slate-900/80 border border-masar-gold/20">
+<div class="text-masar-gold text-sm font-bold mb-1">المحاذاة والوضوح البصري</div>
+<div class="text-[11px] text-slate-300">نظام شبكي 12 أعمدة دقيق يوجه قرارات الشراء بدون تردد.</div>
+</div>
+<div class="p-3.5 rounded-xl bg-slate-900/80 border border-masar-gold/20">
+<div class="text-masar-gold text-sm font-bold mb-1">معايير الدقة الخليجية</div>
+<div class="text-[11px] text-slate-300">أدوات متوافقة مع متطلبات منشآت وهيئة السوق المالية.</div>
+</div>
+</div>
+<!-- Strategic Impact Table/Highlights -->
+<div class="p-4 rounded-xl bg-emerald-950/20 border border-emerald-500/30 text-xs space-y-2">
+<div class="font-bold text-emerald-300 flex items-center justify-between">
+<span>نتائج التحول البصري والوظيفي المتوقعة</span>
+<span class="font-mono">KPI IMPACT</span>
+</div>
+<div class="grid grid-cols-3 gap-2 text-center pt-2">
+<div class="p-2 rounded bg-black/30 border border-white/5">
+<div class="text-base font-bold text-masar-gold font-mono">1.8 ثانية</div>
+<div class="text-[10px] text-slate-400">زمن استيعاب القيمة</div>
+</div>
+<div class="p-2 rounded bg-black/30 border border-white/5">
+<div class="text-base font-bold text-emerald-400 font-mono">+68%</div>
+<div class="text-[10px] text-slate-400">إتمام طلبات الشراء</div>
+</div>
+<div class="p-2 rounded bg-black/30 border border-white/5">
+<div class="text-base font-bold text-white font-mono">99.4%</div>
+<div class="text-[10px] text-slate-400">انطباع المصداقية</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Slide2DiagnosisAudit -->
+<!-- BEGIN: Slide3BrandCore -->
+<!-- SLIDE 3: Brand Core & Positioning (جوهر العلامة والتموضع الاستراتيجي للسوق الخليجي) -->
+<section class="space-y-8" data-purpose="slide-core" id="slide-core">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800 pb-5">
+<div>
+<div class="text-xs font-semibold text-masar-gold uppercase tracking-wider mb-1">03 • جوهر العلامة والتموضع الاستراتيجي</div>
+<h3 class="text-2xl sm:text-3xl font-bold text-white">التموضع القيادي في اقتصاد المعرفة والاستثمار</h3>
+</div>
+<p class="text-sm text-masar-muted max-w-md">
+          الركائز الثلاث التي تبني شخصية مسار كشريك لا غنى عنه لكل مستثمر وصاحب عمل يبحث عن الدقة وسرعة التنفيذ.
+        </p>
+</div>
+<!-- Core Pillars -->
+<div class="grid md:grid-cols-3 gap-6">
+<!-- Pillar 1: Vision -->
+<div class="glass-card rounded-2xl p-6 border-masar-gold/25 relative overflow-hidden group">
+<div class="text-masar-gold/20 absolute -top-4 -left-4 text-7xl font-bold font-mono">01</div>
+<div class="relative z-10 space-y-3">
+<span class="inline-block px-3 py-1 rounded-md text-xs font-semibold bg-masar-gold/15 text-masar-gold border border-masar-gold/30">
+              الرؤيــــة
+            </span>
+<h4 class="text-lg font-bold text-white">البوصلة المعيارية الأولى للاستثمار الخليجي</h4>
+<p class="text-xs text-slate-300 leading-relaxed">
+              أن نكون المرجع الرقمي الأوثق والأكثر جاهزية لكل رواد الأعمال والمستثمرين في السعودية والخليج، عبر أصول ونماذج استراتيجية مبنية بدقة محاسبية وعلمية تامة.
+            </p>
+</div>
+</div>
+<!-- Pillar 2: Mission -->
+<div class="glass-card rounded-2xl p-6 border-masar-gold/25 relative overflow-hidden group">
+<div class="text-masar-gold/20 absolute -top-4 -left-4 text-7xl font-bold font-mono">02</div>
+<div class="relative z-10 space-y-3">
+<span class="inline-block px-3 py-1 rounded-md text-xs font-semibold bg-masar-gold/15 text-masar-gold border border-masar-gold/30">
+              الرسالــــة
+            </span>
+<h4 class="text-lg font-bold text-white">اختصار شهور التخطيط إلى دقائق معدودة</h4>
+<p class="text-xs text-slate-300 leading-relaxed">
+              تمكين القادة من بناء دراسات الجدوى، الحسابات المالية، وخطط الاستحواذ بنماذج رقمية مؤتمتة ومطابقة لأفضل الممارسات الاستشارية العالمية بأسعار في متناول الجميع.
+            </p>
+</div>
+</div>
+<!-- Pillar 3: Values -->
+<div class="glass-card rounded-2xl p-6 border-masar-gold/25 relative overflow-hidden group">
+<div class="text-masar-gold/20 absolute -top-4 -left-4 text-7xl font-bold font-mono">03</div>
+<div class="relative z-10 space-y-3">
+<span class="inline-block px-3 py-1 rounded-md text-xs font-semibold bg-masar-gold/15 text-masar-gold border border-masar-gold/30">
+              نبرة الصوت (Tone)
+            </span>
+<h4 class="text-lg font-bold text-white">رصينة، حاسمة، استشرافية، وتمكينية</h4>
+<p class="text-xs text-slate-300 leading-relaxed">
+              نخاطب العميل بلغة مستشار رفيع المستوى، نبتعد عن الشعارات البراقة الفضفاضة، ونركز على المؤشرات والأرقام والنتائج القابلة للقياس الفعلي على أرض الواقع.
+            </p>
+</div>
+</div>
+</div>
+<!-- Target Personas Bar -->
+<div class="rounded-2xl p-6 bg-gradient-to-r from-masar-navy via-slate-900 to-masar-navy border border-masar-gold/20">
+<h4 class="text-sm font-bold text-masar-gold mb-4 flex items-center gap-2">
+<span>👥</span> الجمهور المستهدف الاستراتيجي في الخليج:
+        </h4>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+<div class="p-3 rounded-xl bg-white/5 border border-white/10">
+<div class="font-bold text-white mb-1">مؤسسو الشركات الناشئة</div>
+<div class="text-slate-400">يبحثون عن عروض استثمارية ونماذج تقييم جاهزة لتقديمها للمستثمرين.</div>
+</div>
+<div class="p-3 rounded-xl bg-white/5 border border-white/10">
+<div class="font-bold text-white mb-1">المستثمرون الملائكيون</div>
+<div class="text-slate-400">يحتاجون لقوالب فحص نافٍ للجهالة (Due Diligence) وحسابات العائد.</div>
+</div>
+<div class="p-3 rounded-xl bg-white/5 border border-white/10">
+<div class="font-bold text-white mb-1">المكاتب الاستشارية والمحاسبية</div>
+<div class="text-slate-400">توظيف أدوات المنصة لتسريع خدمة عملائهم بجودة وتقارير فائقة الاحتراف.</div>
+</div>
+<div class="p-3 rounded-xl bg-white/5 border border-white/10">
+<div class="font-bold text-white mb-1">المدراء الماليون (CFOs)</div>
+<div class="text-slate-400">تتبع التدفقات النقدية ومحاكاة سيناريوهات النمو والمخاطر الأسبوعية.</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Slide3BrandCore -->
+<!-- BEGIN: Slide4LogoSystem -->
+<!-- SLIDE 4: Logo System & Geometry (نظام الشعار وشبكة البناء الهندسي) -->
+<section class="space-y-8" data-purpose="slide-logo" id="slide-logo">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800 pb-5">
+<div>
+<div class="text-xs font-semibold text-masar-gold uppercase tracking-wider mb-1">04 • نظام الشعار وشبكة البناء الهندسي</div>
+<h3 class="text-2xl sm:text-3xl font-bold text-white">التشريح التشكيلي والرمزية الهندسية الصاعدة</h3>
+</div>
+<p class="text-sm text-masar-muted max-w-md">
+          شعار متقن يدمج دلالة المسار (حرف M) مع مؤشر صعود رأس المال والدرع الحامي للأعمال في بيئة استثمارية تنافسية.
+        </p>
+</div>
+<!-- Main Logo Anatomy Showcase -->
+<div class="grid lg:grid-cols-12 gap-8 items-center">
+<!-- Logo Large View with Geometry Markup -->
+<div class="lg:col-span-7">
+<div class="glass-card rounded-2xl p-6 sm:p-8 border-masar-gold/30 relative">
+<div class="flex items-center justify-between pb-3 mb-4 border-b border-white/10 text-xs">
+<span class="text-masar-gold font-mono font-bold">MASTER LOGO • VECTOR PROFILE</span>
+<span class="text-slate-400 font-mono">ASPECT RATIO 3.33 : 1</span>
+</div>
+<!-- The Logo Container -->
+<div class="relative bg-[#070D1E] rounded-xl p-4 sm:p-8 border border-masar-gold/40 flex items-center justify-center">
+<img alt="شعار مسار المعتمد مع خطوط القياس" class="w-full max-w-2xl h-auto shadow-2xl" height="240" src="https://lh3.googleusercontent.com/aida/AEtjO1UufB6Q6JtCXEsaXGzGPuZHCofroYAMVbmRtWRwjCZfYpZaWceG3pH8jAFXYyn7nb9RADigfwPITmvA52LrWCXpZBLLK4nd_Lp9m-1oxLzbKsuMw5FJazGFhgRjKdzIeTO4-FZ_8vWLLWySRLzBltRRclXGRFYWCBK7uhddiMQbIOENQgwWpVX17-EfR8cFt56dRLp68c5eO4Qq5hF6_2mqHSl3BKA6TxDxYpY-aWRlGdJtNE3TqXkyGnc" width="800"/>
+<!-- Blueprint Overlay Marker Accents -->
+<div class="absolute top-2 right-2 text-[10px] font-mono text-masar-gold/60">X-GRID: 800 x 240 px</div>
+<div class="absolute bottom-2 left-2 text-[10px] font-mono text-masar-gold/60">COLOR SPACE: P3 RGB / GOLD FOIL</div>
+</div>
+<!-- Descriptive Callouts -->
+<div class="grid sm:grid-cols-3 gap-3 mt-4 text-[11px] text-slate-300">
+<div class="p-2.5 rounded-lg bg-black/40 border border-slate-800">
+<span class="text-masar-gold font-bold block mb-0.5">1. مسار الصعود (M-Trajectory)</span>
+                رمز حركي يحاكي حرف M وينتهي برأس سهم دقيق يعبر عن نمو الاستثمار وتحقيق الربحية.
+              </div>
+<div class="p-2.5 rounded-lg bg-black/40 border border-slate-800">
+<span class="text-masar-gold font-bold block mb-0.5">2. الدرع السداسي المتوازن</span>
+                إطار هندسي شفاف يرمز للحماية وإدارة المخاطر القانونية والمالية.
+              </div>
+<div class="p-2.5 rounded-lg bg-black/40 border border-slate-800">
+<span class="text-masar-gold font-bold block mb-0.5">3. نقطة الذهب والتايبوغرافي</span>
+                كتلة عربية رشيقة مشكلة بحرفية متوازية مع الإنجليزية بخط سيريلي متناغم.
+              </div>
+</div>
+</div>
+</div>
+<!-- Safe Space & Guidelines -->
+<div class="lg:col-span-5 space-y-5">
+<!-- Safe Margin Card -->
+<div class="glass-card rounded-2xl p-5 border-slate-700">
+<h4 class="text-sm font-bold text-white mb-2 flex items-center justify-between">
+<span>المساحة الآمنة (Clear Space)</span>
+<span class="font-mono text-xs text-masar-gold">MARGIN = 0.5X</span>
+</h4>
+<p class="text-xs text-slate-300 leading-relaxed mb-4">
+              يجب الحفاظ على هامش فراغ يحيط بالشعار من كافة الاتجاهات يعادل نصف ارتفاع رمز السهم الصاعد (X)، لمنع تداخل الشعار مع أي عناصر بصرية أو نصوص أخرى.
+            </p>
+<div class="h-20 rounded-lg bg-slate-900 border border-dashed border-masar-gold/50 flex items-center justify-center text-xs text-masar-gold font-mono">
+              [ SAFE CLEARANCE ZONE 0.5X ]
+            </div>
+</div>
+<!-- Minimum Dimensions -->
+<div class="glass-card rounded-2xl p-5 border-slate-700">
+<h4 class="text-sm font-bold text-white mb-2">الحد الأدنى للأبعاد (Minimum Size)</h4>
+<div class="grid grid-cols-2 gap-3 text-xs text-center">
+<div class="p-3 rounded-lg bg-slate-900 border border-slate-800">
+<div class="text-slate-400 text-[10px]">لشاشات الويب والتطبيقات</div>
+<div class="text-masar-gold font-bold font-mono text-sm mt-1">140px × 42px</div>
+</div>
+<div class="p-3 rounded-lg bg-slate-900 border border-slate-800">
+<div class="text-slate-400 text-[10px]">للمطبوعات والتقارير</div>
+<div class="text-masar-gold font-bold font-mono text-sm mt-1">32mm × 9.5mm</div>
+</div>
+</div>
+</div>
+<!-- Logo Don'ts (Unacceptable Usages) -->
+<div class="glass-card rounded-2xl p-5 border-red-500/30 bg-red-950/10">
+<h4 class="text-xs font-bold text-red-300 mb-2 flex items-center gap-1.5">
+<span>⚠️</span> محاذير وتطبيقات خاطئة يمنع استخدامها:
+            </h4>
+<ul class="text-[11px] text-slate-300 space-y-1 list-disc list-inside">
+<li>يمنع تدوير الشعار أو تغيير زاوية السهم الصاعد إطلاقاً.</li>
+<li>يمنع استبدال تدرج الذهب بألوان نيون أو تدرجات غير معتمدة.</li>
+<li>يمنع ضغط الشعار أو مطّه بدون الحفاظ على نسبة العرض إلى الارتفاع (3.33 : 1).</li>
+<li>يمنع وضع الشعار على خلفيات صور مشتتة تخفي وضوح كلمة "مَسَار".</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Slide4LogoSystem -->
+<!-- BEGIN: Slide5ColorSystem -->
+<!-- SLIDE 5: Color Palette & Tokenomics (لوحة الألوان ورموز التصميم) -->
+<section class="space-y-8" data-purpose="slide-colors" id="slide-colors">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800 pb-5">
+<div>
+<div class="text-xs font-semibold text-masar-gold uppercase tracking-wider mb-1">05 • لوحة الألوان ورموز التصميم الرقمي</div>
+<h3 class="text-2xl sm:text-3xl font-bold text-white">منظومة الألوان السيادية للاقتصاد والاستثمار</h3>
+</div>
+<p class="text-sm text-masar-muted max-w-md">
+          توازن دقيق بين الكحلي الملكي الحالك للتعبير عن الرصانة، والذهب المشع لإثارة الرغبة الشرائية والنمو المستمر.
+        </p>
+</div>
+<!-- Color Swatches Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Color 1: Royal Obsidian Navy -->
+<div class="rounded-2xl overflow-hidden glass-card border-masar-gold/30 flex flex-col">
+<div class="h-32 bg-[#0B132B] p-4 flex flex-col justify-between border-b border-slate-800">
+<span class="text-xs font-mono text-masar-gold font-bold">60% DOMINANCE</span>
+<span class="text-xs text-white/50">Primary Background</span>
+</div>
+<div class="p-4 space-y-2 text-xs flex-1">
+<div class="font-bold text-white text-sm">الكحلي الملكي الليلي</div>
+<div class="text-masar-muted text-[11px]">Obsidian Royal Navy</div>
+<div class="pt-2 font-mono space-y-1 text-slate-300 text-[11px]">
+<div>HEX: <span class="text-masar-gold">#0B132B</span></div>
+<div>RGB: <span class="text-slate-400">11, 19, 43</span></div>
+<div>USE: خلفيات الواجهات، أشرطة الترويسة، الرصانة</div>
+</div>
+</div>
+</div>
+<!-- Color 2: Champagne Amber Gold -->
+<div class="rounded-2xl overflow-hidden glass-card border-masar-gold/50 flex flex-col shadow-gold-subtle">
+<div class="h-32 bg-gradient-to-tr from-[#C59B27] via-[#E5C158] to-[#FDF0CD] p-4 flex flex-col justify-between text-masar-navy font-bold">
+<span class="text-xs font-mono font-bold">25% ACCENT</span>
+<span class="text-xs opacity-75">Brand Anchor &amp; CTAs</span>
+</div>
+<div class="p-4 space-y-2 text-xs flex-1">
+<div class="font-bold text-white text-sm">الذهب الشامباني الاستثماري</div>
+<div class="text-masar-muted text-[11px]">Champagne Amber Gold</div>
+<div class="pt-2 font-mono space-y-1 text-slate-300 text-[11px]">
+<div>HEX: <span class="text-masar-gold">#E5C158 / #C59B27</span></div>
+<div>RGB: <span class="text-slate-400">229, 193, 88</span></div>
+<div>USE: أزرار الشراء، وسم الأسعار، حدود التمييز</div>
+</div>
+</div>
+</div>
+<!-- Color 3: Growth Emerald Alpha -->
+<div class="rounded-2xl overflow-hidden glass-card border-slate-700 flex flex-col">
+<div class="h-32 bg-emerald-600 p-4 flex flex-col justify-between text-white font-bold">
+<span class="text-xs font-mono font-bold">10% SIGNAL</span>
+<span class="text-xs text-white/70">Performance &amp; Growth</span>
+</div>
+<div class="p-4 space-y-2 text-xs flex-1">
+<div class="font-bold text-white text-sm">أخضر النمو والسيولة</div>
+<div class="text-masar-muted text-[11px]">Emerald Profit Alpha</div>
+<div class="pt-2 font-mono space-y-1 text-slate-300 text-[11px]">
+<div>HEX: <span class="text-emerald-400">#10B981</span></div>
+<div>RGB: <span class="text-slate-400">16, 185, 129</span></div>
+<div>USE: نسب الأرباح، التأكيدات الإيجابية، إشارات التحميل</div>
+</div>
+</div>
+</div>
+<!-- Color 4: Pristine Clean White / Slate -->
+<div class="rounded-2xl overflow-hidden glass-card border-slate-700 flex flex-col">
+<div class="h-32 bg-[#F8FAFC] p-4 flex flex-col justify-between text-slate-900 font-bold">
+<span class="text-xs font-mono font-bold">5% CONTRAST</span>
+<span class="text-xs text-slate-500">Typography &amp; Clarity</span>
+</div>
+<div class="p-4 space-y-2 text-xs flex-1">
+<div class="font-bold text-white text-sm">أبيض النقاء والوضوح</div>
+<div class="text-masar-muted text-[11px]">Pure Contrast White</div>
+<div class="pt-2 font-mono space-y-1 text-slate-300 text-[11px]">
+<div>HEX: <span class="text-white">#FFFFFF / #F8FAFC</span></div>
+<div>RGB: <span class="text-slate-400">248, 250, 252</span></div>
+<div>USE: العناوين البارزة، تباين النصوص، كروت البيانات</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Contrast Ratio & Compliance Bar -->
+<div class="rounded-xl p-4 bg-slate-900/90 border border-masar-gold/20 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-300 gap-3">
+<div class="flex items-center gap-3">
+<span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+<span>معايير إمكانية الوصول: <strong>WCAG 2.1 Level AAA</strong> لتباين النصوص الذهبية والبيضاء على الكحلي الداكن.</span>
+</div>
+<div class="font-mono text-masar-gold text-[11px]">
+          Contrast Ratio: 13.8:1 (Optimal for High-Value Transactions)
+        </div>
+</div>
+</section>
+<!-- END: Slide5ColorSystem -->
+<!-- BEGIN: Slide6Typography -->
+<!-- SLIDE 6: Typography & Hierarchy (التايبوغرافي والشبكة الطباعية) -->
+<section class="space-y-8" data-purpose="slide-typography" id="slide-typography">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800 pb-5">
+<div>
+<div class="text-xs font-semibold text-masar-gold uppercase tracking-wider mb-1">06 • التايبوغرافي والشبكة الطباعية</div>
+<h3 class="text-2xl sm:text-3xl font-bold text-white">خط IBM Plex Sans Arabic: وضوح تقني عالي الدقة</h3>
+</div>
+<p class="text-sm text-masar-muted max-w-md">
+          الخط المعتمد رسمياً لجميع واجهات منصة مسار، يجمع بين متانة الحروف الهندسية وسلاسة القراءة على الشاشات الذكية وجداول البيانات المالية.
+        </p>
+</div>
+<!-- Typography Weights & Samples -->
+<div class="grid lg:grid-cols-12 gap-8 items-start">
+<!-- Left: Font Weights Showcase -->
+<div class="lg:col-span-5 space-y-4">
+<div class="glass-card rounded-2xl p-6 border-slate-700 space-y-5">
+<h4 class="text-sm font-bold text-masar-gold border-b border-white/10 pb-2">الأوزان الطباعية المعتمدة</h4>
+<div class="space-y-4">
+<div class="p-3 rounded-lg bg-black/40 border border-slate-800">
+<div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+<span>Bold 800</span>
+<span class="font-mono text-masar-gold">العناوين الكبرى والأرقام</span>
+</div>
+<div class="text-xl font-extrabold text-white">منصة مسار تقود مستقبل الاستثمار</div>
+</div>
+<div class="p-3 rounded-lg bg-black/40 border border-slate-800">
+<div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+<span>SemiBold 600</span>
+<span class="font-mono text-masar-gold">العناوين الفرعية والأزرار</span>
+</div>
+<div class="text-lg font-semibold text-slate-200">نماذج دراسات جدوى معتمدة للسوق السعودي</div>
+</div>
+<div class="p-3 rounded-lg bg-black/40 border border-slate-800">
+<div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+<span>Regular 400</span>
+<span class="font-mono text-masar-gold">النصوص الطويلة والشروحات</span>
+</div>
+<div class="text-sm font-normal text-slate-300 leading-relaxed">
+                  تم تصميم هذه الجداول وفق المعايير المحاسبية المعتمدة ومحدثة لعام ٢٠٢٥ مع حاسبات ضريبة القيمة المضافة.
+                </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Scale & Hierarchy Table -->
+<div class="lg:col-span-7">
+<div class="glass-card rounded-2xl p-6 border-masar-gold/25 space-y-4">
+<h4 class="text-sm font-bold text-white border-b border-white/10 pb-2 flex items-center justify-between">
+<span>سلّم الأحجام والتراتبية الهرمية (Type Scale)</span>
+<span class="text-xs text-masar-gold font-mono">1.250 Major Third Scale</span>
+</h4>
+<div class="overflow-x-auto">
+<table class="w-full text-right text-xs">
+<thead>
+<tr class="text-slate-400 border-b border-slate-800">
+<th class="py-2.5 px-3">المستوى</th>
+<th class="py-2.5 px-3">الحجم (Desktop / Mobile)</th>
+<th class="py-2.5 px-3">الوزن</th>
+<th class="py-2.5 px-3">الاستخدام النموذجي</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-800/60 font-mono text-slate-300">
+<tr>
+<td class="py-3 px-3 font-bold text-masar-gold">Display Title</td>
+<td class="py-3 px-3">48px / 34px (3rem)</td>
+<td class="py-3 px-3">ExtraBold 800</td>
+<td class="py-3 px-3 font-sans text-slate-400">الصفحة الترحيبية وعناوين البطاقات الرئيسية</td>
+</tr>
+<tr>
+<td class="py-3 px-3 font-bold text-white">Heading 1 (H1)</td>
+<td class="py-3 px-3">32px / 26px (2rem)</td>
+<td class="py-3 px-3">Bold 700</td>
+<td class="py-3 px-3 font-sans text-slate-400">عناوين الأقسام الرئيسية وصفحات المنتجات</td>
+</tr>
+<tr>
+<td class="py-3 px-3 font-bold text-white">Heading 2 (H2)</td>
+<td class="py-3 px-3">24px / 20px (1.5rem)</td>
+<td class="py-3 px-3">SemiBold 600</td>
+<td class="py-3 px-3 font-sans text-slate-400">بطاقات المنتجات والمؤشرات المالية</td>
+</tr>
+<tr>
+<td class="py-3 px-3 font-bold text-white">Body Text</td>
+<td class="py-3 px-3">16px / 14px (1rem)</td>
+<td class="py-3 px-3">Regular 400</td>
+<td class="py-3 px-3 font-sans text-slate-400">الوصف، المقالات، وجداول البيانات</td>
+</tr>
+<tr>
+<td class="py-3 px-3 font-bold text-emerald-400">Micro Caption</td>
+<td class="py-3 px-3">12px / 11px (0.75rem)</td>
+<td class="py-3 px-3">Medium 500</td>
+<td class="py-3 px-3 font-sans text-slate-400">أرقام الإصدارات، الهوامش والوسوم</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Numbers / Monospace Note -->
+<div class="p-3 rounded-lg bg-masar-navy border border-masar-gold/20 flex items-center justify-between text-xs">
+<span class="text-slate-300">خط الأرقام المالية المعتمد:</span>
+<span class="font-mono text-masar-gold font-bold">JetBrains Mono / Tabular Figures (SAR 14,850.00)</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Slide6Typography -->
+<!-- BEGIN: Slide7UIComponents -->
+<!-- SLIDE 7: UI Component Guidelines & High-Conversion Store Components -->
+<section class="space-y-8" data-purpose="slide-ui" id="slide-ui">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800 pb-5">
+<div>
+<div class="text-xs font-semibold text-masar-gold uppercase tracking-wider mb-1">07 • معايير مكونات الواجهة وتجربة البيع الرقمي</div>
+<h3 class="text-2xl sm:text-3xl font-bold text-white">بطاقة المنتج الرقمي وأختام الثقة الاستثمارية</h3>
+</div>
+<p class="text-sm text-masar-muted max-w-md">
+          تطبيق عملي لمكونات واجهة متجر مسار الجديدة: تعزيز التحويل، الشراء الفوري بنقرة واحدة، وإبراز الضمانات المعتمدة.
+        </p>
+</div>
+<!-- Component Live Specimen Showroom -->
+<div class="grid lg:grid-cols-12 gap-8 items-start">
+<!-- Live Specimen: High-Fidelity Product Card -->
+<div class="lg:col-span-5 space-y-4">
+<div class="text-xs font-bold text-masar-gold uppercase tracking-wide">نموذج حي: بطاقة منتج رقمي معتمدة (Product Card v2.4)</div>
+<!-- The Digital Product Card Component -->
+<article class="rounded-2xl glass-card border border-masar-gold/40 p-5 space-y-4 relative group hover:border-masar-gold transition shadow-2xl shadow-masar-navy/80" data-purpose="digital-product-card">
+<!-- Badge -->
+<div class="flex items-center justify-between">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-masar-gold/15 text-masar-gold border border-masar-gold/30">
+                ⭐ الأكثر مبيعاً في السعودية
+              </span>
+<span class="text-[11px] text-slate-400 font-mono">XLSX + PPTX + PDF</span>
+</div>
+<!-- Product Title & Brief -->
+<div class="space-y-1.5">
+<h4 class="text-lg font-bold text-white group-hover:text-masar-gold transition">
+                حقيبة النموذج المالي الشامل للشركات التقنية (SaaS &amp; Fintech)
+              </h4>
+<p class="text-xs text-slate-300 leading-relaxed">
+                دراسة جدوى تفاعلية كاملة مع حاسبة التدفقات النقدية لـ ٥ سنوات، تقييم ما قبل الاستثمار (Pre-money)، ومطابقة معايير بنك التنمية الاجتماعية.
+              </p>
+</div>
+<!-- Product Metrics -->
+<div class="grid grid-cols-3 gap-2 p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 text-center text-xs">
+<div>
+<div class="text-[10px] text-slate-400">الصفحات واللوحات</div>
+<div class="font-bold text-white mt-0.5">18 شيت إكسل</div>
+</div>
+<div class="border-x border-slate-800">
+<div class="text-[10px] text-slate-400">التحديثات</div>
+<div class="font-bold text-emerald-400 mt-0.5">مجانية مدى الحياة</div>
+</div>
+<div>
+<div class="text-[10px] text-slate-400">التنزيل</div>
+<div class="font-bold text-masar-gold mt-0.5">فوري ومباشر</div>
+</div>
+</div>
+<!-- Pricing & Action Row -->
+<div class="pt-2 flex items-center justify-between border-t border-slate-800">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-2xl font-extrabold text-masar-gold font-mono">289</span>
+<span class="text-xs text-slate-300 font-bold">ر.س فقط</span>
+<span class="text-xs text-slate-500 line-through font-mono">599 ر.س</span>
+</div>
+<div class="text-[10px] text-emerald-400 font-semibold">خصم 50% لفترة محدودة</div>
+</div>
+<!-- Premium Gold Action Button -->
+<button class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-masar-goldDark via-masar-gold to-masar-goldLight text-masar-navy font-bold text-xs shadow-lg hover:shadow-masar-gold/30 hover:scale-[1.02] active:scale-95 transition flex items-center gap-2" type="button">
+<svg class="w-4 h-4 fill-current" viewbox="0 0 20 20">
+<path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.24-1.04A1 1 0 005.07 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
+</svg>
+<span>شراء وتنزيل فوراً</span>
+</button>
+</div>
+</article>
+</div>
+<!-- Right: Trust Badges & Guarantee Framework -->
+<div class="lg:col-span-7 space-y-5">
+<div class="text-xs font-bold text-masar-gold uppercase tracking-wide">مؤشرات الثقة والضمانات المعتمدة (Trust &amp; Guarantee Architecture)</div>
+<!-- Trust Badges Bar Specimen -->
+<div class="glass-card rounded-2xl p-6 border-slate-700 space-y-5">
+<h4 class="text-sm font-bold text-white">شريط الموثوقية الخليجي الموحد (Global Trust Header)</h4>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-start gap-3">
+<span class="text-xl">🔒</span>
+<div>
+<div class="font-bold text-white mb-0.5">بوابات دفع آمنة ومعتمدة</div>
+<div class="text-slate-400 text-[11px]">ربط مباشر مع مدى، Apple Pay، والبطاقات الائتمانية الخليجية بتشفير 256-bit.</div>
+</div>
+</div>
+<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-start gap-3">
+<span class="text-xl">🇸🇦</span>
+<div>
+<div class="font-bold text-white mb-0.5">مطابقة للوائح السعودية والخليج</div>
+<div class="text-slate-400 text-[11px]">معتمدة وفق اشتراطات منشآت وهيئة الزكاة والضريبة والجمارك (ZATCA).</div>
+</div>
+</div>
+<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-start gap-3">
+<span class="text-xl">⚡</span>
+<div>
+<div class="font-bold text-white mb-0.5">روابط تنزيل فورية دائمة</div>
+<div class="text-slate-400 text-[11px]">وصول دائم إلى ملفاتك المشتراة من حسابك بدون تاريخ انتهاء صلاحية.</div>
+</div>
+</div>
+<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-start gap-3">
+<span class="text-xl">🛡️</span>
+<div>
+<div class="font-bold text-white mb-0.5">ضمان الدقة الحسابية</div>
+<div class="text-slate-400 text-[11px]">مراجعة كاملة للمعادلات الرياضية لضمان خلوها من الأخطاء الصفرية (#DIV/0!).</div>
+</div>
+</div>
+</div>
+<!-- Footer Micro-Navigation UI Specimen -->
+<div class="p-4 rounded-xl bg-[#090F24] border border-masar-gold/25 mt-4">
+<div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-masar-gold"></span>
+<span class="font-bold text-white">منصة مسار للاستشارات والحلول الذكية</span>
+</div>
+<div class="flex items-center gap-4 text-slate-400 text-[11px]">
+<span>الشروط والأحكام</span>
+<span>سياسة الخصوصية</span>
+<span>الأسئلة الشائعة</span>
+<span>الدعم الفني المباشر</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Slide7UIComponents -->
+<!-- BEGIN: ExecutiveSignoffSlide -->
+<!-- Final Approval & Sign-Off Block -->
+<section class="rounded-3xl border border-masar-gold/40 bg-gradient-to-b from-masar-navy to-[#060B18] p-8 sm:p-12 text-center space-y-6">
+<div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-masar-gold/15 text-masar-gold border border-masar-gold/30 text-2xl mx-auto shadow-gold-glow">
+        ✦
+      </div>
+<div class="max-w-2xl mx-auto space-y-2">
+<h3 class="text-2xl sm:text-3xl font-extrabold text-white">اعتماد وثيقة الهوية البصرية ونظام التصميم</h3>
+<p class="text-sm text-slate-300 leading-relaxed">
+          تمت مراجعة واعتماد هذا الدليل كمرجع قياسي إلزامي لجميع التصاميم، الحملات التسويقية، وتطوير المنتجات الرقمية لمنصة مسار لعام 2025.
+        </p>
+</div>
+<!-- Signatures Bar -->
+<div class="pt-6 border-t border-masar-gold/20 max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs text-slate-400">
+<div class="p-3 rounded-xl bg-black/30 border border-white/5">
+<div class="text-[10px] text-masar-gold font-bold mb-1">الرئيس التنفيذي (CEO)</div>
+<div class="text-white font-bold">د. خــالد القحطـاني</div>
+<div class="text-[10px] text-emerald-400 mt-1 font-mono">APPROVED • 2025/03/01</div>
+</div>
+<div class="p-3 rounded-xl bg-black/30 border border-white/5">
+<div class="text-[10px] text-masar-gold font-bold mb-1">رئيس قطاع المنتج والتجربة (CPO)</div>
+<div class="text-white font-bold">م. ريــان البعيجـان</div>
+<div class="text-[10px] text-emerald-400 mt-1 font-mono">APPROVED • 2025/03/01</div>
+</div>
+<div class="p-3 rounded-xl bg-black/30 border border-white/5">
+<div class="text-[10px] text-masar-gold font-bold mb-1">المستشار الفني والمالي</div>
+<div class="text-white font-bold">فريق التميز المؤسسي</div>
+<div class="text-[10px] text-emerald-400 mt-1 font-mono">VERIFIED ARCHITECTURE</div>
+</div>
+</div>
+</section>
+<!-- END: ExecutiveSignoffSlide -->
+</main>
+<!-- END: MasterDeckContent -->
+<!-- BEGIN: MasterFooter -->
+<footer class="border-t border-slate-800/80 bg-[#050814] py-8 text-center text-xs text-slate-500">
+<div class="max-w-7xl mx-auto px-4 space-y-2">
+<p>© 2025 جميع الحقوق محفوظة لمنصة مسار للحلول الاستراتيجية والاستثمارية • المملكة العربية السعودية ودول مجلس التعاون الخليجي.</p>
+<p class="font-mono text-[11px] text-masar-gold/70">MASAR DESIGN SYSTEM SPECIFICATION • V2.4.0 FINAL RELEASE</p>
+</div>
+</footer>
+<!-- END: MasterFooter -->
+<script src="assets/site.js"></script></body></html>

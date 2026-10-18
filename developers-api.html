@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;font-family:'IBM Plex Sans Arabic',sans-serif;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"surface-variant":"#dae2fd","on-secondary":"#ffffff","on-tertiary-fixed":"#002113","inverse-primary":"#bec5e5","on-error":"#ffffff","surface-tint":"#565d79","surface-dim":"#d2d9f4","primary-container":"#131a33","background":"#faf8ff","error-container":"#ffdad6","surface-container":"#eaedff","primary":"#000000","primary-fixed":"#dbe1ff","on-tertiary-fixed-variant":"#005236","on-surface":"#131b2e","on-tertiary":"#ffffff","surface-container-high":"#e2e7ff","secondary":"#904d00","secondary-fixed-dim":"#ffb77d","on-primary-container":"#7b83a0","tertiary":"#000000","on-surface-variant":"#45464d","surface-container-highest":"#dae2fd","outline":"#76767e","tertiary-fixed-dim":"#4edea3","primary-fixed-dim":"#bec5e5","outline-variant":"#c6c6ce","secondary-fixed":"#ffdcc3","on-secondary-fixed-variant":"#6e3900","on-tertiary-container":"#009668","tertiary-container":"#002113","on-primary-fixed-variant":"#3e4660","error":"#ba1a1a","surface-bright":"#faf8ff","inverse-on-surface":"#eef0ff","inverse-surface":"#283044","tertiary-fixed":"#6ffbbe","on-secondary-fixed":"#2f1500","on-error-container":"#93000a","on-secondary-container":"#663500","on-primary-fixed":"#131a33","secondary-container":"#fe932c","on-background":"#131b2e","surface":"#faf8ff","surface-container-low":"#f2f3ff","surface-container-lowest":"#ffffff","on-primary":"#ffffff"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter":"1.5rem","space-xs":"0.25rem","gutter-mobile":"1rem","space-xl":"2.5rem","margin-mobile":"1.25rem","space-sm":"0.5rem","space-md":"1rem","margin":"3rem","space-lg":"1.5rem"},"fontFamily":{"title-md":["IBM Plex Sans"],"label-sm":["IBM Plex Sans"],"body-md":["IBM Plex Sans"],"headline-lg-mobile":["IBM Plex Sans"],"display-lg":["IBM Plex Sans"],"body-sm":["IBM Plex Sans"],"title-lg":["IBM Plex Sans"],"headline-md":["IBM Plex Sans"],"display-lg-mobile":["IBM Plex Sans"],"headline-lg":["IBM Plex Sans"],"metric-xl":["IBM Plex Sans"],"body-lg":["IBM Plex Sans"],"label-md":["IBM Plex Sans"]},"fontSize":{"title-md":["1.125rem",{"lineHeight":"1.625rem","fontWeight":"500"}],"label-sm":["0.75rem",{"lineHeight":"1rem","letterSpacing":"0.05em","fontWeight":"600"}],"body-md":["1rem",{"lineHeight":"1.5rem","fontWeight":"400"}],"headline-lg-mobile":["1.75rem",{"lineHeight":"2.25rem","letterSpacing":"-0.01em","fontWeight":"600"}],"display-lg":["3.5rem",{"lineHeight":"4.25rem","letterSpacing":"-0.02em","fontWeight":"700"}],"body-sm":["0.875rem",{"lineHeight":"1.375rem","fontWeight":"400"}],"title-lg":["1.25rem",{"lineHeight":"1.75rem","fontWeight":"600"}],"headline-md":["1.5rem",{"lineHeight":"2rem","letterSpacing":"-0.01em","fontWeight":"600"}],"display-lg-mobile":["2.25rem",{"lineHeight":"2.75rem","letterSpacing":"-0.01em","fontWeight":"700"}],"headline-lg":["2.25rem",{"lineHeight":"2.875rem","letterSpacing":"-0.015em","fontWeight":"600"}],"metric-xl":["2.75rem",{"lineHeight":"3rem","letterSpacing":"-0.03em","fontWeight":"700"}],"body-lg":["1.125rem",{"lineHeight":"1.75rem","fontWeight":"400"}],"label-md":["0.875rem",{"lineHeight":"1.25rem","letterSpacing":"0.025em","fontWeight":"600"}]}}}};</script></head><body data-page="developers-api" class="bg-background font-body-md text-body-md text-on-surface antialiased selection:bg-secondary selection:text-on-secondary"><header class="fixed top-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-7xl mx-auto px-margin-mobile lg:px-margin flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><img alt="Modern luxury tech logo for 'Masar' (مسار) - an upscale Gulf fintech and business planning digital platform. Sleek geometric letterform 'M' combined with an upward trajectory arrow / path dynamic symbol. Minimalist, premium, gold metallic and royal navy contrast, sharp vector precision.. Brand logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1X0pCyuVKCF5McjyrKvDmXagH9jquDm1BWjZ_cRYqQnnzRXKRQdH0ZLctC7oRIwPlYdQKYsIEgCCvRPg0KzZiHK63DxAIE5rrWLYHBzSRUxnQjDD33NnHZfC1rSLb9wOfzj_XnH_3REMv6BKJzL_mpAkI-953Xa7lM5fxo8pfb5Uuq6-XoXjfrzD0JLSPyNiZ8nnq8O1K5lFxFBVeLYtjV4ltmbjPHELewGmsPl2ENVDCRaQAUryIAemmk"/><div class="flex flex-col"><span class="font-title-lg text-title-lg tracking-tight text-on-surface font-bold">مسار</span><span class="font-label-sm text-label-sm text-secondary uppercase">MASAR CAPITAL</span></div></div><nav class="hidden xl:flex items-center gap-space-lg" data-active-classes="text-secondary font-semibold"><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors py-space-xs" data-path="home" href="index.html">الرئيسية</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors py-space-xs" data-path="digital-models-store" href="store.html">متجر النماذج الرقمية</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors py-space-xs" data-path="partner-portal" href="partner-portal.html">بوابة الشركاء</a><a aria-current="page" class="transition-colors py-space-xs text-secondary font-semibold" data-path="developers-and-api" href="developers-api.html">المطورين و API</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors py-space-xs" data-path="consultant-suite" href="consultant-portal.html">بوابة المستشارين</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors py-space-xs" data-path="vdr-room" href="data-room.html">غرفة البيانات VDR</a></nav></div><div class="flex items-center gap-space-md"><button class="px-space-sm py-space-xs rounded bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-sm text-label-sm" type="button">EN</button><button class="p-space-xs rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><div class="flex items-center gap-space-sm ps-space-sm"><div class="hidden md:flex flex-col text-left"><span class="font-label-sm text-label-sm font-semibold text-on-surface">منصة المؤسسات</span><span class="font-label-sm text-label-sm text-on-surface-variant text-[10px]">حساب معتمد</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div></header><main class="w-full pt-20 bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- Subtle Background Ambiance -->
+<div class="relative w-full overflow-hidden">
+<div class="absolute -top-32 right-1/4 w-96 h-96 rounded-full bg-surface-container opacity-60 blur-3xl pointer-events-none"></div>
+<div class="absolute top-80 left-10 w-80 h-80 rounded-full bg-secondary-fixed/30 opacity-40 blur-3xl pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-margin-mobile lg:px-margin py-space-xl">
+<!-- Top Section: Header & Live Operational Pulse -->
+<section class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg mb-space-xl">
+<div class="flex flex-col max-w-3xl">
+<div class="flex flex-wrap items-center gap-space-sm mb-space-sm">
+<span class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-primary-container text-inverse-primary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container animate-pulse"></span>
+              الإصدار المستقر v2.4 Enterprise
+            </span>
+<span class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-on-tertiary-container"></span>
+              كافة واجهات API تعمل بكفاءة 99.99%
+            </span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">الرياض (KAFD-DC1)</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mb-space-xs">
+            بوابة المطورين والربط المالي الآلي
+          </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+            محرك نمذجة التدفقات الاستثمارية ومصفوفات التقييم المؤسسي الفوري. متوافق مع معايير المصرفية المفتوحة الخليجية ومعايير SAMA التقنية.
+          </p>
+</div>
+<!-- Direct Actions -->
+<div class="flex items-center gap-space-sm self-start lg:self-end">
+<a class="px-space-md py-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors flex items-center gap-2" href="#code-explorer">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+<span>محرر التجارب</span>
+</a>
+<button class="px-space-lg py-space-sm rounded-lg bg-secondary text-on-secondary shadow-md hover:opacity-95 font-label-md text-label-md transition-all flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">key</span>
+<span>توليد مفتاح API جديد</span>
+</button>
+</div>
+</section>
+<!-- Section: Key & Quota Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-space-xl">
+<!-- Live API Keys Card (7 Cols) -->
+<div class="md:col-span-7 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="w-9 h-9 rounded-lg bg-primary-container text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">vpn_key</span>
+</span>
+<div>
+<h2 class="font-title-md text-title-md text-on-surface">بيانات الاعتماد التوثيقية</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">مفاتيح الدخول لمصادقة Bearer Token</p>
+</div>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+                مشفّر 256-bit
+              </span>
+</div>
+<!-- Live Key Container -->
+<div class="space-y-space-sm">
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm">Production</span>
+<code class="font-mono text-body-sm text-on-surface select-all" dir="ltr" id="prodKeyText">msr_live_9f82••••••••••••••••3b1a</code>
+</div>
+<div class="flex items-center gap-1 self-end sm:self-auto">
+<button class="p-1.5 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" onclick="toggleKeyVisibility('prodKeyText')" title="إظهار / إخفاء" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="px-2.5 py-1 rounded bg-surface-container-lowest hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1" onclick="copyToClipboard('msr_live_9f82813958afb20140283b1a')" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span>نسخ</span>
+</button>
+</div>
+</div>
+<!-- Sandbox Key Container -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="px-2 py-0.5 rounded bg-surface-variant text-on-surface-variant font-label-sm text-label-sm">Sandbox</span>
+<code class="font-mono text-body-sm text-on-surface select-all" dir="ltr" id="sandboxKeyText">msr_test_7a11c8d4e928490fa982</code>
+</div>
+<div class="flex items-center gap-1 self-end sm:self-auto">
+<button class="px-2.5 py-1 rounded bg-surface-container-lowest hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1" onclick="copyToClipboard('msr_test_7a11c8d4e928490fa982')" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span>نسخ</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified_user</span>
+              متوافق مع حماية OAuth 2.0 و TLS 1.3
+            </span>
+<a class="text-secondary hover:underline font-label-md text-label-md" href="#">إدارة أذونات المفاتيح (Scopes) ←</a>
+</div>
+</div>
+<!-- Consumption Metric Card (5 Cols) -->
+<div class="md:col-span-5 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="w-9 h-9 rounded-lg bg-surface-container-high text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+</span>
+<div>
+<h2 class="font-title-md text-title-md text-on-surface">استهلاك الطلبات الشهري</h2>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">باقة المؤسسات السيادية</span>
+</div>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">42.8%</span>
+</div>
+<div class="my-space-md">
+<div class="flex items-baseline justify-between mb-1">
+<div class="flex items-baseline gap-1">
+<span class="font-metric-xl text-metric-xl text-on-surface">42,890</span>
+<span class="text-on-surface-variant font-body-sm text-body-sm">/ 100,000 استدعاء</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-tertiary-container">+14% عن الأسبوع الماضي</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 42.89%"></div>
+</div>
+</div>
+<!-- Micro Metas -->
+<div class="grid grid-cols-2 gap-space-sm bg-surface-container-low rounded-lg p-space-sm">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">متوسط سرعة المعالجة</span>
+<div class="flex items-center gap-1">
+<span class="font-title-lg text-title-lg font-bold text-on-surface">84ms</span>
+<span class="material-symbols-outlined text-[16px] text-on-tertiary-container">bolt</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">معدل الخطأ (5xx)</span>
+<div class="flex items-center gap-1">
+<span class="font-title-lg text-title-lg font-bold text-on-surface">0.001%</span>
+<span class="text-on-tertiary-container font-label-sm text-label-sm">ممتاز</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Interactive Endpoint & Code Engine -->
+<section class="mb-space-xl" id="code-explorer">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-sm mb-space-md">
+<div>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">REST Financial Engine</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">المسارات البرمجية ومولدات الحساب المالي</h2>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span>يدعم التشفير الكامل لبيانات التدفق النقدي الداخلي</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Endpoints Navigator (4 Cols) -->
+<div class="lg:col-span-4 flex flex-col gap-space-xs">
+<!-- Endpoint Item 1 -->
+<button class="endpoint-tab w-full text-right p-space-md rounded-xl bg-surface-container-lowest shadow-sm hover:bg-surface-container-low transition-all border-r-4 border-secondary" id="btn-endpoint-dcf" onclick="selectEndpoint('dcf')" type="button">
+<div class="flex items-center justify-between mb-1">
+<span class="px-2 py-0.5 rounded bg-primary-container text-inverse-primary font-mono text-[11px] font-bold">POST</span>
+<span class="font-label-sm text-label-sm text-on-tertiary-container font-medium">التقييم المؤسسي</span>
+</div>
+<div class="font-mono text-label-md text-label-md text-on-surface text-left" dir="ltr">/v2/valuation/dcf</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 line-clamp-1">
+                حساب التقييم المالي الشامل بنموذج التدفقات المخصومة والـ WACC
+              </p>
+</button>
+<!-- Endpoint Item 2 -->
+<button class="endpoint-tab w-full text-right p-space-md rounded-xl bg-surface-container-lowest/60 hover:bg-surface-container-lowest transition-all" id="btn-endpoint-pitch" onclick="selectEndpoint('pitch')" type="button">
+<div class="flex items-center justify-between mb-1">
+<span class="px-2 py-0.5 rounded bg-primary-container text-inverse-primary font-mono text-[11px] font-bold">POST</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">الذكاء الاصطناعي المالي</span>
+</div>
+<div class="font-mono text-label-md text-label-md text-on-surface text-left" dir="ltr">/v2/models/generate-pitch</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 line-clamp-1">
+                توليد هيكل عرض المستثمرين المخصص بالمعايير الخليجية
+              </p>
+</button>
+<!-- Endpoint Item 3 -->
+<button class="endpoint-tab w-full text-right p-space-md rounded-xl bg-surface-container-lowest/60 hover:bg-surface-container-lowest transition-all" id="btn-endpoint-license" onclick="selectEndpoint('license')" type="button">
+<div class="flex items-center justify-between mb-1">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-mono text-[11px] font-bold">GET</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">التراخيص المعتمدة</span>
+</div>
+<div class="font-mono text-label-md text-label-md text-on-surface text-left" dir="ltr">/v2/verification/license/{key}</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 line-clamp-1">
+                التحقق الفوري المشفر من صحة التراخيص وتوقيع مسار المالي
+              </p>
+</button>
+<!-- Endpoint Item 4 -->
+<button class="endpoint-tab w-full text-right p-space-md rounded-xl bg-surface-container-lowest/60 hover:bg-surface-container-lowest transition-all" id="btn-endpoint-vdr" onclick="selectEndpoint('vdr')" type="button">
+<div class="flex items-center justify-between mb-1">
+<span class="px-2 py-0.5 rounded bg-primary-container text-inverse-primary font-mono text-[11px] font-bold">POST</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">غرف البيانات VDR</span>
+</div>
+<div class="font-mono text-label-md text-label-md text-on-surface text-left" dir="ltr">/v2/vdr/secure-deposit</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 line-clamp-1">
+                إيداع التقارير وتشفيرها مع بصمة زمنية رسمية (Timestamp)
+              </p>
+</button>
+<!-- Quick Specs Info Card -->
+<div class="p-space-md bg-surface-container rounded-xl mt-space-xs text-on-surface">
+<div class="flex items-center gap-space-xs mb-1">
+<span class="material-symbols-outlined text-[18px] text-secondary">security</span>
+<span class="font-label-md text-label-md">التوافق والأمان</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                معدل الاستدعاء الافتراضي 600 طلب/الدقيقة. يُطلب ترويسة <code class="text-xs bg-surface-container-lowest px-1 py-0.5 rounded" dir="ltr">X-Masar-Signature</code> للعمليات المصرفية.
+              </p>
+</div>
+</div>
+<!-- Code Execution & Output Terminal (8 Cols) -->
+<div class="lg:col-span-8 bg-inverse-surface rounded-xl overflow-hidden shadow-xl text-inverse-on-surface">
+<!-- Terminal Header -->
+<div class="bg-primary-container px-space-md py-space-sm flex flex-wrap items-center justify-between gap-space-sm">
+<!-- Language Switcher -->
+<div class="flex items-center gap-1" dir="ltr">
+<button class="lang-btn px-3 py-1 rounded text-label-sm font-mono text-white bg-surface-tint" id="lang-curl" onclick="switchLanguage('curl')" type="button">cURL</button>
+<button class="lang-btn px-3 py-1 rounded text-label-sm font-mono text-on-primary-container hover:text-white transition-colors" id="lang-python" onclick="switchLanguage('python')" type="button">Python</button>
+<button class="lang-btn px-3 py-1 rounded text-label-sm font-mono text-on-primary-container hover:text-white transition-colors" id="lang-nodejs" onclick="switchLanguage('nodejs')" type="button">Node.js</button>
+<button class="lang-btn px-3 py-1 rounded text-label-sm font-mono text-on-primary-container hover:text-white transition-colors" id="lang-php" onclick="switchLanguage('php')" type="button">PHP</button>
+<button class="lang-btn px-3 py-1 rounded text-label-sm font-mono text-on-primary-container hover:text-white transition-colors" id="lang-go" onclick="switchLanguage('go')" type="button">Go</button>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1 font-mono text-[11px] text-tertiary-fixed">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed"></span>
+                  Sandbox Active
+                </span>
+<button class="p-1.5 rounded hover:bg-surface-tint/50 text-inverse-on-surface transition-colors" onclick="copySnippet()" title="نسخ الكود" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+</div>
+<!-- Code Body Container -->
+<div class="p-space-md font-mono text-[13px] leading-relaxed overflow-x-auto text-inverse-primary" dir="ltr">
+<pre class="selection:bg-secondary select-all whitespace-pre" id="codeDisplay">curl -X POST "https://api.masar.sa/v2/valuation/dcf" \
+  -H "Authorization: Bearer msr_live_9f82••••••••3b1a" \
+  -H "Content-Type: application/json" \
+  -H "X-Masar-Jurisdiction: GCC-SA" \
+  -d '{
+    "company_name": "التقنية المتطورة القابضة",
+    "currency": "SAR",
+    "projections_years": 5,
+    "discount_rate_wacc": 0.118,
+    "terminal_growth_rate": 0.028,
+    "cash_flows": [4500000, 7200000, 11400000, 16800000, 24000000],
+    "net_debt": 1200000
+  }'</pre>
+</div>
+<!-- Execution Action Bar -->
+<div class="px-space-md py-space-xs bg-primary-container/80 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="text-[11px] font-mono text-on-primary-container">Endpoint Latency: ~82ms</span>
+</div>
+<button class="px-space-md py-1 rounded bg-secondary hover:bg-secondary-container text-on-secondary font-label-sm text-label-sm transition-colors flex items-center gap-1.5" onclick="executeSnippetSimulation()" type="button">
+<span class="material-symbols-outlined text-[16px]">play_arrow</span>
+<span>تشغيل التجربة (Send Request)</span>
+</button>
+</div>
+<!-- Response Console Section -->
+<div class="bg-primary-container/40 p-space-md">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="font-mono text-label-sm text-on-primary-container">استجابة الخادم (Response):</span>
+<span class="px-2 py-0.5 rounded bg-tertiary-container text-tertiary-fixed font-mono text-[11px] font-bold">200 OK</span>
+</div>
+<span class="text-[11px] font-mono text-on-primary-container">Time: 79ms • Size: 1.4 KB</span>
+</div>
+<pre class="font-mono text-[12px] leading-relaxed text-inverse-primary bg-primary-container/60 p-space-sm rounded-lg overflow-x-auto" dir="ltr" id="responseJson">{
+  "status": "success",
+  "data": {
+    "valuation_id": "val_991823ab",
+    "enterprise_value": 78420000,
+    "equity_value": 77220000,
+    "implied_ev_revenue_multiple": 4.67,
+    "internal_rate_of_return_irr": 0.348,
+    "terminal_value": 52140000,
+    "currency": "SAR",
+    "audit_hash": "sha256_e7d2b84738a9...",
+    "benchmark_context": "KSA FinTech &amp; Logistics Sector 2025"
+  }
+}</pre>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Visual Architecture & Regional Data Ingestion -->
+<section class="mb-space-xl bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-center">
+<div class="lg:col-span-6">
+<span class="font-label-sm text-label-sm text-secondary uppercase font-semibold">Financial Data Topology</span>
+<h3 class="font-headline-md text-headline-md text-on-surface my-space-xs">
+              تدفق البيانات والامتثال السيادي للقطاع المالي
+            </h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-md">
+              تتم معالجة النماذج المالية والتقييمات الحساسة داخل مراكز بيانات محلية بالكامل في الرياض وجدة، مع دعم مباشر لمزامنة دفاتر المحاسبة سحابياً مع منصات ERP العالمية عبر خطوط ربط خاصة (Direct Connect).
+            </p>
+<div class="grid grid-cols-2 gap-space-md">
+<div class="p-space-sm bg-surface-container-low rounded-lg">
+<span class="font-label-md text-label-md font-bold text-on-surface">معايير IFRS 9 &amp; 16</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">حساب مخصصات المخاطر والاعتراف بالقوائم آلياً.</p>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg">
+<span class="font-label-md text-label-md font-bold text-on-surface">شهادة SOC2 Type II</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">تشفير كامل في بيئات النقل والتخزين End-to-End.</p>
+</div>
+</div>
+</div>
+<!-- Inline Architecture Diagram Visualization -->
+<div class="lg:col-span-6 bg-surface-container-low p-space-md rounded-xl flex flex-col justify-center">
+<div class="flex items-center justify-between mb-space-sm text-on-surface-variant font-label-sm text-label-sm">
+<span>خريطة الاستدعاء المباشر للمحرك المالي</span>
+<span class="text-on-tertiary-container flex items-center gap-1 font-mono">
+<span class="w-2 h-2 rounded-full bg-on-tertiary-container animate-ping"></span>
+                LIVE PIPELINE
+              </span>
+</div>
+<!-- SVG Data Flow Visualization -->
+<div class="w-full h-48 flex items-center justify-center">
+<svg class="w-full h-full" fill="none" viewbox="0 0 540 160" xmlns="http://www.w3.org/2000/svg">
+<!-- Client Box -->
+<rect class="fill-surface-container-lowest" height="70" rx="8" width="100" x="10" y="45"></rect>
+<text class="fill-on-surface font-sans text-[11px] font-bold" text-anchor="middle" x="60" y="80">تطبيقات الشريك</text>
+<text class="fill-on-surface-variant font-mono text-[9px]" text-anchor="middle" x="60" y="98">Client App / SDK</text>
+<!-- Flow Line 1 -->
+<path class="text-secondary" d="M110 80 H 170" stroke="currentColor" stroke-dasharray="4 4" stroke-width="2"></path>
+<polygon class="fill-secondary" points="172,80 164,76 164,84"></polygon>
+<!-- Gateway Box -->
+<rect class="fill-primary-container" height="90" rx="8" width="120" x="180" y="35"></rect>
+<text class="fill-inverse-primary font-sans text-[11px] font-bold" text-anchor="middle" x="240" y="70">بوابة مسار الآمنة</text>
+<text class="fill-secondary-container font-mono text-[9px]" text-anchor="middle" x="240" y="88">WAF + Auth Token</text>
+<text class="fill-inverse-on-surface font-sans text-[8px]" text-anchor="middle" x="240" y="104">84ms Latency</text>
+<!-- Flow Line 2 -->
+<path class="text-secondary" d="M300 80 H 360" stroke="currentColor" stroke-dasharray="4 4" stroke-width="2"></path>
+<polygon class="fill-secondary" points="362,80 354,76 354,84"></polygon>
+<!-- Engine Boxes -->
+<rect class="fill-surface-container-lowest" height="50" rx="6" width="155" x="370" y="15"></rect>
+<text class="fill-on-surface font-sans text-[10px] font-bold" text-anchor="middle" x="447" y="42">محرك DCF والتقييم الآلي</text>
+<text class="fill-on-tertiary-container font-mono text-[8px]" text-anchor="middle" x="447" y="55">High-Throughput C++</text>
+<rect class="fill-surface-container-lowest" height="50" rx="6" width="155" x="370" y="75"></rect>
+<text class="fill-on-surface font-sans text-[10px] font-bold" text-anchor="middle" x="447" y="102">غرفة البيانات المشفرة VDR</text>
+<text class="fill-secondary font-mono text-[8px]" text-anchor="middle" x="447" y="115">AES-GCM / HSM Keys</text>
+</svg>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm pt-2">
+<span>التخزين: مركز بيانات السحاب الحكومي والمالي KAFD</span>
+<span class="font-mono text-[11px] text-on-surface">SHA-256 Validated</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Ready-to-Use SDKs & Ecosystem Plugins -->
+<section class="mb-space-xl">
+<div class="flex items-center justify-between mb-space-md">
+<div>
+<span class="font-label-sm text-label-sm text-secondary uppercase font-semibold">Developer Ecosystem</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">مكتبات الربط البرمجي والمكونات الجاهزة</h2>
+</div>
+<a class="text-secondary font-label-md text-label-md hover:underline hidden sm:block" href="#">استعراض كافة الحزم على GitHub ←</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- SDK 1: Python Data Science -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-on-surface font-bold text-lg">
+<span class="material-symbols-outlined text-[24px]">code</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-mono text-[11px]">v1.9.2</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface mb-1">حزمة Python للمحللين</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">
+                مهيأة لبيئات Jupyter Notebook و Pandas لبناء نماذج التدفقات و Monte Carlo Simulations مباشرة.
+              </p>
+</div>
+<div>
+<div class="bg-surface-container-low p-space-xs rounded-lg flex items-center justify-between font-mono text-[12px] text-on-surface" dir="ltr">
+<code>pip install masar-fintech</code>
+<button class="p-1 hover:text-secondary" onclick="copyToClipboard('pip install masar-fintech')" title="نسخ الأمر" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+</div>
+</div>
+<!-- SDK 2: Node.js & React/Next.js -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-on-surface font-bold text-lg">
+<span class="material-symbols-outlined text-[24px]">integration_instructions</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-mono text-[11px]">v2.4.0</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface mb-1">حزمة React &amp; Next.js</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">
+                مكونات واجهة مالية جاهزة تشمل جداول التقييم ومؤشرات الـ Cap Table التفاعلية مع دعم RTL المدمج.
+              </p>
+</div>
+<div>
+<div class="bg-surface-container-low p-space-xs rounded-lg flex items-center justify-between font-mono text-[12px] text-on-surface" dir="ltr">
+<code>npm i @masar/react-financial</code>
+<button class="p-1 hover:text-secondary" onclick="copyToClipboard('npm i @masar/react-financial')" title="نسخ الأمر" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+</div>
+</div>
+<!-- SDK 3: E-Commerce Plugins -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-on-surface font-bold text-lg">
+<span class="material-symbols-outlined text-[24px]">storefront</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant font-mono text-[11px]">WooCommerce</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface mb-1">إضافات المتاجر الرقمية</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">
+                إمكانية ربط وترخيص ملفات النماذج المالية والتحقق اللحظي من مدفوعات العروض لرواد الأعمال.
+              </p>
+</div>
+<div>
+<a class="w-full py-space-xs rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm flex items-center justify-center gap-1" href="#">
+<span>تنزيل الإضافة الجاهزة (Plugin.zip)</span>
+<span class="material-symbols-outlined text-[16px]">download</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Real-time Webhooks & Events Stream -->
+<section class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm mb-space-md">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-on-tertiary-container"></span>
+<span class="font-title-md text-title-md text-on-surface">مستمع الأحداث وتنبيهات الويب هوك (Webhooks)</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+              استقبل إشعارات فورية عند تغير مراحل صفقات الاستثمار أو إيداع وثائق الفحص النافي للجهالة.
+            </p>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high font-label-sm text-label-sm transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>تعديل الروابط المستهدفة</span>
+</button>
+<button class="px-space-md py-1.5 rounded-lg bg-primary text-on-primary font-label-sm text-label-sm transition-opacity hover:opacity-90 flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>إضافة Webhook جديد</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-right font-body-sm text-body-sm">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">
+<th class="p-space-sm rounded-r-lg">الحدث البرمجي (Event Name)</th>
+<th class="p-space-sm">الوصف الوظيفي</th>
+<th class="p-space-sm text-left" dir="ltr">Payload Schema</th>
+<th class="p-space-sm">الحالة</th>
+<th class="p-space-sm rounded-l-lg text-left">آخر تشغيل</th>
+</tr>
+</thead>
+<tbody class="text-on-surface">
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="p-space-sm font-mono text-[13px] text-secondary font-bold" dir="ltr">model.purchased</td>
+<td class="p-space-sm">إتمام شراء وتوليد ترخيص جديد لنموذج مالي استثماري</td>
+<td class="p-space-sm text-left font-mono text-[12px] text-on-surface-variant" dir="ltr">{ model_id, buyer_cr, amount }</td>
+<td class="p-space-sm">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container text-on-tertiary-container font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary-container"></span>
+                    نشط (Active)
+                  </span>
+</td>
+<td class="p-space-sm text-left text-on-surface-variant font-mono text-[12px]">منذ 4 دقائق</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="p-space-sm font-mono text-[13px] text-secondary font-bold" dir="ltr">vdr.file_verified</td>
+<td class="p-space-sm">اكتمال فحص تشفير الوثائق في غرفة البيانات المعتمدة</td>
+<td class="p-space-sm text-left font-mono text-[12px] text-on-surface-variant" dir="ltr">{ room_id, file_hash, verifier }</td>
+<td class="p-space-sm">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container text-on-tertiary-container font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary-container"></span>
+                    نشط (Active)
+                  </span>
+</td>
+<td class="p-space-sm text-left text-on-surface-variant font-mono text-[12px]">منذ 18 دقيقة</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="p-space-sm font-mono text-[13px] text-secondary font-bold" dir="ltr">consultation.booked</td>
+<td class="p-space-sm">حجز موعد جلسة تدقيق استراتيجية مع مستشار مرخّص</td>
+<td class="p-space-sm text-left font-mono text-[12px] text-on-surface-variant" dir="ltr">{ booking_id, expert_id, slot }</td>
+<td class="p-space-sm">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+                    في الانتظار
+                  </span>
+</td>
+<td class="p-space-sm text-left text-on-surface-variant font-mono text-[12px]">منذ ساعتين</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</div>
+<!-- Interactive Client-side Logic -->
+<script>
+    const codeSnippets = {
+      dcf: {
+        curl: `curl -X POST "https://api.masar.sa/v2/valuation/dcf" \\
+  -H "Authorization: Bearer msr_live_9f82••••••••3b1a" \\
+  -H "Content-Type: application/json" \\
+  -H "X-Masar-Jurisdiction: GCC-SA" \\
+  -d '{
+    "company_name": "التقنية المتطورة القابضة",
+    "currency": "SAR",
+    "projections_years": 5,
+    "discount_rate_wacc": 0.118,
+    "terminal_growth_rate": 0.028,
+    "cash_flows": [4500000, 7200000, 11400000, 16800000, 24000000],
+    "net_debt": 1200000
+  }'`,
+        python: `import masar
+
+client = masar.Client(api_key="msr_live_9f82••••••••3b1a")
+
+# حساب التقييم المالي الشامل بناءً على التدفقات المتوقعة
+valuation = client.valuation.calculate_dcf(
+    company_name="التقنية المتطورة القابضة",
+    currency="SAR",
+    wacc=0.118,
+    growth_rate=0.028,
+    cash_flows=[4500000, 7200000, 11400000, 16800000, 24000000],
+    net_debt=1200000
+)
+
+print(f"قيمة المنشأة المؤسسية: {valuation.enterprise_value:,.2f} ريال")
+print(f"معدل العائد الداخلي (IRR): {valuation.irr * 100:.2f}%")`,
+        nodejs: `import { MasarClient } from '@masar/financial-sdk';
+
+const masar = new MasarClient({ apiKey: process.env.MASAR_API_KEY });
+
+async function runDCF() {
+  const result = await masar.valuation.dcf({
+    companyName: 'التقنية المتطورة القابضة',
+    currency: 'SAR',
+    wacc: 0.118,
+    terminalGrowthRate: 0.028,
+    cashFlows: [4500000, 7200000, 11400000, 16800000, 24000000],
+    netDebt: 1200000
+  });
+
+  console.log('Enterprise Value:', result.enterpriseValue);
+}`,
+        php: `<?php
+require_once('vendor/autoload.php');
+
+$masar = new \\Masar\\FinTechClient('msr_live_9f82••••••••3b1a');
+
+$valuation = $masar->valuation->dcf([
+    'company_name' => 'التقنية المتطورة القابضة',
+    'currency' => 'SAR',
+    'discount_rate_wacc' => 0.118,
+    'terminal_growth_rate' => 0.028,
+    'cash_flows' => [4500000, 7200000, 11400000, 16800000, 24000000],
+    'net_debt' => 1200000
+]);
+
+echo "EV: " . $valuation->enterprise_value;`,
+        go: `package main
+
+import (
+    "fmt"
+    "github.com/masar-sa/masar-go/valuation"
+)
+
+func main() {
+    client := valuation.NewClient("msr_live_9f82••••••••3b1a")
+    res, err := client.CalculateDCF(&valuation.DCFParams{
+        Currency: "SAR",
+        WACC:     0.118,
+        CashFlows: []float64{4500000, 7200000, 11400000, 16800000, 24000000},
+    })
+    if err == nil {
+        fmt.Printf("Enterprise Value: %f\\n", res.EnterpriseValue)
+    }
+}`
+      },
+      pitch: {
+        curl: `curl -X POST "https://api.masar.sa/v2/models/generate-pitch" \\
+  -H "Authorization: Bearer msr_live_9f82••••••••3b1a" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "sector": "Logistics & Supply Chain",
+    "target_raise_amount": 15000000,
+    "investor_profile": "Venture Capital - GCC",
+    "include_tam_sam_som": true
+  }'`,
+        python: `import masar
+
+client = masar.Client(api_key="msr_live_9f82••••••••3b1a")
+
+# توليد هيكل عرض المستثمرين الاستثماري المدعوم بالذكاء الاصطناعي
+pitch = client.models.generate_pitch(
+    sector="Logistics & Supply Chain",
+    target_raise=15000000,
+    investor_profile="Venture Capital - GCC"
+)
+
+print("تم توليد الهيكل بنجاح:", pitch.document_id)`,
+        nodejs: `const pitch = await masar.models.generatePitch({
+  sector: 'Logistics & Supply Chain',
+  targetRaiseAmount: 15000000,
+  investorProfile: 'Venture Capital - GCC'
+});`,
+        php: `$pitch = $masar->models->generatePitch([
+    'sector' => 'Logistics & Supply Chain',
+    'target_raise_amount' => 15000000
+]);`,
+        go: `res, err := client.GeneratePitch(&models.PitchParams{
+    Sector: "Logistics",
+    TargetRaise: 15000000,
+})`
+      },
+      license: {
+        curl: `curl -X GET "https://api.masar.sa/v2/verification/license/msr_lic_882910f" \\
+  -H "Authorization: Bearer msr_live_9f82••••••••3b1a"`,
+        python: `check = client.verification.verify_license("msr_lic_882910f")
+print(f"الترخيص صالح لـ: {check.organization_name}")`,
+        nodejs: `const verification = await masar.verification.checkLicense('msr_lic_882910f');`,
+        php: `$check = $masar->verification->check('msr_lic_882910f');`,
+        go: `verified, err := client.VerifyLicense("msr_lic_882910f")`
+      },
+      vdr: {
+        curl: `curl -X POST "https://api.masar.sa/v2/vdr/secure-deposit" \\
+  -H "Authorization: Bearer msr_live_9f82••••••••3b1a" \\
+  -H "Content-Type: multipart/form-data" \\
+  -F "room_id=vdr_room_9941" \\
+  -F "file=@audit_financials_2024.pdf" \\
+  -F "encrypt_mode=AES-256-GCM"`,
+        python: `vdr_deposit = client.vdr.deposit(
+    room_id="vdr_room_9941",
+    file_path="audit_financials_2024.pdf",
+    encryption="AES-256-GCM"
+)`,
+        nodejs: `const deposit = await masar.vdr.deposit({
+  roomId: 'vdr_room_9941',
+  fileStream: fileData,
+  encryptMode: 'AES-256-GCM'
+});`,
+        php: `$deposit = $masar->vdr->deposit('vdr_room_9941', $fileHandle);`,
+        go: `deposit, err := client.DepositVDR("vdr_room_9941", fileBytes)`
+      }
+    };
+
+    let currentEndpoint = 'dcf';
+    let currentLang = 'curl';
+
+    function selectEndpoint(ep) {
+      currentEndpoint = ep;
+      
+      // Update UI active state
+      document.querySelectorAll('.endpoint-tab').forEach(tab => {
+        tab.classList.remove('border-r-4', 'border-secondary', 'bg-surface-container-lowest');
+        tab.classList.add('bg-surface-container-lowest/60');
+      });
+      
+      const activeTab = document.getElementById('btn-endpoint-' + ep);
+      if (activeTab) {
+        activeTab.classList.remove('bg-surface-container-lowest/60');
+        activeTab.classList.add('bg-surface-container-lowest', 'border-r-4', 'border-secondary');
+      }
+
+      updateSnippetView();
+    }
+
+    function switchLanguage(lang) {
+      currentLang = lang;
+      
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('bg-surface-tint', 'text-white');
+        btn.classList.add('text-on-primary-container');
+      });
+
+      const activeBtn = document.getElementById('lang-' + lang);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-on-primary-container');
+        activeBtn.classList.add('bg-surface-tint', 'text-white');
+      }
+
+      updateSnippetView();
+    }
+
+    function updateSnippetView() {
+      const codeElem = document.getElementById('codeDisplay');
+      if (codeElem && codeSnippets[currentEndpoint] && codeSnippets[currentEndpoint][currentLang]) {
+        codeElem.textContent = codeSnippets[currentEndpoint][currentLang];
+      }
+    }
+
+    function toggleKeyVisibility(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (el.textContent.includes('••••')) {
+        el.textContent = 'msr_live_9f82813958afb20140283b1a';
+      } else {
+        el.textContent = 'msr_live_9f82••••••••••••••••3b1a';
+      }
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text);
+      alert('تم النسخ إلى الحافظة بنجاح.');
+    }
+
+    function copySnippet() {
+      const text = document.getElementById('codeDisplay').textContent;
+      navigator.clipboard.writeText(text);
+      alert('تم نسخ الكود البرمجي بنجاح.');
+    }
+
+    function executeSnippetSimulation() {
+      const respEl = document.getElementById('responseJson');
+      respEl.style.opacity = '0.5';
+      setTimeout(() => {
+        respEl.style.opacity = '1';
+        alert('تمت المحاكاة بنجاح — الاستجابة 200 OK (81ms)');
+      }, 400);
+    }
+  </script>
+</div></main><footer class="w-full bg-surface-container-low mt-space-xl"><div class="max-w-7xl mx-auto px-margin-mobile lg:px-margin py-space-xl flex flex-col md:flex-row justify-between items-center gap-space-md"><div class="flex items-center gap-space-sm"><img alt="Modern luxury tech logo for 'Masar' (مسار) - an upscale Gulf fintech and business planning digital platform. Sleek geometric letterform 'M' combined with an upward trajectory arrow / path dynamic symbol. Minimalist, premium, gold metallic and royal navy contrast, sharp vector precision.. Brand logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1X0pCyuVKCF5McjyrKvDmXagH9jquDm1BWjZ_cRYqQnnzRXKRQdH0ZLctC7oRIwPlYdQKYsIEgCCvRPg0KzZiHK63DxAIE5rrWLYHBzSRUxnQjDD33NnHZfC1rSLb9wOfzj_XnH_3REMv6BKJzL_mpAkI-953Xa7lM5fxo8pfb5Uuq6-XoXjfrzD0JLSPyNiZ8nnq8O1K5lFxFBVeLYtjV4ltmbjPHELewGmsPl2ENVDCRaQAUryIAemmk"/><span class="font-title-md text-title-md font-bold text-on-surface">مسار للحلول المالية والنمذجة المؤسسية</span></div><div class="flex items-center gap-space-lg text-on-surface-variant font-label-sm text-label-sm"><span>المملكة العربية السعودية • دول مجلس التعاون الخليجي</span><span>© 2025 مسار. جميع الحقوق محفوظة.</span></div></div></footer><script src="assets/site.js"></script></body></html>
