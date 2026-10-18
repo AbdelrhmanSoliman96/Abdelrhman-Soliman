@@ -1,0 +1,877 @@
+<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&amp;family=IBM+Plex+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "error": "#ba1a1a",
+          "on-background": "#131b2e",
+          "surface-variant": "#dae2fd",
+          "on-primary-fixed-variant": "#3e4660",
+          "on-primary-fixed": "#131a33",
+          "primary-fixed": "#dbe1ff",
+          "on-tertiary-container": "#009668",
+          "on-tertiary-fixed-variant": "#005236",
+          "secondary-container": "#fe932c",
+          "tertiary-fixed": "#6ffbbe",
+          "on-secondary-fixed-variant": "#6e3900",
+          "error-container": "#ffdad6",
+          "on-error": "#ffffff",
+          "surface-container-highest": "#dae2fd",
+          "background": "#faf8ff",
+          "on-tertiary": "#ffffff",
+          "on-secondary": "#ffffff",
+          "on-secondary-container": "#663500",
+          "on-error-container": "#93000a",
+          "tertiary-container": "#002113",
+          "secondary-fixed-dim": "#ffb77d",
+          "on-surface": "#131b2e",
+          "on-primary-container": "#7b83a0",
+          "secondary": "#904d00",
+          "surface-bright": "#faf8ff",
+          "inverse-primary": "#bec5e5",
+          "primary-fixed-dim": "#bec5e5",
+          "outline": "#76767e",
+          "on-tertiary-fixed": "#002113",
+          "outline-variant": "#c6c6ce",
+          "surface-container-lowest": "#ffffff",
+          "surface": "#faf8ff",
+          "on-surface-variant": "#45464d",
+          "on-primary": "#ffffff",
+          "surface-container": "#eaedff",
+          "surface-tint": "#565d79",
+          "primary-container": "#131a33",
+          "surface-container-low": "#f2f3ff",
+          "on-secondary-fixed": "#2f1500",
+          "inverse-surface": "#283044",
+          "tertiary-fixed-dim": "#4edea3",
+          "primary": "#000000",
+          "surface-dim": "#d2d9f4",
+          "secondary-fixed": "#ffdcc3",
+          "surface-container-high": "#e2e7ff",
+          "inverse-on-surface": "#eef0ff",
+          "tertiary": "#000000"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-md": "1rem",
+          "space-sm": "0.5rem",
+          "space-xl": "2.5rem",
+          "gutter": "1.5rem",
+          "space-xs": "0.25rem",
+          "space-lg": "1.5rem",
+          "margin-mobile": "1.25rem",
+          "margin": "3rem",
+          "gutter-mobile": "1rem"
+        },
+        "fontFamily": {
+          "body-md": ["IBM Plex Sans"],
+          "title-lg": ["IBM Plex Sans"],
+          "metric-xl": ["IBM Plex Sans"],
+          "headline-lg": ["IBM Plex Sans"],
+          "title-md": ["IBM Plex Sans"],
+          "display-lg": ["IBM Plex Sans"],
+          "label-sm": ["IBM Plex Sans"],
+          "body-sm": ["IBM Plex Sans"],
+          "body-lg": ["IBM Plex Sans"],
+          "label-md": ["IBM Plex Sans"],
+          "display-lg-mobile": ["IBM Plex Sans"],
+          "headline-lg-mobile": ["IBM Plex Sans"],
+          "headline-md": ["IBM Plex Sans"]
+        },
+        "fontSize": {
+          "body-md": ["1rem", {"lineHeight": "1.5rem", "fontWeight": "400"}],
+          "title-lg": ["1.25rem", {"lineHeight": "1.75rem", "fontWeight": "600"}],
+          "metric-xl": ["2.75rem", {"lineHeight": "3rem", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+          "headline-lg": ["2.25rem", {"lineHeight": "2.875rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+          "title-md": ["1.125rem", {"lineHeight": "1.625rem", "fontWeight": "500"}],
+          "display-lg": ["3.5rem", {"lineHeight": "4.25rem", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+          "label-sm": ["0.75rem", {"lineHeight": "1rem", "letterSpacing": "0.05em", "fontWeight": "600"}],
+          "body-sm": ["0.875rem", {"lineHeight": "1.375rem", "fontWeight": "400"}],
+          "body-lg": ["1.125rem", {"lineHeight": "1.75rem", "fontWeight": "400"}],
+          "label-md": ["0.875rem", {"lineHeight": "1.25rem", "letterSpacing": "0.025em", "fontWeight": "600"}],
+          "display-lg-mobile": ["2.25rem", {"lineHeight": "2.75rem", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+          "headline-lg-mobile": ["1.75rem", {"lineHeight": "2.25rem", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+          "headline-md": ["1.5rem", {"lineHeight": "2rem", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+        }
+      }
+    }
+  }</script></head><body data-page="data-room" class="bg-surface font-body-md text-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 h-20 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex items-center justify-between px-gutter"><div class="flex items-center gap-space-md"><img alt="Modern luxury tech logo for 'Masar' (مسار) - an upscale Gulf fintech and business planning digital platform. Sleek geometric letterform 'M' combined with an upward trajectory arrow / path dynamic symbol. Minimalist, premium, gold metallic and royal navy contrast, sharp vector precision.. Brand logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UOKP7sBVUAEf1xrufFdTJ14bKVmk1pUbIDQiGO9U1P5YlOzm_GALaqyKhzzN7bDYdnZNnOkm5TEfEoBKuARFuTjSHbqQyvHAXtAngiS6f3DxVNf-kzNhMpxsTAdemm3Q_feu8hQrk967nUTFPqoM6_68-VmQdkL-7bZGfU_8UIpXbMdjYXpg9gBeA80OJk66rhMFu-SWCSon1OJGDSHnhbkoAdyRT6w4VBXDskm3NNZ6vqlxszxoYtElU"><span class="font-title-md text-title-md tracking-tight text-on-surface font-bold">مسار | إدارة الصفقات</span></div><nav class="hidden lg:flex items-center gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><a class="px-space-sm py-space-xs rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors font-label-md text-label-md" data-path="home" href="index.html">الرئيسية</a><a class="px-space-sm py-space-xs rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors font-label-md text-label-md" data-path="store" href="store.html">المتجر</a><a class="px-space-sm py-space-xs rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors font-label-md text-label-md" data-path="knowledge-hub" href="knowledge.html">مركز المعرفة</a><a class="px-space-sm py-space-xs rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors font-label-md text-label-md" data-path="compare-models" href="compare.html">المقارنة</a><a class="px-space-sm py-space-xs rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors font-label-md text-label-md" data-path="advisory-booking" href="advisory-booking.html">الاستشارات</a><a aria-current="page" class="px-space-sm py-space-xs transition-colors bg-primary-container text-on-primary-container font-semibold rounded-lg" data-path="data-room-vdr" href="data-room.html">غرفة البيانات</a></nav><div class="flex items-center gap-space-sm"><div class="hidden sm:flex items-center gap-space-xs px-space-sm py-space-xs rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm"><span class="material-symbols-outlined text-secondary text-[16px]">verified_user</span><span class="">VDR مشفر</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><aside class="fixed right-0 top-20 bottom-0 w-72 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex flex-col p-space-md"><div class="px-space-sm py-space-xs mb-space-md bg-surface-container-low rounded-xl"><span class="font-label-sm text-label-sm text-secondary font-bold uppercase block">المحفظة الاستثمارية</span><span class="font-title-sm text-on-surface font-semibold block mt-space-xs">صندوق رؤية الخليج الأول</span></div><nav class="flex-1 flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-space-sm transition-colors bg-primary-container text-on-primary-container font-semibold rounded-lg" data-path="data-room-vdr" href="data-room.html"><span class="material-symbols-outlined text-[20px]">folder_supervised</span><span class="">الملفات والمستندات السرية</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors font-label-md text-label-md" data-path="due-diligence-audit" href="data-room.html"><span class="material-symbols-outlined text-[20px]">verified</span><span class="">الفحص المالي النافي للجهالة</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors font-label-md text-label-md" data-path="syndicate-allocations" href="pitch-deck.html"><span class="material-symbols-outlined text-[20px]">pie_chart</span><span class="">توزيع الحصص والتحالفات</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors font-label-md text-label-md" data-path="advisory-booking" href="advisory-booking.html"><span class="material-symbols-outlined text-[20px]">support_agent</span><span class="">جلسة مستشار الصفقات</span></a></nav><div class="pt-space-md bg-surface-container-low p-space-sm rounded-xl"><div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant mb-space-xs"><span class="">حالة التشفير العسكري</span><span class="text-on-tertiary-container font-bold">نشط</span></div><div class="w-full h-1.5 rounded-full bg-surface-container"><div class="h-full rounded-full bg-secondary-container w-full"></div></div></div></aside><div class="pr-72"><main class="w-full pt-20 px-space-lg bg-surface min-h-screen"><div class="flex flex-col w-full pb-space-xl">
+<!-- Dynamic Watermark Overlay (Security Ambience) -->
+<div class="pointer-events-none fixed inset-0 z-30 select-none overflow-hidden opacity-[0.035] flex flex-wrap gap-space-xl p-space-lg items-center justify-center font-mono text-label-sm text-on-surface">
+<span class="">MASAR-VDR-SECURE • SANAD-SERIES-A • IP: 197.245.12.89 • NDA ACTIVE</span>
+<span class="">CONFIDENTIAL &amp; PROPRIETARY • TRACKED SESSION #7829-KSA</span>
+<span class="">MASAR-VDR-SECURE • SANAD-SERIES-A • IP: 197.245.12.89 • NDA ACTIVE</span>
+<span class="">CONFIDENTIAL &amp; PROPRIETARY • TRACKED SESSION #7829-KSA</span>
+</div>
+<!-- Top Hero Security Banner -->
+<div class="w-full mb-space-md p-space-sm rounded-xl bg-surface-container-lowest border border-on-tertiary-container/30 shadow-md flex items-center justify-between gap-space-sm">
+  <div class="flex items-center gap-space-sm">
+    <div class="w-9 h-9 rounded-xl bg-tertiary-container/15 text-on-tertiary-container flex items-center justify-center shrink-0">
+      <span class="material-symbols-outlined text-[22px]">check_circle</span>
+    </div>
+    <div class="text-body-sm font-body-sm">
+      <span class="font-bold text-on-surface">تم إيداع ومزامنة العرض الاستثماري التنفيذي (Series A Pitch Deck v3.8) بنجاح الآن</span>
+      <span class="text-on-surface-variant mr-1.5">• تشفير فوري AES-256 وعلامة مائية ديناميكية مفعّلة لكافة الصناديق الاستثمارية.</span>
+    </div>
+  </div>
+  <div class="flex items-center gap-space-xs shrink-0">
+    <span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-label-sm font-label-sm font-semibold">جديد ومزامن الآن</span>
+    <button class="p-1 text-outline hover:text-on-surface" onclick="this.parentElement.parentElement.remove()" title="إغلاق">
+      <span class="material-symbols-outlined text-[18px]">close</span>
+    </button>
+  </div>
+</div><div class="relative w-full rounded-2xl bg-primary-container text-on-primary p-space-lg shadow-xl overflow-hidden mb-space-lg">
+<!-- Ambient gold/cyan security glow -->
+<div class="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-secondary-container opacity-20 blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-tertiary-fixed opacity-10 blur-3xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col xl:flex-row items-start xl:items-center justify-between gap-space-lg">
+<div class="space-y-space-xs max-w-3xl">
+<div class="flex flex-wrap items-center gap-space-xs">
+<span class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container-lowest/10 text-secondary-fixed text-label-sm font-label-sm tracking-wide">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
+            غرفة بيانات استثمارية نشطة (VDR Active)
+          </span>
+<span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container-lowest/10 text-on-tertiary-container text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+            معيار التشفير العسكري NCA-ECC
+          </span>
+<span class="px-space-sm py-1 rounded-full bg-surface-container-lowest/10 text-on-primary-container text-label-sm font-label-sm">
+            معرف الجولة: #SND-SR-A-2025
+          </span>
+</div>
+<div class="pt-space-xs">
+<h1 class="text-headline-lg font-headline-lg text-surface-bright tracking-tight flex items-center gap-space-xs">
+            غرفة بيانات جولة التمويل (Series A) — شركة سند للحلول التقنية
+            <span class="material-symbols-outlined text-secondary text-[26px]">lock</span>
+</h1>
+<p class="text-on-primary-container text-body-md font-body-md mt-1">
+            بيئة سحابية معزولة ومشفرة بتقنية <span class="text-surface-bright font-semibold">AES-256 Bit</span> مع حظر تلقائي لالتقاط الشاشات، وعلامة مائية ديناميكية ترصد عنوان IP والبريد الإلكتروني لكل متصفح في الوقت الحقيقي.
+          </p>
+</div>
+</div>
+<!-- Quick Action CTA Group -->
+<div class="flex flex-wrap items-center gap-space-xs w-full xl:w-auto shrink-0">
+<button class="flex items-center gap-space-xs px-space-md py-space-sm rounded-xl bg-secondary hover:bg-on-secondary-container text-surface-bright font-label-md text-label-md shadow-lg shadow-secondary/25 transition-all" id="btn-upload">
+<span class="material-symbols-outlined text-[20px]">cloud_upload</span>
+<span class="">رفع مستند مشفر</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-space-sm rounded-xl bg-surface-container-lowest/15 hover:bg-surface-container-lowest/25 text-surface-bright font-label-md text-label-md transition-all" id="btn-gen-link">
+<span class="material-symbols-outlined text-[20px]">vpn_key</span>
+<span class="">توليد رابط IP مؤقت</span>
+</button>
+<button class="p-space-sm rounded-xl bg-surface-container-lowest/15 hover:bg-surface-container-lowest/25 text-surface-bright transition-all" title="تصدير سجل الرقابة">
+<span class="material-symbols-outlined text-[20px]">history_edu</span>
+</button>
+</div>
+</div>
+<!-- Security KPI Metric Strip -->
+<div class="mt-space-lg pt-space-md border-t-0 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-space-md bg-surface-container-lowest/5 -mx-space-lg -mb-space-lg px-space-lg py-space-md backdrop-blur-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded-xl bg-surface-container-lowest/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary-fixed text-[24px]">donut_large</span>
+</div>
+<div>
+<span class="text-label-sm font-label-sm text-on-primary-container block">إنجاز التدقيق النافي للجهالة</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="text-title-lg font-title-lg text-surface-bright font-bold">78%</span>
+<span class="text-label-sm font-label-sm text-on-tertiary-container font-semibold">+14% هذا الأسبوع</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded-xl bg-surface-container-lowest/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary-fixed text-[24px]">group_work</span>
+</div>
+<div>
+<span class="text-label-sm font-label-sm text-on-primary-container block">المستثمرون المصرح لهم</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="text-title-lg font-title-lg text-surface-bright font-bold">14</span>
+<span class="text-label-sm font-label-sm text-on-primary-container">صندوقاً استثمارياً نشطاً</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm"><div class="w-12 h-12 rounded-xl bg-surface-container-lowest/10 flex items-center justify-center shrink-0">
+  <span class="material-symbols-outlined text-secondary-fixed text-[24px]">cloud_done</span>
+</div>
+<div>
+  <span class="text-label-sm font-label-sm text-on-primary-container block">المساحة السحابية المؤمنة</span>
+  <div class="flex items-baseline gap-1 mt-0.5">
+    <span class="text-title-lg font-title-lg text-surface-bright font-bold">1.41 GB</span>
+    <span class="text-label-sm font-label-sm text-on-primary-container">من أصل 10 GB</span>
+  </div>
+</div></div>
+<div class="flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded-xl bg-surface-container-lowest/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary-fixed text-[24px]">shield</span>
+</div>
+<div>
+<span class="text-label-sm font-label-sm text-on-primary-container block">مستوى الامتثال والرقابة</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="text-title-lg font-title-lg text-tertiary-fixed font-bold">100% متوافق</span>
+<span class="text-label-sm font-label-sm text-on-primary-container">بدون اختراق</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Main 12-Column Responsive Workspace Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+<!-- Right Side: VDR Folder Hierarchy & Filter Pipeline (5 cols) -->
+<div class="xl:col-span-5 flex flex-col gap-space-md">
+<!-- Folders Explorer Panel -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-md">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary-container text-[22px]">snippet_folder</span>
+<h2 class="text-title-md font-title-md text-on-surface font-bold">مجلدات الفحص النافي للجهالة</h2>
+</div>
+<span class="px-space-xs py-0.5 rounded-full bg-surface-container text-on-surface-variant text-label-sm font-label-sm">5 فئات رئيسية</span>
+</div>
+<div class="space-y-space-xs">
+<!-- Folder Item 01 (Active) -->
+<div class="folder-card group cursor-pointer p-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container transition-all flex items-center justify-between shadow-sm" data-folder="legal">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-xl bg-primary-container text-surface-bright flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">gavel</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm text-secondary font-bold">01</span>
+<h3 class="text-title-sm font-title-sm text-on-surface font-semibold truncate">التراخيص والوثائق القانونية والسجل التجاري</h3>
+</div>
+<div class="flex items-center gap-2 mt-0.5 text-label-sm font-label-sm text-on-surface-variant">
+<span class="">8 ملفات مدققة</span>
+<span class="">•</span>
+<span class="">عقد التأسيس ومحاضر الجمعيات</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end shrink-0 pl-1">
+<span class="px-space-xs py-0.5 rounded bg-tertiary-container/10 text-on-tertiary-container text-label-sm font-label-sm font-bold">مكتمل 100%</span>
+<span class="material-symbols-outlined text-primary-container text-[18px] mt-1 group-hover:-translate-x-1 transition-transform">chevron_left</span>
+</div>
+</div>
+<!-- Folder Item 02 -->
+<div class="folder-card group cursor-pointer p-space-sm rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-all flex items-center justify-between" data-folder="financials">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-xl bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">account_balance</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm text-secondary font-bold">02</span>
+<h3 class="text-title-sm font-title-sm text-on-surface font-semibold truncate">النماذج المالية والميزانيات المدققة</h3>
+</div>
+<div class="flex items-center gap-2 mt-0.5 text-label-sm font-label-sm text-on-surface-variant">
+<span class="">12 ملفاً (Excel/PDF)</span>
+<span class="">•</span>
+<span class="">ميزانيات 3 أعوام وتوقعات 5 سنوات</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end shrink-0 pl-1">
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant text-label-sm font-label-sm">85% منجز</span>
+<span class="material-symbols-outlined text-outline-variant text-[18px] mt-1 group-hover:-translate-x-1 transition-transform">chevron_left</span>
+</div>
+</div>
+<!-- Folder Item 03 -->
+<div class="folder-card group cursor-pointer p-space-sm rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-all flex items-center justify-between" data-folder="ip">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-xl bg-error-container text-on-error-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm text-secondary font-bold">03</span>
+<h3 class="text-title-sm font-title-sm text-on-surface font-semibold truncate">الملكية الفكرية وبراءات الاختراع والكود</h3>
+</div>
+<div class="flex items-center gap-2 mt-0.5 text-label-sm font-label-sm text-on-surface-variant">
+<span class="">5 ملفات فائقة السرية</span>
+<span class="">•</span>
+<span class="">حظر تنزيل كامل</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end shrink-0 pl-1">
+<span class="px-space-xs py-0.5 rounded bg-error-container/60 text-on-error-container text-label-sm font-label-sm">مشفر بنمط صارم</span>
+<span class="material-symbols-outlined text-outline-variant text-[18px] mt-1 group-hover:-translate-x-1 transition-transform">chevron_left</span>
+</div>
+</div>
+<!-- Folder Item 04 -->
+<div class="folder-card group cursor-pointer p-space-sm rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-all flex items-center justify-between" data-folder="contracts">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high text-on-surface flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">contract</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm text-secondary font-bold">04</span>
+<h3 class="text-title-sm font-title-sm text-on-surface font-semibold truncate">عقود العملاء الكبار والشراكات الحكومية</h3>
+</div>
+<div class="flex items-center gap-2 mt-0.5 text-label-sm font-label-sm text-on-surface-variant">
+<span class="">15 عقداً استراتيجياً</span>
+<span class="">•</span>
+<span class="">SAR 42M ARR مؤكد</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end shrink-0 pl-1">
+<span class="px-space-xs py-0.5 rounded bg-tertiary-container/10 text-on-tertiary-container text-label-sm font-label-sm">90% مراجع</span>
+<span class="material-symbols-outlined text-outline-variant text-[18px] mt-1 group-hover:-translate-x-1 transition-transform">chevron_left</span>
+</div>
+</div>
+<!-- Folder Item 05 -->
+<div class="folder-card group cursor-pointer p-space-sm rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-all flex items-center justify-between" data-folder="captable">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-xl bg-primary-container text-surface-bright flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">pie_chart</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm text-secondary font-bold">05</span>
+<h3 class="text-title-sm font-title-sm text-on-surface font-semibold truncate">جدول الحصص (Cap Table) واتفاقيات المساهمين</h3>
+</div>
+<div class="flex items-center gap-2 mt-0.5 text-label-sm font-label-sm text-on-surface-variant">
+<span class="">4 ملفات تدقيق مالي</span>
+<span class="">•</span>
+<span class="">تاريخ الجولات السابقة Seed &amp; Pre-A</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end shrink-0 pl-1">
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant text-label-sm font-label-sm">محدث اليوم</span>
+<span class="material-symbols-outlined text-outline-variant text-[18px] mt-1 group-hover:-translate-x-1 transition-transform">chevron_left</span>
+</div>
+</div>
+</div>
+<!-- Progress Matrix Inline Visual -->
+<div class="mt-space-md p-space-sm rounded-xl bg-surface-container-low flex flex-col gap-2">
+<div class="flex items-center justify-between text-label-sm font-label-sm text-on-surface-variant">
+<span class="">مسار التدقيق الشامل (Due Diligence Health)</span>
+<span class="font-bold text-on-surface">40 من 45 ملفاً معتمداً</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container flex overflow-hidden">
+<div class="h-full bg-on-tertiary-container w-[78%]"></div>
+<div class="h-full bg-secondary-container w-[14%]"></div>
+<div class="h-full bg-surface-variant w-[8%]"></div>
+</div>
+<div class="flex items-center justify-between text-label-sm font-label-sm text-on-surface-variant text-[11px] pt-1">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-on-tertiary-container"></span> معتمد نظامياً (78%)</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-secondary-container"></span> تحت فحص المحامي (14%)</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-surface-variant"></span> بانتظار التحديث (8%)</span>
+</div>
+</div>
+</div>
+<!-- Live VDR Analytics & Active Investors Insight Panel -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-on-tertiary-container animate-ping"></span>
+<h2 class="text-title-md font-title-md text-on-surface font-bold">نشاط المستثمرين اللحظي في الغرفة</h2>
+</div>
+<span class="text-label-sm font-label-sm text-secondary font-semibold">مباشر (Live Sync)</span>
+</div>
+<div class="space-y-space-xs">
+<!-- Active Investor 1 -->
+<div class="p-space-sm rounded-xl bg-surface-container-low flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-9 h-9 rounded-full bg-primary-container text-surface-bright font-bold flex items-center justify-center shrink-0 text-label-md">
+                RVC
+              </div>
+<div class="min-w-0">
+<div class="flex items-center gap-1">
+<h4 class="text-title-sm font-title-sm text-on-surface font-semibold truncate">صندوق الرياض فينتشرز</h4>
+<span class="material-symbols-outlined text-secondary text-[16px]" title="مستثمر رئيسي Lead">stars</span>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant truncate">يتصفح الآن: النموذج المالي 2025-2029 (ص 14)</p>
+</div>
+</div>
+<div class="text-left shrink-0">
+<span class="text-label-sm font-label-sm text-on-surface font-semibold block">48 دقيقة</span>
+<span class="text-[10px] text-on-tertiary-container font-semibold">تفاعل فائق 92%</span>
+</div>
+</div>
+<!-- Active Investor 2 -->
+<div class="p-space-sm rounded-xl bg-surface-container-low flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-9 h-9 rounded-full bg-secondary text-surface-bright font-bold flex items-center justify-center shrink-0 text-label-md">
+                ADQ
+              </div>
+<div class="min-w-0">
+<div class="flex items-center gap-1">
+<h4 class="text-title-sm font-title-sm text-on-surface font-semibold truncate">مجموعة أبوظبي للنمو</h4>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant truncate">فحص عقد: الاتفاقية الإطارية مع الهيئة الرقمية</p>
+</div>
+</div>
+<div class="text-left shrink-0">
+<span class="text-label-sm font-label-sm text-on-surface font-semibold block">12 دقيقة</span>
+<span class="text-[10px] text-on-surface-variant">طلب تنزيل مائي</span>
+</div>
+</div>
+<!-- Active Investor 3 -->
+<div class="p-space-sm rounded-xl bg-surface-container-low flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-9 h-9 rounded-full bg-surface-container-high text-on-surface font-bold flex items-center justify-center shrink-0 text-label-md">
+                KVP
+              </div>
+<div class="min-w-0">
+<div class="flex items-center gap-1">
+<h4 class="text-title-sm font-title-sm text-on-surface font-semibold truncate">كويت بارتنرز للاستثمار الجريء</h4>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant truncate">مراجعة براءة اختراع خوارزمية التسوية المالية</p>
+</div>
+</div>
+<div class="text-left shrink-0">
+<span class="text-label-sm font-label-sm text-on-surface font-semibold block">26 دقيقة</span>
+<span class="text-[10px] text-on-tertiary-container font-semibold">18 صفحة مقروءة</span>
+</div>
+</div>
+</div>
+<!-- Micro Watermark Protection Reminder -->
+<div class="flex items-center gap-space-xs p-space-xs px-space-sm rounded-lg bg-surface-container text-on-surface-variant text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-secondary text-[16px]">fingerprint</span>
+<span class="">يتم ختم كل ملف برقم الهوية الاستثمارية والوقت بدقة أجزاء الثانية لمنع التسريب.</span>
+</div>
+</div>
+</div>
+<!-- Left Side: Active Documents Table, Security Inspection & Permissions (7 cols) -->
+<div class="xl:col-span-7 flex flex-col gap-space-md">
+<!-- Active Directory & Documents Table Header Card -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-sm mb-space-sm">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[22px]">folder_open</span>
+<h2 class="text-title-md font-title-md text-on-surface font-bold">الملفات والمستندات الحية: المجلد 01 - القانوني والتأسيس</h2>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">
+              عرض الملفات المعتمدة قانونياً والمحمية بتقنية العرض السحابي المقيد.
+            </p>
+</div>
+<div class="flex items-center gap-space-xs">
+<div class="relative">
+<input class="w-48 pl-space-sm pr-8 py-1.5 rounded-lg bg-surface-container-low text-body-sm font-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container" placeholder="بحث فوري في المستندات..." type="text">
+<span class="material-symbols-outlined absolute right-2 top-2 text-outline text-[18px]">search</span>
+</div>
+<button class="p-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant" title="فلترة حسب الصلاحية">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Documents List -->
+<div class="overflow-x-auto">
+<table class="w-full text-right border-collapse">
+<thead>
+<tr class="text-label-sm font-label-sm text-on-surface-variant bg-surface-container-low/60 rounded-lg">
+<th class="py-2.5 px-3 font-semibold rounded-r-lg">اسم المستند والنسخة</th>
+<th class="py-2.5 px-3 font-semibold">الحجم</th>
+<th class="py-2.5 px-3 font-semibold">تاريخ التدقيق</th>
+<th class="py-2.5 px-3 font-semibold">مستوى الحماية</th>
+<th class="py-2.5 px-3 font-semibold text-center rounded-l-lg">إجراء فوري</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-body-sm font-body-sm"><tr class="bg-surface-container-low/70 hover:bg-surface-container-low transition-colors group border-b border-surface-container">
+  <td class="py-space-sm px-3">
+    <div class="flex items-center gap-2">
+      <span class="w-8 h-8 rounded-lg bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center shrink-0">
+        <span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+      </span>
+      <div class="min-w-0">
+        <div class="flex items-center gap-1.5">
+          <span class="font-semibold text-on-surface block truncate">العرض الاستثماري التنفيذي الشامل — Series A Pitch Deck v3.8.pdf</span>
+          <span class="px-1.5 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed text-[10px] font-bold shrink-0">جديد ومزامن الآن (New &amp; Live)</span>
+        </div>
+        <span class="text-[11px] text-on-tertiary-container font-semibold">مصادق ومحمي بعلامة مائية ديناميكية • إيداع معتمد</span>
+      </div>
+    </div>
+  </td>
+  <td class="py-space-sm px-3 text-on-surface-variant font-mono text-label-sm">14.8 MB</td>
+  <td class="py-space-sm px-3 text-secondary font-mono text-label-sm font-semibold">الآن (15 يناير 2025)</td>
+  <td class="py-space-sm px-3">
+    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container/20 text-on-secondary-container text-label-sm font-label-sm font-semibold">
+      <span class="material-symbols-outlined text-[12px]">branding_watermark</span>
+      مصادق ومحمي بعلامة مائية
+    </span>
+  </td>
+  <td class="py-space-sm px-3 text-center">
+    <div class="flex items-center justify-center gap-1">
+      <button class="p-1.5 rounded-lg bg-primary-container text-surface-bright hover:bg-on-primary-fixed-variant transition-colors" title="معاينة آمنة في المتصفح">
+        <span class="material-symbols-outlined text-[18px]">visibility</span>
+      </button>
+      <button class="p-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface transition-colors" title="إدارة الصلاحيات">
+        <span class="material-symbols-outlined text-[18px]">tune</span>
+      </button>
+    </div>
+  </td>
+</tr>
+<!-- File Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-space-sm px-3">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-lg bg-error-container/40 text-error flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+</span>
+<div class="min-w-0">
+<span class="font-semibold text-on-surface block truncate">السجل التجاري المطور والتراخيص التقنية 2025.pdf</span>
+<span class="text-[11px] text-on-tertiary-container font-semibold">تم التحقق عبر واجهة واثق Wathiq API</span>
+</div>
+</div>
+</td>
+<td class="py-space-sm px-3 text-on-surface-variant font-mono text-label-sm">4.2 MB</td>
+<td class="py-space-sm px-3 text-on-surface-variant font-mono text-label-sm">08 يناير 2025</td>
+<td class="py-space-sm px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-[12px]">branding_watermark</span>
+                    تنزيل مائي مقيد
+                  </span>
+</td>
+<td class="py-space-sm px-3 text-center">
+<button class="p-1.5 rounded-lg bg-surface-container hover:bg-primary-container hover:text-on-primary transition-colors" title="معاينة آمنة">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</td>
+</tr>
+<!-- File Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-space-sm px-3">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-lg bg-primary-fixed text-on-primary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">description</span>
+</span>
+<div class="min-w-0">
+<span class="font-semibold text-on-surface block truncate">عقد التأسيس المعدل وفق نظام الشركات الجديد.pdf</span>
+<span class="text-[11px] text-on-surface-variant">موثق من كاتب العدل الرقمي</span>
+</div>
+</div>
+</td>
+<td class="py-space-sm px-3 text-on-surface-variant font-mono text-label-sm">8.1 MB</td>
+<td class="py-space-sm px-3 text-on-surface-variant font-mono text-label-sm">05 يناير 2025</td>
+<td class="py-space-sm px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-tertiary-container/10 text-on-tertiary-container text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-[12px]">lock_open</span>
+                    عرض وتنزيل مصرح
+                  </span>
+</td>
+<td class="py-space-sm px-3 text-center">
+<button class="p-1.5 rounded-lg bg-surface-container hover:bg-primary-container hover:text-on-primary transition-colors" title="معاينة آمنة">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</td>
+</tr>
+<!-- File Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-space-sm px-3">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-lg bg-secondary-fixed text-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">table_chart</span>
+</span>
+<div class="min-w-0">
+<span class="font-semibold text-on-surface block truncate">جدول توزيع الحصص المحدث Cap-Table_Q4_Final.xlsx</span>
+<span class="text-[11px] text-secondary font-semibold">محمي بكلمة مرور جلسة متغيرة</span>
+</div>
+</div>
+</td>
+<td class="py-space-sm px-3 text-on-surface-variant font-mono text-label-sm">2.7 MB</td>
+<td class="py-space-sm px-3 text-on-surface-variant font-mono text-label-sm">12 يناير 2025</td>
+<td class="py-space-sm px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary-container text-surface-bright text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-[12px]">key</span>
+                    صلاحية مشروطة بـ NDA
+                  </span>
+</td>
+<td class="py-space-sm px-3 text-center">
+<button class="p-1.5 rounded-lg bg-surface-container hover:bg-primary-container hover:text-on-primary transition-colors" title="معاينة آمنة">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</td>
+</tr>
+<!-- File Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-space-sm px-3">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-lg bg-error-container text-error flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">security</span>
+</span>
+<div class="min-w-0">
+<span class="font-semibold text-on-surface block truncate">تقرير الفحص الفني للأمن السيبراني وعمارة الكود.pdf</span>
+<span class="text-[11px] text-error font-semibold">منع تنزيل تام • عرض في المتصفح فقط</span>
+</div>
+</div>
+</td>
+<td class="py-space-sm px-3 text-on-surface-variant font-mono text-label-sm">14.6 MB</td>
+<td class="py-space-sm px-3 text-on-surface-variant font-mono text-label-sm">10 يناير 2025</td>
+<td class="py-space-sm px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-error-container/50 text-error text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-[12px]">visibility_off</span>
+                    بدون تنزيل (View-Only)
+                  </span>
+</td>
+<td class="py-space-sm px-3 text-center">
+<button class="p-1.5 rounded-lg bg-surface-container hover:bg-primary-container hover:text-on-primary transition-colors" title="معاينة آمنة">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Granular Permissions Matrix Card (Institutional VC Access Control) -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-md">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[22px]">admin_panel_settings</span>
+<h2 class="text-title-md font-title-md text-on-surface font-bold">مصفوفة أذونات المستثمرين المتقدمة (Granular Matrix)</h2>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">
+              تحديد مستويات الوصول لكل فئة مستثمر بشكل مستقل لحماية الأسرار التشغيلية للمشروع.
+            </p>
+</div>
+<button class="flex items-center gap-1 px-space-sm py-1.5 rounded-lg bg-primary-container text-surface-bright text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-[16px]">add_moderator</span>
+<span class="">إضافة فئة وصول</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm">
+<!-- Permission Tier 1 -->
+<div class="p-space-sm rounded-xl bg-surface-container-low flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-title-sm text-title-sm font-bold text-on-surface">مستثمر رئيسي (Lead VC)</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant mt-1">وصول كامل لجميع المستندات المالية والتقنية وعقود الإيرادات.</p>
+<div class="space-y-1.5 mt-space-sm text-label-sm font-label-sm">
+<div class="flex items-center gap-1.5 text-on-tertiary-container font-semibold">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="">تنزيل مائي فوري</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-tertiary-container font-semibold">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="">معاينة جداول الإكسيل التفاعلية</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-tertiary-container font-semibold">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="">توليد تقرير Due Diligence فوري</span>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-2 border-t-0 flex items-center justify-between">
+<span class="text-label-sm text-on-surface-variant">3 صناديق مرتبطة</span>
+<span class="text-secondary font-bold text-label-sm cursor-pointer hover:underline">تعديل</span>
+</div>
+</div>
+<!-- Permission Tier 2 -->
+<div class="p-space-sm rounded-xl bg-surface-container-low flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-title-sm text-title-sm font-bold text-on-surface">مستثمر مشارك (Syndicate)</span>
+<span class="material-symbols-outlined text-outline text-[18px]">group</span>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant mt-1">اطلاع مقيد على ملخص الميزانيات ونموذج الأعمال مع حجب الملكية الفكرية.</p>
+<div class="space-y-1.5 mt-space-sm text-label-sm font-label-sm">
+<div class="flex items-center gap-1.5 text-on-tertiary-container font-semibold">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="">معاينة داخل المتصفح فقط</span>
+</div>
+<div class="flex items-center gap-1.5 text-error font-semibold">
+<span class="material-symbols-outlined text-[16px]">cancel</span>
+<span class="">منع التنزيل والطباعة نهائياً</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-tertiary-container font-semibold">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="">علامة مائية متحركة نشطة</span>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-2 border-t-0 flex items-center justify-between">
+<span class="text-label-sm text-on-surface-variant">8 مستثمرين</span>
+<span class="text-secondary font-bold text-label-sm cursor-pointer hover:underline">تعديل</span>
+</div>
+</div>
+<!-- Permission Tier 3 -->
+<div class="p-space-sm rounded-xl bg-surface-container-low flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-title-sm text-title-sm font-bold text-on-surface">مدقق خارجي / مستشار قانوني</span>
+<span class="material-symbols-outlined text-outline text-[18px]">account_balance_wallet</span>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant mt-1">وصول مخصص للبيانات القانونية ومحاضر مجالس الإدارة وشهادات الزكاة والضريبة.</p>
+<div class="space-y-1.5 mt-space-sm text-label-sm font-label-sm">
+<div class="flex items-center gap-1.5 text-on-tertiary-container font-semibold">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="">تدقيق السجلات القانونية</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-tertiary-container font-semibold">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="">إرفاق تقارير التدقيق والملاحظات</span>
+</div>
+<div class="flex items-center gap-1.5 text-error font-semibold">
+<span class="material-symbols-outlined text-[16px]">cancel</span>
+<span class="">حجب كود المنصة والملكية الفكرية</span>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-2 border-t-0 flex items-center justify-between">
+<span class="text-label-sm text-on-surface-variant">3 مكاتب تدقيق</span>
+<span class="text-secondary font-bold text-label-sm cursor-pointer hover:underline">تعديل</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Real-Time Audit Trail Preview Card -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-md">
+<div class="flex items-center justify-between pb-space-xs mb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-on-tertiary-container text-[20px]">policy</span>
+<h3 class="text-title-md font-title-md text-on-surface font-bold">سجل التدقيق الرقابي الحي (Audit Trail Log)</h3>
+</div>
+<a class="text-label-sm font-label-sm text-secondary font-semibold hover:underline" href="#">عرض السجل الكامل (284 حركة)</a>
+</div>
+<div class="space-y-space-xs text-label-sm font-label-sm"><div class="flex items-center justify-between py-1.5 px-2 rounded-lg bg-surface-container-low font-mono border-r-2 border-secondary">
+  <div class="flex items-center gap-2">
+    <span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
+    <span class="text-on-surface font-sans font-semibold">إيداع وثيقة جديدة: تم رفع ومزامنة 'Series A Pitch Deck v3.8.pdf'</span>
+    <span class="text-on-surface-variant font-sans">بواسطة: المؤسس التنفيذي • تشفير فوري بنجاح</span>
+  </div>
+  <span class="text-secondary font-sans font-semibold text-[11px]">الآن • مسار آمن TLS 1.3</span>
+</div>
+<div class="flex items-center justify-between py-1.5 px-2 rounded-lg bg-surface-container-low font-mono">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-on-tertiary-container"></span>
+<span class="text-on-surface font-sans font-semibold">تحميل مائي: 'عقد التأسيس'</span>
+<span class="text-on-surface-variant font-sans">بواسطة: رياض فينتشرز (م. فهد القحطاني)</span>
+</div>
+<span class="text-outline text-[11px]">منذ 4 دقائق • IP 212.138.45.12</span>
+</div>
+<div class="flex items-center justify-between py-1.5 px-2 rounded-lg bg-surface-container-low font-mono">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span class="text-on-surface font-sans font-semibold">محاولة نسخ محظورة: 'خوارزمية المحرك'</span>
+<span class="text-on-surface-variant font-sans">تم الحظر التلقائي وحفظ لقطة الحدث</span>
+</div>
+<span class="text-outline text-[11px]">منذ 19 دقيقة • نظام الأمان الداخلي</span>
+</div>
+<div class="flex items-center justify-between py-1.5 px-2 rounded-lg bg-surface-container-low font-mono">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-surface-variant"></span>
+<span class="text-on-surface font-sans font-semibold">دخول جلسة آمنة: كويت بارتنرز VC</span>
+<span class="text-on-surface-variant font-sans">توثيق ثنائي 2FA مكتمل بنجاح</span>
+</div>
+<span class="text-outline text-[11px]">منذ 31 دقيقة • مصرح له</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive Modal: Generate Temporary Expiring IP-Restricted Link -->
+<div class="hidden fixed inset-0 z-50 bg-primary-container/60 backdrop-blur-sm flex items-center justify-center p-space-md" id="vdr-modal">
+<div class="bg-surface-container-lowest rounded-2xl max-w-lg w-full p-space-lg shadow-2xl space-y-space-md">
+<div class="flex items-center justify-between pb-space-xs border-b-0">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[24px]">link</span>
+<h3 class="text-title-lg font-title-lg text-on-surface font-bold">توليد رابط استثماري مشفر ومقيد بـ IP</h3>
+</div>
+<button class="text-outline hover:text-on-surface" id="btn-close-modal">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="space-y-space-sm text-body-sm font-body-sm">
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface font-semibold mb-1">اسم الصندوق / المستثمر المستهدف</label>
+<input class="w-full px-space-sm py-2 rounded-lg bg-surface-container-low text-on-surface font-semibold focus:outline-none" type="text" value="صندوق الابتكار السعودي الجريء (SIVC)">
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface font-semibold mb-1">صلاحية الرابط (مدة الانتهاء)</label>
+<select class="w-full px-space-sm py-2 rounded-lg bg-surface-container-low text-on-surface font-semibold focus:outline-none">
+<option>24 ساعة (موصى به للسرية)</option>
+<option>48 ساعة</option>
+<option>7 أيام</option>
+<option>مؤقت حتى انتهاء جلسة التصفح</option>
+</select>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface font-semibold mb-1">تقييد نطاق الـ IP (اختياري)</label>
+<input class="w-full px-space-sm py-2 rounded-lg bg-surface-container-low text-on-surface focus:outline-none" placeholder="مثال: 194.170.*.*" type="text">
+</div>
+</div>
+<div class="p-space-sm rounded-xl bg-surface-container-low space-y-2">
+<label class="flex items-center gap-2 cursor-pointer">
+<input checked="" class="rounded text-secondary focus:ring-0" type="checkbox">
+<span class="text-label-sm font-label-sm text-on-surface">تطبيق العلامة المائية الديناميكية متضمنة بريد المستثمر</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer">
+<input checked="" class="rounded text-secondary focus:ring-0" type="checkbox">
+<span class="text-label-sm font-label-sm text-on-surface">تعطيل أوامر التنزيل والطباعة وحفظ لقطة الشاشة</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer">
+<input checked="" class="rounded text-secondary focus:ring-0" type="checkbox">
+<span class="text-label-sm font-label-sm text-on-surface">طلب التوقيع الرقمي لاتفاقية عدم الإفصاح (NDA) قبل الفتح</span>
+</label>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-xs pt-space-xs">
+<button class="px-space-md py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface text-label-md font-label-md" id="btn-cancel-modal">إلغاء</button>
+<button class="px-space-md py-2 rounded-xl bg-secondary text-surface-bright text-label-md font-label-md shadow-lg shadow-secondary/30" id="btn-create-secure-link">توليد الرابط الآمن الآن</button>
+</div>
+</div>
+</div>
+<script>
+    // Modal toggle interactions
+    const modal = document.getElementById('vdr-modal');
+    const openBtn = document.getElementById('btn-gen-link');
+    const closeBtn = document.getElementById('btn-close-modal');
+    const cancelBtn = document.getElementById('btn-cancel-modal');
+    const createBtn = document.getElementById('btn-create-secure-link');
+
+    if (openBtn && modal) {
+      openBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+      });
+    }
+
+    const closeModal = () => {
+      if (modal) modal.classList.add('hidden');
+    };
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+
+    if (createBtn) {
+      createBtn.addEventListener('click', () => {
+        createBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span> جاري التشفير والتوليد...';
+        setTimeout(() => {
+          createBtn.innerHTML = 'تم نسخ الرابط المشفر بنجاح!';
+          setTimeout(() => {
+            closeModal();
+            createBtn.innerHTML = 'توليد الرابط الآمن الآن';
+          }, 1200);
+        }, 1000);
+      });
+    }
+
+    // Dynamic folder selection styling micro-interaction
+    const folderCards = document.querySelectorAll('.folder-card');
+    folderCards.forEach(card => {
+      card.addEventListener('click', () => {
+        folderCards.forEach(c => {
+          c.classList.remove('bg-surface-container-low', 'shadow-sm');
+          c.classList.add('bg-surface-container-lowest');
+        });
+        card.classList.remove('bg-surface-container-lowest');
+        card.classList.add('bg-surface-container-low', 'shadow-sm');
+      });
+    });
+  </script>
+</div></main></div>
+
+<script src="assets/site.js"></script></body></html>
