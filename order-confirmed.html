@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;font-family:'IBM Plex Sans Arabic','IBM Plex Sans',sans-serif;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "surface-variant": "#dae2fd",
+        "tertiary-container": "#002113",
+        "secondary-fixed": "#ffdcc3",
+        "on-secondary-fixed-variant": "#6e3900",
+        "on-tertiary-container": "#009668",
+        "surface-tint": "#565d79",
+        "on-primary": "#ffffff",
+        "surface-container": "#eaedff",
+        "on-surface-variant": "#45464d",
+        "on-background": "#131b2e",
+        "secondary-container": "#fe932c",
+        "error-container": "#ffdad6",
+        "surface-container-low": "#f2f3ff",
+        "error": "#ba1a1a",
+        "on-secondary": "#ffffff",
+        "primary-fixed": "#dbe1ff",
+        "on-tertiary-fixed-variant": "#005236",
+        "on-error": "#ffffff",
+        "outline-variant": "#c6c6ce",
+        "secondary": "#904d00",
+        "primary-fixed-dim": "#bec5e5",
+        "tertiary": "#000000",
+        "on-error-container": "#93000a",
+        "secondary-fixed-dim": "#ffb77d",
+        "surface-container-high": "#e2e7ff",
+        "on-tertiary": "#ffffff",
+        "surface-container-lowest": "#ffffff",
+        "inverse-primary": "#bec5e5",
+        "surface-bright": "#faf8ff",
+        "inverse-surface": "#283044",
+        "surface-dim": "#d2d9f4",
+        "surface-container-highest": "#dae2fd",
+        "on-primary-fixed": "#131a33",
+        "tertiary-fixed-dim": "#4edea3",
+        "inverse-on-surface": "#eef0ff",
+        "primary-container": "#131a33",
+        "on-primary-fixed-variant": "#3e4660",
+        "on-tertiary-fixed": "#002113",
+        "surface": "#faf8ff",
+        "outline": "#76767e",
+        "tertiary-fixed": "#6ffbbe",
+        "on-secondary-fixed": "#2f1500",
+        "primary": "#000000",
+        "on-surface": "#131b2e",
+        "background": "#faf8ff",
+        "on-secondary-container": "#663500",
+        "on-primary-container": "#7b83a0"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-lg": "1.5rem",
+        "margin": "3rem",
+        "gutter": "1.5rem",
+        "gutter-mobile": "1rem",
+        "space-xs": "0.25rem",
+        "space-xl": "2.5rem",
+        "space-sm": "0.5rem",
+        "margin-mobile": "1.25rem",
+        "space-md": "1rem"
+      },
+      "fontFamily": {
+        "title-md": ["IBM Plex Sans"],
+        "body-lg": ["IBM Plex Sans"],
+        "metric-xl": ["IBM Plex Sans"],
+        "display-lg": ["IBM Plex Sans"],
+        "headline-md": ["IBM Plex Sans"],
+        "body-sm": ["IBM Plex Sans"],
+        "headline-lg-mobile": ["IBM Plex Sans"],
+        "headline-lg": ["IBM Plex Sans"],
+        "display-lg-mobile": ["IBM Plex Sans"],
+        "body-md": ["IBM Plex Sans"],
+        "label-sm": ["IBM Plex Sans"],
+        "title-lg": ["IBM Plex Sans"],
+        "label-md": ["IBM Plex Sans"]
+      },
+      "fontSize": {
+        "title-md": ["1.125rem", {"lineHeight": "1.625rem", "fontWeight": "500"}],
+        "body-lg": ["1.125rem", {"lineHeight": "1.75rem", "fontWeight": "400"}],
+        "metric-xl": ["2.75rem", {"lineHeight": "3rem", "letterSpacing": "-0.03em", "fontWeight": "700"}],
+        "display-lg": ["3.5rem", {"lineHeight": "4.25rem", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+        "headline-md": ["1.5rem", {"lineHeight": "2rem", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+        "body-sm": ["0.875rem", {"lineHeight": "1.375rem", "fontWeight": "400"}],
+        "headline-lg-mobile": ["1.75rem", {"lineHeight": "2.25rem", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+        "headline-lg": ["2.25rem", {"lineHeight": "2.875rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "display-lg-mobile": ["2.25rem", {"lineHeight": "2.75rem", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+        "body-md": ["1rem", {"lineHeight": "1.5rem", "fontWeight": "400"}],
+        "label-sm": ["0.75rem", {"lineHeight": "1rem", "letterSpacing": "0.05em", "fontWeight": "600"}],
+        "title-lg": ["1.25rem", {"lineHeight": "1.75rem", "fontWeight": "600"}],
+        "label-md": ["0.875rem", {"lineHeight": "1.25rem", "letterSpacing": "0.025em", "fontWeight": "600"}]
+      }
+    }
+  }
+}</script></head><body data-page="order-confirmed" class="bg-surface text-on-surface antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed"><header class="fixed top-0 w-full z-50 bg-primary-container shadow-[0_1px_8px_rgba(0,0,0,0.12)]"><div class="h-20 max-w-[1280px] mx-auto px-gutter flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><a class="flex items-center gap-space-sm" data-path="digital-store" href="store.html"><img alt="Modern luxury tech logo for 'Masar' (مسار) - an upscale Gulf fintech and business planning digital platform. Sleek geometric letterform 'M' combined with an upward trajectory arrow / path dynamic symbol. Minimalist, premium, gold metallic and royal navy contrast, sharp vector precision.. Brand logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UufB6Q6JtCXEsaXGzGPuZHCofroYAMVbmRtWRwjCZfYpZaWceG3pH8jAFXYyn7nb9RADigfwPITmvA52LrWCXpZBLLK4nd_Lp9m-1oxLzbKsuMw5FJazGFhgRjKdzIeTO4-FZ_8vWLLWySRLzBltRRclXGRFYWCBK7uhddiMQbIOENQgwWpVX17-EfR8cFt56dRLp68c5eO4Qq5hF6_2mqHSl3BKA6TxDxYpY-aWRlGdJtNE3TqXkyGnc"/><div class="flex flex-col"><span class="font-title-lg text-title-lg font-bold text-on-primary tracking-wide">مسار</span><span class="font-label-sm text-label-sm text-secondary-container tracking-widest uppercase">MASAR FINTECH</span></div></a><nav class="hidden xl:flex items-center gap-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-title-md rounded-lg shadow-[0_8px_20px_-4px_rgba(217,119,6,0.35)]"><a class="px-space-md py-space-sm rounded-lg font-body-md text-body-md text-inverse-on-surface hover:text-secondary-fixed hover:bg-surface-variant/10 transition-colors" data-path="digital-store" href="store.html">متجر النماذج الرقمية</a><a class="px-space-md py-space-sm rounded-lg font-body-md text-body-md text-inverse-on-surface hover:text-secondary-fixed hover:bg-surface-variant/10 transition-colors" data-path="cart-checkout" href="checkout.html">سلة الشراء</a><a class="px-space-md py-space-sm rounded-lg font-body-md text-body-md text-inverse-on-surface hover:text-secondary-fixed hover:bg-surface-variant/10 transition-colors" data-path="knowledge-hub" href="knowledge.html">مركز المعرفة والمدونة</a><a class="px-space-md py-space-sm rounded-lg font-body-md text-body-md text-inverse-on-surface hover:text-secondary-fixed hover:bg-surface-variant/10 transition-colors" data-path="about-contact" href="about.html">من نحن وتواصل معنا</a></nav></div><div class="flex items-center gap-space-md"><div class="hidden md:flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface/10 text-inverse-on-surface text-label-sm font-label-sm"><span class="material-symbols-outlined text-[16px] text-secondary-container">payments</span><span class="font-medium">SAR (ر.س)</span></div><a class="relative flex items-center justify-center p-space-sm rounded-lg text-inverse-on-surface hover:text-secondary-fixed hover:bg-surface-variant/10 transition-colors" data-path="cart-checkout" href="checkout.html" title="سلة الشراء"><span class="material-symbols-outlined text-[24px]">shopping_bag</span><span class="absolute -top-1 -right-1 bg-secondary-container text-on-secondary-container font-label-sm text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-[0_2px_8px_rgba(254,147,44,0.4)]">3</span></a><div class="hidden sm:flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-tertiary-container text-on-tertiary-container text-label-sm font-label-sm"><span class="material-symbols-outlined text-[15px]">verified</span><span class="font-semibold">معتمد GCC</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Status & Celebration Banner -->
+<section class="relative overflow-hidden bg-primary-container text-on-primary py-space-xl px-gutter">
+<div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fe932c_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+<div class="relative max-w-[1280px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-space-lg">
+<div class="flex items-start gap-space-md">
+<div class="relative flex-shrink-0">
+<div class="w-16 h-16 rounded-full bg-tertiary-container flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-tertiary-fixed text-[36px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container text-[14px]">verified</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex flex-wrap items-center gap-space-xs">
+<span class="px-space-sm py-0.5 rounded-full bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm">عملية الدفع مؤكدة</span>
+<span class="text-on-primary-container font-body-sm text-body-sm">•</span>
+<span class="text-on-primary-container font-body-sm text-body-sm font-mono">رقم المرجع: #MSR-2025-88492</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg font-bold text-on-primary">تم تأكيد طلبك بنجاح وجاهزية الملفات للتنزيل</h1>
+<p class="font-body-md text-body-md text-on-primary-container max-w-2xl">
+            شكراً لثقتكم بمنصة مسار. تم إصدار التراخيص الحصرية وملفات النماذج المالية مفتوحة المصدر بالكامل مع توثيق الفاتورة الضريبية وفق معايير هيئة الزكاة والضريبة والجمارك (ZATCA).
+          </p>
+</div>
+</div>
+<!-- Quick Action / Receipt pill -->
+<div class="bg-surface/10 backdrop-blur-md rounded-xl p-space-md flex flex-col gap-space-xs min-w-[280px] w-full md:w-auto">
+<div class="flex items-center justify-between text-on-primary font-body-sm text-body-sm">
+<span class="text-on-primary-container">تاريخ المعاملة:</span>
+<span class="font-medium font-mono">24 أكتوبر 2025 - 14:32</span>
+</div>
+<div class="flex items-center justify-between text-on-primary font-body-sm text-body-sm">
+<span class="text-on-primary-container">طريقة السداد:</span>
+<span class="flex items-center gap-1 font-medium font-mono"><span class="material-symbols-outlined text-secondary-fixed text-[16px]">credit_card</span>مدى •••• 9214</span>
+</div>
+<div class="flex items-center justify-between text-on-primary font-body-sm text-body-sm">
+<span class="text-on-primary-container">إجمالي المبلغ:</span>
+<span class="font-title-lg text-title-lg font-bold text-secondary-fixed">2,850.00 ر.س</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Notification Bar for Email -->
+<div class="w-full bg-surface-container border-b border-surface-container-high py-space-sm px-gutter">
+<div class="max-w-[1280px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-space-xs font-body-sm text-body-sm text-on-surface">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">mark_email_read</span>
+<span>تم إرسال نسخة الفاتورة وروابط التنزيل الدائمة إلى:</span>
+<span class="font-semibold text-primary underline underline-offset-4">faisal@alotaibi-tech.sa</span>
+</div>
+<div class="flex items-center gap-space-sm text-on-surface-variant font-label-sm text-label-sm">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-secondary-container text-[16px]">history</span>صلاحية التنزيل: وصول سحابي غير محدود</span>
+</div>
+</div>
+</div>
+<!-- Main Content Layout: Grid (8 cols downloads + 4 cols checkout summary & receipt) -->
+<div class="max-w-[1280px] mx-auto px-gutter py-space-xl w-full">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+<!-- Primary Column (8 Cols): Downloads, Licenses, Consultation -->
+<div class="lg:col-span-8 flex flex-col gap-space-xl">
+<!-- Cloud Sync Fast Bar -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[22px]">cloud_sync</span>
+</div>
+<div>
+<p class="font-title-md text-title-md font-semibold text-on-surface">المزامنة السحابية المباشرة</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">احفظ جميع النماذج والتراخيص في مساحتك السحابية بضغطة زر</p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs w-full sm:w-auto">
+<button class="flex-1 sm:flex-initial px-space-md py-space-xs rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md flex items-center justify-center gap-1 transition-all" onclick="handleCloudSync('Google Drive')">
+<span class="material-symbols-outlined text-[18px]">add_to_drive</span>
+<span>Google Drive</span>
+</button>
+<button class="flex-1 sm:flex-initial px-space-md py-space-xs rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md flex items-center justify-center gap-1 transition-all" onclick="handleCloudSync('Dropbox')">
+<span class="material-symbols-outlined text-[18px]">folder_zip</span>
+<span>Dropbox</span>
+</button>
+</div>
+</div>
+<!-- Section Title -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-6 bg-secondary-container rounded-full"></span>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface">الملفات الرقمية والتراخيص الصادرة</h2>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">عنصران متاحان للتحميل الفوري</span>
+</div>
+<!-- Download Item 1: Full SaaS Financial Modeling Suite -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow flex flex-col gap-space-md">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-14 h-14 rounded-xl bg-tertiary-container flex-shrink-0 flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined text-[32px]">table_chart</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex flex-wrap items-center gap-space-xs">
+<span class="px-space-sm py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-sm text-label-sm font-semibold">إصدار V4.2 الأحدث</span>
+<span class="px-space-sm py-0.5 rounded-full bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm">مفتوح المصدر بالكامل (Unprotected)</span>
+</div>
+<h3 class="font-title-lg text-title-lg font-bold text-on-surface">حقيبة النموذج المالي الشامل للشركات التقنية وSaaS</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                  يتضمن جداول التدفقات النقدية المتوقعة لـ 5 سنوات، حساب تكلفة الاستحواذ (CAC)، القيمة الدائمة (LTV)، مصفوفة سيناريوهات التسعير وتوزيع جولات التمويل (Cap Table).
+                </p>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1 flex-shrink-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant">حجم الحزمة الكاملة</span>
+<span class="font-title-md text-title-md font-bold text-on-surface font-mono">24.5 ميجابايت</span>
+</div>
+</div>
+<!-- License Key Box -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">vpn_key</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-semibold">مفتاح الترخيص المؤسسي (Enterprise License Key):</span>
+<span class="font-mono font-bold text-on-surface text-body-md tracking-wider" id="licenseKey1">MSR-SAAS-9942-AUTH-KSA</span>
+</div>
+</div>
+<button class="px-space-md py-space-xs rounded bg-surface-container hover:bg-surface-variant text-on-surface font-label-sm text-label-sm flex items-center justify-center gap-1 transition-all" onclick="copyToClipboard('licenseKey1', this)">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span>نسخ المفتاح</span>
+</button>
+</div>
+<!-- Download Action Area -->
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-space-md pt-space-xs">
+<div class="flex flex-wrap items-center gap-space-xs">
+<a class="px-space-md py-space-xs rounded bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md flex items-center gap-1 transition-colors" download="" href="#">
+<span class="material-symbols-outlined text-[18px] text-tertiary-fixed-dim">description</span>
+<span>ملف Excel (.xlsx) فقط</span>
+</a>
+<a class="px-space-md py-space-xs rounded bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md flex items-center gap-1 transition-colors" download="" href="#">
+<span class="material-symbols-outlined text-[18px] text-secondary-container">slideshow</span>
+<span>عرض المستثمرين (.pptx)</span>
+</a>
+<a class="px-space-md py-space-xs rounded bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md flex items-center gap-1 transition-colors" download="" href="#">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">picture_as_pdf</span>
+<span>دليل المتغيرات (PDF)</span>
+</a>
+</div>
+<!-- Primary Champagne CTA -->
+<a class="px-space-lg py-space-sm rounded-lg bg-secondary-container hover:bg-secondary text-on-primary font-title-md text-title-md font-bold flex items-center justify-center gap-space-xs shadow-[0_8px_20px_-4px_rgba(254,147,44,0.4)] transition-all" download="" href="#">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span>تنزيل الحقيبة كاملة (ZIP)</span>
+</a>
+</div>
+</div>
+<!-- Download Item 2: Pitch Deck & GCC Investor Fund Directory -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow flex flex-col gap-space-md">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-14 h-14 rounded-xl bg-surface-container-high flex-shrink-0 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[32px]">co_present</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex flex-wrap items-center gap-space-xs">
+<span class="px-space-sm py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm font-semibold">18 شريحة قياسية + Keynote</span>
+<span class="px-space-sm py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-sm text-label-sm font-semibold">دليل 45 صندوق خليجي</span>
+</div>
+<h3 class="font-title-lg text-title-lg font-bold text-on-surface">قالب العرض الاستثماري الاحترافي (Pitch Deck) + دليل الصناديق السيادية</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                  تصميم متوافق مع معايير Y Combinator وSequoia Capital معدل للمنطقة الخليجية باللغتين العربية والإنجليزية، مع جهات الاتصال المباشرة ومراحل الاستثمار النشطة.
+                </p>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1 flex-shrink-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant">حجم الحزمة</span>
+<span class="font-title-md text-title-md font-bold text-on-surface font-mono">18.2 ميجابايت</span>
+</div>
+</div>
+<!-- License Key Box -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">verified_user</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-semibold">مفتاح الترخيص (License Key):</span>
+<span class="font-mono font-bold text-on-surface text-body-md tracking-wider" id="licenseKey2">MSR-DECK-45FD-GCC-2025</span>
+</div>
+</div>
+<button class="px-space-md py-space-xs rounded bg-surface-container hover:bg-surface-variant text-on-surface font-label-sm text-label-sm flex items-center justify-center gap-1 transition-all" onclick="copyToClipboard('licenseKey2', this)">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span>نسخ المفتاح</span>
+</button>
+</div>
+<!-- Download Action -->
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-space-md pt-space-xs">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-secondary-container text-[18px]">verified</span>
+<span>تنسيقات متاحة: PowerPoint (.pptx), Keynote (.key), PDF</span>
+</div>
+<a class="px-space-lg py-space-sm rounded-lg bg-primary hover:bg-primary-container text-on-primary font-title-md text-title-md font-bold flex items-center justify-center gap-space-xs shadow-sm transition-all" download="" href="#">
+<span class="material-symbols-outlined text-[20px]">cloud_download</span>
+<span>تنزيل القالب ودليل الصناديق</span>
+</a>
+</div>
+</div>
+<!-- 1-on-1 Financial Consultation Add-on Card -->
+<div class="bg-gradient-to-l from-primary-container to-inverse-surface rounded-xl p-space-lg text-on-primary shadow-lg relative overflow-hidden">
+<div class="absolute -left-10 -bottom-10 w-44 h-44 rounded-full bg-secondary-container/10 pointer-events-none"></div>
+<div class="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-space-lg">
+<div class="flex items-start gap-space-md">
+<div class="w-14 h-14 rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0 text-on-secondary-container shadow-md">
+<span class="material-symbols-outlined text-[30px]">event_available</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-sm py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-sm text-label-sm font-bold">جلسة مستشار معتمد</span>
+<span class="text-tertiary-fixed font-label-sm text-label-sm font-semibold">تم التأكيد والدفع</span>
+</div>
+<h3 class="font-headline-md text-headline-md font-bold text-on-primary">جلسة تدقيق النموذج المالي (45 دقيقة 1-on-1)</h3>
+<p class="font-body-sm text-body-sm text-inverse-on-surface/85 max-w-xl">
+                  سيقوم أحد شركائنا الماليين المعتمدين بمراجعة افتراضات نموذجك المالي معك مباشرة وتجهيز إجابات تساؤلات المستثمرين الملائكيين وصناديق رأس المال الجريء.
+                </p>
+</div>
+</div>
+<button class="w-full md:w-auto px-space-lg py-space-sm rounded-lg bg-surface text-primary font-title-md text-title-md font-bold hover:bg-secondary-fixed hover:text-on-secondary-fixed transition-colors flex items-center justify-center gap-space-xs flex-shrink-0 shadow-sm" onclick="openBookingModal()">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+<span>جدولة موعد الجلسة الآن</span>
+</button>
+</div>
+</div>
+<!-- Next Steps / Guided Onboarding -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<h3 class="font-headline-md text-headline-md font-bold text-on-surface">الخطوات التالية لتحقيق أقصى استفادة</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Step 1 -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm relative">
+<div class="flex items-center justify-between">
+<span class="w-8 h-8 rounded-full bg-primary text-on-primary font-mono font-bold flex items-center justify-center text-label-md">01</span>
+<span class="material-symbols-outlined text-secondary-container">folder_open</span>
+</div>
+<h4 class="font-title-md text-title-md font-bold text-on-surface">فك ضغط الملفات</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">قم بفك ضغط ملف ZIP وضع ملف الإكسل في مجلد محمي مع حفظ نسخة احتياطية من النموذج الأساسي.</p>
+</div>
+<!-- Step 2 -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm relative">
+<div class="flex items-center justify-between">
+<span class="w-8 h-8 rounded-full bg-primary text-on-primary font-mono font-bold flex items-center justify-center text-label-md">02</span>
+<span class="material-symbols-outlined text-tertiary-fixed-dim">play_circle</span>
+</div>
+<h4 class="font-title-md text-title-md font-bold text-on-surface">مشاهدة التهيئة (10 دقائق)</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">شاهد فيديو شرح خريطة المعادلات وكيفية تغذية المدخلات (Inputs) الملونة بالأزرق لتوليد النتائج تلقائياً.</p>
+</div>
+<!-- Step 3 -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm relative">
+<div class="flex items-center justify-between">
+<span class="w-8 h-8 rounded-full bg-primary text-on-primary font-mono font-bold flex items-center justify-center text-label-md">03</span>
+<span class="material-symbols-outlined text-secondary">dashboard_customize</span>
+</div>
+<h4 class="font-title-md text-title-md font-bold text-on-surface">ربط لوحة المستثمر</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">اربط أرقام النموذج بمنصة مسار لمزامنة مؤشرات الأداء الحية ومشاركتها مع المستثمرين بأمان.</p>
+</div>
+</div>
+<div class="pt-space-xs flex justify-end">
+<a class="px-space-lg py-space-sm rounded-lg bg-surface-container text-on-surface hover:bg-surface-variant font-title-md text-title-md font-semibold flex items-center gap-space-xs transition-colors" href="#">
+<span>الانتقال إلى لوحة تحكم المستثمر ومتابعة المشاريع</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Secondary Column (4 Cols): ZATCA Invoice & Support Sidebar -->
+<div class="lg:col-span-4 flex flex-col gap-space-lg">
+<!-- ZATCA Compliant Official Invoice Box -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[24px]">receipt_long</span>
+<h3 class="font-title-lg text-title-lg font-bold text-on-surface">فاتورة ضريبية معتمدة</h3>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm">متوافقة مع ZATCA</span>
+</div>
+<!-- Invoice Summary Table -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm">
+<div class="flex justify-between items-center text-body-sm font-body-sm">
+<span class="text-on-surface-variant">رقم الفاتورة:</span>
+<span class="font-mono font-bold text-on-surface">INV-2025-09823</span>
+</div>
+<div class="flex justify-between items-center text-body-sm font-body-sm">
+<span class="text-on-surface-variant">الرقم الضريبي للمنصة:</span>
+<span class="font-mono text-on-surface">310894211900003</span>
+</div>
+<div class="flex justify-between items-center text-body-sm font-body-sm">
+<span class="text-on-surface-variant">المشتري:</span>
+<span class="font-medium text-on-surface">فيصل بن مشاري العتيبي</span>
+</div>
+<div class="flex justify-between items-center text-body-sm font-body-sm">
+<span class="text-on-surface-variant">المجموع قبل الضريبة:</span>
+<span class="font-mono text-on-surface">2,478.26 ر.س</span>
+</div>
+<div class="flex justify-between items-center text-body-sm font-body-sm">
+<span class="text-on-surface-variant">ضريبة القيمة المضافة (15%):</span>
+<span class="font-mono text-on-surface">371.74 ر.س</span>
+</div>
+<div class="h-[1px] bg-outline-variant/30 my-space-xs"></div>
+<div class="flex justify-between items-center font-title-md text-title-md font-bold text-on-surface">
+<span>الإجمالي المدفوع:</span>
+<span class="text-secondary font-mono">2,850.00 ر.س</span>
+</div>
+</div>
+<!-- QR Code Container for ZATCA E-Invoicing standard -->
+<div class="flex items-center gap-space-md p-space-sm rounded-lg bg-surface-container-low">
+<div class="w-20 h-20 bg-surface-container-lowest rounded p-1 shadow-sm flex items-center justify-center flex-shrink-0">
+<!-- Visual representation of ZATCA QR Code -->
+<svg class="w-full h-full text-on-surface" fill="currentColor" viewbox="0 0 100 100">
+<rect height="30" rx="4" width="30" x="0" y="0"></rect>
+<rect fill="white" height="20" width="20" x="5" y="5"></rect>
+<rect height="10" width="10" x="10" y="10"></rect>
+<rect height="30" rx="4" width="30" x="70" y="0"></rect>
+<rect fill="white" height="20" width="20" x="75" y="5"></rect>
+<rect height="10" width="10" x="80" y="10"></rect>
+<rect height="30" rx="4" width="30" x="0" y="70"></rect>
+<rect fill="white" height="20" width="20" x="5" y="75"></rect>
+<rect height="10" width="10" x="10" y="80"></rect>
+<!-- Stylized data matrix bits -->
+<rect height="8" width="8" x="40" y="10"></rect>
+<rect height="6" width="6" x="55" y="15"></rect>
+<rect height="6" width="12" x="40" y="25"></rect>
+<rect height="8" width="8" x="10" y="45"></rect>
+<rect height="6" width="10" x="25" y="40"></rect>
+<rect height="14" width="14" x="45" y="45"></rect>
+<rect height="12" width="8" x="65" y="40"></rect>
+<rect height="6" width="12" x="80" y="45"></rect>
+<rect height="8" width="10" x="40" y="65"></rect>
+<rect height="6" width="16" x="60" y="65"></rect>
+<rect height="12" width="8" x="45" y="80"></rect>
+<rect height="8" width="14" x="65" y="80"></rect>
+<rect height="15" width="10" x="85" y="75"></rect>
+</svg>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-bold text-on-surface">رمز التحقق المشفر</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant leading-tight">مشفر وفق متطلبات المرحلة الثانية للفوترة الإلكترونية بالمملكة.</span>
+</div>
+</div>
+<a class="w-full py-space-sm px-space-md rounded-lg bg-surface-container hover:bg-surface-variant text-on-surface font-title-md text-title-md font-semibold flex items-center justify-center gap-space-xs transition-colors" download="" href="#">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span>تحميل الفاتورة الضريبية (PDF)</span>
+</a>
+</div>
+<!-- Trust & Advisory Support Widget -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-tertiary-container flex items-center justify-center text-tertiary-fixed flex-shrink-0">
+<span class="material-symbols-outlined text-[22px]">support_agent</span>
+</div>
+<div>
+<h4 class="font-title-md text-title-md font-bold text-on-surface">الدعم المالي المباشر</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">متاح لمساعدتك في أي استفسار حسابي</p>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            هل واجهتك صعوبة في فك حماية أي خلية أو تغيير العملة الافتراضية؟ مستشارونا الماليون متاحون للرد المباشر خلال أوقات العمل الرسمية.
+          </p>
+<a class="w-full py-space-sm px-space-md rounded-lg bg-tertiary-container hover:bg-primary-container text-on-tertiary-container font-title-md text-title-md font-bold flex items-center justify-center gap-space-xs transition-all shadow-sm" href="https://wa.me/966500000000" rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[20px] text-tertiary-fixed">chat</span>
+<span>محادثة المستشار عبر واتساب</span>
+</a>
+<div class="flex items-center justify-between text-on-surface-variant text-label-sm font-label-sm pt-space-xs">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>مستشار مالي متصل الآن</span>
+<span>متوسط الاستجابة: 8 دقائق</span>
+</div>
+</div>
+<!-- Guarantee & Security Card -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-xs text-on-surface-variant font-body-sm text-body-sm">
+<div class="flex items-center gap-space-xs text-on-surface font-semibold">
+<span class="material-symbols-outlined text-secondary-container text-[18px]">shield</span>
+<span>ضمان الدقة والامتثال المؤسسي</span>
+</div>
+<p class="text-body-sm leading-relaxed">
+            جميع المعادلات والميزانيات العمومية مراجعة ومدققة بواسطة خبراء معتمدين وحاصلين على شهادات CFA و SOCPA لضمان قبولها لدى المستثمرين.
+          </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Toast Notification Container (Hidden by default, triggered by JS) -->
+<div class="fixed bottom-6 left-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-primary-container text-on-primary px-space-md py-space-sm rounded-lg shadow-xl flex items-center gap-space-sm" id="toastNotification">
+<span class="material-symbols-outlined text-secondary-fixed text-[20px]">check_circle</span>
+<span class="font-body-sm text-body-sm font-medium" id="toastMessage">تم نسخ مفتاح الترخيص بنجاح</span>
+</div>
+</div>
+<script>
+  function copyToClipboard(elementId, triggerBtn) {
+    const text = document.getElementById(elementId).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('تم نسخ مفتاح الترخيص بنجاح: ' + text);
+      const originalText = triggerBtn.innerHTML;
+      triggerBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] text-secondary">check</span><span>تم النسخ</span>';
+      setTimeout(() => {
+        triggerBtn.innerHTML = originalText;
+      }, 2500);
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+    });
+  }
+
+  function handleCloudSync(serviceName) {
+    showToast('جاري بدء المزامنة وتصدير الملفات إلى ' + serviceName + '...');
+  }
+
+  function openBookingModal() {
+    showToast('جاري فتح رزنامة المستشار المالي لاختيار الموعد المناسب...');
+  }
+
+  function showToast(message) {
+    const toast = document.getElementById('toastNotification');
+    const msgEl = document.getElementById('toastMessage');
+    msgEl.innerText = message;
+    toast.classList.remove('translate-y-24', 'opacity-0');
+    toast.classList.add('translate-y-0', 'opacity-100');
+    
+    setTimeout(() => {
+      toast.classList.remove('translate-y-0', 'opacity-100');
+      toast.classList.add('translate-y-24', 'opacity-0');
+    }, 3500);
+  }
+</script></main><footer class="w-full bg-primary-container text-inverse-on-surface pt-space-xl pb-space-lg"><div class="max-w-[1280px] mx-auto px-gutter"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-xl pb-space-xl"><div class="flex flex-col gap-space-md"><div class="flex items-center gap-space-sm"><img alt="Brand logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UufB6Q6JtCXEsaXGzGPuZHCofroYAMVbmRtWRwjCZfYpZaWceG3pH8jAFXYyn7nb9RADigfwPITmvA52LrWCXpZBLLK4nd_Lp9m-1oxLzbKsuMw5FJazGFhgRjKdzIeTO4-FZ_8vWLLWySRLzBltRRclXGRFYWCBK7uhddiMQbIOENQgwWpVX17-EfR8cFt56dRLp68c5eO4Qq5hF6_2mqHSl3BKA6TxDxYpY-aWRlGdJtNE3TqXkyGnc"/><span class="font-title-lg text-title-lg font-bold text-on-primary">مسار</span></div><p class="font-body-sm text-body-sm text-inverse-on-surface/80 leading-relaxed">المنصة الخليجية الرائدة لحلول ذكاء الأعمال المالي، صياغة دراسات الجدوى المعتمدة ونماذج الاستثمار الموجهة للشركات الناشئة والصناديق السيادية في الشرق الأوسط.</p><div class="flex items-center gap-space-sm pt-space-xs"><span class="px-space-sm py-space-xs rounded-full bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm font-semibold">معتمد بالمملكة والخليج</span></div></div><div class="flex flex-col gap-space-sm"><h4 class="font-title-md text-title-md font-bold text-secondary-fixed mb-space-xs">المنتجات والخدمات</h4><a class="font-body-sm text-body-sm text-inverse-on-surface/75 hover:text-secondary-fixed transition-colors" data-path="digital-store" href="store.html">متجر النماذج الرقمية</a><a class="font-body-sm text-body-sm text-inverse-on-surface/75 hover:text-secondary-fixed transition-colors" data-path="cart-checkout" href="checkout.html">عربة الشراء وإتمام الطلب</a><a class="font-body-sm text-body-sm text-inverse-on-surface/75 hover:text-secondary-fixed transition-colors" data-path="knowledge-hub" href="knowledge.html">مركز المعرفة والمدونة</a><a class="font-body-sm text-body-sm text-inverse-on-surface/75 hover:text-secondary-fixed transition-colors" data-path="about-contact" href="about.html">من نحن وتواصل معنا</a></div><div class="flex flex-col gap-space-sm"><h4 class="font-title-md text-title-md font-bold text-secondary-fixed mb-space-xs">الاعتمادات والتنظيم</h4><div class="flex flex-col gap-space-xs"><div class="flex items-center gap-space-xs text-inverse-on-surface/90 font-body-sm text-body-sm"><span class="material-symbols-outlined text-secondary-container text-[18px]">verified_user</span><span>متوافق مع المعايير المحاسبية IFRS</span></div><div class="flex items-center gap-space-xs text-inverse-on-surface/90 font-body-sm text-body-sm"><span class="material-symbols-outlined text-secondary-container text-[18px]">verified_user</span><span>عضو شبكة الفنتك السعودية (Fintech Saudi)</span></div><div class="flex items-center gap-space-xs text-inverse-on-surface/90 font-body-sm text-body-sm"><span class="material-symbols-outlined text-secondary-container text-[18px]">verified_user</span><span>منظومة الحوكمة المالية الخليجية GCC FinGov</span></div></div></div><div class="flex flex-col gap-space-md"><h4 class="font-title-md text-title-md font-bold text-secondary-fixed">شركاء الدفع المعتمدون</h4><p class="font-body-sm text-body-sm text-inverse-on-surface/80">بوابات دفع مشفرة وآمنة بنسبة 100% تدعم المدفوعات البنكية الفورية الخليجية.</p><div class="flex flex-wrap items-center gap-space-xs"><span class="px-space-md py-space-xs rounded bg-surface/10 text-on-primary font-label-md text-label-md font-bold">مدى (Mada)</span><span class="px-space-md py-space-xs rounded bg-surface/10 text-on-primary font-label-md text-label-md font-bold">Apple Pay</span><span class="px-space-md py-space-xs rounded bg-surface/10 text-on-primary font-label-md text-label-md font-bold">Visa</span><span class="px-space-md py-space-xs rounded bg-surface/10 text-on-primary font-label-md text-label-md font-bold">STC Pay</span></div></div></div><div class="pt-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md text-inverse-on-surface/60 font-body-sm text-body-sm"><p>© 2025 منصة مسار للاستشارات المالية والذكاء الاصطناعي (Masar Platform). جميع الحقوق محفوظة.</p><div class="flex items-center gap-space-lg"><a class="hover:text-secondary-fixed transition-colors" href="#">شروط الخدمة</a><a class="hover:text-secondary-fixed transition-colors" href="#">سياسة الخصوصية وسرية البيانات</a><a class="hover:text-secondary-fixed transition-colors" href="#">التراخيص والامتثال التنظيمي</a></div></div></div></footer><script src="assets/site.js"></script></body></html>

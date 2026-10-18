@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-secondary-container": "#663500", "error": "#ba1a1a", "primary-fixed": "#dbe1ff", "primary-container": "#131a33", "inverse-on-surface": "#eef0ff", "inverse-primary": "#bec5e5", "tertiary": "#000000", "surface-container-highest": "#dae2fd", "secondary-fixed": "#ffdcc3", "on-surface": "#131b2e", "outline": "#76767e", "surface-variant": "#dae2fd", "on-secondary": "#ffffff", "tertiary-fixed": "#6ffbbe", "inverse-surface": "#283044", "tertiary-fixed-dim": "#4edea3", "surface-tint": "#565d79", "on-primary-fixed-variant": "#3e4660", "on-tertiary-container": "#009668", "on-secondary-fixed-variant": "#6e3900", "surface-container-high": "#e2e7ff", "on-primary-container": "#7b83a0", "tertiary-container": "#002113", "secondary-container": "#fe932c", "on-error": "#ffffff", "on-surface-variant": "#45464d", "surface-dim": "#d2d9f4", "on-error-container": "#93000a", "error-container": "#ffdad6", "on-primary-fixed": "#131a33", "on-tertiary-fixed": "#002113", "primary-fixed-dim": "#bec5e5", "surface-container-low": "#f2f3ff", "secondary": "#904d00", "on-background": "#131b2e", "background": "#faf8ff", "primary": "#000000", "secondary-fixed-dim": "#ffb77d", "surface-bright": "#faf8ff", "outline-variant": "#c6c6ce", "surface-container": "#eaedff", "on-tertiary": "#ffffff", "on-secondary-fixed": "#2f1500", "on-primary": "#ffffff", "on-tertiary-fixed-variant": "#005236", "surface-container-lowest": "#ffffff", "surface": "#faf8ff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.5rem", "space-md": "1rem", "margin": "3rem", "gutter-mobile": "1rem", "gutter": "1.5rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "margin-mobile": "1.25rem", "space-xl": "2.5rem" }, "fontFamily": { "display-lg-mobile": [ "IBM Plex Sans" ], "label-md": [ "IBM Plex Sans" ], "label-sm": [ "IBM Plex Sans" ], "headline-lg": [ "IBM Plex Sans" ], "body-sm": [ "IBM Plex Sans" ], "display-lg": [ "IBM Plex Sans" ], "title-md": [ "IBM Plex Sans" ], "metric-xl": [ "IBM Plex Sans" ], "body-md": [ "IBM Plex Sans" ], "headline-lg-mobile": [ "IBM Plex Sans" ], "headline-md": [ "IBM Plex Sans" ], "title-lg": [ "IBM Plex Sans" ], "body-lg": [ "IBM Plex Sans" ] }, "fontSize": { "display-lg-mobile": [ "2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "label-md": [ "0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.025em", "fontWeight": "600" } ], "label-sm": [ "0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.05em", "fontWeight": "600" } ], "headline-lg": [ "2.25rem", { "lineHeight": "2.875rem", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "body-sm": [ "0.875rem", { "lineHeight": "1.375rem", "fontWeight": "400" } ], "display-lg": [ "3.5rem", { "lineHeight": "4.25rem", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "title-md": [ "1.125rem", { "lineHeight": "1.625rem", "fontWeight": "500" } ], "metric-xl": [ "2.75rem", { "lineHeight": "3rem", "letterSpacing": "-0.03em", "fontWeight": "700" } ], "body-md": [ "1rem", { "lineHeight": "1.5rem", "fontWeight": "400" } ], "headline-lg-mobile": [ "1.75rem", { "lineHeight": "2.25rem", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-md": [ "1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "title-lg": [ "1.25rem", { "lineHeight": "1.75rem", "fontWeight": "600" } ], "body-lg": [ "1.125rem", { "lineHeight": "1.75rem", "fontWeight": "400" } ] } } } };</script></head><body data-page="payment-failed" class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-7xl mx-auto px-margin-mobile lg:px-margin flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><a class="flex items-center gap-space-sm" data-path="overview" href="dashboard.html"><img alt="Modern luxury tech logo for 'Masar' (مسار) - an upscale Gulf fintech and business planning digital platform. Sleek geometric letterform 'M' combined with an upward trajectory arrow / path dynamic symbol. Minimalist, premium, gold metallic and royal navy contrast, sharp vector precision.. Brand logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UOKP7sBVUAEf1xrufFdTJ14bKVmk1pUbIDQiGO9U1P5YlOzm_GALaqyKhzzN7bDYdnZNnOkm5TEfEoBKuARFuTjSHbqQyvHAXtAngiS6f3DxVNf-kzNhMpxsTAdemm3Q_feu8hQrk967nUTFPqoM6_68-VmQdkL-7bZGfU_8UIpXbMdjYXpg9gBeA80OJk66rhMFu-SWCSon1OJGDSHnhbkoAdyRT6w4VBXDskm3NNZ6vqlxszxoYtElU"/><span class="font-title-lg text-title-lg tracking-tight text-on-surface">مسار</span><span class="hidden sm:inline-block font-label-sm text-label-sm px-space-xs py-0.5 rounded bg-surface-container-high text-on-surface-variant font-semibold">FINTECH</span></a><nav class="hidden lg:flex items-center gap-space-xs" data-active-classes="bg-primary-container text-on-primary font-title-md rounded-lg"><a class="px-space-md py-space-xs font-title-md text-title-md text-on-surface-variant hover:text-on-surface transition-colors rounded-lg" data-path="store" href="store.html">متجر النماذج</a><a class="px-space-md py-space-xs font-title-md text-title-md text-on-surface-variant hover:text-on-surface transition-colors rounded-lg" data-path="knowledge-hub" href="knowledge.html">مركز المعرفة</a><a class="px-space-md py-space-xs font-title-md text-title-md text-on-surface-variant hover:text-on-surface transition-colors rounded-lg" data-path="advisory" href="advisory-booking.html">من نحن والاستشارات</a><a class="px-space-md py-space-xs font-title-md text-title-md text-on-surface-variant hover:text-on-surface transition-colors rounded-lg" data-path="compliance-and-security" href="privacy.html">الخصوصية والأمان</a></nav></div><div class="flex items-center gap-space-sm sm:gap-space-md"><button class="hidden sm:flex items-center gap-space-xs px-space-sm py-1.5 rounded-lg bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">payments</span><span class="font-label-sm text-label-sm font-semibold">SAR</span></button><a class="relative p-space-xs rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="checkout" href="checkout.html"><span class="material-symbols-outlined text-[24px]">shopping_bag</span><span class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-[10px] flex items-center justify-center font-bold">2</span></a><div class="h-6 w-px bg-surface-container-highest hidden sm:block"></div><a class="hidden md:flex items-center px-space-md py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container transition-colors" data-path="login" href="login.html"><span class="material-symbols-outlined ml-1.5 text-[18px]">login</span>دخول المنظومة</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-80px)]"><div class="flex flex-col w-full">
+<div class="relative w-full overflow-hidden bg-gradient-to-b from-error-container/20 via-surface to-background pb-space-xl">
+<div class="max-w-7xl mx-auto px-margin-mobile lg:px-margin pt-space-lg">
+<!-- Top Reassurance Header Banner -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md sm:p-space-lg shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="relative flex-shrink-0 w-14 h-14 rounded-full bg-error-container/40 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[32px]">credit_card_off</span>
+<span class="absolute top-0 right-0 w-3.5 h-3.5 rounded-full bg-error ring-2 ring-surface-container-lowest"></span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="font-label-sm text-label-sm px-space-xs py-0.5 rounded bg-error-container text-on-error-container font-semibold">تنبيه المعالجة المصرفية</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-mono">ERR-SAMA-3DS-402</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-on-surface mt-1">تعذر إتمام عملية الدفع والتفويض البنكي</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">رفض التفويض من البنك المصدر أو انتهاء مهلة المصادقة الثنائية (3D Secure).</p>
+</div>
+</div>
+<!-- Guarantee Pill & Safe Status -->
+<div class="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto bg-surface-container-low md:bg-transparent p-space-sm md:p-0 rounded-lg">
+<div class="flex items-center gap-1.5 text-on-tertiary-container">
+<span class="material-symbols-outlined text-[20px] text-on-tertiary-container" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-label-md text-label-md font-semibold">لم يُخصم أي مبلغ من رصيدك</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">الحساب البنكي آمن ومحمي بنسبة 100%</p>
+</div>
+</div>
+<!-- Main Recovery Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg mt-space-lg">
+<!-- Left: Payment Recovery Engine (8 Cols) -->
+<div class="lg:col-span-8 flex flex-col gap-space-lg">
+<!-- Reassurance Notice Box -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-secondary-container/20 flex-shrink-0 flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[24px]">bookmark_heart</span>
+</div>
+<div class="flex-1">
+<h2 class="font-title-lg text-title-lg text-on-surface">سلتك الاستثمارية ورخصتك الرقمية محفوظة بأمان</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                  تم حجز ملفات الاستثمار الشاملة وتثبيت نسبة الخصم المؤسسي المطبقة لمدة <span class="font-bold text-on-surface font-mono">30 دقيقة</span>. يمكنك استكمال الدفع فوراً عبر أحد الحلول الميسرة أدناه دون الحاجة لإعادة إدخال بيانات الطلب.
+                </p>
+</div>
+</div>
+<!-- Failure Diagnostics Pills -->
+<div class="mt-space-md pt-space-md bg-surface-container-low rounded-lg p-space-md">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold block mb-2">الأسباب المصرفية الأكثر شيوعاً لهذا التنبيه:</span>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-xs text-on-surface-variant">
+<div class="flex items-center gap-1.5 font-body-sm text-body-sm bg-surface-container-lowest px-2.5 py-1.5 rounded">
+<span class="material-symbols-outlined text-[16px] text-secondary">schedule</span>
+<span>تأخر استلام رمز OTP المؤقت</span>
+</div>
+<div class="flex items-center gap-1.5 font-body-sm text-body-sm bg-surface-container-lowest px-2.5 py-1.5 rounded">
+<span class="material-symbols-outlined text-[16px] text-secondary">trending_up</span>
+<span>تجاوز سقف الشراء الرقمي اليومي</span>
+</div>
+<div class="flex items-center gap-1.5 font-body-sm text-body-sm bg-surface-container-lowest px-2.5 py-1.5 rounded">
+<span class="material-symbols-outlined text-[16px] text-secondary">lock_clock</span>
+<span>إلغاء تنشيط التجارة الإلكترونية بالبطاقة</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Transaction Summary Breakdown -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between pb-space-sm">
+<span class="font-title-lg text-title-lg text-on-surface">تفاصيل العملية غير المكتملة</span>
+<span class="font-label-sm text-label-sm font-mono text-on-surface-variant">TXN-KSA-2025-99418</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-md mt-space-sm pt-space-sm bg-surface-container-low p-space-md rounded-lg">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">المبلغ الإجمالي</span>
+<span class="font-title-lg text-title-lg font-bold text-on-surface mt-0.5 block">793.50 <span class="text-xs font-normal">ر.س</span></span>
+<span class="font-label-sm text-[11px] text-on-tertiary-container">شامل ضريبة 15%</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">وسيلة الدفع</span>
+<div class="flex items-center gap-1 mt-1">
+<span class="font-title-md text-title-md text-on-surface font-semibold">مدى mada</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-mono">**** 9214</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">البنك المصدر</span>
+<span class="font-title-md text-title-md text-on-surface mt-0.5 block">مصرف الإنماء</span>
+<span class="font-label-sm text-[11px] text-on-surface-variant">حساب جاري مؤسسي</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">رمز الاستجابة</span>
+<span class="font-title-md text-title-md text-error font-mono mt-0.5 block">DECLINE_3DS</span>
+<span class="font-label-sm text-[11px] text-on-surface-variant">قبل 3 دقائق</span>
+</div>
+</div>
+</div>
+<!-- Recovery Options Selection -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between mb-space-md">
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface">خيارات إعادة المحاولة والسداد الفوري</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">اختر الطريقة الأنسب لتفادي تعثر الدفع واستلام الملفات فوراً</p>
+</div>
+<span class="px-space-sm py-1 rounded-full bg-secondary-container/20 text-on-secondary-container font-label-sm text-label-sm font-semibold">تأكيد آمن</span>
+</div>
+<!-- Alternative 1: Card Retry Form (Selected/Expanded) -->
+<div class="bg-surface rounded-xl p-space-md shadow-sm mb-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">credit_card</span>
+</div>
+<div>
+<span class="font-title-md text-title-md text-on-surface font-semibold block">إعادة المحاولة عبر بطاقة مصرفية (مدى / فيزا / ماستركارد)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">يمكنك تعديل بيانات البطاقة أو استخدام بطاقة بديلة</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-semibold bg-secondary-fixed/50 px-2 py-0.5 rounded">الخيار الموصى به</span>
+</div>
+<form class="mt-space-md grid grid-cols-1 sm:grid-cols-2 gap-space-md" onsubmit="event.preventDefault(); document.getElementById('retryStatusModal').classList.remove('hidden');">
+<div class="sm:col-span-2">
+<label class="block font-label-md text-label-md text-on-surface mb-1">اسم حامل البطاقة (كما يظهر على البطاقة)</label>
+<input class="w-full bg-surface-container-lowest text-on-surface rounded-lg px-space-md py-2.5 font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" required="" type="text" value="عبدالعزيز بن فهد آل سعود"/>
+</div>
+<div class="sm:col-span-2">
+<label class="block font-label-md text-label-md text-on-surface mb-1">رقم البطاقة</label>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest text-on-surface rounded-lg px-space-md py-2.5 font-mono text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" required="" type="text" value="4574 •••• •••• 9214"/>
+<div class="absolute left-3 top-2.5 flex items-center gap-1.5">
+<span class="font-label-sm text-xs bg-surface-container px-2 py-0.5 rounded text-on-surface-variant font-bold">mada</span>
+<span class="font-label-sm text-xs bg-surface-container px-2 py-0.5 rounded text-on-surface-variant font-bold">VISA</span>
+</div>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">تاريخ الانتهاء</label>
+<input class="w-full bg-surface-container-lowest text-on-surface rounded-lg px-space-md py-2.5 font-mono text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" placeholder="MM / YY" required="" type="text" value="09 / 28"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">رمز التحقق الخلفي (CVV)</label>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest text-on-surface rounded-lg px-space-md py-2.5 font-mono text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" maxlength="4" placeholder="•••" required="" type="password"/>
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[20px]">help_outline</span>
+</div>
+</div>
+<div class="sm:col-span-2 pt-space-xs flex flex-col sm:flex-row items-center gap-space-sm justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-tertiary-container text-[18px]">lock</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">معاملة بنكية مشفرة متوافقة مع ضوابط البنك المركزي السعودي SAMA</span>
+</div>
+<button class="w-full sm:w-auto px-space-xl py-3 rounded-lg bg-secondary-container text-on-secondary-container hover:opacity-95 font-label-md text-label-md font-bold transition-all shadow-md flex items-center justify-center gap-2" type="submit">
+<span>إعادة تفويض العملية البنكية (793.50 ر.س)</span>
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+</button>
+</div>
+</form>
+</div>
+<!-- Alternative 2: Instant Apple Pay -->
+<div class="bg-surface rounded-xl p-space-md shadow-sm mb-space-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-primary text-on-primary flex items-center justify-center font-bold text-lg">
+                  Pay
+                </div>
+<div>
+<span class="font-title-md text-title-md text-on-surface font-semibold block">السداد بنقرة واحدة عبر Apple Pay</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">يتجاوز عادة مشكلات OTP والحدود المصرفية المحلية بسهولة فائقة</span>
+</div>
+</div>
+<button class="w-full sm:w-auto px-space-lg py-2.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md font-medium hover:bg-primary-container transition-colors flex items-center justify-center gap-2" onclick="alert('جاري تشغيل واجهة Apple Pay المشفرة...')" type="button">
+<span>الدفع عبر Apple Pay</span>
+<span class="material-symbols-outlined text-[18px]">touch_app</span>
+</button>
+</div>
+<!-- Alternative 3: Corporate SARIE / Bank Transfer -->
+<div class="bg-surface rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between cursor-pointer" onclick="document.getElementById('sarieTransferBox').classList.toggle('hidden');">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined text-[24px]">account_balance</span>
+</div>
+<div>
+<span class="font-title-md text-title-md text-on-surface font-semibold block">التحويل البنكي المؤسسي السريع (SARIE / IBAN)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">مثالي للشركات والصناديق — تفعيل فوري مع إرفاق إيصال التحويل</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant">عرض بيانات الحساب</span>
+<span class="material-symbols-outlined text-outline">expand_more</span>
+</div>
+</div>
+<!-- Collapsible IBAN Info -->
+<div class="mt-space-md pt-space-md bg-surface-container-lowest p-space-md rounded-lg" id="sarieTransferBox">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md text-right">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">اسم المستفيد المعتمد:</span>
+<span class="font-body-md text-body-md text-on-surface font-semibold block mt-0.5">شركة مسار لحلول ذكاء الأعمال وتقنية المعلومات</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">البنك:</span>
+<span class="font-body-md text-body-md text-on-surface font-semibold block mt-0.5">مصرف الراجحي (Al Rajhi Bank)</span>
+</div>
+<div class="sm:col-span-2 bg-surface-container-low p-space-sm rounded flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">رقم الآيبان الرسمي (IBAN):</span>
+<span class="font-title-md text-title-md font-mono text-on-surface font-bold tracking-wider">SA58 8000 0412 6080 1099 4418</span>
+</div>
+<button class="px-space-sm py-1 rounded bg-surface-container text-on-surface font-label-sm text-label-sm hover:bg-surface-container-high transition-colors flex items-center gap-1" onclick="navigator.clipboard.writeText('SA5880000412608010994418'); alert('تم نسخ رقم الآيبان بنجاح');" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span>نسخ الآيبان</span>
+</button>
+</div>
+</div>
+<div class="mt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm pt-space-sm">
+<span class="font-body-sm text-body-sm text-on-surface-variant">بعد إتمام الحوالة، أرفق صورة الإيصال لتحصل على تنزيل فوري للنماذج:</span>
+<label class="cursor-pointer px-space-md py-2 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">upload_file</span>
+<span>إرفاق إشعار الحوالة</span>
+<input class="hidden" onchange="alert('تم استلام إشعار الحوالة، جاري المطابقة الآلية السريعة خلال دقيقتين.');" type="file"/>
+</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Cart Holding & Concierge Support (4 Cols) -->
+<div class="lg:col-span-4 flex flex-col gap-space-lg">
+<!-- Active Reservation Countdown Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between pb-space-sm">
+<span class="font-label-md text-label-md text-on-surface-variant">مهلة حجز السلة والخصم:</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-bold">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                حجز مؤقت نشط
+              </span>
+</div>
+<!-- Big Visual Digital Timer -->
+<div class="mt-space-xs bg-surface-container-low p-space-md rounded-xl text-center">
+<div class="font-metric-xl text-metric-xl font-mono text-secondary tracking-widest" id="countdownTimer">27:45</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">سيتم تحرير المقعد الاستشاري والخصم الاستثماري عند انتهاء المؤقت</p>
+</div>
+<!-- Reserved Item Card Preview -->
+<div class="mt-space-md pt-space-md flex flex-col gap-space-sm">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">العناصر المحجوزة في طلبيتك:</span>
+<div class="bg-surface-container-low p-space-sm rounded-lg flex items-start gap-space-sm">
+<div class="w-12 h-12 rounded bg-surface-container-highest flex-shrink-0 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">analytics</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-label-md text-label-md text-on-surface font-semibold line-clamp-1">حقيبة النموذج المالي الشامل للشركات التقنية SaaS v4.2</h4>
+<p class="font-label-sm text-[11px] text-on-surface-variant mt-0.5">رخصة مؤسسية كاملة + جدول الحصص Cap Table</p>
+<div class="flex items-center justify-between mt-1">
+<span class="font-label-sm text-label-sm font-bold text-on-surface">690.00 ر.س</span>
+<span class="font-label-sm text-[10px] text-on-tertiary-container bg-surface-container-lowest px-1.5 py-0.5 rounded">ترخيص رقمي حصري</span>
+</div>
+</div>
+</div>
+<!-- Bonus Free Item Included -->
+<div class="bg-surface-container-low p-space-sm rounded-lg flex items-start gap-space-sm">
+<div class="w-12 h-12 rounded bg-secondary-container/20 flex-shrink-0 flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[24px]">support_agent</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<h4 class="font-label-md text-label-md text-on-surface font-semibold">جلسة استشارية تنفيذية (30 دقيقة)</h4>
+<span class="font-label-sm text-[10px] text-on-tertiary-container font-bold">مشمولة مجاناً</span>
+</div>
+<p class="font-label-sm text-[11px] text-on-surface-variant mt-0.5">مراجعة المؤشرات المالية مع مستشار معتمد (قيمة سابقة: 1,200 ر.س)</p>
+</div>
+</div>
+<!-- Applied Promo Voucher -->
+<div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-secondary">verified</span>
+<span class="font-label-sm text-label-sm text-on-surface font-mono font-bold">VC-PARTNERS-10%</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-tertiary-container font-semibold">تم خصم 10% بنجاح</span>
+</div>
+</div>
+<!-- Price Breakdown List -->
+<div class="mt-space-md pt-space-sm flex flex-col gap-1.5 font-body-sm text-body-sm">
+<div class="flex justify-between text-on-surface-variant">
+<span>المجموع الفرعي للنماذج:</span>
+<span class="font-mono">790.00 ر.س</span>
+</div>
+<div class="flex justify-between text-on-tertiary-container">
+<span>خصم الشركاء (10%):</span>
+<span class="font-mono">- 79.00 ر.س</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>ضريبة القيمة المضافة (15%):</span>
+<span class="font-mono">82.50 ر.س</span>
+</div>
+<div class="flex justify-between text-on-surface font-title-md text-title-md font-bold pt-2">
+<span>المبلغ المستحق النهائي:</span>
+<span class="font-mono text-secondary">793.50 ر.س</span>
+</div>
+</div>
+</div>
+<!-- Instant Financial Concierge Support Box -->
+<div class="bg-primary-container text-on-primary rounded-xl p-space-lg shadow-md relative overflow-hidden">
+<div class="absolute -top-12 -left-12 w-32 h-32 rounded-full bg-secondary/20 blur-xl pointer-events-none"></div>
+<div class="flex items-center gap-space-sm mb-space-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold">
+<span class="material-symbols-outlined text-[22px]">contact_support</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md font-bold text-on-primary">مركز مساعدة الدفع الفوري</h3>
+<span class="font-label-sm text-[11px] text-on-primary-container block">فريق المحاسبة والامتثال متصل الآن</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-primary-container mb-space-md">
+              هل استمر البنك برفض العملية؟ مستشار الدفع المالي متاح لإصدار رابط سداد مخصص أو إصدار فاتورة ضريبية رسمية لمؤسستك على الفور.
+            </p>
+<div class="flex flex-col gap-space-xs">
+<button class="w-full py-2.5 px-space-md rounded-lg bg-surface text-on-surface font-label-md text-label-md font-semibold hover:bg-surface-container transition-colors flex items-center justify-center gap-2" onclick="alert('جاري وصلك بمستشار العمليات المالية المشفر عبر المحادثة المباشرة (متوسط وقت الاستجابة: 42 ثانية)...')" type="button">
+<span class="material-symbols-outlined text-[18px] text-on-tertiary-container">chat</span>
+<span>بدء محادثة مباشرة مع مسؤول السداد</span>
+</button>
+<a class="w-full py-2.5 px-space-md rounded-lg bg-white/10 text-on-primary font-label-md text-label-md font-semibold hover:bg-white/20 transition-colors flex items-center justify-center gap-2" href="tel:920033418">
+<span class="material-symbols-outlined text-[18px]">call</span>
+<span dir="ltr">9200 33418</span>
+<span class="font-label-sm text-xs opacity-75">(الرقم المالي الموحد)</span>
+</a>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between text-on-primary-container text-xs">
+<span class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed animate-ping"></span>
+                متوسط وقت الرد: أقل من دقيقة
+              </span>
+<span>ساعات العمل: 24/7</span>
+</div>
+</div>
+<!-- Institutional Trust & Compliance Badges -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<span class="font-label-sm text-[11px] text-on-surface-variant font-semibold block text-center mb-space-sm">معايير الأمان والامتثال المصرفي المطبقة في مسار</span>
+<div class="grid grid-cols-3 gap-space-xs text-center">
+<div class="p-2 rounded bg-surface-container-low flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-[20px]">shield</span>
+<span class="font-label-sm text-[10px] text-on-surface font-semibold mt-1">PCI-DSS Level 1</span>
+</div>
+<div class="p-2 rounded bg-surface-container-low flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-on-tertiary-container text-[20px]">policy</span>
+<span class="font-label-sm text-[10px] text-on-surface font-semibold mt-1">SAMA Regulated</span>
+</div>
+<div class="p-2 rounded bg-surface-container-low flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[20px]">enhanced_encryption</span>
+<span class="font-label-sm text-[10px] text-on-surface font-semibold mt-1">256-Bit SSL</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive Demo Notification Modal -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-space-md backdrop-blur-sm" id="retryStatusModal">
+<div class="bg-surface-container-lowest rounded-2xl max-w-md w-full p-space-xl shadow-2xl text-center">
+<div class="w-16 h-16 rounded-full bg-secondary-container/20 text-on-secondary-container mx-auto flex items-center justify-center mb-space-md">
+<span class="material-symbols-outlined text-[36px] animate-spin">sync</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">جاري التفويض المصرفي السريع</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">
+        نقوم الآن بإرسال طلب المصادقة الثنائية (3DS) المباشر إلى البنك المصدر. يرجى إدخال الرمز الذي سيصلك عبر الرسائل النصية القصيرة.
+      </p>
+<div class="mt-space-lg bg-surface-container-low p-space-md rounded-lg flex items-center justify-center gap-2">
+<span class="font-label-md text-label-md text-on-surface">المرجع:</span>
+<span class="font-mono text-label-md font-bold text-secondary">MASAR-AUTH-99418</span>
+</div>
+<div class="mt-space-lg flex gap-space-sm justify-center">
+<button class="px-space-lg py-2.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container transition-colors" onclick="document.getElementById('retryStatusModal').classList.add('hidden')" type="button">
+          فهمت ذلك، في انتظار الرمز
+        </button>
+</div>
+</div>
+</div>
+<!-- Client-side Interactive Timer Script -->
+<script>
+    (function initRecoveryTimer() {
+      var minutes = 27;
+      var seconds = 45;
+      var timerElement = document.getElementById('countdownTimer');
+      if (!timerElement) return;
+
+      var interval = setInterval(function() {
+        if (seconds === 0) {
+          if (minutes === 0) {
+            clearInterval(interval);
+            timerElement.textContent = "00:00";
+            return;
+          }
+          minutes--;
+          seconds = 59;
+        } else {
+          seconds--;
+        }
+        var mStr = minutes < 10 ? "0" + minutes : minutes;
+        var sStr = seconds < 10 ? "0" + seconds : seconds;
+        timerElement.textContent = mStr + ":" + sStr;
+      }, 1000);
+    })();
+  </script>
+</div></main><footer class="w-full bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] mt-space-xl"><div class="max-w-7xl mx-auto px-margin-mobile lg:px-margin py-space-xl"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-space-xl pb-space-xl"><div class="lg:col-span-2 flex flex-col gap-space-md"><div class="flex items-center gap-space-sm"><img alt="Modern luxury tech logo for 'Masar' (مسار) - an upscale Gulf fintech and business planning digital platform. Sleek geometric letterform 'M' combined with an upward trajectory arrow / path dynamic symbol. Minimalist, premium, gold metallic and royal navy contrast, sharp vector precision.. Brand logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UOKP7sBVUAEf1xrufFdTJ14bKVmk1pUbIDQiGO9U1P5YlOzm_GALaqyKhzzN7bDYdnZNnOkm5TEfEoBKuARFuTjSHbqQyvHAXtAngiS6f3DxVNf-kzNhMpxsTAdemm3Q_feu8hQrk967nUTFPqoM6_68-VmQdkL-7bZGfU_8UIpXbMdjYXpg9gBeA80OJk66rhMFu-SWCSon1OJGDSHnhbkoAdyRT6w4VBXDskm3NNZ6vqlxszxoYtElU"/><span class="font-headline-md text-headline-md text-on-surface">منصة مسار المالية</span></div><p class="font-body-md text-body-md text-on-surface-variant max-w-md">منظومة الاستشارات الاستثمارية وتخطيط الأعمال الرائدة في المملكة العربية السعودية ودول مجلس التعاون الخليجي، مدعومة بأحدث أدوات النمذجة والامتثال المؤسسي.</p><div class="flex items-center gap-space-xs flex-wrap"><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">متوافق مع ZATCA</span><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">معايير SAMA</span><span class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">ضوابط NCA للأمن السيبراني</span></div></div><div class="flex flex-col gap-space-sm"><span class="font-title-md text-title-md text-on-surface font-semibold">الحلول والنماذج</span><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="store" href="store.html">دراسات الجدوى المالية</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="store" href="store.html">نماذج التقييم الاستثماري</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="store" href="store.html">هياكل التدفقات النقدية</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="store" href="store.html">قوالب العروض للمستثمرين</a></div><div class="flex flex-col gap-space-sm"><span class="font-title-md text-title-md text-on-surface font-semibold">المعرفة والاستشارات</span><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="knowledge-hub" href="knowledge.html">التقارير الاقتصادية والقطاعية</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="knowledge-hub" href="knowledge.html">حاسبة العائد على الاستثمار</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="advisory" href="advisory-booking.html">طلب مستشار مالي معتمد</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="advisory" href="advisory-booking.html">شراكات الصناديق السيادية</a></div><div class="flex flex-col gap-space-sm"><span class="font-title-md text-title-md text-on-surface font-semibold">الحوكمة والسياسات</span><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="compliance-and-security" href="privacy.html">سياسة حماية البيانات (PDPL)</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="compliance-and-security" href="privacy.html">شهادات الامتثال والترخيص</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="compliance-and-security" href="privacy.html">شروط الخدمة والتعاقد</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="compliance-and-security" href="privacy.html">الإفصاح وإخلاء المسؤولية</a></div></div><div class="pt-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-secondary text-[20px]">verified_user</span><span class="font-body-sm text-body-sm text-on-surface-variant">© 2025 منصة مسار للاستشارات المالية والتقنية. جميع الحقوق محفوظة في المملكة العربية السعودية ودول مجلس التعاون.</span></div><div class="flex items-center gap-space-md"><span class="font-label-sm text-label-sm text-on-surface-variant">الرياض - مركز الملك عبد الله المالي (KAFD)</span></div></div></div></footer><script src="assets/site.js"></script></body></html>
