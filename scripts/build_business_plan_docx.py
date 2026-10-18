@@ -26,6 +26,7 @@ from docx.shared import Cm, Pt, RGBColor                       # noqa: E402
 
 from scripts import _ooxml as X                                # noqa: E402
 from business_plan import content as K                         # noqa: E402
+from business_plan.roles import BY_ROLE                        # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FIGS = os.path.join(ROOT, "business_plan", "figures")
@@ -134,11 +135,12 @@ def para(doc, markup="", size=9.8, colour=INK, bold=False, italic=False,
         p.alignment = align
     if keep:
         pf.keep_with_next = True
-    # Widow and orphan control, plus keeping a paragraph's lines together: a
-    # two-line tail stranded on its own page reads as a production error.
+    # Widow and orphan control only. Setting keepLines as well would make every
+    # paragraph atomic, so a paragraph that does not fit jumps whole to the next
+    # page and leaves a near-empty one behind it — which is a worse artefact than
+    # the split it was meant to prevent. Headings keep with the next paragraph
+    # instead, via `keep`, which is where that behaviour actually belongs.
     X.insert_ordered(p._p.get_or_add_pPr(), "w:widowControl", X.PPR,
-                     {"w:val": "true"})
-    X.insert_ordered(p._p.get_or_add_pPr(), "w:keepLines", X.PPR,
                      {"w:val": "true"})
     write(p, markup, size, colour, bold, italic, spacing)
     return p
@@ -356,6 +358,39 @@ def figure(doc, name, caption):
     return p
 
 
+def role_cards(doc, names):
+    """One card per role: purpose, responsibilities, and the measure it is held to."""
+    for name in names:
+        role, reports_to, purpose, duties, measure = BY_ROLE[name]
+        p = para(doc, role, size=11.4, colour=INK, bold=True, before=12, after=1,
+                 indent=0.3, keep=True)
+        left_bar(p, UV_HEX, size="24")
+        p2 = para(doc, f"Reports to {reports_to}", size=8.2, colour=UV, bold=True,
+                  after=3, indent=0.3, keep=True)
+        left_bar(p2, UV_HEX, size="24")
+        p3 = para(doc, purpose, size=9.6, colour=SECOND, italic=True, after=5,
+                  indent=0.3)
+        left_bar(p3, HAIR_HEX)
+        for d in duties:
+            q = doc.add_paragraph()
+            pf = q.paragraph_format
+            pf.left_indent = Cm(1.02)
+            pf.first_line_indent = Cm(-0.42)
+            pf.space_after = Pt(3)
+            pf.line_spacing = 1.3
+            r = q.add_run("\u2013  ")
+            r.font.name = FONT
+            r.font.size = Pt(9.3)
+            r.font.color.rgb = FAINT
+            X.run_cs(r, FALLBACK, 9.3)
+            write(q, d, 9.3)
+            left_bar(q, HAIR_HEX)
+        pm = para(doc, measure, size=8.8, colour=INK, bold=True, before=3,
+                  after=9, indent=0.3)
+        shade_par(pm, WASH_HEX)
+        left_bar(pm, LIME_HEX, size="24")
+
+
 RENDER = {
     "lead": lambda d, b: lead(d, b[1]),
     "h2": lambda d, b: h2(d, b[1]),
@@ -369,6 +404,7 @@ RENDER = {
     "kpi": lambda d, b: kpi(d, b[1]),
     "table": lambda d, b: table(d, b[1], b[2], b[3] if len(b) > 3 else None),
     "fig": lambda d, b: figure(d, b[1], b[2]),
+    "roles": lambda d, b: role_cards(d, b[1]),
     "pb": lambda d, b: page_break(d),
 }
 
@@ -489,35 +525,29 @@ def contents(doc):
     X.tbl_borders(t, color="FFFFFF", sz="2")
     tbl_fixed(t, [0.95, 6.45, 9.2])
     blurbs = {
-        "Executive summary": "Six engines, what each is worth, and why "
-                             "subscriptions are the smallest",
-        "The company and the product": "What StartPad is, and what makes it "
-                                       "sellable to an institution",
-        "Market study": "TAM and SAM built per engine, from the organisations "
-                        "that sign the contract",
-        "The six revenue engines": "What each sells, who signs, what it is worth "
-                                   "and how it scales",
-        "Engine 1 — University cohorts and licences":
-            "The flagship: pilot to cohort to parallel groups to faculty licence",
-        "Engine 2 — Sponsored seats in national initiatives":
-            "The scale engine: million-founder programmes with no delivery capacity",
-        "Engine 3 — Sponsored competitions":
-            "Why a competition is a revenue line, not a marketing cost",
-        "Competition and positioning": "What a buyer uses instead, and why it does "
-                                       "not close the gap",
-        "Go-to-market plan": "Five moves, four phases, two markets, and the "
-                             "institutional pipeline",
-        "Demand generation": "Making a dean take the meeting — not buying "
-                             "consumers",
-        "Organisation and HR plan": "Every role, when it is hired, what it costs "
-                                    "and why in that order",
-        "Operational plan": "What has to be true for the go-to-market plan to be "
-                            "deliverable",
-        "Financial plan": "Three years of revenue, cost and cash, and the raise",
-        "Risks": "The ones most likely to break this, and what absorbs each",
-        "Milestones": "What has to be true at the end of each quarter",
-        "Appendix — assumptions and sources": "Every input, so the inputs can be "
-                                              "argued with",
+        "Executive Summary": "The company, the problem, the opportunity and the "
+                             "eight engines, in brief",
+        "Company Description": "Mission, vision, values, and what has to be true "
+                               "for this to work",
+        "Market Analysis": "Segments, buyer universe, size, drivers, gaps and "
+                           "the regulatory frame",
+        "Competitive Analysis": "Who a buyer uses instead, how we compare, and "
+                                "what is actually hard to copy",
+        "Products and Services": "What is sold, in what format, at what price "
+                                 "and anchored against what",
+        "Marketing Strategy": "Two customer journeys, the channels that produce "
+                              "institutional pipeline, and the brand",
+        "Sales Strategy": "Four selling motions, the team that runs them, and "
+                          "the pipeline they feed",
+        "Go-to-Market Roadmap": "Eight engines, eight gates, twelve quarters — "
+                                "and the critical path through them",
+        "Operations Plan": "How a contract becomes a delivered cohort, and what "
+                           "breaks first if it does not",
+        "Management and Organization": "A deliberately small team, with every "
+                                       "role described in full",
+        "Strategic Analysis": "SWOT, PESTLE, risk and what we do when something "
+                              "goes wrong",
+        "Appendix": "Every figure behind the plan, and what it does not claim",
     }
     for i, (name, _) in enumerate(K.SECTIONS):
         row = t.rows[i]

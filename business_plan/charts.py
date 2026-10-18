@@ -95,126 +95,592 @@ def _clean(ax, grid="x"):
 #  1 · TAM / SAM / SOM
 # =====================================================================
 
-ENGINE_COLOURS = [UV, "#0071ED", "#00ABD4", "#00DC91", "#A1EE58", "#D5D8E0"]
-ENGINE_SHORT = ["University cohorts\nand licences", "Sponsored seats in\nnational initiatives",
-                "Sponsored\ncompetitions", "Corporate and\nCSR programmes",
-                "Programme and\nincubator seats", "Founder\nsubscriptions"]
-ENGINE_1LINE = ["University cohorts and licences", "Sponsored seats in initiatives",
+#
+# Every diagram below is drawn on a coordinate system where one data unit is one
+# inch, so a chip's width can be converted to a character count and the text inside
+# it can be broken to fit. Wrapping by measurement rather than by hand is the whole
+# reason these diagrams survive an edit to their own content.
+#
+_CHAR_W = 0.565     # mean glyph width as a fraction of point size, DejaVu Sans,
+                    # deliberately over-estimated so a label breaks rather than clips
+PAD = 0.075         # inches of padding inside a chip
+LINE = 1.52         # line spacing multiple
+
+
+def _canvas(w, h):
+    fig, ax = plt.subplots(figsize=(w, h))
+    ax.set_xlim(0, w)
+    ax.set_ylim(0, h)
+    ax.axis("off")
+    fig.subplots_adjust(left=0, right=1, top=1, bottom=0)
+    return fig, ax
+
+
+def _wrap(text, size, width_in):
+    """Break text to a pixel width without ever dropping a word."""
+    cols = max(4, int(width_in * 72 / (size * _CHAR_W)))
+    out = []
+    for para in str(text).split("\n"):
+        line = ""
+        for word in para.split():
+            trial = f"{line} {word}".strip()
+            if len(trial) <= cols or not line:
+                line = trial
+            else:
+                out.append(line)
+                line = word
+        out.append(line)
+    return out
+
+
+def _lines_h(lines, size):
+    return len(lines) * size * LINE / 72
+
+
+def _ink_for(fill):
+    """Pick type colour by measured luminance, never by eye.
+
+    This is what keeps type off lime: lime measures 1.29:1 against white, so white
+    type on lime is unreadable. The rule is in the brand, and here it is enforced
+    rather than remembered.
+    """
+    h = fill.lstrip("#")
+    r, g, b = (int(h[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    lum = 0.2126 * r + 0.7152 * g + 0.0722 * b
+    return (INK, "#2A3040") if lum > 0.55 else (WHITE, "#E7E9F6")
+
+
+def _chip(ax, x, y, w, h, title, body, fill, tsize=8.4, bsize=7.1, tag=None,
+          tcol=None, bcol=None, centre=False, vcentre=False):
+    ax.add_patch(FancyBboxPatch((x, y), w, h,
+                                boxstyle="round,pad=0,rounding_size=0.05",
+                                facecolor=fill, edgecolor="none", zorder=3))
+    auto_t, auto_b = _ink_for(fill)
+    tcol = tcol or auto_t
+    bcol = bcol or auto_b
+    inner = w - 2 * PAD
+    tx = x + w / 2 if centre else x + PAD
+    ha = "center" if centre else "left"
+    if vcentre:
+        # Measure the whole stack first, then start it so the block sits on the
+        # chip's centre line rather than hanging from its top edge.
+        block = 0.0
+        if tag:
+            block += 6.3 * LINE / 72
+        if title:
+            block += _lines_h(_wrap(title, tsize, inner), tsize) + (0.035 if body else 0)
+        if body:
+            block += _lines_h(_wrap(body, bsize, inner), bsize)
+        ty = y + h / 2 + block / 2
+    else:
+        ty = y + h - PAD
+    if tag:
+        ax.text(tx, ty, tag, fontsize=6.3, color=bcol, fontweight="bold",
+                va="top", ha=ha, zorder=4)
+        ty -= 6.3 * LINE / 72
+    if title:
+        tl = _wrap(title, tsize, inner)
+        ax.text(tx, ty, "\n".join(tl), fontsize=tsize, fontweight="bold",
+                color=tcol, va="top", ha=ha, zorder=4, linespacing=LINE)
+        ty -= _lines_h(tl, tsize) + 0.035
+    if body:
+        bl = _wrap(body, bsize, inner)
+        ax.text(tx, ty, "\n".join(bl), fontsize=bsize, color=bcol,
+                va="top", ha=ha, zorder=4, linespacing=LINE)
+
+
+def _arrow(ax, x1, y1, x2, y2, col="#C3C8D6"):
+    ax.add_patch(FancyArrowPatch((x1, y1), (x2, y2), arrowstyle="-|>",
+                                 mutation_scale=8, color=col,
+                                 linewidth=1.0, zorder=2))
+
+
+ENGINE_COLOURS = [UV, "#0071ED", "#0096DF", "#00B8C8", "#00D3A4", "#2CE086",
+                  "#A1EE58", "#D5D8E0"]
+ENGINE_1LINE = ["University cohorts and licences", "Schools and technical education",
+                "National initiatives and government", "NGO, donor and foundations",
                 "Sponsored competitions", "Corporate and CSR programmes",
                 "Programme and incubator seats", "Founder subscriptions"]
 
 
 # =====================================================================
-#  1 · TAM and SAM, engine by engine
+#  1 · The population we serve
+# =====================================================================
+
+def fig_segments():
+    m = M.market()
+    rows = sorted(m["segments"], key=lambda r: -r[1])
+    fig, ax = plt.subplots(figsize=(7.1, 2.6))
+    for i, (label, val) in enumerate(rows):
+        ax.barh(i, val / 1e6, 0.54, color=spec(i, len(rows)), zorder=3)
+        ax.text(val / 1e6 + 0.08, i, f"{val/1e6:,.2f}m", va="center",
+                fontsize=8.2, color=INK, fontweight="bold")
+    ax.set_yticks(range(len(rows)))
+    ax.set_yticklabels([r[0] for r in rows], fontsize=8.2, color=INK)
+    ax.invert_yaxis()
+    ax.set_xlim(0, max(r[1] for r in rows) / 1e6 * 1.22)
+    ax.set_xlabel("People, millions")
+    _clean(ax, grid="x")
+    ax.text(max(r[1] for r in rows) / 1e6 * 1.2, len(rows) - 0.35,
+            f"{m['people']/1e6:,.1f}m in total, Egypt and Saudi Arabia",
+            ha="right", fontsize=7.8, color=INK2, fontweight="bold")
+    return _save(fig, "segments")
+
+
+# =====================================================================
+#  2 · TAM and SAM, engine by engine
 # =====================================================================
 
 def fig_tam_sam():
     m = M.market()
     rows = m["rows"]
-    fig, ax = plt.subplots(figsize=(7.1, 3.5))
-    y = range(len(rows))
+    fig, ax = plt.subplots(figsize=(7.1, 3.8))
     h = 0.36
     for i, (r, c) in enumerate(zip(rows, ENGINE_COLOURS)):
         ax.barh(i + h / 2, r["tam"] / 1e6, h, color=HAIR, zorder=3)
         ax.barh(i - h / 2, r["sam"] / 1e6, h, color=c, zorder=4)
-        ax.text(r["tam"] / 1e6 + 0.5, i + h / 2, f"${r['tam']/1e6:,.1f}m",
+        ax.text(r["tam"] / 1e6 + 1.0, i + h / 2, f"${r['tam']/1e6:,.1f}m",
                 va="center", fontsize=7.4, color=MUTED)
-        ax.text(r["sam"] / 1e6 + 0.5, i - h / 2, f"${r['sam']/1e6:,.1f}m",
+        ax.text(r["sam"] / 1e6 + 1.0, i - h / 2, f"${r['sam']/1e6:,.1f}m",
                 va="center", fontsize=7.6, color=INK, fontweight="bold")
-    ax.set_yticks(list(y))
-    ax.set_yticklabels(ENGINE_1LINE, fontsize=8.2, color=INK)
+    ax.set_yticks(range(len(rows)))
+    ax.set_yticklabels(ENGINE_1LINE, fontsize=8.0, color=INK)
     ax.invert_yaxis()
     ax.set_xlabel("USD millions a year")
-    ax.set_xlim(0, max(r["tam"] for r in rows) / 1e6 * 1.18)
+    ax.set_xlim(0, max(r["tam"] for r in rows) / 1e6 * 1.2)
     _clean(ax, grid="x")
-    htam = Rectangle((0, 0), 1, 1, color=HAIR)
-    hsam = Rectangle((0, 0), 1, 1, color=UV)
-    ax.legend([htam, hsam], ["TAM — the whole universe",
-                             "SAM — fits, reachable, has a budget"],
+    ax.legend([Rectangle((0, 0), 1, 1, color=HAIR),
+               Rectangle((0, 0), 1, 1, color=UV)],
+              ["TAM — the whole universe", "SAM — fits, reachable, has a budget"],
               frameon=False, fontsize=7.8, loc="lower right", labelcolor=INK2)
     return _save(fig, "tam_sam")
 
 
-def fig_buyer_funnel():
-    """The institutional buying units, filtered down to the ones we can serve."""
-    m = M.market()
-    rows = m["buyer_funnel"]
-    fig, ax = _canvas(7.1, 1.95)
-    top = rows[0][1]
-    for i, (label, val) in enumerate(rows):
-        w = (val / top) * 3.1
-        y = len(rows) - i - 1
-        ax.add_patch(FancyBboxPatch((3.5, y * 0.62 + 0.14), w, 0.46,
-                                    boxstyle="round,pad=0,rounding_size=0.04",
-                                    facecolor=spec(i, len(rows)), edgecolor="none",
-                                    zorder=3))
-        ax.text(3.42, y * 0.62 + 0.37, label, ha="right", va="center",
-                fontsize=8.0, color=INK)
-        ax.text(3.5 + w + 0.1, y * 0.62 + 0.37,
-                f"{val:,.0f}   ({val/top*100:,.0f}%)", ha="left", va="center",
-                fontsize=8.0, fontweight="bold", color=INK)
-    return _save(fig, "buyer_funnel")
-
-
-# =====================================================================
-#  2 · Revenue by engine
-# =====================================================================
-
-def fig_revenue_engines():
-    yrs = M.projection()
-    keys = M.ENGINE_NAMES
-    fig, ax = plt.subplots(figsize=(7.1, 3.5))
-    x = range(len(yrs))
-    bottoms = [0.0] * len(yrs)
-    for k, c, s in zip(keys, ENGINE_COLOURS, ENGINE_1LINE):
-        vals = [y["lines"][k] for y in yrs]
-        ax.bar(x, vals, 0.5, bottom=bottoms, color=c, label=s,
-               edgecolor=WHITE, linewidth=1.2, zorder=3)
-        bottoms = [b + v for b, v in zip(bottoms, vals)]
-    # Offsets are measured against the tallest bar, not against each bar: a
-    # proportional offset puts the two labels on top of each other on the short one.
-    top = max(y["revenue"] for y in yrs)
-    for i, y in enumerate(yrs):
-        ax.text(i, y["revenue"] + top * 0.058, _money(y["revenue"]), ha="center",
-                fontsize=10.5, fontweight="bold", color=INK)
-        ax.text(i, y["revenue"] + top * 0.018,
-                f"{y['institutional_share']*100:.0f}% institutional", ha="center",
-                fontsize=7.2, color=MUTED)
-    ax.set_xticks(list(x))
-    ax.set_xticklabels([f"Year {y['year']}\n{2025+y['year']}/{26+y['year']}"
-                        for y in yrs], fontsize=8.6, color=INK)
-    ax.set_ylabel("Recognised revenue, USD")
-    ax.set_ylim(0, top * 1.19)
-    ax.yaxis.set_major_formatter(lambda v, p: f"${v/1e6:,.0f}m" if v else "0")
-    _clean(ax, grid="y")
-    ax.legend(frameon=False, fontsize=7.4, loc="upper left",
-              bbox_to_anchor=(0.005, 0.90), labelcolor=INK2)
-    return _save(fig, "revenue_engines")
-
-
 def fig_engine_mix():
-    """Where the revenue comes from, and how little of it is subscriptions."""
     yrs = M.projection()
-    fig, axes = plt.subplots(1, 3, figsize=(7.1, 2.55))
+    fig, axes = plt.subplots(1, 3, figsize=(7.1, 2.7))
     for ax, y in zip(axes, yrs):
         vals = [y["lines"][k] for k in M.ENGINE_NAMES]
         ax.pie(vals, colors=ENGINE_COLOURS, startangle=90,
-               wedgeprops=dict(width=0.42, edgecolor=WHITE, linewidth=1.6))
+               wedgeprops=dict(width=0.42, edgecolor=WHITE, linewidth=1.5))
         ax.text(0, 0.12, f"Year {y['year']}", ha="center", va="center",
                 fontsize=9.5, fontweight="bold", color=INK)
-        ax.text(0, -0.15, _money(y["revenue"]), ha="center", va="center",
-                fontsize=8, color=MUTED)
-        ax.text(0, -1.33, f"{y['institutional_share']*100:.0f}% institutional",
-                ha="center", fontsize=7.6, color=INK2, fontweight="bold")
-    axes[1].legend(ENGINE_1LINE, frameon=False, fontsize=6.6, ncol=3,
-                   loc="upper center", bbox_to_anchor=(0.5, -0.06),
-                   labelcolor=INK2, handlelength=1.0, columnspacing=0.9)
+        ax.text(0, -0.16, f"{y['institutional_share']*100:.0f}%", ha="center",
+                va="center", fontsize=8, color=MUTED)
+        ax.text(0, -1.34, "institutional", ha="center", fontsize=7.4, color=INK2)
+    axes[1].legend(ENGINE_1LINE, frameon=False, fontsize=6.4, ncol=4,
+                   loc="upper center", bbox_to_anchor=(0.5, -0.04),
+                   labelcolor=INK2, handlelength=1.0, columnspacing=0.8)
     return _save(fig, "engine_mix")
 
 
 # =====================================================================
-#  3 · What each engine is worth, and what it costs to win
+#  3 · The roadmap — when each engine switches on
 # =====================================================================
+
+def fig_roadmap():
+    """Twelve quarters. An engine's bar starts at its gate, not at day one."""
+    qs = M.QUARTERS
+    gates = M.ENGINE_GATES
+    Q = M.QUARTERLY
+    series = [
+        ("University cohorts", "uni_cohorts_eg", "uni_cohorts_ksa"),
+        ("Faculty licences", "uni_licences", None),
+        ("School and technical cohorts", "school_cohorts", "tvet_cohorts"),
+        ("Sponsored competitions", "competitions", None),
+        ("NGO and donor programmes", "ngo_programmes", None),
+        ("National initiative seats", "initiative_seats", None),
+        ("Corporate and CSR programmes", "corporates", None),
+        ("Programme and incubator seats", "programmes", None),
+    ]
+    W, H = 7.1, 3.95
+    fig, ax = _canvas(W, H)
+    left = 2.05
+    cell = (W - left - 0.06) / 12
+    top = H - 0.52
+
+    # Year bands and quarter labels
+    for yi, (y0, y1) in enumerate([(0, 4), (4, 8), (8, 12)]):
+        x = left + y0 * cell
+        ax.add_patch(Rectangle((x, top + 0.30), (y1 - y0) * cell - 0.04, 0.16,
+                               color=[UV, "#0096DF", "#00D3A4"][yi], zorder=3))
+        ax.text(x + ((y1 - y0) * cell) / 2, top + 0.54, f"YEAR {yi+1}",
+                fontsize=6.6, color=INK2, fontweight="bold", ha="center")
+    for i, (label, phase, _) in enumerate(qs):
+        x = left + i * cell
+        ax.text(x + cell / 2, top + 0.20, label.split()[0], fontsize=5.9,
+                color=MUTED, ha="center", va="top")
+        ax.text(x + cell / 2, top + 0.07, phase, fontsize=5.9, color=INK2,
+                ha="center", va="top", fontweight="bold")
+
+    rowh = (top - 0.42) / len(series)
+    for r, (name, k1, k2) in enumerate(series):
+        y = top - 0.24 - (r + 1) * rowh
+        vals = [Q[k1][i] + (Q[k2][i] if k2 else 0) for i in range(12)]
+        peak = max(vals) or 1
+        ax.text(left - 0.10, y + rowh * 0.42, name, fontsize=7.1, color=INK,
+                ha="right", va="center")
+        first = next((i for i, v in enumerate(vals) if v > 0), None)
+        for i, v in enumerate(vals):
+            x = left + i * cell
+            if v <= 0:
+                ax.add_patch(Rectangle((x + 0.02, y + rowh * 0.30), cell - 0.05,
+                                       rowh * 0.26, color="#EFF1F5", zorder=2))
+                continue
+            hgt = rowh * (0.22 + 0.48 * (v / peak))
+            ax.add_patch(FancyBboxPatch((x + 0.02, y + rowh * 0.16), cell - 0.05, hgt,
+                                        boxstyle="round,pad=0,rounding_size=0.02",
+                                        facecolor=spec(r, len(series)),
+                                        edgecolor="none", zorder=3))
+        if first is not None:
+            # The gate marker sits on the first active bar, inside its own row.
+            # Placing it above the bar drifts it into the row above and reads as
+            # belonging to the wrong engine.
+            cy = y + rowh * 0.40
+            ax.add_patch(plt.Circle((left + first * cell + cell / 2, cy),
+                                    0.055, color=INK, zorder=6))
+            ax.text(left + first * cell + cell / 2, cy, "G", fontsize=5.0,
+                    color=WHITE, ha="center", va="center", fontweight="bold",
+                    zorder=7)
+    ax.text(left, 0.11, "G  marks the gate — the quarter an engine can first earn, "
+            "once its prerequisite is met.  Bar height is volume;  a grey cell "
+            "means the engine is not yet open.",
+            fontsize=6.5, color=MUTED, va="center")
+    return _save(fig, "roadmap")
+
+
+def fig_gates():
+    """What has to be true before each engine can sell anything."""
+    gates = M.ENGINE_GATES[:8]
+    W, H = 7.1, 4.3
+    fig, ax = _canvas(W, H)
+    rowh = (H - 0.18) / len(gates)
+    for i, (name, qi, prereq, why) in enumerate(gates):
+        y = H - 0.08 - (i + 1) * rowh
+        ax.add_patch(FancyBboxPatch((0, y + 0.04), W, rowh - 0.08,
+                                    boxstyle="round,pad=0,rounding_size=0.04",
+                                    facecolor=WASH if i % 2 else "#FFFFFF",
+                                    edgecolor="none", zorder=2))
+        ax.add_patch(Rectangle((0, y + 0.04), 0.07, rowh - 0.08,
+                               color=spec(i, len(gates)), zorder=3))
+        ax.text(0.17, y + rowh - 0.18, name, fontsize=8.0, fontweight="bold",
+                color=INK, va="top", zorder=4)
+        q = M.QUARTERS[qi]
+        ax.text(0.17, y + rowh - 0.36, f"Opens {q[0]} · {q[1]} quarter",
+                fontsize=6.5, color=UV, va="top", zorder=4, fontweight="bold")
+        ax.text(2.35, y + rowh - 0.18,
+                "\n".join(_wrap("GATE  " + prereq, 6.8, 4.55)),
+                fontsize=6.8, color=INK, va="top", zorder=4, linespacing=1.45)
+        gl = len(_wrap("GATE  " + prereq, 6.8, 4.55))
+        ax.text(2.35, y + rowh - 0.20 - gl * 6.8 * 1.45 / 72,
+                "\n".join(_wrap(why, 6.5, 4.55)),
+                fontsize=6.5, color=MUTED, va="top", zorder=4, linespacing=1.45)
+    return _save(fig, "gates")
+
+
+def fig_quarterly_volumes():
+    """What the company is physically delivering, quarter by quarter."""
+    Q = M.QUARTERLY
+    fig, ax = plt.subplots(figsize=(7.1, 3.0))
+    x = range(12)
+    uni = [Q["uni_cohorts_eg"][i] + Q["uni_cohorts_ksa"][i] + Q["uni_pilots"][i]
+           for i in x]
+    sch = [Q["school_cohorts"][i] for i in x]
+    tv = [Q["tvet_cohorts"][i] for i in x]
+    comp = [Q["competitions"][i] for i in x]
+    ngo = [Q["ngo_programmes"][i] for i in x]
+    series = [("University cohorts", uni, UV), ("School cohorts", sch, "#0096DF"),
+              ("Technical cohorts", tv, "#00C8B6"),
+              ("Competitions", comp, "#6CEA6B"), ("NGO programmes", ngo, LIME)]
+    bottoms = [0] * 12
+    for name, vals, c in series:
+        ax.bar(x, vals, 0.62, bottom=bottoms, color=c, label=name,
+               edgecolor=WHITE, linewidth=0.8, zorder=3)
+        bottoms = [b + v for b, v in zip(bottoms, vals)]
+    for i in x:
+        if bottoms[i]:
+            ax.text(i, bottoms[i] + 2.5, f"{bottoms[i]:.0f}", ha="center",
+                    fontsize=6.8, color=INK, fontweight="bold")
+    ax.set_xticks(list(x))
+    ax.set_xticklabels([q[0].replace(" ", "\n") for q in M.QUARTERS], fontsize=6.4,
+                       color=INK2)
+    ax.set_ylabel("Delivery events in the quarter")
+    ax.set_ylim(0, max(bottoms) * 1.16)
+    _clean(ax, grid="y")
+    for b in (3.5, 7.5):
+        ax.axvline(b, color=HAIR, linewidth=0.9, zorder=1)
+    ax.legend(frameon=False, fontsize=7.2, loc="upper left", labelcolor=INK2)
+    return _save(fig, "quarterly_volumes")
+
+
+# =====================================================================
+#  4 · Marketing — the customer journey
+# =====================================================================
+
+def fig_customer_journey():
+    """Two journeys, because there are two customers and only one of them pays."""
+    W, H = 7.1, 3.25
+    fig, ax = _canvas(W, H)
+    inst = [("AWARE", "Hears of us", "A founder story, a competition on a "
+             "neighbouring campus, a ministry naming us"),
+            ("INTERESTED", "Takes the meeting", "A cohort report from an "
+             "institution like theirs"),
+            ("EVALUATING", "Runs a pilot", "A free cohort, their students, "
+             "their room"),
+            ("COMMITTED", "Signs", "One contract: bootcamp, workshops, seats"),
+            ("ADVOCATE", "Renews and refers", "Their own report, and a named "
+             "peer who asks about it")]
+    youth = [("AWARE", "Sees it", "A reel, an ambassador, a workshop, a "
+              "competition poster"),
+             ("JOINS", "Free account", "One tap, no payment"),
+             ("ACTIVATES", "Finishes Mission 01", "Live, in a room, with a "
+              "facilitator"),
+             ("PROGRESSES", "Missions 02–10", "Inside a paid cohort or a "
+              "sponsored seat"),
+             ("PAYS", "Pro or Team", "To finish 11–15 after the programme ends")]
+    gap = 0.09
+    w = (W - 1.15 - 4 * gap) / 5
+    for ri, (title, rows, col) in enumerate(
+            [("THE BUYER", inst, UV), ("THE YOUNG PERSON", youth, "#00B8C8")]):
+        ytop = H - 0.18 - ri * 1.62
+        ax.text(0, ytop - 0.14, title, fontsize=7.0, color=col, fontweight="bold",
+                va="top")
+        for i, (stage, act, trigger) in enumerate(rows):
+            x = 1.15 + i * (w + gap)
+            _chip(ax, x, ytop - 1.44, w, 1.26, act, trigger,
+                  spec(i, 5) if ri == 0 else WASH, tag=stage, tsize=8.0, bsize=6.3)
+            if i < 4:
+                _arrow(ax, x + w + 0.01, ytop - 0.80, x + w + gap - 0.01, ytop - 0.80)
+    ax.text(0, 0.22, "The two journeys meet in the room: the buyer's pilot is the "
+            "young person's activation.", fontsize=6.9, color=MUTED, va="center")
+    return _save(fig, "customer_journey")
+
+
+def fig_channel_mix():
+    """Where institutional pipeline comes from, and what each channel is for."""
+    rows = [("Ambassador intelligence", 26, "Which campus has budget this term"),
+            ("Founder stories and podcast", 21, "Makes a dean take the meeting"),
+            ("Competitions on campus", 18, "Enters through the door with no budget"),
+            ("Ecosystem events and conferences", 15, "Where partnerships start"),
+            ("Referral from an existing partner", 12, "The cheapest meeting we get"),
+            ("Direct outreach", 8, "Works only once the others have warmed it")]
+    fig, ax = plt.subplots(figsize=(7.1, 2.6))
+    for i, (label, val, why) in enumerate(rows):
+        ax.barh(i, val, 0.5, color=spec(i, len(rows)), zorder=3)
+        ax.text(val + 0.7, i + 0.07, f"{val}%", va="center", fontsize=8,
+                color=INK, fontweight="bold")
+        ax.text(val + 3.4, i + 0.07, why, va="center", fontsize=6.9, color=MUTED)
+    ax.set_yticks(range(len(rows)))
+    ax.set_yticklabels([r[0] for r in rows], fontsize=8, color=INK)
+    ax.invert_yaxis()
+    ax.set_xlim(0, 52)
+    ax.set_xticks([])
+    ax.spines["bottom"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+    ax.text(0, -0.95, "Share of year-one institutional pipeline by origin",
+            fontsize=6.9, color=MUTED)
+    return _save(fig, "channel_mix")
+
+
+# =====================================================================
+#  5 · Strategic analysis
+# =====================================================================
+
+def fig_swot():
+    quad = [
+        ("STRENGTHS", UV, [
+            "A sequenced method with a review gate, not a content library",
+            "Bilingual and MENA-composed, not translated",
+            "The institutional workspace and cohort report — a reporting line",
+            "Eight engines, so no single buyer type is existential"]),
+        ("WEAKNESSES", "#0096DF", [
+            "Delivery depends on certified facilitators who do not exist yet",
+            "No signed national programme to point to on day one",
+            "Founder-dependent: the CEO personally opens every cohort",
+            "Unproven at school age, where safeguarding rules differ"]),
+        ("OPPORTUNITIES", "#00D3A4", [
+            "Public million-scale targets with no delivery capacity behind them",
+            "Egypt's technical education reform needs employability content",
+            "Competitions are run everywhere and run badly",
+            "Capital concentrating in the Gulf while founders concentrate in Egypt"]),
+        ("THREATS", LIME, [
+            "A university builds its own programme in-house",
+            "Consultancies and event agencies cut price on the cohort",
+            "A government programme contracts a single incumbent",
+            "Currency and budget shocks hitting CSR and donor spend first"]),
+    ]
+    W, H = 7.1, 3.9
+    fig, ax = _canvas(W, H)
+    gap = 0.12
+    w = (W - gap) / 2
+    h = (H - gap) / 2
+    for i, (title, col, items) in enumerate(quad):
+        x = (i % 2) * (w + gap)
+        y = H - h if i < 2 else 0
+        ax.add_patch(FancyBboxPatch((x, y), w, h,
+                                    boxstyle="round,pad=0,rounding_size=0.05",
+                                    facecolor=WASH, edgecolor="none", zorder=2))
+        ax.add_patch(Rectangle((x, y + h - 0.12), w, 0.12, color=col, zorder=3))
+        ax.text(x + PAD, y + h - 0.26, title, fontsize=8.2, fontweight="bold",
+                color=INK, va="top", zorder=4)
+        yy = y + h - 0.52
+        for it in items:
+            lines = _wrap(it, 6.9, w - 2 * PAD - 0.14)
+            ax.text(x + PAD, yy, "▪", fontsize=6.0, color=col, va="top", zorder=4)
+            ax.text(x + PAD + 0.14, yy, "\n".join(lines), fontsize=6.9,
+                    color=INK2, va="top", zorder=4, linespacing=1.45)
+            yy -= _lines_h(lines, 6.9) + 0.07
+    return _save(fig, "swot")
+
+
+def fig_porter():
+    forces = [
+        ("Rivalry among existing competitors", "MODERATE",
+         "Training consultancies and in-house university programmes compete on "
+         "price and relationship, not on method. No regional platform does what "
+         "StartPad does.", 0.55),
+        ("Threat of new entrants", "MODERATE TO HIGH",
+         "The software is replicable. The certified facilitator pool, the "
+         "bilingual curriculum and the institutional relationships are not — and "
+         "they take years.", 0.65),
+        ("Bargaining power of buyers", "HIGH",
+         "Universities and ministries are slow, price-sensitive and used to being "
+         "courted. Mitigated by the pilot-to-licence ladder and switching cost "
+         "once a cohort record exists.", 0.78),
+        ("Bargaining power of suppliers", "LOW TO MODERATE",
+         "Facilitators are the supply, and they can be hired by consultancies. "
+         "Certification, tiering and a career path are the defence.", 0.42),
+        ("Threat of substitutes", "MODERATE",
+         "Free content, generic AI tools and short courses. None of them produce "
+         "a reportable cohort record, which is what the buyer is actually "
+         "purchasing.", 0.50),
+    ]
+    W, H = 7.1, 3.5
+    fig, ax = _canvas(W, H)
+    rowh = (H - 0.10) / len(forces)
+    for i, (name, level, body, score) in enumerate(forces):
+        y = H - 0.05 - (i + 1) * rowh
+        ax.add_patch(FancyBboxPatch((0, y + 0.05), W, rowh - 0.10,
+                                    boxstyle="round,pad=0,rounding_size=0.04",
+                                    facecolor=WASH if i % 2 else WHITE,
+                                    edgecolor="none", zorder=2))
+        ax.text(PAD, y + rowh - 0.20, name, fontsize=7.6, fontweight="bold",
+                color=INK, va="top", zorder=4)
+        ax.text(PAD, y + rowh - 0.38, level, fontsize=6.4, color=UV,
+                fontweight="bold", va="top", zorder=4)
+        # intensity meter
+        mx, mw = 2.05, 1.05
+        ax.add_patch(Rectangle((mx, y + rowh / 2 - 0.045), mw, 0.09,
+                               color="#E4E7EE", zorder=3))
+        ax.add_patch(Rectangle((mx, y + rowh / 2 - 0.045), mw * score, 0.09,
+                               color=spec(int(score * 8), 9), zorder=4))
+        ax.text(3.32, y + rowh - 0.18, "\n".join(_wrap(body, 6.8, W - 3.42)),
+                fontsize=6.8, color=INK2, va="top", zorder=4, linespacing=1.45)
+    return _save(fig, "porter")
+
+
+def fig_pestle():
+    items = [
+        ("POLITICAL", "Both states have made youth entrepreneurship a stated "
+         "national priority with named programmes and budgets.政 policy "
+         "direction is a tailwind; political attention also means procurement "
+         "scrutiny."),
+        ("ECONOMIC", "EGP devaluation cuts the cost base faster than local "
+         "willingness to pay. Gulf capital is deepening while Egyptian funding "
+         "tightens — which is the case for serving both."),
+        ("SOCIAL", "A very young population, high graduate unemployment and "
+         "strong social legitimacy for entrepreneurship as a route out. Family "
+         "approval still favours employment, which the Bazaar is designed to "
+         "address."),
+        ("TECHNOLOGICAL", "Near-universal smartphone access among the target age "
+         "group; AI review makes one-to-many mentoring possible at a price the "
+         "market can bear."),
+        ("LEGAL", "Egypt's Law 6 of 2025 incentivises informal businesses to "
+         "formalise. Student data, safeguarding and child-protection rules bind "
+         "the schools engine and are a compliance cost, not an afterthought."),
+        ("ENVIRONMENTAL", "Low direct footprint. Climate and green-economy themes "
+         "are increasingly required in donor and CSR logframes, and the mission "
+         "content accommodates them."),
+    ]
+    W, H = 7.1, 3.25
+    fig, ax = _canvas(W, H)
+    gap = 0.11
+    w = (W - 2 * gap) / 3
+    h = (H - gap) / 2
+    for i, (title, body) in enumerate(items):
+        x = (i % 3) * (w + gap)
+        y = H - h if i < 3 else 0
+        _chip(ax, x, y, w, h - 0.02, title, body.replace("政 ", ""),
+              spec(i, 6) if i < 3 else WASH, tsize=7.6, bsize=6.6)
+    return _save(fig, "pestle")
+
+
+def fig_moat():
+    """What is actually defensible, ordered by how long it takes to copy."""
+    rows = [("The certified facilitator pool", 36,
+             "Years to recruit, certify and retain in two markets"),
+            ("Institutional relationships and renewals", 30,
+             "Procurement cycles cannot be shortcut"),
+            ("The cohort evidence record", 24,
+             "Switching means abandoning the history a dean reports on"),
+            ("Bilingual MENA-composed curriculum", 18,
+             "Composed, not translated — and dialect-specific"),
+            ("The AI review rubric, tuned on real cohorts", 14,
+             "Improves with every cohort; a cold start cannot match it"),
+            ("The platform itself", 6, "The least defensible layer, and the one "
+                                       "most people mistake for the moat")]
+    fig, ax = plt.subplots(figsize=(7.1, 2.6))
+    for i, (label, months, why) in enumerate(rows):
+        ax.barh(i, months, 0.5, color=spec(i, len(rows)), zorder=3)
+        ax.text(months + 0.6, i + 0.06, f"{months} mo", va="center", fontsize=7.6,
+                color=INK, fontweight="bold")
+        ax.text(months + 4.0, i + 0.06, why, va="center", fontsize=6.8, color=MUTED)
+    ax.set_yticks(range(len(rows)))
+    ax.set_yticklabels([r[0] for r in rows], fontsize=7.8, color=INK)
+    ax.invert_yaxis()
+    ax.set_xlim(0, 86)
+    ax.set_xticks([])
+    ax.spines["bottom"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+    ax.text(0, -0.95, "Estimated months for a well-funded competitor to replicate",
+            fontsize=6.9, color=MUTED)
+    return _save(fig, "moat")
+
+
+# =====================================================================
+#  6 · Engine 2 — the schools ladder
+# =====================================================================
+
+def fig_school_ladder():
+    su = M.school_unit_economics()
+    tu = M.tvet_unit_economics()
+    steps = [
+        ("FORMAT 01", "School club", "A term-long after-school programme on the "
+         "missions, run by a trained teacher.", "Platform seats"),
+        ("FORMAT 02", "School cohort",
+         f"{su['days']} in-person days for {su['size']} students, ending in a "
+         f"public showcase.", _money(su["price"])),
+        ("FORMAT 03", "Technical institute",
+         f"{tu['days']} days with an employability frame — a trade turned into a "
+         f"business.", _money(tu["price"])),
+        ("FORMAT 04", "Whole-school licence",
+         "Every student for an academic year, with teacher certification.",
+         _money(M.PRICE_SCHOOL_LICENCE)),
+    ]
+    W, H = 7.1, 2.35
+    fig, ax = _canvas(W, H)
+    gap = 0.13
+    w = (W - 3 * gap) / 4
+    for i, (tag, title, body, price) in enumerate(steps):
+        x = i * (w + gap)
+        _chip(ax, x, 0.66, w, 1.52, title, body, spec(i, 4), tag=tag, tsize=9.4,
+              bsize=6.9)
+        _chip(ax, x, 0.06, w, 0.50, price, None, WASH, tsize=10.5, centre=True,
+              vcentre=True, tcol=UV)
+        if i < 3:
+            _arrow(ax, x + w + 0.012, 1.42, x + w + gap - 0.012, 1.42)
+    return _save(fig, "school_ladder")
+
 
 def fig_engine_economics():
     rows = M.engine_economics()
@@ -328,14 +794,9 @@ def fig_university_ladder():
             _arrow(ax, x + w + 0.012, 1.42, x + w + gap - 0.012, 1.42)
     return _save(fig, "university_ladder")
 
-
-# =====================================================================
-#  6 · Engine 2 — the scale of the initiative opportunity
-# =====================================================================
-
 def fig_initiative_scale():
     """National targets, what is addressable, and what we plan to take."""
-    seats = M.PLAN["initiative_seats"]
+    seats = {y: M.plan("initiative_seats", y) for y in (1, 2, 3)}
     bars = [
         ("Stated national targets\n(Egypt programmes alone)", 3_000_000, HAIR),
         ("Addressable seats a year\nacross both markets", M.INITIATIVE_SEATS_PER_YEAR,
@@ -492,44 +953,42 @@ def fig_subscription_sources():
 
 
 def fig_cohort_ramp():
+    """Delivery load against the facilitator capacity it needs, all twelve quarters."""
     cap = M.facilitator_capacity()
     fig, ax = plt.subplots(figsize=(7.1, 3.1))
     x = range(len(cap))
-    eg = [c["egypt"] for c in cap]
-    ksa = [c["ksa"] for c in cap]
-    pil = [c["pilots"] for c in cap]
-    ax.bar(x, eg, 0.5, color=UV, label="Egypt · paid", zorder=3)
-    ax.bar(x, ksa, 0.5, bottom=eg, color="#00ABD4", label="KSA · paid", zorder=3)
-    ax.bar(x, pil, 0.5, bottom=[a + b for a, b in zip(eg, ksa)],
-           color=HAIR, label="Egypt · free pilots", zorder=3)
-    for i, c in enumerate(cap):
-        ax.text(i, c["total"] + 0.55, str(c["total"]), ha="center",
-                fontsize=9.5, fontweight="bold", color=INK)
+    uni = [c["uni"] for c in cap]
+    sch = [c["school"] for c in cap]
+    tv = [c["tvet"] for c in cap]
+    ax.bar(x, uni, 0.62, color=UV, label="University cohorts", zorder=3)
+    ax.bar(x, sch, 0.62, bottom=uni, color="#0096DF", label="School cohorts",
+           zorder=3)
+    ax.bar(x, tv, 0.62, bottom=[a + b for a, b in zip(uni, sch)], color="#00D3A4",
+           label="Technical cohorts", zorder=3)
     ax2 = ax.twinx()
-    ax2.plot(list(x), [c["facilitators"] for c in cap], color=INK, linewidth=1.6,
-             marker="o", markersize=4.5, zorder=5, label="Facilitators required")
+    ax2.plot(list(x), [c["facilitators"] for c in cap], color=INK, linewidth=1.7,
+             marker="o", markersize=3.6, zorder=5, label="Facilitators required")
     for i, c in enumerate(cap):
-        ax2.text(i, c["facilitators"] + 0.7, f"{c['facilitators']:.0f}", ha="center",
-                 fontsize=7.8, color=INK2)
-    ax2.set_ylim(0, max(c["facilitators"] for c in cap) * 1.5)
-    ax2.set_ylabel("Facilitators required", color=INK2, fontsize=8.4)
+        if i in (0, 3, 7, 11):
+            ax2.text(i, c["facilitators"] + 4, f"{c['facilitators']:.0f}",
+                     ha="center", fontsize=7.2, color=INK, fontweight="bold")
+    ax2.set_ylim(0, max(c["facilitators"] for c in cap) * 1.45)
+    ax2.set_ylabel("Facilitators required", color=INK2, fontsize=8.2)
     ax2.spines["top"].set_visible(False)
     ax2.spines["left"].set_visible(False)
     ax2.spines["right"].set_color(HAIR)
-    ax2.tick_params(labelsize=7.6)
+    ax2.tick_params(labelsize=7.4)
     ax.set_xticks(list(x))
-    ax.set_xticklabels([f"{c['label']}\n{c['phase']}" for c in cap],
-                       fontsize=8.4, color=INK)
+    ax.set_xticklabels([c["label"].replace(" ", "\n") for c in cap], fontsize=6.4,
+                       color=INK2)
     ax.set_ylabel("Cohorts in the quarter")
     ax.set_ylim(0, max(c["total"] for c in cap) * 1.3)
     _clean(ax, grid="y")
-    ax.legend(frameon=False, fontsize=7.8, loc="upper left", labelcolor=INK2)
+    for b in (3.5, 7.5):
+        ax.axvline(b, color=HAIR, linewidth=0.9, zorder=1)
+    ax.legend(frameon=False, fontsize=7.2, loc="upper left", labelcolor=INK2)
     return _save(fig, "cohort_ramp")
 
-
-# =====================================================================
-#  8 · Headcount by function
-# =====================================================================
 
 def fig_headcount():
     by_fn, totals = M.headcount()
@@ -558,197 +1017,6 @@ def fig_headcount():
 
 # =====================================================================
 #  9 · Where a cohort's $7,500 goes
-# =====================================================================
-
-def fig_cohort_economics():
-    ue = M.cohort_unit_economics()
-    parts = [("Facilitation\n2 × 6 days", ue["facilitation"], "#C9CEDB"),
-             ("Materials and\ncertificates", ue["materials"], "#DDE1EA"),
-             ("Bazaar", ue["bazaar"], "#EDEFF4"),
-             ("Gross profit", ue["gross"], LIME)]
-    fig, ax = plt.subplots(figsize=(7.1, 1.75))
-    left = 0.0
-    for label, val, c in parts:
-        ax.barh(0, val, 0.44, left=left, color=c, edgecolor=WHITE,
-                linewidth=1.4, zorder=3)
-        ax.text(left + val / 2, 0, f"${val:,.0f}", ha="center", va="center",
-                fontsize=8.6, fontweight="bold", color=INK)
-        ax.text(left + val / 2, -0.37, label, ha="center", va="top",
-                fontsize=7.4, color=MUTED, linespacing=1.4)
-        left += val
-    ax.text(ue["price"], 0.37, f"${ue['price']:,.0f} cohort price   ·   "
-            f"{ue['margin']*100:.0f}% gross margin",
-            ha="right", va="bottom", fontsize=8.6, fontweight="bold", color=INK)
-    ax.set_xlim(0, ue["price"] * 1.005)
-    ax.set_ylim(-1.05, 0.72)
-    ax.axis("off")
-    return _save(fig, "cohort_economics")
-
-
-# =====================================================================
-# 10 · Cumulative cash, and where the trough is
-# =====================================================================
-
-def fig_cash_curve():
-    yrs = M.projection()
-    f = M.funding()
-
-    # Each year's revenue and cost are converted to a monthly run-rate at the
-    # mid-point of that year, and the months between are interpolated. Spreading
-    # each year independently would reset the ramp every twelve months and put a
-    # false step at each year boundary — and the trough in the wrong place.
-    def monthly(field):
-        anchors = [(6, yrs[0][field] / 12), (18, yrs[1][field] / 12),
-                   (30, yrs[2][field] / 12)]
-        out = []
-        for m_ in range(1, 37):
-            if m_ <= anchors[0][0]:
-                # Ramp in from a standing start: month one is not a full month.
-                out.append(anchors[0][1] * (0.45 + 0.55 * m_ / anchors[0][0]))
-                continue
-            if m_ >= anchors[-1][0]:
-                out.append(anchors[-1][1])
-                continue
-            for (m0, v0), (m1, v1) in zip(anchors, anchors[1:]):
-                if m0 <= m_ <= m1:
-                    out.append(v0 + (v1 - v0) * (m_ - m0) / (m1 - m0))
-                    break
-        return out
-
-    rev_m, cost_m = monthly("revenue"), monthly("cost")
-    cash, months = [], []
-    bal = f["rounded"]
-    for i in range(36):
-        bal += rev_m[i] - cost_m[i]
-        cash.append(bal)
-        months.append(i + 1)
-    fig, ax = plt.subplots(figsize=(7.1, 2.9))
-    ax.axhline(0, color=INK, linewidth=0.9, zorder=4)
-    ax.plot(months, cash, color=UV, linewidth=2.0, zorder=5)
-    ax.fill_between(months, cash, 0, where=[c >= 0 for c in cash],
-                    color=LIME, alpha=0.45, zorder=2, interpolate=True)
-    ax.fill_between(months, cash, 0, where=[c < 0 for c in cash],
-                    color="#F3C9C8", alpha=0.8, zorder=2, interpolate=True)
-    trough = min(cash)
-    ti = cash.index(trough) + 1
-    ax.annotate(f"Cash trough  {_money(trough)}\nmonth {ti}",
-                xy=(ti, trough), xytext=(ti + 1.4, trough - f["rounded"] * 0.44),
-                fontsize=7.8, color=INK,
-                arrowprops=dict(arrowstyle="-", color=FAINT, linewidth=0.8))
-    ax.set_xticks([1, 12, 24, 36])
-    ax.set_xticklabels(["Month 1\nOct 2026", "Month 12", "Month 24", "Month 36\nSep 2029"],
-                       fontsize=7.8, color=INK2)
-    ax.set_ylabel("Cash on hand, USD")
-    ax.yaxis.set_major_formatter(lambda v, p: f"${v/1e6:,.1f}m")
-    ax.set_xlim(1, 36)
-    _clean(ax, grid="y")
-    for m_ in (12, 24):
-        ax.axvline(m_, color=HAIR, linewidth=0.8, zorder=1)
-    return _save(fig, "cash_curve")
-
-
-# =====================================================================
-
-#
-# Every diagram below is drawn on a coordinate system where one data unit is one
-# inch, so a chip's width can be converted to a character count and the text inside
-# it can be broken to fit. Wrapping by measurement rather than by hand is the whole
-# reason these diagrams survive an edit to their own content.
-#
-_CHAR_W = 0.565     # mean glyph width as a fraction of point size, DejaVu Sans,
-                    # deliberately over-estimated so a label breaks rather than clips
-PAD = 0.075         # inches of padding inside a chip
-LINE = 1.52         # line spacing multiple
-
-
-def _canvas(w, h):
-    fig, ax = plt.subplots(figsize=(w, h))
-    ax.set_xlim(0, w)
-    ax.set_ylim(0, h)
-    ax.axis("off")
-    fig.subplots_adjust(left=0, right=1, top=1, bottom=0)
-    return fig, ax
-
-
-def _wrap(text, size, width_in):
-    """Break text to a pixel width without ever dropping a word."""
-    cols = max(4, int(width_in * 72 / (size * _CHAR_W)))
-    out = []
-    for para in str(text).split("\n"):
-        line = ""
-        for word in para.split():
-            trial = f"{line} {word}".strip()
-            if len(trial) <= cols or not line:
-                line = trial
-            else:
-                out.append(line)
-                line = word
-        out.append(line)
-    return out
-
-
-def _lines_h(lines, size):
-    return len(lines) * size * LINE / 72
-
-
-def _ink_for(fill):
-    """Pick type colour by measured luminance, never by eye.
-
-    This is what keeps type off lime: lime measures 1.29:1 against white, so white
-    type on lime is unreadable. The rule is in the brand, and here it is enforced
-    rather than remembered.
-    """
-    h = fill.lstrip("#")
-    r, g, b = (int(h[i:i + 2], 16) / 255 for i in (0, 2, 4))
-    lum = 0.2126 * r + 0.7152 * g + 0.0722 * b
-    return (INK, "#2A3040") if lum > 0.55 else (WHITE, "#E7E9F6")
-
-
-def _chip(ax, x, y, w, h, title, body, fill, tsize=8.4, bsize=7.1, tag=None,
-          tcol=None, bcol=None, centre=False, vcentre=False):
-    ax.add_patch(FancyBboxPatch((x, y), w, h,
-                                boxstyle="round,pad=0,rounding_size=0.05",
-                                facecolor=fill, edgecolor="none", zorder=3))
-    auto_t, auto_b = _ink_for(fill)
-    tcol = tcol or auto_t
-    bcol = bcol or auto_b
-    inner = w - 2 * PAD
-    tx = x + w / 2 if centre else x + PAD
-    ha = "center" if centre else "left"
-    if vcentre:
-        # Measure the whole stack first, then start it so the block sits on the
-        # chip's centre line rather than hanging from its top edge.
-        block = 0.0
-        if tag:
-            block += 6.3 * LINE / 72
-        if title:
-            block += _lines_h(_wrap(title, tsize, inner), tsize) + (0.035 if body else 0)
-        if body:
-            block += _lines_h(_wrap(body, bsize, inner), bsize)
-        ty = y + h / 2 + block / 2
-    else:
-        ty = y + h - PAD
-    if tag:
-        ax.text(tx, ty, tag, fontsize=6.3, color=bcol, fontweight="bold",
-                va="top", ha=ha, zorder=4)
-        ty -= 6.3 * LINE / 72
-    if title:
-        tl = _wrap(title, tsize, inner)
-        ax.text(tx, ty, "\n".join(tl), fontsize=tsize, fontweight="bold",
-                color=tcol, va="top", ha=ha, zorder=4, linespacing=LINE)
-        ty -= _lines_h(tl, tsize) + 0.035
-    if body:
-        bl = _wrap(body, bsize, inner)
-        ax.text(tx, ty, "\n".join(bl), fontsize=bsize, color=bcol,
-                va="top", ha=ha, zorder=4, linespacing=LINE)
-
-
-def _arrow(ax, x1, y1, x2, y2, col="#C3C8D6"):
-    ax.add_patch(FancyArrowPatch((x1, y1), (x2, y2), arrowstyle="-|>",
-                                 mutation_scale=8, color=col,
-                                 linewidth=1.0, zorder=2))
-
-
 def fig_gtm_moves():
     """The five moves, and what each one unlocks."""
     moves = [
@@ -987,13 +1255,16 @@ def fig_ngo_initiatives():
 
 
 
-ALL = [fig_tam_sam, fig_buyer_funnel, fig_revenue_engines, fig_engine_mix,
+
+ALL = [fig_segments, fig_tam_sam, fig_engine_mix, fig_roadmap, fig_gates,
+       fig_quarterly_volumes, fig_customer_journey, fig_channel_mix,
+       fig_swot, fig_porter, fig_pestle, fig_moat, fig_school_ladder,
        fig_engine_economics, fig_deal_sizes, fig_pipeline,
        fig_university_ladder, fig_initiative_scale, fig_initiative_model,
-       fig_competition_model, fig_pl, fig_subscription_sources,
-       fig_cohort_ramp, fig_headcount, fig_cohort_economics, fig_cash_curve,
-       fig_gtm_moves, fig_institution_workflow, fig_bootcamp_map,
-       fig_org_chart, fig_phases, fig_flywheel, fig_ngo_initiatives]
+       fig_competition_model, fig_subscription_sources, fig_cohort_ramp,
+       fig_headcount, fig_gtm_moves, fig_institution_workflow,
+       fig_bootcamp_map, fig_org_chart, fig_phases, fig_flywheel,
+       fig_ngo_initiatives]
 
 
 def build_all():
