@@ -1,0 +1,475 @@
+<title>StartPad — The Question Bank</title>
+<style>
+  :root{--paper:#F2F3F8;--surface:#FFFFFF;--surface-2:#EAEBF3;--ink:#14131C;--ink-soft:#4E4C60;--ink-faint:#7B7990;
+  --rule:#D9DAE6;--rule-soft:#E7E8F0;--accent:#4530E8;--accent-ink:#2E1FB0;--on-accent:#FFFFFF;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0F0E16;--surface:#191823;--surface-2:#221F30;
+  --ink:#ECEBF3;--ink-soft:#A9A7BC;--ink-faint:#7D7B92;--rule:#2E2B3D;--rule-soft:#24222F;--accent:#9A88FF;
+  --accent-ink:#C3B8FF;--on-accent:#14131C;}}
+  :root[data-theme="dark"]{--paper:#0F0E16;--surface:#191823;--surface-2:#221F30;--ink:#ECEBF3;--ink-soft:#A9A7BC;
+  --ink-faint:#7D7B92;--rule:#2E2B3D;--rule-soft:#24222F;--accent:#9A88FF;--accent-ink:#C3B8FF;--on-accent:#14131C;}
+  *{box-sizing:border-box}html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+  body{margin:0;background:var(--paper);color:var(--ink);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Arabic",Arial,sans-serif}
+  .wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem 6rem}
+  h1,h2,h3{text-wrap:balance;margin:0;line-height:1.15;letter-spacing:-.025em}
+  h1{font-size:clamp(2.1rem,5.5vw,3.2rem);font-weight:800;letter-spacing:-.04em;padding-block:3.25rem 1rem}
+  h2{font-size:clamp(1.5rem,3.2vw,2rem);font-weight:800;margin-top:3rem;padding-top:2.25rem;border-top:2px solid var(--ink)}
+  h3{font-size:1.12rem;font-weight:700;margin-top:2.5rem;color:var(--accent-ink);
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:-.01em}
+  h4{font-size:1rem;font-weight:700;margin:2rem 0 0}
+  p{margin:.85rem 0}
+  ul,ol{margin:.85rem 0;padding-inline-start:1.4rem}
+  li{margin:.35rem 0}
+  blockquote{margin:.9rem 0;padding:.2rem 0 .2rem 1rem;border-inline-start:3px solid var(--accent);color:var(--ink-soft)}
+  a{color:var(--accent);text-underline-offset:2px}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+  hr{border:0;border-top:1px solid var(--rule-soft);margin:2.5rem 0}
+  strong{font-weight:680}
+  em{color:var(--ink-soft)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--surface-2);
+  padding:.1em .35em;border-radius:2px}
+  .table-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:2px;background:var(--surface);margin:1.25rem 0}
+  table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+  th,td{text-align:start;padding:.6rem .8rem;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+  th{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-faint);font-weight:600;background:var(--surface-2)}
+  tbody tr:last-child td{border-bottom:0}
+  .prompt{border:1px solid var(--rule);border-radius:3px;background:var(--surface);overflow:hidden;margin:1rem 0 2rem}
+  .prompt>header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.6rem .9rem;
+  background:var(--surface-2);border-bottom:1px solid var(--rule)}
+  .prompt>header .label{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.7rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-faint);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .prompt>header .label b{color:var(--accent-ink);font-weight:700}
+  .copy{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+  background:transparent;border:1px solid var(--rule);color:var(--ink-soft);padding:.25rem .55rem;border-radius:2px;
+  cursor:pointer;white-space:nowrap;transition:background .15s ease,color .15s ease}
+  .copy:hover{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+  pre{margin:0;padding:1rem .9rem;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:.84rem;line-height:1.7;color:var(--ink);white-space:pre-wrap;word-wrap:break-word;background:var(--surface)}
+  pre code{background:none;padding:0;font-size:inherit}
+</style>
+<div class="wrap">
+<h1>StartPad — The Question Bank (Round 17)</h1>
+<p>Every question in all 15 missions, rewritten — plus a finance thread running through seven of them. Nothing renamed.</p>
+<hr>
+<h2>What does not change</h2>
+<p><strong>The five phases stay exactly as they are:</strong> Discover · Shape · Test · Model · Readiness.</p>
+<p><strong>All 15 mission names stay exactly as they are:</strong></p>
+<div class="table-scroll"><table><thead><tr><th>Phase</th><th>#</th><th>Mission</th><th>XP</th></tr></thead><tbody><tr><td><strong>Discover</strong></td><td>1</td><td>Problem Analysis</td><td>100</td></tr><tr><td></td><td>2</td><td>Problem Definition</td><td>100</td></tr><tr><td></td><td>3</td><td>Opportunity Prioritisation</td><td>150</td></tr><tr><td><strong>Shape</strong></td><td>4</td><td>Testable Problem Statement</td><td>150</td></tr><tr><td></td><td>5</td><td>Solution Selection</td><td>200</td></tr><tr><td></td><td>6</td><td>Value Proposition &amp; Assumptions</td><td>200</td></tr><tr><td><strong>Test</strong></td><td>7</td><td>First Assumption Test</td><td>250</td></tr><tr><td><strong>Model</strong></td><td>8</td><td>Business Model Canvas</td><td>300</td></tr><tr><td></td><td>9</td><td>Build a Learning Prototype</td><td>300</td></tr><tr><td></td><td>10</td><td>Prototype User Test</td><td>300</td></tr><tr><td><strong>Readiness</strong></td><td>11</td><td>Go-to-Market Experiment</td><td>300</td></tr><tr><td></td><td>12</td><td>Demand &amp; Market Validation</td><td>350</td></tr><tr><td></td><td>13</td><td>MVP Scope &amp; Build</td><td>400</td></tr><tr><td></td><td>14</td><td>Early Traction Review</td><td>450</td></tr><tr><td></td><td>15</td><td>Launch &amp; Incubator Readiness</td><td>500</td></tr></tbody></table></div>
+<p>No renames, no reordering, no merges, no additions. Only the questions inside them change.</p>
+<hr>
+<h2>The interaction types</h2>
+<p>Fifteen types. Your list, plus the few needed to cover everything.</p>
+<div class="table-scroll"><table><thead><tr><th>Type</th><th>What it is</th><th>You called it</th></tr></thead><tbody><tr><td><code>dropdown</code></td><td>Long searchable list, one choice</td><td>drop list</td></tr><tr><td><code>single-select</code></td><td>Tappable chips, one true</td><td>multiple choice</td></tr><tr><td><code>multi-select</code></td><td>Tappable chips, several true</td><td>multiple choice</td></tr><tr><td><code>checklist</code></td><td>Tick all that apply, often a self-check</td><td>check</td></tr><tr><td><code>rank</code></td><td>Drag items into order</td><td>—</td></tr><tr><td><strong><code>card-match</code></strong></td><td><strong>Drag cards to pair them up</strong></td><td><strong>cards match</strong></td></tr><tr><td><code>card-sort</code></td><td>Drag cards into labelled columns</td><td>—</td></tr><tr><td><code>matrix</code></td><td>Drag cards onto a 2×2 grid</td><td>—</td></tr><tr><td><code>sentence-builder</code></td><td>A sentence with blanks to fill</td><td>—</td></tr><tr><td><code>table</code></td><td>Add-a-row list, drag to reorder</td><td>—</td></tr><tr><td><code>number</code></td><td>Amount, with unit and currency</td><td>—</td></tr><tr><td><code>calculated</code></td><td>Worked out for them, never typed</td><td>—</td></tr><tr><td><code>short-answer</code></td><td>One line</td><td>answer / text</td></tr><tr><td><code>long-answer</code></td><td>Genuinely open</td><td>—</td></tr><tr><td><code>upload</code></td><td>File, link, or pasted text</td><td>upload</td></tr><tr><td><code>canvas</code></td><td>A named framework with tappable blocks</td><td>—</td></tr></tbody></table></div>
+<p><strong>Three rules that apply to every question.</strong></p>
+<ol><li><strong>Every list ends with "Other →"</strong>, which opens a text field. No list is ever closed.</li><li><strong>Every question can take an attachment</strong>, whatever its type. Answering a chip question and wanting to attach a screenshot is normal.</li><li><strong>Multi-select is the default for categories.</strong> Fintech <em>and</em> healthtech is a real answer. Subscription <em>and</em> commission is a real answer.</li></ol>
+<p><strong>Where cards get used.</strong> <code>card-match</code> is not decoration — it does two jobs no other input does:</p>
+<ul><li><strong>It teaches.</strong> Matching the nine Business Model Canvas blocks to their plain-English meanings takes sixty seconds and replaces a paragraph nobody reads.</li><li><strong>It forces justification.</strong> Matching each MVP feature to the problem it solves means a feature with nothing to pair to is scope creep, visibly, without anyone saying so.</li></ul>
+<hr>
+<h1>The 15 missions</h1>
+<p>Legend: <strong>↩</strong> carried forward from an earlier mission, pre-filled and editable.</p>
+<hr>
+<h2>Phase: Discover</h2>
+<h3>Mission 1 — Problem Analysis · 100 XP</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Type</th><th>Detail</th></tr></thead><tbody><tr><td>1</td><td>Which areas interest you?</td><td><code>dropdown</code> multi</td><td>Searchable. Fintech · Healthtech · Edtech · E-commerce · Logistics · Agritech · Proptech · Food &amp; beverage · Travel · Media · Gaming · B2B software · Marketplace · Climate · Fashion · Fitness · HR · Legal · Insurance · Manufacturing · Energy · Other → <strong>Pick more than one if that's true.</strong></td></tr><tr><td>2</td><td>What problems have you noticed?</td><td><code>sentence-builder</code></td><td><em>"I noticed that <strong>___</strong> struggle with <strong>___</strong> when <strong>___</strong>."</em> Add up to three.</td></tr><tr><td>3</td><td>Who is affected?</td><td><code>multi-select</code></td><td>Students · Young professionals · Small business owners · Freelancers · Parents · Farmers · Drivers · Patients · Teachers · Retailers · Shop staff · Delivery riders · Other →</td></tr><tr><td>4</td><td><strong>Match each problem to who it hurts most</strong></td><td><strong><code>card-match</code></strong></td><td>Problem cards from Q2 ↔ people cards from Q3. A problem with nobody attached is a problem you haven't seen yet.</td></tr><tr><td>5</td><td>What already exists to solve it?</td><td><code>table</code></td><td>Name · link · what it does</td></tr><tr><td>6</td><td>Where do those fall short?</td><td><code>multi-select</code> + <code>short-answer</code></td><td>Too expensive · Too slow · Hard to use · Not available here · Poor quality · Needs expertise · No offline use · No Arabic · Doesn't fit how we work · Other → then one line on the biggest gap</td></tr><tr><td>7</td><td>How do you know this is real?</td><td><code>single-select</code></td><td>I've experienced it myself · I watched someone deal with it · I've talked to people about it · I read about it · I have data · <strong>It's a hunch for now</strong></td></tr></tbody></table></div>
+<p><strong>Q7 is the honesty question.</strong> "It's a hunch" must be selectable without penalty — it is the truthful answer for most people in Mission 1, and punishing it teaches founders to lie to the platform.</p>
+<h3>Mission 2 — Problem Definition · 100 XP</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Type</th><th>Detail</th></tr></thead><tbody><tr><td>1</td><td>Describe your main user</td><td><code>sentence-builder</code></td><td><em>"<strong>[age range]</strong> <strong>[role]</strong> in <strong>[city / country]</strong> who <strong>[context]</strong>"</em> — every blank is its own chip set or dropdown</td></tr><tr><td>2</td><td>What's true about them?</td><td><code>checklist</code></td><td>Grouped: <strong>Income</strong> low / middle / high · <strong>Tech</strong> beginner / comfortable / expert · <strong>Who pays</strong> they do / their employer / their family · <strong>Where they are</strong> Instagram / TikTok / WhatsApp / LinkedIn / in person</td></tr><tr><td>3</td><td>The problem they face</td><td>↩ M1 Q2</td><td><em>"You wrote this in Mission 1. Sharpen it now you know who you're talking about."</em></td></tr><tr><td>4</td><td>When does it happen?</td><td><code>multi-select</code></td><td>At work · At home · Commuting · Shopping · Studying · Online · In person · Late at night · Month-end · Other →</td></tr><tr><td>5</td><td>How often?</td><td><code>single-select</code></td><td>Many times a day · Daily · Weekly · Monthly · A few times a year · Once</td></tr><tr><td>6</td><td>Who is <strong>not</strong> your user?</td><td><code>short-answer</code></td><td>One line. This sharpens a segment faster than any positive question — "everyone" stops being answerable.</td></tr><tr><td>7</td><td>How do they solve it today?</td><td><code>multi-select</code></td><td>By hand · A spreadsheet · WhatsApp · A notebook · A competitor's app · They pay someone · <strong>They don't</strong> · Other →</td></tr></tbody></table></div>
+<p><strong>Q7 finds your real competitor</strong>, which is usually a spreadsheet rather than a company.</p>
+<h3>Mission 3 — Opportunity Prioritisation · 150 XP</h3>
+<p>Almost entirely drag-and-drop. The mission's own description names the axes — <em>impact and frequency</em>.</p>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Type</th><th>Detail</th></tr></thead><tbody><tr><td>1</td><td>Plot each problem</td><td><strong><code>matrix</code></strong></td><td>Impact × Frequency. Cards ↩ from Missions 1 and 2. Drag on desktop, two sliders on mobile. Quadrants labelled: <strong>Fix first</strong> · <strong>Quick wins</strong> · <strong>Big bets</strong> · <strong>Park it</strong></td></tr><tr><td>2</td><td>Anything missing?</td><td><code>table</code></td><td>Add more problems — they appear on the grid immediately</td></tr><tr><td>3</td><td>Put your top three in order</td><td><strong><code>rank</code></strong></td><td>Drag. Pre-ordered by where they landed on the grid, so it starts sensible.</td></tr><tr><td>4</td><td>Which one are you working on?</td><td><code>single-select</code></td><td>Only the plotted cards. Top of the ranking pre-selected.</td></tr><tr><td>5</td><td>Why that one?</td><td><code>short-answer</code></td><td>One line</td></tr><tr><td>6</td><td><strong>Sort the rest</strong></td><td><strong><code>card-sort</code></strong></td><td>Three columns: <strong>Working on this now</strong> · <strong>Parked for later</strong> · <strong>Dropping this</strong>. Prioritising is a decision, not a ranking — this makes the decision visible.</td></tr></tbody></table></div>
+<hr>
+<h2>Phase: Shape</h2>
+<h3>Mission 4 — Testable Problem Statement · 150 XP</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Type</th><th>Detail</th></tr></thead><tbody><tr><td>1</td><td>Write your problem statement</td><td><code>sentence-builder</code></td><td><em>"<strong>[User]</strong> needs a way to <strong>[job]</strong> because <strong>[insight]</strong>. Today they <strong>[workaround]</strong>, which costs them <strong>[impact]</strong>."</em></td></tr><tr><td>2</td><td>Who exactly?</td><td>↩ M2 Q1</td><td>Editable</td></tr><tr><td>3</td><td>What does it cost them?</td><td><code>number</code> + <code>multi-select</code></td><td>Amount + unit (money / hours / times per week) and what kind of cost: Money · Time · Missed opportunities · Stress · Reputation · Other →</td></tr><tr><td>4</td><td>How would you know it's solved?</td><td><code>table</code></td><td>Metric · where it is today · where it needs to be</td></tr><tr><td>5</td><td>Who would pay for it to be solved?</td><td><code>single-select</code></td><td>The user themselves · Their employer · A government body · An advertiser · A platform · <strong>Not sure yet</strong></td></tr><tr><td>6</td><td>What would prove this wrong?</td><td><code>short-answer</code></td><td>The mission is called <em>Testable</em>. A statement nothing could disprove is a belief, not a hypothesis — and this line is what makes Mission 7 possible.</td></tr><tr><td>7</td><td><strong>Check your own statement</strong></td><td><strong><code>checklist</code></strong></td><td>☐ Names a specific user, not "people" · ☐ Says what they're trying to do · ☐ Says why it matters to them · ☐ <strong>Does not name a solution</strong> · ☐ Someone else could test it</td></tr></tbody></table></div>
+<p><strong>Q5 catches the blind spot</strong> that stays hidden until Mission 8 asks about revenue: the person with the problem is often not the person with the budget.</p>
+<p><strong>Q7 teaches the criteria by making the founder apply them.</strong> The fourth box is the one most first statements fail.</p>
+<h3>Mission 5 — Solution Selection · 200 XP</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Type</th><th>Detail</th></tr></thead><tbody><tr><td>1</td><td>What could you build?</td><td><code>table</code></td><td>Idea + one line each. Three to six is the useful range.</td></tr><tr><td>2</td><td>Score each idea</td><td><strong><code>matrix</code></strong></td><td>Value × Impact, as the mission describes it. Drag or sliders.</td></tr><tr><td>3</td><td>Put them in order</td><td><strong><code>rank</code></strong></td><td>Pre-ordered from the grid</td></tr><tr><td>4</td><td>Which one are you building?</td><td><code>single-select</code></td><td>From the plotted ideas</td></tr><tr><td>5</td><td>What's the simplest version that would still help someone?</td><td><code>short-answer</code></td><td>This line becomes the default MVP scope in Mission 13</td></tr><tr><td>6</td><td>What would have to be true for this to work?</td><td><code>table</code></td><td>Assumption rows — these pre-fill Mission 6 rather than asking a founder to conjure assumptions from a blank page</td></tr><tr><td>7</td><td>💰 Roughly what would it cost to build?</td><td><code>single-select</code></td><td>Nothing but my own time · Under 5,000 · 5,000–25,000 · 25,000–100,000 · Over 100,000 · <strong>Not sure yet</strong> — in the founder's currency. A rough band, not a budget. It feeds the scoping in Mission 13.</td></tr></tbody></table></div>
+<h3>Mission 6 — Value Proposition &amp; Assumptions · 200 XP</h3>
+<p>The mission description says <em>problem-solution canvas</em>. So it's a <strong><code>canvas</code></strong> — tappable blocks, filling in visually, not eight stacked boxes.</p>
+<div class="table-scroll"><table><thead><tr><th>Block</th><th>Type</th><th>Detail</th></tr></thead><tbody><tr><td>Customer segment</td><td>↩ M2</td><td>Editable</td></tr><tr><td>Their problem</td><td>↩ M4</td><td>Editable</td></tr><tr><td>What they do today</td><td>↩ M2 Q7</td><td>Editable</td></tr><tr><td><strong>Your solution</strong></td><td><code>long-answer</code></td><td>One of only three genuinely open questions in the whole journey</td></tr><tr><td>Value proposition</td><td><code>sentence-builder</code></td><td><em>"For <strong>[user]</strong> who <strong>[need]</strong>, <strong>[name]</strong> is a <strong>[category]</strong> that <strong>[benefit]</strong>. Unlike <strong>[alternative]</strong>, we <strong>[difference]</strong>."</em></td></tr><tr><td><strong>Features → benefits</strong></td><td><strong><code>card-match</code></strong></td><td>Drag each feature to the benefit it delivers. A feature that matches nothing is a feature nobody asked for.</td></tr><tr><td>What makes you different?</td><td><code>multi-select</code></td><td>Cheaper · Faster · Simpler · Available locally · In Arabic · More reliable · More trusted · Does something new · Other →</td></tr><tr><td><strong>Your assumptions</strong></td><td><code>table</code> + <strong><code>card-sort</code></strong></td><td>List them, then drag into <strong>Must be true</strong> · <strong>Nice if true</strong> · <strong>Doesn't really matter</strong>. The "Must be true" pile is Mission 7's input.</td></tr></tbody></table></div>
+<h3>Phase: Test</h3>
+<h3>Mission 7 — First Assumption Test · 250 XP</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Type</th><th>Detail</th></tr></thead><tbody><tr><td>1</td><td>Which assumption are you testing?</td><td><code>single-select</code></td><td>↩ the <strong>Must be true</strong> pile from Mission 6, riskiest first. <em>"Test this one unless you have a reason not to."</em></td></tr><tr><td>2</td><td><strong>Match each method to what it's good at</strong></td><td><strong><code>card-match</code></strong></td><td>Interviews ↔ understanding <em>why</em> · Survey ↔ measuring <em>how many</em> · Landing page ↔ testing <em>interest</em> · Fake door ↔ testing <em>intent to act</em> · Concierge ↔ delivering it by hand first · Wizard of Oz ↔ testing before you build. <strong>Sixty seconds, and they now know what these words mean.</strong></td></tr><tr><td>3</td><td>Which will you use?</td><td><code>single-select</code></td><td>The same six</td></tr><tr><td>4</td><td>Your hypothesis</td><td><code>sentence-builder</code></td><td><em>"We believe <strong>[user]</strong> will <strong>[action]</strong> because <strong>[reason]</strong>. We'll know we're right if <strong>[signal]</strong>."</em></td></tr><tr><td>5</td><td>What result would prove it?</td><td><code>number</code></td><td><em>"At least <strong>___</strong> out of <strong>___</strong> do <strong>___</strong>"</em> — <strong>set before running the test</strong>, and locked once the test starts</td></tr><tr><td>6</td><td>Who did you test with?</td><td><code>multi-select</code> + <code>number</code></td><td>Friends and family · My network · Cold outreach · A community or group · Existing users · Recruited or paid — plus how many</td></tr><tr><td>7</td><td>What did you get?</td><td><code>upload</code> + <code>number</code></td><td>Survey export, notes, screenshots — plus the actual result</td></tr><tr><td>8</td><td>What did you learn?</td><td><code>single-select</code> + <code>long-answer</code></td><td>Confirmed · Contradicted · <strong>Inconclusive</strong> — then what you learned. <em>Inconclusive is a respected answer</em>, and saying so stops founders inventing a verdict.</td></tr></tbody></table></div>
+<p><strong>Q6 exists because sampling bias is invisible unless asked.</strong> Ten friends saying yes is not evidence, and the reviewer can only say so if it knows who was asked.</p>
+<hr>
+<h2>Phase: Model</h2>
+<h3>Mission 8 — Business Model Canvas · 300 XP</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Type</th><th>Detail</th></tr></thead><tbody><tr><td>1</td><td><strong>Match each block to what it means</strong></td><td><strong><code>card-match</code></strong></td><td>Nine block names ↔ nine plain-English meanings. <em>"Key Activities — the things your business must do every week for the model to work."</em> <strong>Do this before the canvas opens.</strong> Most founders meet this framework here for the first time.</td></tr><tr><td>2</td><td>The canvas</td><td><strong><code>canvas</code></strong></td><td>Real nine-block layout, tappable, "4 of 9 blocks" indicator. Stacks vertically on mobile in the same order.</td></tr></tbody></table></div>
+<p>The nine blocks:</p>
+<div class="table-scroll"><table><thead><tr><th>Block</th><th>Type</th><th>Detail</th></tr></thead><tbody><tr><td>Customer Segments</td><td>↩ M2</td><td>Editable</td></tr><tr><td>Value Propositions</td><td>↩ M6</td><td>Editable</td></tr><tr><td>Channels</td><td><code>multi-select</code></td><td>Own website · App store · Instagram · TikTok · WhatsApp · Resellers · Direct sales · Marketplace · Physical shop · Other →</td></tr><tr><td>Customer Relationships</td><td><code>multi-select</code></td><td>Self-serve · Personal support · Community · Automated · Dedicated account · Other →</td></tr><tr><td><strong>Revenue Streams</strong></td><td><code>multi-select</code></td><td>Subscription · One-time sale · Commission · Freemium · Advertising · Licensing · Marketplace fee · Usage-based · Other → <strong>Mixed models are normal. A single box hides that completely.</strong></td></tr><tr><td>Key Activities</td><td><code>table</code></td><td>What the business must do every week</td></tr><tr><td>Key Resources</td><td><code>multi-select</code> + <code>table</code></td><td>People · Technology · Money · Brand · Data · Licences · Premises · Other →</td></tr><tr><td>Key Partners</td><td><code>table</code></td><td>Partner · what they provide</td></tr><tr><td>Cost Structure</td><td><code>table</code></td><td>Cost line · amount · currency — <strong>running monthly total shown live</strong></td></tr></tbody></table></div>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Type</th><th>Detail</th></tr></thead><tbody><tr><td>3</td><td>💰 Unit economics</td><td><code>number</code> + <code>calculated</code></td><td>Price · cost to serve one customer · <strong>gross margin calculated for them</strong>. A canvas with no unit economics is a poster.</td></tr><tr><td>4</td><td>💰 How many customers to break even?</td><td><code>calculated</code></td><td>Fixed monthly costs ÷ gross profit per customer, taken straight from the Cost Structure block and Q3. <strong>Nothing typed.</strong> Shown as one sentence: <em>"You need 84 customers a month to cover your costs."</em></td></tr><tr><td>5</td><td>💰 Your money model</td><td><code>calculated</code></td><td>A summary strip: price · cost to serve · margin % · fixed costs · break-even customers. The whole financial shape of the business on one line, assembled from what they already entered.</td></tr><tr><td>6</td><td>Which block are you least sure about?</td><td><code>single-select</code></td><td>The nine. Names the next thing to test, and gives the platform something useful to recommend.</td></tr></tbody></table></div>
+<h3>Mission 9 — Build a Learning Prototype · 300 XP</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Type</th><th>Detail</th></tr></thead><tbody><tr><td>1</td><td>What do you want to find out?</td><td><code>sentence-builder</code></td><td><em>"I want to find out whether <strong>___</strong>"</em> — offers ↩ the Mission 6 assumptions that Mission 7 didn't test. <strong>This goes first</strong>, before any tooling question. It's what makes it a <em>learning</em> prototype.</td></tr><tr><td>2</td><td>What kind of prototype?</td><td><code>single-select</code></td><td>Paper sketch · Clickable design · No-code app · Landing page · Slide walkthrough · Coded · Other →</td></tr><tr><td>3</td><td>Built with</td><td><code>multi-select</code></td><td>Figma · Canva · Bubble · Webflow · Glide · FlutterFlow · Adalo · Framer · Paper and pen · Other →</td></tr><tr><td>4</td><td><strong>What's in it?</strong></td><td><strong><code>card-sort</code></strong></td><td>Features ↩ from Mission 6, dragged into <strong>In the prototype</strong> · <strong>Left out for now</strong></td></tr><tr><td>5</td><td>Map the main flow</td><td><code>table</code></td><td>Ordered steps, drag to reorder</td></tr><tr><td>6</td><td>Upload it</td><td><code>upload</code></td><td>Link or file. <strong>Required.</strong></td></tr><tr><td>7</td><td>What will a tester see first?</td><td><code>short-answer</code></td><td>Thirty seconds decides most prototype tests, and nobody plans the opening</td></tr></tbody></table></div>
+<h3>Mission 10 — Prototype User Test · 300 XP</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Type</th><th>Detail</th></tr></thead><tbody><tr><td>1</td><td>How many people tested it?</td><td><code>number</code></td><td>Under 5, quietly: <em>"Fewer than five rarely shows a pattern. Still worth logging."</em></td></tr><tr><td>2</td><td>How did you run it?</td><td><code>single-select</code></td><td>In person · Video call · They used it alone · Group session</td></tr><tr><td>3</td><td>What did you observe?</td><td><code>table</code></td><td>One row per finding</td></tr><tr><td>4</td><td><strong>Sort your findings</strong></td><td><strong><code>card-sort</code></strong></td><td><strong>Confirmed what I thought</strong> · <strong>Contradicted it</strong> · <strong>Surprised me</strong>. The surprise column is where the value is.</td></tr><tr><td>5</td><td>Where did people get stuck?</td><td><code>table</code></td><td>Step · what happened</td></tr><tr><td>6</td><td>Upload your notes</td><td><code>upload</code></td><td>Notes, recordings, screenshots</td></tr><tr><td>7</td><td>Did it answer your question?</td><td><code>single-select</code> + <code>short-answer</code></td><td>↩ <em>"You built this to find out whether [X]. Did you?"</em> Yes · No · Not yet</td></tr><tr><td>8</td><td>What will you change?</td><td><code>table</code> + <strong><code>rank</code></strong></td><td>List changes, then drag into priority order</td></tr></tbody></table></div>
+<hr>
+<h2>Phase: Readiness</h2>
+<h3>Mission 11 — Go-to-Market Experiment · 300 XP</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Type</th><th>Detail</th></tr></thead><tbody><tr><td>1</td><td><strong>Rank these by how easily you can reach your users</strong></td><td><strong><code>rank</code></strong></td><td>Instagram · TikTok · WhatsApp groups · LinkedIn · Facebook groups · Google Ads · SEO · Influencers · Events · University campus · Referral · Cold outreach · Resellers. <strong>Dragging thirteen cards into order is the thinking.</strong></td></tr><tr><td>2</td><td>Which one will you test?</td><td><code>single-select</code></td><td>Top of the ranking pre-selected. <strong>One only</strong> — <em>"You can test more later. Testing five at once tells you nothing about any of them."</em></td></tr><tr><td>3</td><td>Who exactly will you reach?</td><td>↩ M2</td><td>Narrowed to one segment, not the whole market</td></tr><tr><td>4</td><td>What will you put in front of them?</td><td><code>short-answer</code> + <code>upload</code></td><td>The offer in one line, plus the ad, landing page or message</td></tr><tr><td>5</td><td>What counts as success?</td><td><code>single-select</code> + <code>number</code></td><td>Sign-ups · replies · pre-orders · waitlist joins · clicks · meetings booked — plus the threshold, <strong>set before you run it</strong></td></tr><tr><td>6</td><td>Budget and timebox</td><td><code>number</code> + currency + <code>number</code></td><td>Amount, and how many days</td></tr><tr><td>7</td><td>What happened?</td><td><code>number</code> + <code>upload</code> + <code>single-select</code></td><td>Actual result, evidence, and a verdict: Worth repeating · Worth changing · Worth dropping</td></tr><tr><td>8</td><td>Could you do this ten times over?</td><td><code>single-select</code></td><td>Yes easily · Yes with money · Yes with more people · No. <strong>Separates a channel from a one-off favour.</strong></td></tr><tr><td>9</td><td>💰 What did one result cost you?</td><td><code>calculated</code></td><td>Budget ÷ results, from Q6 and Q7. <strong>The founder's first cost-per-customer number, free, from data they already gave you.</strong></td></tr><tr><td>10</td><td>💰 What would 100 cost at this rate?</td><td><code>calculated</code></td><td>Q9 × 100, shown beside their Mission 8 margin: <em>"100 customers would cost 42,000. At your margin they'd be worth 61,000."</em> Makes a channel's viability obvious without a single extra question.</td></tr></tbody></table></div>
+<h3>Mission 12 — Demand &amp; Market Validation · 350 XP</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Type</th><th>Detail</th></tr></thead><tbody><tr><td>1</td><td>How did you test demand?</td><td><code>multi-select</code></td><td>Interviews · Survey · Landing page sign-ups · Pre-orders · Waitlist · Pilot customer · Letters of intent · Other →</td></tr><tr><td>2</td><td>What signals did you get?</td><td><code>table</code></td><td>Indicator · number</td></tr><tr><td>3</td><td>Who else is doing this?</td><td><code>table</code></td><td>Name · link · price · one strength · one weakness</td></tr><tr><td>4</td><td><strong>Match each competitor to their main strength</strong></td><td><strong><code>card-match</code></strong></td><td>Competitor cards ↔ Price · Brand · Distribution · Technology · Local presence · Head start. Makes the landscape legible at a glance — and shows which strength nobody has claimed.</td></tr><tr><td>5</td><td>Your pricing</td><td><code>single-select</code> + <code>number</code></td><td>Model, plus the price point with currency</td></tr><tr><td>6</td><td>Willingness to pay</td><td><code>single-select</code> + <code>number</code></td><td>How people responded, <strong>and how many said yes but didn't actually do anything.</strong> The say/do gap is the most important number on this page.</td></tr><tr><td>7</td><td>How big is the market?</td><td><code>number</code> × 3 + <code>calculated</code></td><td>TAM / SAM / SOM, with a bottom-up helper: <strong>users × price × frequency, calculated live</strong></td></tr><tr><td>8</td><td>Where did that number come from?</td><td><code>short-answer</code></td><td>One line</td></tr><tr><td>9</td><td>💰 At what price do people say no?</td><td><code>single-select</code></td><td>A price ladder built from Q5: <em>"At [price] — most said yes / some hesitated / most said no."</em> Three rungs below and above their price. <strong>The cheapest price research that exists</strong>, and most founders have this information in their heads already.</td></tr><tr><td>10</td><td>💰 How long to earn back what a customer costs?</td><td><code>calculated</code></td><td>Mission 11's cost per customer ÷ gross profit per customer, from Mission 8. Shown in months: <em>"It takes 3.2 months of this customer to pay back what it cost to get them."</em> Under 12 months is healthy — say so.</td></tr><tr><td>11</td><td>Your read on demand</td><td><code>single-select</code> + <code>short-answer</code></td><td>Strong · Mixed · Weak — and why</td></tr></tbody></table></div>
+<h3>Mission 13 — MVP Scope &amp; Build · 400 XP</h3>
+<p>The word <strong>Scope</strong> is in the mission name. Two card exercises make it real.</p>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Type</th><th>Detail</th></tr></thead><tbody><tr><td>1</td><td><strong>What's in, what's out?</strong></td><td><strong><code>card-sort</code></strong></td><td>Every feature from Missions 6 and 9 arrives as a card. Two columns: <strong>In the MVP</strong> · <strong>Not yet</strong>. <strong>This is the most valuable interaction in the journey</strong> — it makes cutting scope a deliberate, visible act instead of something that happens by accident three weeks into building.</td></tr><tr><td>2</td><td><strong>Match each MVP feature to the problem it solves</strong></td><td><strong><code>card-match</code></strong></td><td>Features ↔ the problems from Mission 3. <strong>A feature that matches nothing is scope creep</strong>, and the founder discovers that themselves rather than being told.</td></tr><tr><td>3</td><td>Why those cuts?</td><td><code>short-answer</code></td><td>One line</td></tr><tr><td>4</td><td>How will you build it?</td><td><code>multi-select</code></td><td><strong>No-code:</strong> Bubble · Glide · Softr · Webflow · <strong>Code:</strong> React · Next · Flutter · Laravel · Django · Node · <strong>Backend:</strong> Supabase · Firebase · AWS · Other →</td></tr><tr><td>5</td><td>How long will it take?</td><td><code>number</code> + unit</td><td>Days or weeks</td></tr><tr><td>6</td><td>What's the one thing it must do well?</td><td><code>short-answer</code></td><td>Forces a single quality bar into what is otherwise a feature list</td></tr><tr><td>7</td><td><strong>How will you know someone used it?</strong></td><td><strong><code>checklist</code></strong></td><td>☐ Analytics installed · ☐ Database records · ☐ I'll ask them directly · ☐ I'll watch them use it · ☐ Not set up yet. <strong>If they tick only the last box, link straight to the toolkit</strong> — this is the difference between Mission 14 having data and Mission 14 being guesswork.</td></tr><tr><td>8</td><td>Upload the MVP</td><td><code>upload</code></td><td>Link. <strong>Required.</strong></td></tr><tr><td>9</td><td>💰 What's your budget to build it?</td><td><code>number</code> + currency + <code>single-select</code></td><td><strong>"Nothing — my own time only"</strong> is the first option and the most common true answer. Pre-filled from the Mission 5 band, editable.</td></tr><tr><td>10</td><td>💰 What have you spent so far?</td><td><code>table</code></td><td>Line · amount · currency — tools, subscriptions, design, ads, anything. <strong>Running total shown.</strong> Founders routinely underestimate this by half because it arrives 200 at a time.</td></tr><tr><td>11</td><td>Can someone use it end to end?</td><td><code>single-select</code> + <code>table</code></td><td>Yes · Almost · Not yet → if not, list the blockers</td></tr></tbody></table></div>
+<h3>Mission 14 — Early Traction Review · 450 XP</h3>
+<p>The mission says <em>"without claiming product-market fit too soon"</em>. Every question serves that.</p>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Type</th><th>Detail</th></tr></thead><tbody><tr><td>1</td><td>The numbers</td><td><code>number</code> grid</td><td>Sign-ups · activated · came back in week 1 · came back in week 4 — <strong>plus how many weeks of data and total sample size</strong>. Everything below is read against those two.</td></tr><tr><td>2</td><td>Retention</td><td><code>calculated</code></td><td>Worked out from Q1 with the arithmetic shown. <strong>Never typed</strong> — a typed percentage is a guess.</td></tr><tr><td>3</td><td><strong>Sort each signal</strong></td><td><strong><code>card-sort</code></strong></td><td><strong>A real signal</strong> · <strong>Might be noise</strong> · <strong>Too early to say</strong>. This single exercise <em>is</em> the mission's lesson, and it takes thirty seconds.</td></tr><tr><td>4</td><td>What might be inflating this?</td><td><code>checklist</code></td><td>☐ Friends and family · ☐ Paid promotion · ☐ A one-off event · ☐ A press mention · ☐ A discount or incentive · ☐ Nothing I can see. <strong>The anti-overclaim guard.</strong></td></tr><tr><td>5</td><td>What do these numbers <strong>not</strong> tell you?</td><td><code>long-answer</code></td><td>The mission's whole thesis in one question</td></tr><tr><td>6</td><td>Evidence from users</td><td><code>upload</code> + <code>number</code></td><td>Plus an optional Sean Ellis result — ask users <em>"how would you feel if you could no longer use this?"</em> and enter the % saying <strong>very disappointed</strong>. Guarded: <em>"Needs 30+ responses to mean anything. 40% is the recognised threshold — a signal, not a verdict."</em></td></tr><tr><td>7</td><td>Which number will you move next month?</td><td><code>single-select</code> + <code>number</code></td><td>Pick one metric and a target. Turns a review into a commitment.</td></tr><tr><td>8</td><td>💰 Revenue so far</td><td><code>number</code> + currency + <code>single-select</code></td><td><strong>"No revenue yet"</strong> is the first option and carries no penalty — most founders at Mission 14 are pre-revenue and that is normal</td></tr><tr><td>9</td><td>💰 Paying customers</td><td><code>number</code></td><td>How many people have actually paid you, ever. Separate from sign-ups, and usually a much smaller number.</td></tr><tr><td>10</td><td>💰 Average per customer</td><td><code>calculated</code></td><td>Revenue ÷ paying customers, shown next to the price from Mission 8: <em>"You planned 200 per customer. You're averaging 140."</em> <strong>That gap is one of the most useful things a founder can see</strong>, and neither number needed typing.</td></tr><tr><td>11</td><td>What will you change?</td><td><code>table</code> + <code>rank</code></td><td>List, then drag into priority</td></tr></tbody></table></div>
+<p><strong>Nowhere on this page is there a product-market-fit score.</strong> Replace any such display with <strong>evidence strength — thin · early · promising</strong>, computed from sample size and observation window.</p>
+<h3>Mission 15 — Launch &amp; Incubator Readiness · 500 XP</h3>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Question</th><th>Type</th><th>Detail</th></tr></thead><tbody><tr><td>1</td><td>What did you launch, and when?</td><td><code>short-answer</code> + date + <code>upload</code></td><td>Name, date, link</td></tr><tr><td>2</td><td>Your evidence pack</td><td><code>checklist</code></td><td><strong>Auto-assembled</strong> from Missions 3, 4, 7, 10, 11, 12 and 14. The founder ticks what to include and edits. <strong>Nothing is retyped.</strong></td></tr><tr><td>3</td><td><strong>Match each claim to its evidence</strong></td><td><strong><code>card-match</code></strong></td><td>Claim cards ("people will pay", "this channel works", "users come back") ↔ evidence cards from earlier missions. <strong>The best use of matching in the whole journey: a claim with no evidence attached is a claim you cannot make in a pitch</strong>, and the founder sees that before a panel does.</td></tr><tr><td>4</td><td>Your story, in one paragraph</td><td><code>sentence-builder</code></td><td><em>"In <strong>[time period]</strong> we <strong>[did this]</strong>, which produced <strong>[result]</strong>. That tells us <strong>[insight]</strong>, so next we will <strong>[step]</strong>."</em></td></tr><tr><td>5</td><td>What are you asking for?</td><td><code>single-select</code> + <code>number</code></td><td>Incubator or accelerator place · Pre-seed investment · Grant · Pilot customer · Co-founder · Not raising yet — plus amount and currency if funding</td></tr><tr><td>6</td><td>The next 90 days</td><td><code>table</code></td><td>Milestone · date · who owns it</td></tr><tr><td>7</td><td>Risks you'd name yourself</td><td><code>table</code></td><td>Risk · how you'd handle it. <strong>A founder who names their own risks reads as credible; one who hasn't reads as unprepared.</strong></td></tr><tr><td>8</td><td>What do you need that you don't have?</td><td><code>multi-select</code></td><td>Money · A co-founder · Technical help · Customers · Mentorship · Licensing or legal · Nothing right now → <strong>each answer routes to the relevant part of the platform</strong></td></tr><tr><td>9</td><td>💰 Cash available</td><td><code>number</code> + currency</td><td>What you actually have to spend. <strong>"Nothing"</strong> is allowed.</td></tr><tr><td>10</td><td>💰 What do you spend a month?</td><td><code>number</code> + currency</td><td>Everything — tools, ads, salaries, rent. Pre-filled from Mission 13's spending log.</td></tr><tr><td>11</td><td>💰 Your runway</td><td><code>calculated</code></td><td>Cash ÷ monthly spend, in months: <em>"At this rate you have 4 months."</em> <strong>Every incubator asks this, and a founder who has never worked it out finds out in the room</strong> — which is the worst possible place.</td></tr><tr><td>12</td><td>💰 Use of funds</td><td><code>table</code> + <code>calculated</code></td><td>Only shown if they're asking for money in Q5. Category · amount · % of the ask, <strong>with the percentages totalled live and flagged if they don't reach 100</strong>. Product · Marketing · Team · Operations · Legal and licensing · Buffer</td></tr><tr><td>13</td><td>Readiness check</td><td><code>checklist</code></td><td>☐ I can explain the problem in one sentence · ☐ I've spoken to at least 10 potential users · ☐ I have evidence someone will pay · ☐ <strong>I know my runway</strong> · ☐ I know my next 90 days · ☐ I can name my biggest risk</td></tr><tr><td>14</td><td>Generate your pack</td><td><code>upload</code> → download</td><td>Branded PDF assembling every mission's output, <strong>including a one-page financial summary</strong></td></tr></tbody></table></div>
+<hr>
+<h2>💰 The money thread</h2>
+<p>Finance isn't a mission and it shouldn't be a block of questions bolted onto one. It's <strong>one thread running through seven missions</strong>, where each step uses numbers the founder already gave you.</p>
+<div class="table-scroll"><table><thead><tr><th>Mission</th><th>The money question</th><th>What it produces</th></tr></thead><tbody><tr><td><strong>4</strong> Testable Problem Statement</td><td>What does the problem cost them?</td><td>The value you could capture</td></tr><tr><td><strong>5</strong> Solution Selection</td><td>Roughly what would it cost to build?</td><td>A band, not a budget</td></tr><tr><td><strong>8</strong> Business Model Canvas</td><td>Price · cost to serve · fixed costs</td><td><strong>Gross margin · break-even customers</strong></td></tr><tr><td><strong>11</strong> Go-to-Market Experiment</td><td>Budget and results of the test</td><td><strong>Cost per customer · cost of 100</strong></td></tr><tr><td><strong>12</strong> Demand &amp; Market Validation</td><td>The price ladder</td><td><strong>Payback period</strong></td></tr><tr><td><strong>13</strong> MVP Scope &amp; Build</td><td>Budget and what's been spent</td><td>Real cost to date</td></tr><tr><td><strong>14</strong> Early Traction Review</td><td>Revenue and paying customers</td><td><strong>Actual vs planned price</strong></td></tr><tr><td><strong>15</strong> Launch &amp; Incubator Readiness</td><td>Cash and monthly spend</td><td><strong>Runway · use of funds</strong></td></tr></tbody></table></div>
+<p><strong>Seventeen money questions in total. Nine of them are calculated</strong> — the founder never types them. They enter a price and a cost in Mission 8 and the platform returns their margin and their break-even. They enter a budget and a result in Mission 11 and get a cost per customer. By Mission 15 the runway calculates itself.</p>
+<p><strong>Four rules, so this doesn't become the thing that stops people.</strong></p>
+<ol><li><strong>"Not sure yet", "Nothing", and "No revenue yet" are always available and never penalised.</strong> Most founders at Mission 14 are pre-revenue. That's normal, and a rubric that marks it down teaches people to invent numbers.</li><li><strong>Nothing financial is asked in Discover, Shape or Test.</strong> Missions 1, 2, 3, 6, 7, 9 and 10 have no money questions at all. A founder who hasn't defined the problem yet has nothing useful to say about price.</li><li><strong>Estimate or actual, on every number.</strong> A toggle, stored with the value. An estimated runway and a real one are different things and the founder should be able to say which they meant.</li><li><strong>Currency is set once</strong>, on the profile — EGP · SAR · AED · USD — and every field inherits it. Never ask twice.</li></ol>
+<p><strong>Connect these to the toolkit.</strong> The platform already has unit-economics, burn-and-runway and P&amp;L calculators. Mission 8's numbers should open in the unit-economics calculator, and Mission 15's should open in burn and runway, pre-filled — one place to enter, two places to use.</p>
+<hr>
+<h2>What the journey looks like now</h2>
+<div class="table-scroll"><table><thead><tr><th></th><th>Before</th><th>After</th></tr></thead><tbody><tr><td>Total questions</td><td>87</td><td><strong>136</strong></td></tr><tr><td>Money questions</td><td>~3</td><td><strong>17</strong> (9 of them calculated)</td></tr><tr><td>Blank open boxes</td><td><strong>75</strong></td><td><strong>3</strong></td></tr><tr><td>Answered by tapping or dragging</td><td>0</td><td><strong>~70</strong></td></tr><tr><td>Drag-based exercises</td><td>0</td><td><strong>19</strong></td></tr><tr><td>Card-match exercises</td><td>0</td><td><strong>7</strong></td></tr><tr><td>Card-sort exercises</td><td>0</td><td><strong>6</strong></td></tr><tr><td>Ranking exercises</td><td>0</td><td><strong>4</strong></td></tr><tr><td>2×2 matrices</td><td>0</td><td><strong>2</strong></td></tr><tr><td>Canvases</td><td>0</td><td><strong>2</strong></td></tr><tr><td>Calculated fields — never typed</td><td>0</td><td><strong>13</strong></td></tr><tr><td>Carried forward between missions</td><td>0</td><td><strong>13</strong></td></tr></tbody></table></div>
+<p>More questions, far less work. The three that stay open are the three that should be: <strong>Mission 6's "your solution"</strong>, <strong>Mission 7's "what did you learn"</strong>, and <strong>Mission 14's "what do these numbers not tell you"</strong>. Reflection deserves a blank page. Choosing from a list does not.</p>
+<h3>Type usage across all 15 missions</h3>
+<div class="table-scroll"><table><thead><tr><th>Type</th><th>Questions</th></tr></thead><tbody><tr><td><code>single-select</code></td><td>25</td></tr><tr><td><code>number</code></td><td>24</td></tr><tr><td><code>table</code></td><td>21</td></tr><tr><td><code>multi-select</code></td><td>16</td></tr><tr><td><strong><code>calculated</code></strong></td><td><strong>13</strong></td></tr><tr><td><code>short-answer</code></td><td>11</td></tr><tr><td><code>upload</code></td><td>8</td></tr><tr><td><code>sentence-builder</code></td><td>8</td></tr><tr><td><strong><code>card-match</code></strong></td><td><strong>7</strong></td></tr><tr><td><strong><code>card-sort</code></strong></td><td><strong>6</strong></td></tr><tr><td><code>checklist</code></td><td>6</td></tr><tr><td><strong><code>rank</code></strong></td><td><strong>4</strong></td></tr><tr><td><code>long-answer</code></td><td>3</td></tr><tr><td><code>matrix</code></td><td>2</td></tr><tr><td><code>canvas</code></td><td>2</td></tr><tr><td><code>dropdown</code></td><td>1</td></tr></tbody></table></div>
+<p>Counts overlap where one question combines two inputs — "upload plus a number", "a choice plus one line" — which is deliberate. A question should collect the whole answer, not be split in two to keep the types tidy.</p>
+<hr>
+<hr>
+<h1>The prompts</h1>
+<p>Four. Paste one per message.</p>
+<h2>PROMPT A — Build the Five Missing Interaction Types</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT A</b> · Build the Five Missing Interaction Types</span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>PAGE: The shared question component library.
+
+THE PROBLEM
+
+The missions need drag-based interactions that don't exist in the codebase
+yet. Everything is currently a text field, which is why the missions feel
+like paperwork.
+
+BUILD THESE FIVE. They are the ones that change how the journey feels.
+
+1. CARD-MATCH — drag cards to pair them up
+   Two columns of cards. The founder drags a card from the left onto its
+   partner on the right, or taps one then the other.
+   - A joined pair shows a connecting line and both cards lock together
+   - Unmatched cards stay visibly unmatched — that IS the feedback
+   - Some exercises have a correct answer (matching canvas blocks to their
+     meanings): show a gentle tick on a correct pair, and let a wrong pair be
+     dragged apart with no penalty and no score
+   - Some have no correct answer (matching features to benefits): every pair
+     is the founder's own judgement, nothing is marked
+   - Allow one-to-many where the question says so
+   - MOBILE: tap-to-select then tap-to-pair. Dragging across two columns on a
+     phone is miserable.
+   - KEYBOARD: arrow keys to move between cards, space to pick up and drop
+   Used 7 times, including matching the nine Business Model Canvas blocks to
+   their plain-English meanings, and matching each MVP feature to the problem
+   it solves.
+
+2. CARD-SORT — drag cards into labelled columns
+   Two or three columns with headings. Cards start in an unsorted tray and are
+   dragged into a column.
+   - The tray empties as they sort; an empty tray means done
+   - Column counts shown in the heading: "In the MVP (4)"
+   - MOBILE: each card gets buttons for the columns instead of dragging
+   Used 6 times. The most important is Mission 13: every feature sorted into
+   "In the MVP" or "Not yet".
+
+3. RANK — drag items into order
+   A vertical list, dragged to reorder, position number always visible.
+   - Pre-order it sensibly where earlier data allows, so the founder is
+     adjusting rather than starting from nothing
+   - MOBILE: up/down arrows on each row as well as dragging
+   Used 4 times, including ranking 13 go-to-market channels.
+
+4. CHECKLIST — tick all that apply
+   Grouped checkboxes with optional group headings. Used both for gathering
+   facts and for self-assessment, where the boxes teach the criteria by making
+   the founder apply them.
+
+5. DROPDOWN — long searchable list
+   For lists too long for chips. Type to filter, multi-select where the
+   question allows it, selected items shown as removable chips beneath.
+
+RULES FOR ALL FIVE, AND FOR EVERY EXISTING TYPE
+
+  a. EVERY LIST ENDS WITH "Other →" which opens a text field, and what the
+     founder types there is stored so you can see what your taxonomies are
+     missing.
+  b. EVERY QUESTION CAN CARRY AN ATTACHMENT whatever its type.
+  c. MULTI-SELECT IS THE DEFAULT for categories. Fintech AND healthtech is a
+     real answer. Subscription AND commission is a real answer.
+  d. FULL KEYBOARD ACCESS AND SCREEN-READER LABELS on every drag interaction.
+     A drag-only control that cannot be operated another way is broken.
+  e. RTL FOR ARABIC — columns mirror, drag direction mirrors, rank order
+     mirrors.
+  f. WORKS AT 390px WIDE. This is where missions get answered.
+  g. RESPECT prefers-reduced-motion: no card animation for those users.</code></pre></div>
+<h2>PROMPT B — Load the Question Bank</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT B</b> · Load the Question Bank</span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>PAGE: The mission content schema.
+
+IMPORTANT — NOTHING IS RENAMED. The five phases stay Discover, Shape, Test,
+Model and Readiness. All 15 mission names stay exactly as they are. No
+reordering, no merging, no additions. Only the questions inside them change.
+
+THE PROBLEM
+
+87 questions across the 15 missions, 75 of them blank text areas. Testers
+could not answer basic questions — "what area are you interested in?" — not
+because the question is hard, but because a blank box asks the founder to
+invent both the answer and the shape of the answer at once.
+
+THE FIX
+
+Replace the question set with the 120 questions in the accompanying document.
+Load them as DATA, never as JSX. Each question is a record:
+
+  { id, missionId, phase, order, type, label, helpText,
+    options[], allowOther, required, carriesFrom,
+    attachmentAllowed, exampleAnswerId, config }
+
+  config holds the type-specific parts:
+    card-match   { leftSource, rightSource, hasCorrectAnswer, allowOneToMany }
+    card-sort    { columns[], cardSource }
+    rank         { items[], preOrderBy }
+    matrix       { xAxis, yAxis, quadrantLabels[], cardSource }
+    sentence-builder { template, blanks[] }
+    number       { units[], currencies[], calculated }
+
+THE GOVERNING PRINCIPLE: STRUCTURE THE SCAFFOLDING, NEVER THE CONTENT.
+
+A list of industries does not tell a founder what their business is — it
+removes the burden of inventing a taxonomy from scratch. The thinking stays
+theirs. Never pre-fill an answer, never suggest what they should conclude,
+never narrow the options so far that only one is choosable.
+
+THREE QUESTIONS THAT MUST BE BUILT EXACTLY AS WRITTEN
+
+  MISSION 1 Q7 — "How do you know this is real?" includes the option
+  "It's a hunch for now". That option must be selectable with NO penalty and
+  no warning. It is the honest answer for most founders in Mission 1, and
+  punishing it teaches people to lie to the platform.
+
+  MISSION 7 Q8 — the verdict includes "Inconclusive", and the helper text says
+  it is a respected answer. Without that, founders invent a verdict.
+
+  MISSION 14 — there is NO product-market-fit score anywhere on this mission.
+  Wherever the platform currently shows one, replace it with EVIDENCE
+  STRENGTH — thin / early / promising — computed from sample size and
+  observation window, never from self-rating.
+
+CARRY THIRTEEN FIELDS FORWARD, pre-filled and editable, framed as
+continuation rather than repetition:
+
+  M2 Q3   &lt;- M1 Q2                   the problem
+  M3 cards&lt;- M1, M2                  problems to prioritise
+  M4 Q2   &lt;- M2 Q1                   the user
+  M6      &lt;- M2, M4, M1 Q4           segment, problem, alternatives
+  M7 Q1   &lt;- M6 "Must be true" pile  riskiest assumption
+  M8      &lt;- M2, M6                  segments, value proposition
+  M9 Q1   &lt;- M6, M7                  untested assumptions
+  M9 Q4   &lt;- M6                      features
+  M10 Q7  &lt;- M9 Q1                   did the prototype answer its question
+  M11 Q3  &lt;- M2                      narrowed segment
+  M13 Q1  &lt;- M6, M9                  features to scope
+  M13 Q2  &lt;- M3                      problems to match features against
+  M15 Q2  &lt;- M3,4,7,10,11,12,14      the evidence pack
+
+  Never show a carried field blank. Never show it locked. When a founder edits
+  one, keep both versions — at the end of the journey they can see how their
+  problem statement changed from Mission 1 to Mission 15.
+
+ARABIC: every question label, every chip, every column heading and every card
+exists in both languages, written natively rather than translated.</code></pre></div>
+<h2>PROMPT C — Make It Feel Like Something, Not a Form</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT C</b> · Make It Feel Like Something, Not a Form</span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>PAGE: /missions/:id — the answering experience.
+
+THE PROBLEM
+
+Even with better inputs, a page of stacked questions is still a form. The
+difference between a form and something a founder wants to finish is almost
+entirely in the moment-to-moment feel.
+
+THE FIX
+
+1. ONE QUESTION PER SCREEN on mobile, two or three on desktop. A stepper shows
+   "Question 3 of 7" and allows jumping. Give each question room.
+
+2. DRAG EXERCISES GET THE WHOLE SCREEN. A card-sort or a matrix is the mission
+   at that moment — nothing else competes with it. No sidebar, no banner, no
+   progress card.
+
+3. CARDS BEHAVE LIKE OBJECTS. Lift on pick-up, a shadow while moving, settle
+   into place, a drop zone that highlights when a card is over it. This is
+   where the feeling of a product rather than a questionnaire comes from, and
+   it is about fifteen lines of CSS.
+
+4. NAME THE RESULT BACK. When a card lands somewhere meaningful, say what it
+   means in one line:
+     "Fix first — this one is both painful and constant."
+     "Nothing matched to this feature. Is it needed in the MVP?"
+   One line. That line is the teaching.
+
+5. "SEE AN EXAMPLE" ON EVERY QUESTION — a real answer that scored well, shown
+   in a panel, NEVER pre-filled into the field, and always from a different
+   industry than the founder's so it cannot be copied.
+
+6. QUIET FEEDBACK. A small tick and "Ready" when an answer meets the bar. Not
+   a score, not a celebration — a signal they can move on.
+
+7. MOMENTUM, NOT CONFETTI. A small progress movement between questions,
+   something bigger at mission completion. Do not celebrate trivial actions —
+   this audience finds that patronising faster than most.
+
+8. SAVE VISIBLY. "Saved 2 minutes ago" near the stepper. Returning restores
+   the exact position, including a half-finished card sort.
+
+9. SHOW THE THREAD between missions:
+     "In Mission 2 you defined your user as [X]. This mission turns that into
+      a problem statement you can test."
+
+10. LET THEM SEE THE WHOLE MISSION. A "view all questions" toggle, for the
+    people who need the map before the first step.
+
+11. TIME PER QUESTION, honestly: "about 2 minutes". A card sort that says
+    "about 1 minute" gets started; an unlabelled one gets postponed.
+
+12. ARABIC AND RTL throughout — stepper direction, chip wrapping, drag
+    direction, column order, matrix axes.</code></pre></div>
+<h2>PROMPT D — The Money Thread</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT D</b> · The Money Thread</span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>PAGE: /missions/4, 5, 8, 11, 12, 13, 14, 15 — and a shared finance layer.
+
+IMPORTANT: Missions 1, 2, 3, 6, 7, 9 and 10 get NO money questions at all. A
+founder who has not yet defined the problem has nothing useful to say about
+price, and asking makes the early missions feel like an accounting exam.
+
+THE PROBLEM
+
+Finance currently appears as a few scattered number fields with no relationship
+to each other. A founder enters a price in one mission and a budget in another
+and the platform never connects them — so nobody ever learns their margin,
+their break-even, what a customer costs, or how long their money lasts. These
+are the numbers every incubator asks for and the ones founders are most afraid
+of.
+
+THE FIX — ONE THREAD ACROSS SEVEN MISSIONS. Each step uses numbers already
+entered. NINE OF THE SEVENTEEN ARE CALCULATED — the founder never types them.
+
+  M4   already asks what the problem costs the user. Keep it. Tag it as the
+       first node in the money thread so it appears in the summary.
+
+  M5   NEW, single-select band: "Roughly what would it cost to build?"
+         Nothing but my own time · Under 5,000 · 5,000-25,000 ·
+         25,000-100,000 · Over 100,000 · NOT SURE YET
+       A band, not a budget. Pre-fills Mission 13.
+
+  M8   Unit economics exists (price, cost to serve, margin). ADD:
+       NEW calculated: "How many customers to break even?"
+         fixed monthly costs (from the Cost Structure block)
+         ÷ gross profit per customer
+       Render as one sentence: "You need 84 customers a month to cover your
+       costs." NOTHING TYPED.
+       NEW calculated: MONEY MODEL SUMMARY strip —
+         price · cost to serve · margin % · fixed costs · break-even
+       The whole financial shape of the business on one line.
+
+  M11  NEW calculated: "What did one result cost you?" = budget ÷ results,
+       from the questions already in this mission. This is the founder's
+       first cost-per-customer number and it costs them nothing to get.
+       NEW calculated: "What would 100 cost at this rate?" shown beside the
+       Mission 8 margin:
+         "100 customers would cost 42,000. At your margin they'd be worth
+          61,000."
+       A channel's viability becomes obvious without one extra question.
+
+  M12  NEW single-select PRICE LADDER, built from their own price point —
+       three rungs below and three above:
+         "At [price] — most said yes / some hesitated / most said no"
+       The cheapest price research that exists, and founders usually already
+       know the answer.
+       NEW calculated: PAYBACK PERIOD = Mission 11 cost per customer ÷
+       Mission 8 gross profit per customer, in months. Under 12 months is
+       healthy — say so in one line.
+
+  M13  NEW number + currency: "What's your budget to build it?" with
+       "NOTHING — MY OWN TIME ONLY" as the FIRST option. Pre-filled from M5.
+       NEW table: "What have you spent so far?" — line, amount, currency,
+       RUNNING TOTAL SHOWN. Founders underestimate this by about half,
+       because it arrives 200 at a time.
+
+  M14  NEW number + currency: "Revenue so far", with "NO REVENUE YET" as the
+       first option, carrying no penalty.
+       NEW number: "How many people have actually paid you, ever?" — separate
+       from sign-ups and usually far smaller.
+       NEW calculated: average per customer = revenue ÷ paying customers,
+       shown against the Mission 8 price:
+         "You planned 200 per customer. You're averaging 140."
+       That gap is one of the most useful things a founder can see, and
+       neither number was typed.
+
+  M15  NEW number + currency: "Cash available" — "Nothing" allowed.
+       NEW number + currency: "What do you spend a month?" pre-filled from
+       M13's spending log.
+       NEW calculated: RUNWAY = cash ÷ monthly spend, in months.
+         "At this rate you have 4 months."
+       Every incubator asks this, and a founder who has never worked it out
+       finds out in the room.
+       NEW table + calculated: USE OF FUNDS, shown only if they are asking for
+       money — category, amount, % of the ask, PERCENTAGES TOTALLED LIVE and
+       flagged when they do not reach 100. Categories: Product · Marketing ·
+       Team · Operations · Legal and licensing · Buffer.
+       Add "I know my runway" to the readiness checklist.
+
+FOUR RULES SO THIS DOES NOT BECOME THE THING THAT STOPS PEOPLE
+
+1. "NOT SURE YET", "NOTHING" AND "NO REVENUE YET" ARE ALWAYS AVAILABLE AND
+   NEVER PENALISED. Most founders reaching Mission 14 are pre-revenue. That is
+   normal. A rubric that marks it down teaches founders to invent numbers,
+   which is worse than having none.
+
+2. NO MONEY QUESTION IS EVER REQUIRED TO PASS A MISSION. They enrich the
+   assessment; they are not a gate.
+
+3. ESTIMATE OR ACTUAL — a toggle on every number, stored with the value. An
+   estimated runway and a real one are different things and the founder should
+   be able to say which they meant. Show the label wherever the number appears,
+   including in the exported PDF.
+
+4. CURRENCY IS SET ONCE on the founder profile — EGP, SAR, AED, USD — and
+   every field inherits it. Never ask twice. Format with the locale's own
+   separators and put the symbol on the correct side for Arabic.
+
+CONNECT TO THE EXISTING TOOLKIT — DO NOT REBUILD IT
+
+The platform already has unit-economics, burn-and-runway and P&amp;L calculators.
+Mission 8's numbers open in the unit-economics calculator PRE-FILLED, and
+Mission 15's open in burn and runway PRE-FILLED. One place to enter, two
+places to use, and edits flow both ways.
+
+THE FINANCIAL SUMMARY
+
+Add a one-page financial summary to the Mission 15 export and to the founder's
+dashboard:
+  price · margin · break-even customers · cost per customer · payback period ·
+  revenue to date · paying customers · monthly spend · runway
+Every figure labelled estimate or actual, every figure traced to the mission
+it came from. THIS IS THE PAGE AN INCUBATOR ASKS FOR, and by Mission 15 the
+founder will have built it without ever seeing a spreadsheet.</code></pre></div>
+<hr>
+<h2>Sequence</h2>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Prompt</th><th>Why here</th></tr></thead><tbody><tr><td>1</td><td><strong>A</strong> — the five interaction types</td><td>The question bank is unbuildable without them</td></tr><tr><td>2</td><td><strong>B</strong> — the question bank</td><td>The content, as data</td></tr><tr><td>3</td><td><strong>D</strong> — the money thread</td><td>Same schema pass as B. Doing it separately means touching seven missions twice</td></tr><tr><td>4</td><td><strong>C</strong> — the answering experience</td><td>The shell it all lives in</td></tr></tbody></table></div>
+<p>A and B together are the substance. D is the highest-value addition per line of code, because nine of its seventeen questions are calculated from answers the founder has already given. C is what makes founders finish.</p>
+<hr>
+<h2>One note, not a change</h2>
+<p>Mission 5 is named <strong>Solution Selection</strong> and its description says <em>value/impact matrix</em>, so I've built it exactly that way and left both untouched, as you asked.</p>
+<p>Worth knowing for later: value and impact measure nearly the same thing, so ideas tend to land along a diagonal and the grid discriminates less than it could. A <strong>Value × Effort</strong> grid separates them into four genuinely different piles — do now, plan it, quick win, drop it. That's a one-line change to the second axis whenever you want it, and it changes no name.</p>
+</div>
+<script>document.querySelectorAll(".prompt").forEach(function(b){var t=b.querySelector(".copy"),p=b.querySelector("pre");
+if(!t||!p)return;t.addEventListener("click",function(){var x=p.textContent,d=function(){t.textContent="Copied";
+setTimeout(function(){t.textContent="Copy"},1600)};if(navigator.clipboard&&navigator.clipboard.writeText){
+navigator.clipboard.writeText(x).then(d,function(){t.textContent="Press \u2318C"})}else{var a=document.createElement("textarea");
+a.value=x;document.body.appendChild(a);a.select();try{document.execCommand("copy");d()}catch(e){t.textContent="Press \u2318C"}
+document.body.removeChild(a)}})});</script>
