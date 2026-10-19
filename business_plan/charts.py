@@ -103,6 +103,7 @@ def _clean(ax, grid="x"):
 #
 _CHAR_W = 0.565     # mean glyph width as a fraction of point size, DejaVu Sans,
                     # deliberately over-estimated so a label breaks rather than clips
+_CHAR_W_BOLD = 0.625  # DejaVu Sans Bold is wider, and every chip title is bold
 PAD = 0.075         # inches of padding inside a chip
 LINE = 1.52         # line spacing multiple
 
@@ -116,9 +117,9 @@ def _canvas(w, h):
     return fig, ax
 
 
-def _wrap(text, size, width_in):
+def _wrap(text, size, width_in, bold=False):
     """Break text to a pixel width without ever dropping a word."""
-    cols = max(4, int(width_in * 72 / (size * _CHAR_W)))
+    cols = max(4, int(width_in * 72 / (size * (_CHAR_W_BOLD if bold else _CHAR_W))))
     out = []
     for para in str(text).split("\n"):
         line = ""
@@ -168,7 +169,8 @@ def _chip(ax, x, y, w, h, title, body, fill, tsize=8.4, bsize=7.1, tag=None,
         if tag:
             block += 6.3 * LINE / 72
         if title:
-            block += _lines_h(_wrap(title, tsize, inner), tsize) + (0.035 if body else 0)
+            block += (_lines_h(_wrap(title, tsize, inner, bold=True), tsize)
+                      + (0.035 if body else 0))
         if body:
             block += _lines_h(_wrap(body, bsize, inner), bsize)
         ty = y + h / 2 + block / 2
@@ -179,7 +181,7 @@ def _chip(ax, x, y, w, h, title, body, fill, tsize=8.4, bsize=7.1, tag=None,
                 va="top", ha=ha, zorder=4)
         ty -= 6.3 * LINE / 72
     if title:
-        tl = _wrap(title, tsize, inner)
+        tl = _wrap(title, tsize, inner, bold=True)
         ax.text(tx, ty, "\n".join(tl), fontsize=tsize, fontweight="bold",
                 color=tcol, va="top", ha=ha, zorder=4, linespacing=LINE)
         ty -= _lines_h(tl, tsize) + 0.035
@@ -893,35 +895,6 @@ def fig_competition_model():
 #  8 · Revenue, cost and the path to breakeven
 # =====================================================================
 
-def fig_pl():
-    yrs = M.projection()
-    fig, ax = plt.subplots(figsize=(7.1, 3.0))
-    x = range(len(yrs))
-    w = 0.33
-    ax.bar([i - w / 2 for i in x], [y["revenue"] for y in yrs], w,
-           color=UV, label="Revenue", zorder=3)
-    ax.bar([i + w / 2 for i in x], [y["cost"] for y in yrs], w,
-           color=HAIR, label="Operating cost", zorder=3)
-    top = max(y["revenue"] for y in yrs)
-    for i, y in enumerate(yrs):
-        ax.text(i - w / 2, y["revenue"] * 1.025, _money(y["revenue"]), ha="center",
-                fontsize=8, color=INK, fontweight="bold")
-        ax.text(i + w / 2, y["cost"] * 1.025, _money(y["cost"]), ha="center",
-                fontsize=8, color=INK2)
-        p = y["profit"]
-        col = "#B4231F" if p < 0 else "#0F7A4B"
-        ax.text(i, -top * 0.135, f"{'−' if p < 0 else '+'}{_money(abs(p))}",
-                ha="center", fontsize=9, fontweight="bold", color=col)
-    ax.text(-0.70, -top * 0.135, "Result", ha="left", fontsize=8, color=MUTED)
-    ax.set_xticks(list(x))
-    ax.set_xticklabels([f"Year {y['year']}" for y in yrs], fontsize=9, color=INK)
-    ax.set_ylim(0, top * 1.14)
-    ax.yaxis.set_major_formatter(lambda v, p: f"${v/1e6:,.0f}m" if v else "0")
-    _clean(ax, grid="y")
-    ax.legend(frameon=False, fontsize=8, loc="upper left", labelcolor=INK2)
-    return _save(fig, "pl")
-
-
 # =====================================================================
 #  9 · Subscriptions, as a consequence of the engines
 # =====================================================================
@@ -953,10 +926,18 @@ def fig_subscription_sources():
 
 
 def fig_cohort_ramp():
-    """Delivery load against the facilitator capacity it needs, all twelve quarters."""
+    """
+    Delivery load against certified capacity, all twelve quarters.
+
+    Two lines, not one. The old version of this chart showed only the facilitators
+    required, which answers the easy question. The honest question is whether the
+    pool exists, so the available capacity of the certified pool in that same
+    quarter is drawn beside it. The plan is only credible where the dashed line
+    stays above the solid one, and it does, in every quarter, by design.
+    """
     cap = M.facilitator_capacity()
-    fig, ax = plt.subplots(figsize=(7.1, 3.1))
-    x = range(len(cap))
+    fig, ax = plt.subplots(figsize=(7.1, 3.25))
+    x = list(range(len(cap)))
     uni = [c["uni"] for c in cap]
     sch = [c["school"] for c in cap]
     tv = [c["tvet"] for c in cap]
@@ -966,52 +947,67 @@ def fig_cohort_ramp():
     ax.bar(x, tv, 0.62, bottom=[a + b for a, b in zip(uni, sch)], color="#00D3A4",
            label="Technical cohorts", zorder=3)
     ax2 = ax.twinx()
-    ax2.plot(list(x), [c["facilitators"] for c in cap], color=INK, linewidth=1.7,
-             marker="o", markersize=3.6, zorder=5, label="Facilitators required")
-    for i, c in enumerate(cap):
-        if i in (0, 3, 7, 11):
-            ax2.text(i, c["facilitators"] + 4, f"{c['facilitators']:.0f}",
-                     ha="center", fontsize=7.2, color=INK, fontweight="bold")
-    ax2.set_ylim(0, max(c["facilitators"] for c in cap) * 1.45)
-    ax2.set_ylabel("Facilitators required", color=INK2, fontsize=8.2)
+    need = [c["facilitators"] for c in cap]
+    have = [c["available"] * 2 for c in cap]
+    ax2.plot(x, need, color=INK, linewidth=1.8, marker="o", markersize=3.6,
+             zorder=6, label="Facilitators the plan needs")
+    ax2.plot(x, have, color="#C2185B", linewidth=1.6, linestyle=(0, (4, 2)),
+             marker="s", markersize=3.2, zorder=5,
+             label="Certified pool available")
+    ax2.set_ylim(0, max(have) * 1.52)
+    ax2.set_ylabel("Facilitator-equivalents", color=INK2, fontsize=8.2)
     ax2.spines["top"].set_visible(False)
     ax2.spines["left"].set_visible(False)
     ax2.spines["right"].set_color(HAIR)
     ax2.tick_params(labelsize=7.4)
-    ax.set_xticks(list(x))
+    ax.set_xticks(x)
     ax.set_xticklabels([c["label"].replace(" ", "\n") for c in cap], fontsize=6.4,
                        color=INK2)
     ax.set_ylabel("Cohorts in the quarter")
-    ax.set_ylim(0, max(c["total"] for c in cap) * 1.3)
+    ax.set_ylim(0, max(c["total"] for c in cap) * 1.34)
     _clean(ax, grid="y")
     for b in (3.5, 7.5):
         ax.axvline(b, color=HAIR, linewidth=0.9, zorder=1)
-    ax.legend(frameon=False, fontsize=7.2, loc="upper left", labelcolor=INK2)
+    h1, l1 = ax.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    ax.legend(h1 + h2, l1 + l2, frameon=False, fontsize=7.0, loc="upper left",
+              labelcolor=INK2, ncol=2, columnspacing=1.2)
     return _save(fig, "cohort_ramp")
 
 
 def fig_headcount():
+    """
+    The establishment across five years, against its own cap.
+
+    The cap is the point of this chart, so it is drawn: a step line at six, nine,
+    twelve, sixteen and twenty. Bars that touch it and never cross it are the
+    whole argument that this plan can be staffed.
+    """
     by_fn, totals = M.headcount()
-    fns = list(by_fn.keys())
-    fig, ax = plt.subplots(figsize=(7.1, 3.2))
-    x = range(3)
-    bottoms = [0, 0, 0]
-    cols = [UV, "#0071ED", "#00ABD4", "#00DC91", "#A1EE58", LIME, "#C9CEDB",
-            "#8E96A8"]
+    fns = totals["order"]
+    years = list(M.YEARS_5)
+    fig, ax = plt.subplots(figsize=(7.1, 3.35))
+    x = list(range(len(years)))
+    bottoms = [0] * len(years)
+    cols = [UV, "#0071ED", "#00ABD4", "#00D3A4", "#A1EE58"]
     for fn, c in zip(fns, cols):
-        vals = [by_fn[fn]["y1"], by_fn[fn]["y2"], by_fn[fn]["y3"]]
-        ax.bar(x, vals, 0.5, bottom=bottoms, color=c, label=fn,
+        vals = [by_fn[fn][f"y{y}"] for y in years]
+        ax.bar(x, vals, 0.52, bottom=bottoms, color=c, label=fn,
                edgecolor=WHITE, linewidth=1.1, zorder=3)
         bottoms = [b + v for b, v in zip(bottoms, vals)]
-    for i, t in enumerate([totals["y1"], totals["y2"], totals["y3"]]):
-        ax.text(i, t + 1.6, f"{t} people", ha="center", fontsize=9.5,
-                fontweight="bold", color=INK)
-    ax.set_xticks(list(x))
-    ax.set_xticklabels(["Year 1", "Year 2", "Year 3"], fontsize=9, color=INK)
-    ax.set_ylabel("Establishment at year end")
-    ax.set_ylim(0, totals["y3"] * 1.18)
+    caps = [M.HEADCOUNT_CAP[y] for y in years]
+    ax.step([i - 0.5 for i in x] + [x[-1] + 0.5], caps + [caps[-1]],
+            where="post", color="#C2185B", linewidth=1.5,
+            linestyle=(0, (4, 2)), zorder=6, label="The cap this plan commits to")
+    for i, y in enumerate(years):
+        ax.text(i, totals[f"y{y}"] + 0.7, f"{totals[f'y{y}']}", ha="center",
+                fontsize=10.5, fontweight="bold", color=INK, zorder=7)
+    ax.set_xticks(x)
+    ax.set_xticklabels([f"Year {y}" for y in years], fontsize=9, color=INK)
+    ax.set_ylabel("Employees at year end")
+    ax.set_ylim(0, max(caps) * 1.30)
     _clean(ax, grid="y")
-    ax.legend(frameon=False, fontsize=7.6, loc="upper left", labelcolor=INK2)
+    ax.legend(frameon=False, fontsize=7.4, loc="upper left", labelcolor=INK2)
     return _save(fig, "headcount")
 
 
@@ -1021,28 +1017,28 @@ def fig_gtm_moves():
     """The five moves, and what each one unlocks."""
     moves = [
         ("MOVE 01", "Universities", "Entrepreneurship centres, capstones, deans",
-         "Access to students and credibility"),
-        ("MOVE 02", "Ambassadors", "Campus teams, workshops, competitions",
-         "Founders who start Mission 01"),
-        ("MOVE 03", "Content", "Reels, founder podcast, community",
-         "Reach beyond the campuses we are on"),
-        ("MOVE 04", "Partners", "Programmes, NGOs, youth organisations",
-         "Funded cohorts at scale"),
-        ("MOVE 05", "KSA", "Running in parallel since September 2026",
-         "Two markets from year one"),
+         "Delivered cohorts, and the reports every other engine is sold on"),
+        ("MOVE 02", "Competitions", "Enactus, INJAZ, bank-sponsored seasons",
+         "Hundreds of entrants per deal, paid for by a sponsor"),
+        ("MOVE 03", "Mission Zero", "The podcast, the readiness report, ambassadors",
+         "Institutions that call first, and curriculum as a by-product"),
+        ("MOVE 04", "Certified partners", "Youth NGOs, training providers, chapters",
+         "Delivery capacity that is not payroll"),
+        ("MOVE 05", "Public programmes", "Initiatives, ministries, donors",
+         "Seats and trainer certification at national scale"),
     ]
-    W, H = 7.1, 2.15
+    W, H = 7.1, 2.24
     fig, ax = _canvas(W, H)
     gap = 0.11
     w = (W - 4 * gap) / 5
     for i, (tag, title, body, unlock) in enumerate(moves):
         x = i * (w + gap)
-        _chip(ax, x, 1.02, w, 1.10, title, body, SPECTRUM[i * 2], tag=tag,
-              tsize=9.4, vcentre=True)
-        _chip(ax, x, 0.03, w, 0.86, None, unlock, WASH, tag="UNLOCKS", bsize=7.0,
+        _chip(ax, x, 1.06, w, 1.14, title, body, spec(i, 5), tag=tag,
+              tsize=9.2, vcentre=True)
+        _chip(ax, x, 0.03, w, 0.92, None, unlock, WASH, tag="UNLOCKS", bsize=6.8,
               vcentre=True)
         if i < 4:
-            _arrow(ax, x + w + 0.01, 1.57, x + w + gap - 0.01, 1.57)
+            _arrow(ax, x + w + 0.01, 1.63, x + w + gap - 0.01, 1.63)
     return _save(fig, "gtm_moves")
 
 
@@ -1109,43 +1105,64 @@ def fig_bootcamp_map():
 
 
 def fig_org_chart():
-    """Year-one establishment, by reporting line."""
-    by_fn, totals = M.headcount()
-    W, H = 7.1, 3.25
-    fig, ax = _canvas(W, H)
-    _chip(ax, 2.20, 2.46, 2.70, 0.66, "Chief Executive Officer",
-          "Institutional relationships · fundraising · runs Day 01 onboarding",
-          UV, tsize=9.2, bsize=6.4, centre=True, vcentre=True)
+    """
+    The year-one establishment: six people, and what is deliberately not there.
 
-    units = [("Chief Technology Officer", ["Product and Engineering"]),
-             ("Chief Operating Officer", ["Delivery", "Curriculum and Content",
-                                          "Operations and Finance"]),
-             ("Head of Institutional Sales and KSA Country Manager",
-              ["Institutional Sales"]),
-             ("Head of Demand Generation", ["Demand Generation"])]
+    The grey notes matter more than the boxes. A chart showing only the six would
+    hide that operations, finance, design and the school engine are each carried
+    by somebody whose title says something else — which is the honest cost of a
+    six-person year one.
+    """
+    by_fn, totals = M.headcount()
+    W, H = 7.1, 3.34
+    fig, ax = _canvas(W, H)
+    _chip(ax, 2.00, 2.64, 3.10, 0.62, "Chief Executive Officer",
+          "Institutional relationships · hosts Mission Zero · carries operations, "
+          "finance and the quality gates until year four",
+          UV, tsize=9.2, bsize=6.3, centre=True, vcentre=True)
+
+    units = [
+        ("Chief Technology Officer", ["Senior full-stack engineer"],
+         "Design, data and product management sit with the CTO until years "
+         "four and five"),
+        ("Head of Curriculum and Certification", [],
+         "Certifies and audits the facilitator pool rather than employing it"),
+        ("Head of Partnerships — Egypt", [],
+         "Also carries competitions, schools and corporate sponsors through "
+         "year one"),
+        ("Head of Growth and Content", [],
+         "Mission Zero, the ambassador network and the annual readiness report"),
+    ]
     gap = 0.12
     w = (W - 3 * gap) / 4
-    for i, (title, fns) in enumerate(units):
+    note_top = 1.26
+    for i, (title, reports, note) in enumerate(units):
         x = i * (w + gap)
-        people = sum(by_fn[f]["y1"] for f in fns)
-        _chip(ax, x, 1.74, w, 0.58, title, None, "#DDE3F6", tsize=7.4)
-        _arrow(ax, W / 2, 2.44, x + w / 2, 2.35)
-        ax.text(x + w - PAD, 1.80, f"{people}", fontsize=8.6, color=UV,
-                fontweight="bold", ha="right", va="bottom", zorder=4)
-        y = 1.62
-        for f in fns:
-            ax.add_patch(FancyBboxPatch((x, y - 0.34), w, 0.34,
-                                        boxstyle="round,pad=0,rounding_size=0.05",
-                                        facecolor=WASH, edgecolor="none", zorder=3))
-            fl = _wrap(f, 6.8, w - 2 * PAD - 0.16)
-            ax.text(x + PAD, y - 0.17, "\n".join(fl), fontsize=6.8, color=INK,
-                    va="center", zorder=4, linespacing=1.3)
-            ax.text(x + w - PAD, y - 0.17, str(by_fn[f]["y1"]), fontsize=7.2,
-                    color=UV, fontweight="bold", va="center", ha="right", zorder=4)
-            y -= 0.42
-    ax.text(W / 2, 0.10, f"Year one: {totals['y1']} employees, plus a certified "
-            f"freelance facilitator pool and {M.AMBASSADORS[1]} campus ambassadors",
-            fontsize=7.2, color=INK2, ha="center")
+        _chip(ax, x, 1.90, w, 0.58, title, None, "#DDE3F6", tsize=7.4,
+              vcentre=True)
+        _arrow(ax, W / 2, 2.62, x + w / 2, 2.52)
+        for j, r in enumerate(reports):
+            _arrow(ax, x + w / 2, 1.88, x + w / 2, 1.80)
+            _chip(ax, x, 1.38, w, 0.40, None, r, WASH, bsize=6.9, vcentre=True)
+        ax.text(x + PAD, note_top, "\n".join(_wrap(note, 6.3, w - 2 * PAD)),
+                fontsize=6.3, color=MUTED, va="top", zorder=4, linespacing=1.46)
+
+    ax.add_patch(Rectangle((0, 0.60), W, 0.012, color=HAIR, zorder=2))
+    ax.text(0, 0.66, "NOT ON THE PAYROLL — and this is the design, not a gap",
+            fontsize=6.3, color=UV, fontweight="bold", va="bottom", zorder=4)
+    off = [("Certified facilitator pool",
+            f"{M.QUARTERLY['certified_facilitators'][3]} certified by the end of "
+            f"year one. Every cohort runs on this pool."),
+           ("Certified delivery partners",
+            f"{M.stock('delivery_partners', 1)} organisations in year one. They "
+            f"deliver; StartPad audits."),
+           ("Campus ambassadors",
+            f"{M.AMBASSADORS[1]} on a small stipend. Demand generation, never "
+            f"delivery.")]
+    cw = (W - 2 * 0.12) / 3
+    for i, (t, b) in enumerate(off):
+        _chip(ax, i * (cw + 0.12), 0.04, cw, 0.52, t, b, LIME, tsize=7.2,
+              bsize=6.2)
     return _save(fig, "org_chart")
 
 
@@ -1219,52 +1236,412 @@ def fig_flywheel():
 
 
 def fig_ngo_initiatives():
-    """The named national programmes StartPad is built to plug into."""
-    items = [
-        ("One Million Entrepreneurs", "Ministry of Planning · Rowad 2030",
-         "One million entrepreneurs qualified by 2030, with Banque Misr and NBE"),
-        ("1 Million Qualified Innovators", "Higher Education · UNDP · MBRF · ICESCO",
-         "Launched in Cairo, April 2025. Future skills for one million young people"),
-        ("MSMEDA governorate programme", "Qetar El Kheir · 22 governorates",
-         "Free training reaching founders outside the urban technology hubs"),
-        ("One Million International Licences", "With Cisco · announced May 2026",
-         "Accredited technical and professional certification at national scale"),
-    ]
-    W, H = 7.1, 1.82
+    """
+    The named public programmes, with the route into each.
+
+    Built from the plan's own named-target table rather than typed here, so the
+    figure and the prose cannot drift apart.
+    """
+    items = M.NAMED_INITIATIVES[:6]
+    W = 7.1
+    gap = 0.12
+    w = (W - 2 * gap) / 3
+    cells = []
+    for row in items:
+        org, market, runs, supply, plays, route = row
+        name = org.split(" — ")[0].split(", and ")[0]
+        sub = org.split(" — ")[1] if " — " in org else market
+        cells.append((name, f"{market} · {sub}" if sub != market else market,
+                      supply, plays))
+    rowh = []
+    for name, sub, supply, plays in cells:
+        nl = _wrap(name, 8.0, w - 2 * PAD)
+        sl = _wrap(sub, 6.3, w - 2 * PAD)
+        bl = _wrap(supply, 6.7, w - 2 * PAD)
+        rowh.append(0.30 + _lines_h(nl, 8.0) + _lines_h(sl, 6.3)
+                    + _lines_h(bl, 6.7))
+    h1 = max(rowh[:3])
+    h2 = max(rowh[3:])
+    H = h1 + h2 + gap + 0.06
     fig, ax = _canvas(W, H)
-    gap = 0.13
-    w = (W - 3 * gap) / 4
-    for i, (name, who, what) in enumerate(items):
-        x = i * (w + gap)
-        ax.add_patch(FancyBboxPatch((x, 0.06), w, 1.70,
+    for i, (name, sub, supply, plays) in enumerate(cells):
+        col, row = i % 3, i // 3
+        x = col * (w + gap)
+        hh = h1 if row == 0 else h2
+        top = H - 0.03 - (0 if row == 0 else h1 + gap)
+        ax.add_patch(FancyBboxPatch((x, top - hh), w, hh,
                                     boxstyle="round,pad=0,rounding_size=0.05",
                                     facecolor=WASH, edgecolor="none", zorder=2))
-        ax.add_patch(Rectangle((x, 1.64), w, 0.12, color=SPECTRUM[i * 2], zorder=3))
-        y = 1.50
-        nl = _wrap(name, 7.8, w - 2 * PAD)
-        ax.text(x + PAD, y, "\n".join(nl), fontsize=7.8, fontweight="bold",
-                color=INK, va="top", zorder=4, linespacing=1.4)
-        y -= _lines_h(nl, 7.8) + 0.04
-        wl = _wrap(who, 6.5, w - 2 * PAD)
-        ax.text(x + PAD, y, "\n".join(wl), fontsize=6.5, color=UV, va="top",
+        ax.add_patch(Rectangle((x, top - 0.11), w, 0.11, color=spec(i, 6),
+                               zorder=3))
+        y = top - 0.20
+        nl = _wrap(name, 8.0, w - 2 * PAD)
+        ax.text(x + PAD, y, "\n".join(nl), fontsize=8.0, fontweight="bold",
+                color=INK, va="top", zorder=4, linespacing=1.36)
+        y -= _lines_h(nl, 8.0) + 0.028
+        sl = _wrap(sub, 6.3, w - 2 * PAD)
+        ax.text(x + PAD, y, "\n".join(sl), fontsize=6.3, color=UV, va="top",
                 zorder=4, linespacing=1.4)
-        y -= _lines_h(wl, 6.5) + 0.05
-        ax.text(x + PAD, y, "\n".join(_wrap(what, 6.8, w - 2 * PAD)), fontsize=6.8,
-                color=INK2, va="top", zorder=4, linespacing=1.45)
+        y -= _lines_h(sl, 6.3) + 0.04
+        ax.text(x + PAD, y, "\n".join(_wrap(supply, 6.7, w - 2 * PAD)),
+                fontsize=6.7, color=INK2, va="top", zorder=4, linespacing=1.45)
+        ax.text(x + w - PAD, top - hh + 0.06, plays, fontsize=6.4, color=UV,
+                fontweight="bold", ha="right", va="bottom", zorder=4)
     return _save(fig, "ngo_initiatives")
 
 
+def fig_team_arc():
+    """
+    Six people to twenty, and the reason for each step.
+
+    The card height is measured from the longest card rather than fixed, because
+    the whole point of this figure is the reasoning underneath each number and a
+    clipped reason would defeat it.
+    """
+    arc = [
+        ("YEAR 1", "6", "Build it and open the first doors",
+         "Chief executive, chief technology officer, one engineer, curriculum, "
+         "Egyptian partnerships and growth. Operations sits with the CEO."),
+        ("YEAR 2", "9", "A second market, and a network to deliver",
+         "A resident Riyadh country manager, a second engineer, and the partner "
+         "network manager the entire operating model depends on."),
+        ("YEAR 3", "12", "Public money, and the volume it brings",
+         "Government and donors, a delivery coordinator to hold the calendar, "
+         "and a bids associate so the heads can keep selling."),
+        ("YEAR 4", "16", "Hand operations over at last",
+         "A chief operating officer, an AI and data engineer, a schools and "
+         "technical head, and a second coordinator."),
+        ("YEAR 5", "20", "Keep what has been won",
+         "Renewals, student success, a designer and a curriculum producer — the "
+         "first roles that protect an existing book rather than win a new one."),
+    ]
+    W = 7.1
+    gap = 0.10
+    w = (W - 4 * gap) / 5
+    inner = w - 2 * PAD
+    numh = 0.92
+    bodyh = max(_lines_h(_wrap(t, 7.6, inner, bold=True), 7.6) + 0.05
+                + _lines_h(_wrap(b, 6.7, inner), 6.7) for _, _, t, b in arc) + 0.16
+    H = numh + bodyh + 0.14
+    fig, ax = _canvas(W, H)
+    for i, (tag, n, title, body) in enumerate(arc):
+        x = i * (w + gap)
+        fill = spec(i, 5)
+        ink, sub = _ink_for(fill)
+        ax.add_patch(FancyBboxPatch((x, H - numh - 0.02), w, numh,
+                                    boxstyle="round,pad=0,rounding_size=0.05",
+                                    facecolor=fill, edgecolor="none", zorder=3))
+        ax.text(x + PAD, H - 0.10, tag, fontsize=6.3, color=sub,
+                fontweight="bold", va="top", zorder=4)
+        ax.text(x + PAD, H - 0.28, n, fontsize=21, color=ink, fontweight="bold",
+                va="top", zorder=4)
+        ax.text(x + w - PAD, H - numh + 0.06, "people", fontsize=6.6, color=sub,
+                ha="right", va="bottom", zorder=4)
+        _chip(ax, x, 0.04, w, bodyh, title, body, WASH, tsize=7.6, bsize=6.7)
+        if i < 4:
+            _arrow(ax, x + w + 0.005, H - numh / 2 - 0.02,
+                   x + w + gap - 0.005, H - numh / 2 - 0.02)
+    return _save(fig, "team_arc")
+
+
+def fig_leverage():
+    """
+    Why twelve people can stand behind three hundred cohorts.
+
+    Four bands, three bars each — year one palest, year three solid. The bands
+    share one scale, which is the only way the ratio between the employee bar and
+    the cohort bar reads honestly rather than being asserted in a caption.
+    """
+    rows = M.leverage()
+    bands = [("StartPad employees", "staff", UV),
+             ("Certified facilitators", "pool", "#0096DF"),
+             ("Certified partner organisations", "partners", "#00C8B6"),
+             ("Cohorts delivered in the year", "cohorts", "#8FD92F")]
+    W = 7.1
+    labw, rpad = 2.16, 0.62
+    barh, bargap, bandgap = 0.125, 0.028, 0.20
+    bandh = 3 * barh + 2 * bargap
+    footer = 0.56
+    H = footer + len(bands) * (bandh + bandgap) + 0.06
+    fig, ax = _canvas(W, H)
+    barw = W - labw - rpad
+    maxv = max(r["cohorts"] for r in rows)
+    top = H - 0.06
+    for label, key, col in bands:
+        ax.text(0, top - bandh / 2, "\n".join(_wrap(label, 7.5, labw - 0.14)),
+                fontsize=7.5, color=INK, va="center", zorder=4, linespacing=1.35)
+        for ri, r in enumerate(rows):
+            yy = top - barh - ri * (barh + bargap)
+            v = r[key]
+            w = max(0.030, barw * v / maxv)
+            ax.add_patch(Rectangle((labw, yy), w, barh, color=col,
+                                   alpha=[0.38, 0.66, 1.0][ri], zorder=3))
+            ax.text(labw + w + 0.06, yy + barh / 2,
+                    f"Y{r['year']}  {v:,}", fontsize=6.6, color=INK2,
+                    va="center", zorder=4)
+        top -= bandh + bandgap
+
+    ax.add_patch(Rectangle((0, footer - 0.10), W, 0.012, color=HAIR, zorder=2))
+    ax.text(0, footer - 0.30, "Learners reached per employee", fontsize=7.5,
+            color=INK, va="center", zorder=4)
+    for ri, r in enumerate(rows):
+        ax.text(labw + ri * 1.46, footer - 0.30,
+                f"Y{r['year']}   {r['learners_per_employee']:,.0f}", fontsize=9.2,
+                color=UV, fontweight="bold", va="center", zorder=4)
+    ax.text(0, 0.08, "Every cohort in this plan is delivered by a certified "
+            "facilitator or a certified partner organisation, never by an "
+            "employee. Headcount therefore tracks the number of partners to "
+            "audit, not the number of cohorts to run.",
+            fontsize=6.5, color=MUTED, va="center", zorder=4)
+    return _save(fig, "leverage")
+
+
+def fig_engagement_plays():
+    """
+    The six ways in, ordered by how little the counterparty has to risk.
+
+    Each card carries who is approached and how the money moves, because an
+    engagement model that names neither the person nor the invoice is a diagram
+    of a hope. Card height is measured from the longest card's content rather
+    than guessed, so nothing overflows when the wording changes.
+    """
+    plays = [(c, n, who, money)
+             for c, n, who, _ask, money, _pre, _len in M.ENGAGEMENT_PLAYS]
+    W = 7.1
+    gap = 0.13
+    w = (W - gap) / 2
+    inner = w - 2 * PAD
+    head = 0.52
+
+    def body_h(who, money):
+        h = 0.0
+        for txt in (who, money):
+            h += 0.105                                    # the small caps label
+            h += _lines_h(_wrap(txt, 6.6, inner), 6.6)
+            h += 0.045
+        return h
+
+    ch = head + max(body_h(p[2], p[3]) for p in plays) + 0.10
+    H = 3 * ch + 2 * gap + 0.04
+    fig, ax = _canvas(W, H)
+    for i, (code, name, who, money) in enumerate(plays):
+        cx = (i % 2) * (w + gap)
+        cy = H - 0.02 - (i // 2 + 1) * ch - (i // 2) * gap
+        fill = spec(i, 6)
+        ink, sub = _ink_for(fill)
+        ax.add_patch(FancyBboxPatch((cx, cy), w, ch,
+                                    boxstyle="round,pad=0,rounding_size=0.05",
+                                    facecolor=WASH, edgecolor="none", zorder=2))
+        ax.add_patch(FancyBboxPatch((cx, cy + ch - head), w, head,
+                                    boxstyle="round,pad=0,rounding_size=0.05",
+                                    facecolor=fill, edgecolor="none", zorder=3))
+        ax.add_patch(Rectangle((cx, cy + ch - head), w, 0.06, color=fill,
+                               zorder=3))
+        ax.text(cx + PAD, cy + ch - 0.08, code, fontsize=6.4, color=sub,
+                fontweight="bold", va="top", zorder=5)
+        ax.text(cx + PAD, cy + ch - 0.21, name, fontsize=9.4, color=ink,
+                fontweight="bold", va="top", zorder=5)
+        y = cy + ch - head - 0.07
+        for lab, txt in (("WHO IS APPROACHED", who), ("HOW THE MONEY MOVES", money)):
+            ax.text(cx + PAD, y, lab, fontsize=5.9, color=UV, fontweight="bold",
+                    va="top", zorder=4)
+            y -= 0.105
+            tl = _wrap(txt, 6.6, inner)
+            ax.text(cx + PAD, y, "\n".join(tl), fontsize=6.6, color=INK2,
+                    va="top", zorder=4, linespacing=1.42)
+            y -= _lines_h(tl, 6.6) + 0.045
+    return _save(fig, "engagement_plays")
+
+
+def fig_engagement_route():
+    """
+    How StartPad gets inside a programme it does not own.
+
+    The same five steps every time, which is the point: the route is a repeatable
+    procedure rather than a series of lucky introductions.
+    """
+    steps = [
+        ("01", "Find the edge", "Enter at one campus, one branch, one chapter — "
+         "never at head office, which cannot authorise a first.", "Week 0"),
+        ("02", "Fund the proof", "One cohort at StartPad's cost, inside their "
+         "programme, with their name on the report.", "Weeks 1–8"),
+        ("03", "Publish it", "The report, a Mission Zero episode recorded there, "
+         "and the showcase their leadership attends.", "Week 9"),
+        ("04", "Price the block", "Take the report upward and ask for seats or a "
+         "season — a line in their budget, not a new programme.", "Months 3–9"),
+        ("05", "Certify them", "Their trainers, their facilitators, our standard "
+         "and our audit. Volume without headcount.", "Months 9–18"),
+    ]
+    W, H = 7.1, 2.08
+    fig, ax = _canvas(W, H)
+    gap = 0.11
+    w = (W - 4 * gap) / 5
+    for i, (num, title, body, when) in enumerate(steps):
+        x = i * (w + gap)
+        fill = spec(i, 5)
+        ink, sub = _ink_for(fill)
+        ax.add_patch(FancyBboxPatch((x, 0.40), w, 1.64,
+                                    boxstyle="round,pad=0,rounding_size=0.05",
+                                    facecolor=WASH, edgecolor="none", zorder=2))
+        ax.add_patch(Rectangle((x, 1.92), w, 0.12, color=fill, zorder=3))
+        ax.text(x + PAD, 1.84, num, fontsize=6.6, color=UV, fontweight="bold",
+                va="top", zorder=4)
+        tl = _wrap(title, 8.6, w - 2 * PAD)
+        ax.text(x + PAD, 1.70, "\n".join(tl), fontsize=8.6, color=INK,
+                fontweight="bold", va="top", zorder=4, linespacing=1.3)
+        yy = 1.70 - _lines_h(tl, 8.6) - 0.05
+        ax.text(x + PAD, yy, "\n".join(_wrap(body, 6.7, w - 2 * PAD)),
+                fontsize=6.7, color=INK2, va="top", zorder=4, linespacing=1.45)
+        _chip(ax, x, 0.04, w, 0.30, None, when, fill, bsize=6.6, centre=True,
+              vcentre=True)
+        if i < 4:
+            _arrow(ax, x + w + 0.005, 1.20, x + w + gap - 0.005, 1.20)
+    return _save(fig, "engagement_route")
+
+
+def fig_named_targets():
+    """
+    The named organisations, by engine, each tagged with the plays that open it.
+
+    Nothing in this plan's revenue is attributed to any one of these. They are
+    here so a reader can check that the market described has real buyers running
+    real programmes, and that there is a stated route into each. Column heights
+    are measured from the wrapped content — including the column heading, which
+    wraps to two lines in two of the three columns — so no entry can fall
+    outside its own panel.
+    """
+    groups = [
+        ("National initiatives and government", M.NAMED_INITIATIVES, UV),
+        ("Sponsored competitions and youth organisations", M.NAMED_COMPETITIONS,
+         "#0096DF"),
+        ("Delivery partners, donors and sponsors", M.NAMED_PARTNERS, "#00C8B6"),
+    ]
+    W = 7.1
+    gap = 0.14
+    colw = (W - 2 * gap) / 3
+    inner = colw - 2 * PAD
+    BAR, HEADGAP, ENTRYGAP, FOOT = 0.11, 0.07, 0.185, 0.12
+
+    cols = []
+    for title, items, col in groups:
+        head = _wrap(title, 7.6, inner, bold=True)
+        entries = []
+        for row in items:
+            org, market, plays = row[0], row[1], row[4]
+            name = (org.split(" — ")[0].split(", under")[0]
+                       .split(" and the ")[0].split(", and ")[0])
+            entries.append((_wrap(name, 7.0, inner - 0.12), f"{market}  ·  {plays}"))
+        h = (BAR + 0.09 + _lines_h(head, 7.6) + HEADGAP
+             + sum(_lines_h(e[0], 7.0) + ENTRYGAP for e in entries) + FOOT)
+        cols.append((head, entries, col, h))
+
+    H = max(c[3] for c in cols) + 0.06
+    fig, ax = _canvas(W, H)
+    for gi, (head, entries, col, h) in enumerate(cols):
+        x = gi * (colw + gap)
+        top = H - 0.03
+        ax.add_patch(FancyBboxPatch((x, top - h), colw, h,
+                                    boxstyle="round,pad=0,rounding_size=0.05",
+                                    facecolor=WASH, edgecolor="none", zorder=2))
+        ax.add_patch(Rectangle((x, top - BAR), colw, BAR, color=col, zorder=3))
+        y = top - BAR - 0.09
+        ax.text(x + PAD, y, "\n".join(head), fontsize=7.6, color=INK,
+                fontweight="bold", va="top", zorder=4, linespacing=1.32)
+        y -= _lines_h(head, 7.6) + HEADGAP
+        for lines, meta in entries:
+            lh = _lines_h(lines, 7.0)
+            ax.add_patch(Rectangle((x + PAD, y - lh - 0.075), 0.035, lh + 0.055,
+                                   color=col, zorder=4))
+            ax.text(x + PAD + 0.10, y, "\n".join(lines), fontsize=7.0, color=INK,
+                    va="top", zorder=4, linespacing=1.38)
+            ax.text(x + PAD + 0.10, y - lh - 0.012, meta, fontsize=6.1, color=UV,
+                    va="top", zorder=4)
+            y -= lh + ENTRYGAP
+    return _save(fig, "named_targets")
+
+
+def fig_podcast():
+    """
+    Mission Zero: the chain by which a podcast becomes institutional pipeline.
+
+    Drawn as a chain rather than a funnel because each link produces the next and
+    the last one feeds the first — a founder featured becomes the reason the next
+    founder agrees.
+    """
+    chain = M.PODCAST["chain"]
+    W = 7.1
+    H = 0.60 + len(chain) * 0.455
+    fig, ax = _canvas(W, H)
+    ax.text(0, H - 0.09, f"{M.PODCAST['name']}  ·  {M.PODCAST['arabic']}",
+            fontsize=11.5, color=INK, fontweight="bold", va="top", zorder=4)
+    ax.text(0, H - 0.33, "\n".join(_wrap(M.PODCAST["premise"], 7.0, W)),
+            fontsize=7.0, color=MUTED, va="top", zorder=4, linespacing=1.45)
+    y = H - 0.60
+    lw = 3.52
+    for i, (step, effect) in enumerate(chain):
+        fill = spec(i, len(chain))
+        ink, sub = _ink_for(fill)
+        ax.add_patch(FancyBboxPatch((0, y - 0.40), lw, 0.40,
+                                    boxstyle="round,pad=0,rounding_size=0.05",
+                                    facecolor=fill, edgecolor="none", zorder=3))
+        ax.text(0.10, y - 0.20, "\n".join(_wrap(step, 7.3, lw - 0.26)[:2]),
+                fontsize=7.3, color=ink, fontweight="bold", va="center", zorder=4,
+                linespacing=1.35)
+        ax.add_patch(FancyBboxPatch((lw + 0.30, y - 0.40), W - lw - 0.30, 0.40,
+                                    boxstyle="round,pad=0,rounding_size=0.05",
+                                    facecolor=WASH, edgecolor="none", zorder=3))
+        ax.text(lw + 0.40, y - 0.20,
+                "\n".join(_wrap(effect, 7.0, W - lw - 0.52)[:2]), fontsize=7.0,
+                color=INK2, va="center", zorder=4, linespacing=1.35)
+        _arrow(ax, lw + 0.05, y - 0.20, lw + 0.26, y - 0.20)
+        if i < len(chain) - 1:
+            _arrow(ax, lw / 2, y - 0.41, lw / 2, y - 0.52)
+        y -= 0.455
+    return _save(fig, "podcast")
+
+
+def fig_podcast_targets():
+    """What the podcast is held to, year by year. Views are last on purpose."""
+    tg = M.PODCAST["targets"]
+    fig, ax = plt.subplots(figsize=(7.1, 2.85))
+    labels = [t[0] for t in tg]
+    y = list(range(len(labels)))[::-1]
+    width = 0.26
+    for j, (yr, col) in enumerate(zip((1, 2, 3), [UV, "#0096DF", "#00D3A4"])):
+        vals = [t[1 + j] for t in tg]
+        mx = [max(t[1], t[2], t[3]) for t in tg]
+        norm = [v / m if m else 0 for v, m in zip(vals, mx)]
+        ax.barh([yy + (1 - j) * width for yy in y], norm, width, color=col,
+                label=f"Year {yr}", zorder=3)
+        for yy, nv, v in zip(y, norm, vals):
+            ax.text(nv + 0.012, yy + (1 - j) * width, f"{v:,}", fontsize=6.6,
+                    color=INK2, va="center", zorder=4)
+    ax.set_yticks(y)
+    ax.set_yticklabels(labels, fontsize=7.2, color=INK)
+    ax.set_xlim(0, 1.20)
+    ax.set_xticks([])
+    for s in ("top", "right", "bottom", "left"):
+        ax.spines[s].set_visible(False)
+    ax.tick_params(length=0)
+    ax.legend(frameon=False, fontsize=7.2, loc="lower right", labelcolor=INK2,
+              ncol=3)
+    ax.text(0, len(labels) - 0.15, "Each row is scaled to its own year-three "
+            "value, so the shape of the growth is comparable across metrics "
+            "measured in different units.", fontsize=6.4, color=MUTED)
+    return _save(fig, "podcast_targets")
 
 
 ALL = [fig_segments, fig_tam_sam, fig_engine_mix, fig_roadmap, fig_gates,
-       fig_quarterly_volumes, fig_customer_journey, fig_channel_mix,
-       fig_swot, fig_porter, fig_pestle, fig_moat, fig_school_ladder,
+       fig_quarterly_volumes, fig_customer_journey, fig_channel_mix, fig_swot,
+       fig_porter, fig_pestle, fig_moat, fig_school_ladder,
        fig_engine_economics, fig_deal_sizes, fig_pipeline,
        fig_university_ladder, fig_initiative_scale, fig_initiative_model,
-       fig_competition_model, fig_subscription_sources, fig_cohort_ramp,
-       fig_headcount, fig_gtm_moves, fig_institution_workflow,
+       fig_competition_model, fig_subscription_sources,
+       fig_cohort_ramp, fig_headcount, fig_gtm_moves, fig_institution_workflow,
        fig_bootcamp_map, fig_org_chart, fig_phases, fig_flywheel,
-       fig_ngo_initiatives]
+       fig_ngo_initiatives, fig_team_arc, fig_leverage, fig_engagement_plays,
+       fig_engagement_route, fig_named_targets, fig_podcast,
+       fig_podcast_targets]
 
 
 def build_all():

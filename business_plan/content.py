@@ -52,6 +52,9 @@ CAP = facilitator_capacity()
 EE = {r["name"]: r for r in engine_economics()}
 SUBS = subscriptions(1)
 PIPE = pipeline()
+LEV = MD.leverage()
+PC = MD.PODCAST
+PLAYS = MD.ENGAGEMENT_PLAYS
 
 
 def money(v):
@@ -181,14 +184,33 @@ section("Executive Summary", [
          f"faculty licence cannot be sold before two cohorts have run; a ministry "
          f"will not contract a platform that cannot show a cohort report. Only "
          f"university cohorts earn in the Land quarter."),
-        ("The binding constraint is facilitators, not demand",
-         f"Delivery peaks at {max(c['facilitators'] for c in CAP):.0f} facilitators "
-         f"a quarter, and a certified pair runs "
+        ("The constraint is certified delivery, not demand",
+         f"Delivery peaks at {max(c['facilitators'] for c in CAP):.0f} "
+         f"facilitator-equivalents in a quarter, and a certified pair runs "
          f"{COHORTS_PER_PAIR['university']} university cohorts a year. "
-         f"Certification is the first operational priority — and the seat, "
-         f"competition and partner engines matter partly because they scale "
-         f"<b>past</b> that constraint."),
+         f"Certification is therefore the first operational priority, and the "
+         f"seat, competition and partner engines matter partly because they "
+         f"scale <b>past</b> that constraint."),
+        ("Twelve people in year three, twenty in year five",
+         f"The establishment is capped: {HC['y1']} in year one, {HC['y2']} in "
+         f"year two, {HC['y3']} in year three, {HC['y4']} in year four and "
+         f"{HC['y5']} in year five. StartPad does not deliver cohorts at scale — "
+         f"it certifies and audits the organisations and freelancers who do. "
+         f"By year three, {LEV[2]['cohorts']} cohorts are delivered by a pool of "
+         f"{LEV[2]['pool']} certified facilitators and "
+         f"{LEV[2]['partners']} certified partner organisations, which is how "
+         f"{HC['y3']} employees stand behind "
+         f"{n(LEV[2]['learners_per_employee'])} learners each."),
+        ("Every engine enters through a named programme that already exists",
+         "StartPad does not create demand; it attaches to budgets already "
+         "committed. The plan names the organisations — Rowad 2030 and MSMEDA in "
+         "Egypt, Monsha'at, Misk and TVTC in Saudi Arabia, Enactus Egypt, INJAZ "
+         "and the bank-sponsored competition seasons — and states the route into "
+         "each as one of six repeatable engagement plays."),
     ]),
+    ("fig", "leverage", "The whole argument for a twelve-person company in one "
+                        "figure: employees against the certified network that "
+                        "delivers for them."),
 ])
 
 # =====================================================================
@@ -347,6 +369,32 @@ section("Market Analysis", [
              f"realisable number in the table. A plan built on it would be built "
              f"on the one figure here that cannot be converted at these "
              f"willingness-to-pay levels."),
+
+    ("h2", "Who already runs these programmes"),
+    ("p", "A market sized from populations is an argument; a market with named "
+          "buyers running named programmes is a plan. Every organisation below "
+          "already runs something StartPad would sit inside, and already has the "
+          "budget line. None of them is a signed partner, and no revenue in this "
+          "plan is attributed to any one of them — they are listed so a reader "
+          "can verify that the demand described is observable rather than "
+          "inferred. The route into each is set out in the Engagement Model."),
+    ("fig", "named_targets", "Named target organisations by engine, each tagged "
+                             "with the engagement plays that open it. Not signed "
+                             "partners: evidence that the buyers exist."),
+    ("fig", "ngo_initiatives", "The public programmes in detail, and what StartPad "
+                               "supplies to each."),
+    ("table",
+     ["Programme or organisation", "Market", "What it already runs"],
+     [[row[0], row[1], row[2]] for row in MD.NAMED_INITIATIVES],
+     [4.4, 1.7, 10.5]),
+    ("note", "The common shape is worth naming: every one of these has a target "
+             "or a mandate it cannot meet with the delivery capacity it owns. "
+             "Rowad 2030 is committed to a million entrepreneurs and delivers a "
+             "three-stage online curriculum; Monsha'at Academy has run more than "
+             "two hundred training events with no build stage after them; TVTC "
+             "has 314 institutions and a self-employment mandate. That gap — "
+             "between a published commitment and the means to deliver it — is "
+             "the market this plan is addressed to."),
 
     ("h2", "Market drivers"),
     ("bul", [
@@ -670,12 +718,12 @@ section("Marketing Strategy", [
          f"this term, which dean is under accreditation pressure and which "
          f"student-activities office is looking for an event. That is what turns a "
          f"cold institutional list into a warm pipeline."),
-        ("Founder stories and the podcast — the credibility asset",
-         "One founder story, many pieces: a podcast episode in Egyptian Arabic or "
-         "Saudi dialect, cut into reels and posts, every piece ending at Mission "
-         "01. This is not a brand exercise. A dean responds to a graduate of a "
-         "university like theirs, and competitions are where the stories come "
-         "from."),
+        (f"{PC['name']} — the credibility asset, set out in full below",
+         "One founder story, many pieces: an episode in Egyptian Arabic or Saudi "
+         "dialect, recorded on a partner campus, cut into reels and posts, every "
+         "piece ending at Mission 01. This is not a brand exercise. A dean "
+         "responds to a graduate of a university like theirs, and an institution "
+         "whose students appear on camera distributes the episode itself."),
         ("Competitions as a marketing channel that pays for itself",
          "A sponsored competition puts StartPad on a campus with a bank already "
          "paying, reaches roughly 700 entrants who each open an account, and "
@@ -695,6 +743,47 @@ section("Marketing Strategy", [
          "There is no cold paid-acquisition line. Digital spend retargets people "
          "the engines already reached and fills competition and event seats."),
     ]),
+
+    ("pb",),
+    ("h2", f"{PC['name']} — the founder podcast"),
+    ("lead", f"{PC['name']} · {PC['arabic']}. {PC['premise']}"),
+    ("p", "The podcast is in this plan as a demand-generation instrument with a "
+          "measurable job, not as brand decoration. It does three things no "
+          "advertisement does. It gives a dean a reason to say yes, because their "
+          "students appear on camera. It gives a sponsor something deliverable to "
+          "attach a name to. And it produces curriculum material as a "
+          "by-product, because each episode is mapped to the mission it "
+          "illustrates and handed to the learner stuck on exactly that problem."),
+    ("fig", "podcast", "How an episode becomes institutional pipeline. The last "
+                       "link feeds the first: a founder who has been featured is "
+                       "how the next founder is persuaded to appear."),
+
+    ("h3", "Format"),
+    ("deflist", [(k, v) for k, v in PC["format"]]),
+
+    ("h3", "Where it is published"),
+    ("table",
+     ["Channel", "What goes there"],
+     [[k, v] for k, v in PC["distribution"]],
+     [3.6, 11.4]),
+
+    ("h3", "What it is held to"),
+    ("p", "Views are the last row on purpose. A podcast that reaches thirty "
+          "thousand people and produces no institutional conversation has failed "
+          "at the job it was funded for."),
+    ("table",
+     ["Measure", "Year 1", "Year 2", "Year 3"],
+     [[k, n(a), n(b), n(c)] for k, a, b, c in PC["targets"]],
+     [7.2, 2.4, 2.4, 2.4]),
+    ("fig", "podcast_targets", "Each row scaled to its own year-three value, so "
+                               "measures in different units can be compared by "
+                               "shape rather than by size."),
+    ("note", "Guest supply is the risk, and it is managed structurally rather "
+             "than hoped for: every cohort showcase, every competition final and "
+             "every partner event in this plan is also a recording opportunity, "
+             "and the student pitch segment means a guest is giving eight minutes "
+             "of mentoring rather than sitting for an interview. Founders decline "
+             "interviews; they rarely decline students."),
 
     ("h2", "Brand strategy"),
     ("p", "The brand has to carry two audiences without splitting in half. To a "
@@ -717,8 +806,9 @@ section("Marketing Strategy", [
     ("h2", "Content marketing"),
     ("table",
      ["Asset", "Audience", "Purpose", "Cadence"],
-     [["Founder podcast", "Young people and deans",
-       "Credibility and story supply", "Weekly in season"],
+     [[f"{PC['name']}, the founder podcast", "Young people and deans",
+       "Credibility, story supply and curriculum material",
+       "Weekly in season; three seasons a year"],
       ["Reels and short video", "Young people",
        "Reach and Mission 01 sign-ups", "3–5 a week"],
       ["Cohort case studies", "Every institutional buyer",
@@ -736,8 +826,8 @@ section("Marketing Strategy", [
      ["Line", "Year 1", "What it is for"],
      [[name, usd(val), purpose] for (name, val), purpose in zip(
          MD.DEMAND_SPEND[1],
-         ["Founder stories in both dialects — the asset that makes an "
-          "institutional pitch credible",
+         [f"{PC['name']}: founder stories in both dialects, recorded on partner "
+          f"campuses — the asset that makes an institutional pitch credible",
           f"{AMBASSADORS[1]} ambassadors: the cheapest source of founders and the "
           f"early-warning system for which campuses are ready to buy",
           "Where partnership conversations start; judged on meetings booked",
@@ -779,24 +869,45 @@ section("Sales Strategy", [
      [2.8, 3.4, 1.8, 4.0, 4.6]),
 
     ("h2", "Sales team structure"),
-    ("p", "Four heads, each owning a buyer type rather than a territory, because "
-          "the buying behaviour of a ministry and a bank have nothing in common "
-          "and the skills do not transfer. The Saudi country manager owns all "
-          "engines in the Kingdom, because in that market the relationship comes "
-          "before the product line."),
+    ("p", f"Eight engines, and at no point more than "
+          f"{max(HC_BY_FN['Institutional Partnerships'][f'y{y}'] for y in MD.YEARS_5)} "
+          f"people selling them. Heads own a <b>buyer type</b> rather than a "
+          f"territory, because the buying behaviour of a ministry and a bank have "
+          f"nothing in common and the skills do not transfer. The Saudi country "
+          f"manager is the deliberate exception and owns every engine in the "
+          f"Kingdom, because there the relationship precedes the product line. "
+          f"Where a head does not yet exist, the engine is carried by somebody "
+          f"else and the plan says who."),
     ("table",
-     ["Role", "Owns", "Year 1", "Year 3"],
-     [[r, owns, n(y1), n(y3)] for (r, owns), (y1, y3) in zip(
-         [("Head of University Partnerships", "Engine 1"),
-          ("Head of Schools and Technical Education", "Engine 2"),
-          ("Head of Government and Initiatives", "Engine 3"),
-          ("Head of NGO and Donor Partnerships", "Engine 4"),
-          ("Competitions and events manager", "Engine 5"),
-          ("Country Manager — KSA", "All engines, Saudi Arabia"),
-          ("Partnerships associate", "Pipeline volume across engines"),
-          ("Account manager — renewals", "The signed base")],
-         [(1, 1), (1, 1), (1, 1), (1, 1), (1, 5), (1, 2), (2, 14), (0, 10)])],
-     [5.0, 5.2, 1.8, 1.8]),
+     ["Role", "Engines owned", "Y1", "Y2", "Y3", "Y4", "Y5"],
+     [[r, owns] + [n(dict(zip(MD.YEARS_5, counts))[y]) for y in MD.YEARS_5]
+      for r, owns, counts in [
+          (role, owns, counts)
+          for (fn, role, monthly, *counts) in MD.ROLES
+          if fn == "Institutional Partnerships"
+          for owns in [{
+              "Head of Partnerships — Egypt":
+                  "Engines 1 and 7 in Egypt; carries 2, 5 and 6 until their own "
+                  "heads arrive",
+              "Country Manager — KSA (Riyadh)":
+                  "Every engine in Saudi Arabia",
+              "Head of Government, Initiatives and Donors":
+                  "Engines 3 and 4; takes engine 5 from year three",
+              "Partnerships and bids associate":
+                  "Proposals, tenders and the named-target list, across all "
+                  "engines",
+              "Head of Schools and Technical Education":
+                  "Engine 2 in both markets",
+              "Account manager — renewals":
+                  "The signed base, across all engines",
+          }[role]]]],
+     [4.0, 5.4, 0.9, 0.9, 0.9, 0.9, 0.9]),
+    ("note", "Three engines have no dedicated owner in year one and two have none "
+             "until year four. That is a stated cost of the headcount cap, not an "
+             "oversight: the Egyptian partnerships head carries competitions, "
+             "schools and corporate sponsors through year one, which is exactly "
+             "why the roadmap gates those engines late and why the school engine "
+             "ramps more slowly than its population would justify."),
 
     ("h2", "The sales process"),
     ("fig", "institution_workflow", "From identifying the right person to a cohort "
@@ -832,10 +943,11 @@ section("Sales Strategy", [
     ("table",
      ["Stage", "Year one", "Conversion", "Who owns it"],
      [[label, n(val), "—" if i == 0 else pct(val / PIPE[i - 1][1]),
-       ["Associates and the demand-generation team",
-        "The four heads and the country manager",
-        "Head of the relevant engine, with the bid administrator",
-        "The signing head, with the COO on delivery capacity"][i]]
+       ["The bids associate and the ambassador network",
+        "The relevant head, or the country manager in Saudi Arabia",
+        "Head of the relevant engine, with the bids associate",
+        "The signing head, against the partner network manager's capacity "
+        "forecast"][i]]
       for i, (label, val) in enumerate(PIPE)],
      [5.2, 1.8, 2.0, 7.6]),
 
@@ -871,6 +983,158 @@ section("Sales Strategy", [
         "certified pair was available. If this is zero, we are under-selling; if "
         "it is large, certification is behind.",
     ]),
+])
+
+# =====================================================================
+section("Engagement Model", [
+    ("lead", "Naming the organisations is half the work. This part says how "
+             "StartPad actually gets inside each of them: the six ways in, who is "
+             "approached, what the first ask is, how the money moves, and what "
+             "has to be true before the ask can be made at all."),
+
+    ("h2", "StartPad is never the programme — it is inside somebody else's"),
+    ("p", "This is the governing idea of the whole commercial plan and it is "
+          "worth stating before the mechanics. StartPad does not ask an "
+          "institution to start something new. It attaches to a programme that "
+          "already exists, already has a budget, already has a target it is "
+          "measured against, and is already failing to meet it in a specific way. "
+          "A competition already runs; it cannot tell a good team from a "
+          "well-coached one. An academy already has two hundred courses; nothing "
+          "happens after a learner finishes one. A ministry has committed to a "
+          "million entrepreneurs; it has an online curriculum and no build stage. "
+          "In every case the sale is a component, not a programme — which is why "
+          "it can be bought out of money already committed, and why the decision "
+          "does not have to reach a minister."),
+    ("deflist", [
+        ("Enter at the edge, never at the centre",
+         "A campus team, a governorate branch, a single chapter, one college. The "
+         "edge can authorise a first; head office can only authorise a precedent. "
+         "Every route in this plan starts one level below where an outsider would "
+         "aim, and that is deliberate."),
+        ("Pay for the proof yourself",
+         "The first cohort inside a new organisation is funded by StartPad. It "
+         "costs roughly the price of a sales trip and it produces the one asset "
+         "every later conversation needs: a completed cohort with their name on "
+         "the report. Year one runs eight of these."),
+        ("Sell the component, not the programme",
+         "The ask is always a line inside something they already fund — a build "
+         "stage before their competition, a block of seats on their initiative, a "
+         "capstone to their course. New programmes need new budget and new "
+         "approval; components need neither."),
+        ("End at certification, wherever volume is the point",
+         "No provider can staff a national initiative, and proposing to signals "
+         "that the scale has not been understood. The destination for every "
+         "public engine is that the institution's own trainers are certified, "
+         "audited and licensed by StartPad."),
+    ]),
+
+    ("h2", "The six engagement plays"),
+    ("p", "These are the only six ways StartPad ever enters an organisation. They "
+          "are ordered by how little the counterparty has to risk in order to say "
+          "yes, which is also the order a single relationship moves through as it "
+          "matures — most of the named targets in this plan are a sequence of two "
+          "or three of them rather than one."),
+    ("fig", "engagement_plays", "The six plays, with the person approached and the "
+                                "way money moves in each. An engagement model that "
+                                "names neither is a diagram of a hope."),
+    ("table",
+     ["", "The play", "The first ask", "How long it takes"],
+     [[code, name, ask, how_long] for code, name, who, ask, money, pre, how_long
+      in PLAYS],
+     [0.9, 3.2, 7.4, 3.5]),
+
+    ("h3", "What must exist before each play can be run"),
+    ("p", "The sequencing in the roadmap is not arbitrary. Each play is gated on "
+          "an asset the company does not have on day one, and the order in which "
+          "those assets are built is the order in which the engines open."),
+    ("table",
+     ["What has to exist", "Unlocks", "By", "Why it lands then"],
+     [[what, play, when, why] for what, play, when, why
+      in MD.ENGAGEMENT_PREREQUISITES],
+     [5.0, 1.4, 1.8, 6.8]),
+
+    ("h2", "The route in, step by step"),
+    ("fig", "engagement_route", "The same five steps every time. The route is a "
+                                "repeatable procedure, not a series of fortunate "
+                                "introductions."),
+    ("num", [
+        "<b>Find the edge.</b> Identify the smallest unit inside the target that "
+        "can authorise a pilot without a committee — a campus chapter, a "
+        "governorate branch, one college, one school with an employer partner. "
+        "Name the individual, not the organisation.",
+        "<b>Fund the proof.</b> Run one cohort at StartPad's cost, inside their "
+        "programme, under their name, with a showcase their leadership is invited "
+        "to attend. Ask for nothing in return except permission to publish the "
+        "report with their name on it.",
+        "<b>Publish it.</b> The cohort report, a Mission Zero episode recorded on "
+        "their site, and the case study. The institution now has something to "
+        "circulate internally, which is the mechanism by which the decision moves "
+        "upward without StartPad pushing it.",
+        "<b>Price the block.</b> Take the report to the budget holder and ask for "
+        "a line inside an existing programme: a season, a seat block, a term. "
+        "Never a new programme; never a platform licence in isolation.",
+        "<b>Certify them.</b> Where the volume is larger than any provider could "
+        "staff, move the relationship to trainer certification. StartPad keeps "
+        "the standard, the assessment and the audit; the institution gains "
+        "capacity it owns. This is where the engagement becomes an annuity.",
+    ]),
+    ("note", "The five steps compress or stretch, but they do not reorder. "
+             "Attempting step four before step two — asking for budget before "
+             "there is a report with their name on it — is the single most common "
+             "way an institutional sale in this market dies, and it dies slowly, "
+             "consuming a quarter before it does."),
+
+    ("pb",),
+    ("h2", "National initiatives and government: the route into each"),
+    ("p", "The longest cycles in the company and the largest eventual volumes. "
+          "Each row names the plays in sequence and the specific door."),
+    ("table",
+     ["Organisation", "Plays", "How StartPad gets engaged"],
+     [[row[0], row[4], row[5]] for row in MD.NAMED_INITIATIVES],
+     [4.3, 1.8, 10.5]),
+
+    ("pb",),
+    ("h2", "Competitions and youth organisations: the route into each"),
+    ("p", "The fastest engine to enter and the one that reaches the most young "
+          "people per deal, because somebody else has already assembled them. The "
+          "structural fact that governs every row below: the organiser has no "
+          "budget and the sponsor does, so the organiser is the partner and the "
+          "sponsor is the customer."),
+    ("table",
+     ["Competition", "Plays", "How StartPad gets engaged"],
+     [[row[0], row[4], row[5]] for row in MD.NAMED_COMPETITIONS],
+     [4.3, 1.8, 10.5]),
+
+    ("pb",),
+    ("h2", "Delivery partners, donors and sponsors: the route into each"),
+    ("p", "The organisations in this table are mostly not customers. They are the "
+          "delivery capacity, the funding and the distribution that let a company "
+          f"of {HC['y3']} people operate at national scale, and several are worth "
+          f"considerably more as partners than they would ever be worth as "
+          f"accounts."),
+    ("table",
+     ["Organisation", "Plays", "How StartPad gets engaged"],
+     [[row[0], row[4], row[5]] for row in MD.NAMED_PARTNERS],
+     [4.3, 1.8, 10.5]),
+
+    ("h2", "What StartPad gives away, and why"),
+    ("p", f"A certified delivery partner keeps "
+          f"{pct(MD.PARTNER_REVENUE_SHARE)} of the cohort fee. A competition "
+          f"organiser keeps its own brand on the competition. A ministry that "
+          f"certifies its trainers stops buying delivery altogether and buys only "
+          f"the standard and the seats. Each of these is margin, brand or revenue "
+          f"deliberately surrendered, and each buys the same thing: volume that "
+          f"does not have to be hired for. The margin given away is the margin "
+          f"StartPad does not have to carry a payroll against — which is the "
+          f"arithmetic behind an establishment of {HC['y3']} people in year three "
+          f"and {HC['y5']} in year five."),
+    ("note", "The limit is equally deliberate. StartPad never gives away the "
+             "certification standard, the assessment rubric, the evidence record "
+             "or the right to withdraw a licence. A partner may own the "
+             "relationship and the room; it never owns the definition of what "
+             "good looks like. The moment that is conceded, the company is a "
+             "training supplier rather than a standard, and everything "
+             "defensible about it is gone."),
 ])
 
 # =====================================================================
@@ -997,6 +1261,51 @@ section("Operations Plan", [
           "grow past the facilitator ceiling, while engines in the second row do "
           "not. That is why the revenue mix shifts the way it does."),
 
+    ("h2", "Twelve people, three hundred cohorts"),
+    ("p", f"The establishment is capped at {HC['y3']} people in year three. That "
+          f"cap is the central design constraint of this plan rather than an "
+          f"aspiration attached to it, and it is only survivable because StartPad "
+          f"does not deliver cohorts itself at scale. It certifies the "
+          f"organisations and the freelancers who do, audits them, and employs "
+          f"the people who define the standard. Headcount therefore grows with "
+          f"the number of partners to audit, not with the number of cohorts to "
+          f"run — which is the difference between a company that can reach "
+          f"national volume and a training provider that cannot."),
+    ("fig", "leverage", "Employees against the network that delivers for them, "
+                        "across three years, on one scale."),
+    ("table",
+     ["", "Year 1", "Year 2", "Year 3"],
+     [["StartPad employees"] + [n(r["staff"]) for r in LEV],
+      ["Certified facilitators in the pool"] + [n(r["pool"]) for r in LEV],
+      ["Certified partner organisations"] + [n(r["partners"]) for r in LEV],
+      ["Cohorts delivered in the year"] + [n(r["cohorts"]) for r in LEV],
+      ["Learners reached, cohorts and seats"] + [n(r["learners"]) for r in LEV],
+      ["Learners per employee"]
+      + [n(r["learners_per_employee"]) for r in LEV]],
+     [5.6, 3.1, 3.1, 3.1]),
+    ("deflist", [
+        ("Two ratios hold the whole structure up",
+         f"One partner network manager can hold roughly "
+         f"{MD.PARTNERS_PER_NETWORK_MANAGER} certified partner organisations, and "
+         f"one delivery coordinator can schedule and report on roughly "
+         f"{n(MD.COHORTS_PER_COORDINATOR)} cohorts a year. Those two numbers, not "
+         f"the revenue, are what determine when the next person is hired. They "
+         f"are stated here so that a reader who disbelieves the cap can argue "
+         f"with the ratio rather than with the conclusion."),
+        ("A certified facilitator is part-time, and that is the design",
+         f"Each gives StartPad about {pct(MD.FACILITATOR_UTILISATION)} of a "
+         f"delivery year — they are university staff, trainers and practitioners "
+         f"with other work. That is why the pool is large "
+         f"({LEV[2]['pool']} by year three) while the payroll is not, and why a "
+         f"quarter in which a university postpones costs the company almost "
+         f"nothing."),
+        ("A certified partner organisation runs its own cohorts",
+         f"Roughly {MD.COHORTS_PER_PARTNER} a year each, under licence, keeping "
+         f"{pct(MD.PARTNER_REVENUE_SHARE)} of the fee. StartPad supplies the "
+         f"curriculum, the platform, the certification and the audit, and takes "
+         f"no delivery risk at all on those cohorts."),
+    ]),
+
     ("h2", "The binding constraint"),
     ("p", f"A facilitator pair runs {COHORTS_PER_PAIR['university']} university "
           f"cohorts a year once travel, preparation and campus holidays are taken "
@@ -1013,21 +1322,32 @@ section("Operations Plan", [
        f"{c['facilitators']:.0f}"] for c in CAP],
      [2.2, 1.9, 2.4, 2.0, 2.2, 2.4]),
 
-    ("h2", "Facilitator certification"),
-    ("p", "The certified pool is the operational asset and the main single point "
-          "of failure. Four steps, run by the certification lead and signed off by "
-          "the Head of Curriculum."),
+    ("h2", "Certification — the only thing StartPad does not delegate"),
+    ("p", "The certified pool and the certified partner network are the "
+          "operational asset and the main single point of failure. Four steps, "
+          "run by the partner network manager and signed off by the Head of "
+          "Curriculum, who is the only person who can pass or fail a candidate."),
     ("num", [
         "<b>Observe</b> a full cohort end to end, without delivering.",
-        "<b>Co-deliver</b> two days under an employed lead facilitator.",
+        "<b>Co-deliver</b> two days under a facilitator already certified at "
+        "lead tier.",
         "<b>Deliver</b> a full cohort observed and scored against the facilitator "
         "rubric.",
         "<b>Recertify</b> each term against cohort outcomes and student feedback.",
     ]),
-    ("note", "Nobody facilitates unobserved before step three is passed, including "
-             "under schedule pressure — which is precisely the only time the rule "
-             "matters. Recruitment runs a quarter ahead of the delivery plan, "
-             "never against it."),
+    ("note", "Nobody facilitates unobserved before step three is passed, "
+             "including under schedule pressure — which is precisely the only "
+             "time the rule matters. Recruitment runs a quarter ahead of the "
+             "delivery plan, never against it. A company whose entire argument is "
+             "that certification substitutes for employment cannot afford a "
+             "certification that passes everybody, and the Head of Curriculum's "
+             "success measure is written to make failing candidates the correct "
+             "behaviour rather than an awkward one."),
+    ("p", "Partner organisations are certified on the same principle one level "
+          "up: a certification cohort for their facilitators, one supervised "
+          "delivery, then sample audits each term, with licence withdrawal as a "
+          "real and occasionally used sanction. A licence that has never been "
+          "withdrawn from anybody is not a licence."),
     ("p", f"The same machinery certifies partner and ministry trainers under the "
           f"train-the-trainer engine. That is what makes "
           f"{n(plan('initiative_seats', 3))} sponsored seats in year three "
@@ -1043,9 +1363,11 @@ section("Operations Plan", [
         "calendar, not ours. Egyptian and Saudi terms differ and Ramadan moves. "
         "The calendar is built a term ahead and is the constraint sales sells "
         "against.",
-        "<b>Facilitator assignment.</b> A certified pair per group, with an "
-        "employed lead on the first cohort at any new institution. The freelance "
-        "pool covers repeat institutions where the format is proven.",
+        "<b>Facilitator assignment.</b> A certified pair per group, with a "
+        "lead-tier facilitator on the first cohort at any new institution and on "
+        "any cohort a newly certified partner delivers. There are no employed "
+        "facilitators: the tier, not the contract, is what earns the "
+        "assignment.",
         "<b>Materials.</b> Printed kits, problem cards, canvases and certificates "
         "shipped to the venue a week ahead; digital copies in the workspace.",
         "<b>The daily loop.</b> Opener on last night's progress; short input, then "
@@ -1065,6 +1387,10 @@ section("Operations Plan", [
      [["Certified facilitators", "Recruited and certified in-house",
        "The highest-risk input in the business",
        "Certify a quarter ahead; tiered day rates; a progression path"],
+      ["Certified partner organisations",
+       "Youth NGOs, training providers, university centres",
+       "A partner that under-delivers damages the standard, not just a cohort",
+       "Sample audit each term; published standard; licence withdrawal"],
       ["Venues", "Provided by the institution under contract",
        "Cancellation or double-booking",
        "Venue confirmed in the contract; a standing fallback per city"],
@@ -1126,9 +1452,11 @@ section("Operations Plan", [
     ("h2", "Regulatory compliance"),
     ("deflist", [
         ("Safeguarding and child protection",
-         "Facilitator vetting, safeguarding training, parental consent and a "
-         "written incident procedure, owned by the COO. Non-negotiable before any "
-         "school cohort runs."),
+         "Facilitator and partner vetting, safeguarding training, parental "
+         "consent and a written incident procedure — owned by the CEO until the "
+         "COO arrives in year four, and externally attested in both markets "
+         "because an internal attestation is worth nothing here. Non-negotiable "
+         "before any school cohort runs, including a partner's."),
         ("Data protection", "Scoped institutional visibility, student-controlled "
                             "sharing, server-side scoring, and documented "
                             "retention periods."),
@@ -1156,20 +1484,65 @@ section("Operations Plan", [
        "85% or above"],
       ["Safeguarding incidents", "Licence to operate in schools", "Zero"],
       ["Cohorts declined for lack of capacity", "Honesty about the constraint",
-       "Tracked and reported, not hidden"]],
+       "Tracked and reported, not hidden"],
+      ["Certified capacity vs. booked demand, next quarter",
+       "The number the whole headcount cap rests on",
+       "Capacity ahead in every quarter"],
+      ["Partner-delivered cohort scores vs. StartPad-run",
+       "Whether certification actually transfers the standard",
+       "Within five points, or the partner is audited"],
+      ["Partner audits completed per term",
+       "An audit nobody runs is not a control",
+       "Every active partner, every term"],
+      [f"Institutional enquiries credited to {PC['name']}",
+       "Whether the content budget is pipeline or decoration",
+       f"{n(PC['targets'][5][1])} in year one, rising"]],
      [4.6, 5.8, 3.2]),
 ])
 
 # =====================================================================
 section("Management and Organization", [
-    ("lead", f"{HC['y1']} employees in year one growing to {HC['y3']} by year "
-             f"three, in four reporting lines, plus two layers that are not on the "
-             f"payroll and carry most of the delivery."),
+    ("lead", f"{HC['y1']} employees in year one, {HC['y3']} in year three and "
+             f"{HC['y5']} in year five — a hard cap, not a forecast — in five "
+             f"reporting lines, plus three layers that are not on the payroll and "
+             f"carry almost all of the delivery."),
+
+    ("h2", "The cap, and why it is a cap"),
+    ("p", f"Most plans state a headcount and then discover it. This one states a "
+          f"ceiling and designs backwards from it: {HC['y1']}, {HC['y2']}, "
+          f"{HC['y3']}, {HC['y4']}, {HC['y5']}. Four rules hold it there, and "
+          f"each has a visible cost that is admitted elsewhere in this part "
+          f"rather than hidden."),
+    ("num", [
+        "<b>Employ the people who define and audit the standard; contract the "
+        "people who deliver it.</b> Every cohort in this plan is run by a "
+        "certified freelance facilitator or a certified partner organisation, "
+        "never by an employee. Cohort growth therefore cannot become payroll "
+        "growth, which is the only reason the cap survives contact with the "
+        "delivery plan.",
+        "<b>No role is created until it is genuinely full-time.</b> Until then it "
+        "is part of a larger role, the role description says so, and it names the "
+        "year it splits out. The cost is real: the Egyptian partnerships head "
+        "carries competitions, schools and sponsors through year one, which is "
+        "precisely why the school engine ramps slowly.",
+        "<b>Standard, regulated functions are bought, not hired.</b> Bookkeeping, "
+        "payroll, audit, corporate legal, the Saudi entity, video production and "
+        "translation quality assurance sit with firms and freelance panels. They "
+        "appear in operating costs and not on the establishment.",
+        "<b>The chief executive carries operations until the network outgrows one "
+        "person.</b> The plan puts that in year four, and the chief operating "
+        "officer arrives then and not before. This is the single largest key-"
+        "person risk in the plan, and it is named in the risk register rather "
+        "than argued away.",
+    ]),
+    ("fig", "team_arc", "Six to twenty, and the reason for each step. Every hire "
+                        "in years four and five is a function the earlier years "
+                        "deliberately merged into somebody else's job."),
 
     ("h2", "Organisational structure"),
-    ("fig", "org_chart", "The year-one organisation. Four lines under the CEO, who "
-                         "also personally runs the Day 01 platform onboarding in "
-                         "every cohort until that is handed over."),
+    ("fig", "org_chart", "The year-one organisation. The grey notes matter more "
+                         "than the boxes: they say what is carried by somebody "
+                         "whose title says something else."),
     ("p", "The structure follows the engines, not the functions. Institutional "
           "sales is organised by <b>buyer type</b> — university, school, "
           "government, donor, sponsor — because the buying behaviour of a ministry "
@@ -1177,89 +1550,141 @@ section("Management and Organization", [
           "Saudi country manager is the one exception: in that market the "
           "relationship comes before the product line, so one person owns every "
           "engine."),
-    ("fig", "headcount", "Headcount by function across three years. Delivery and "
-                         "institutional sales grow fastest, because they are what "
-                         "the revenue is made of."),
+    ("fig", "headcount", "The establishment across five years against the cap it "
+                         "commits to. Bars that touch the dashed line and never "
+                         "cross it are the whole argument."),
     ("table",
-     ["Function", "Y1", "Y2", "Y3", "What it owns"],
-     [[fn, n(HC_BY_FN[fn]["y1"]), n(HC_BY_FN[fn]["y2"]), n(HC_BY_FN[fn]["y3"]),
-       owns] for fn, owns in [
+     ["Function", "Y1", "Y2", "Y3", "Y4", "Y5", "What it owns"],
+     [[fn] + [n(HC_BY_FN[fn][f"y{y}"]) for y in MD.YEARS_5] + [owns]
+      for fn, owns in [
          ("Leadership", "Direction, institutional relationships, and arbitration "
-                        "between sales ambition and delivery capacity"),
-         ("Product and Engineering", "The platform, the review pipeline and "
-                                     "institutional reporting"),
+                        "between sales ambition and certified capacity"),
+         ("Product and Engineering", "The platform, the review pipeline, the "
+                                     "mentor and institutional reporting"),
          ("Curriculum and Delivery", "What is taught, who is fit to teach it, and "
-                                     "every cohort delivered to standard"),
-         ("Institutional Sales", "All eight engines, organised by buyer type"),
-         ("Growth and Operations", "A warm pipeline, competitions, student "
-                                   "success, and keeping the company compliant")]],
-     [3.4, 1.1, 1.1, 1.1, 9.9]),
+                                     "the network that teaches it"),
+         ("Institutional Partnerships", "All eight engines, organised by buyer "
+                                        "type"),
+         ("Growth and Content", "Mission Zero, ambassadors, the readiness report "
+                                "and learner retention")]],
+     [3.0, 0.9, 0.9, 0.9, 0.9, 0.9, 8.1]),
+    ("p", "The structure follows the buyer, not the function. Institutional "
+          "partnerships is organised by <b>buyer type</b> — university, school, "
+          "government, donor, sponsor — because the buying behaviour of a "
+          "ministry and a bank have nothing in common and the skills do not "
+          "transfer. The Saudi country manager is the deliberate exception: in "
+          "that market the relationship precedes the product line, so one person "
+          "owns every engine."),
 
-    ("h2", "Two layers that are not on the payroll"),
+    ("h2", "Three layers that are not on the payroll"),
+    ("p", "These carry almost all of the delivery, and they are the reason the "
+          "establishment can be capped at all. Treating them as an afterthought "
+          "would misread the company entirely: the certified network is the "
+          "operating model, and the employees exist to define and defend it."),
     ("deflist", [
         ("The certified freelance facilitator pool",
-         f"Every in-person engine runs on them. Lead facilitators are employed; "
-         f"everything above their capacity is delivered by a certified pool paid "
-         f"{usd(UE['facilitation']/(BOOTCAMP_DAYS*2))} a day. This keeps the "
-         f"largest variable cost variable, which is what protects the business in "
-         f"a quarter when a university postpones."),
+         f"Every in-person engine runs on them — there are no employed "
+         f"facilitators in this plan at all. Paid "
+         f"{usd(UE['facilitation']/(BOOTCAMP_DAYS*2))} a day, each giving about "
+         f"{pct(MD.FACILITATOR_UTILISATION)} of a delivery year, rising from "
+         f"{LEV[0]['pool']} certified at the end of year one to "
+         f"{LEV[2]['pool']} by year three. This keeps the largest variable cost "
+         f"genuinely variable, which is what protects the business in a quarter "
+         f"when a university postpones."),
+        ("Certified delivery partner organisations",
+         f"Youth NGOs, training providers and university innovation centres that "
+         f"deliver StartPad cohorts under licence, keeping "
+         f"{pct(MD.PARTNER_REVENUE_SHARE)} of the fee: "
+         f"{LEV[0]['partners']} in year one, {LEV[2]['partners']} by year three, "
+         f"each running roughly {MD.COHORTS_PER_PARTNER} cohorts a year. They "
+         f"bring the geography and the youth pipeline StartPad would otherwise "
+         f"have to build."),
         (f"{AMBASSADORS[1]} campus ambassadors, rising to {AMBASSADORS[3]}",
          "A stipend, free Pro access and standing — not a salary. Their most "
          "valuable output is intelligence about which institution is ready to "
-         "buy."),
+         "buy, not registrations."),
     ]),
 
+    ("h2", "Bought, not hired"),
+    ("p", "The functions below are deliberately absent from the establishment. "
+          "Each is listed with who supplies it and why buying beats hiring, "
+          "because an organisation plan that simply omits finance and legal is "
+          "not lean, it is incomplete."),
+    ("table",
+     ["Function", "Who supplies it", "Why it is bought"],
+     [[fn, who, why] for fn, who, why in MD.OUTSOURCED],
+     [4.2, 5.0, 6.4]),
+
     ("h2", "Hiring plan"),
-    ("p", "Twelve people in year one. The plan hires the people who <b>define</b> "
-          "the standard and contracts the people who <b>deliver</b> it, which is "
-          "why two lead facilitators appear on the payroll and the rest of the "
-          "delivery load sits with a certified freelance pool."),
+    ("p", f"{HC['y1']} people in year one. Each row below states what the hire "
+          f"unlocks and what was being carried by somebody else until it "
+          f"arrived."),
     ("table",
      ["When", "Who", "Why then"],
-     [["Before Q4 2026", "CEO, COO, CTO, Country Manager — KSA",
-       "The Saudi motion is partnership-led with a long cycle; hiring that role "
-       "late pushes Saudi revenue out of year one entirely"],
+     [["Before Q4 2026",
+       "Chief executive, chief technology officer, Head of Curriculum and "
+       "Certification",
+       "Nothing can be certified or sold until the standard and the platform "
+       "have owners. The CEO carries operations, finance and the quality gates "
+       "from here until year four"],
       ["Q4 2026 · Land",
-       "Head of Curriculum and Certification, bilingual curriculum producer, "
-       "2 lead facilitators, 2 engineers",
-       "Delivery must be certified and the curriculum complete before anything "
-       "is sold; the admin workspace must exist before a cohort can be run"],
-      ["Q1 2027 · Prove",
-       "Head of Partnerships — Egypt, growth and community manager",
-       "Cohort reports now exist, so the motions that convert them can start. "
-       "One partnerships head carries every Egyptian engine this year"],
-      ["Year 2",
-       "Heads for schools and for government and donors, delivery coordinator, "
-       "associates, student success, finance and bids, AI engineer, ambassador "
-       "coordinator",
-       "Two engines open and the signed base needs servicing. This is where the "
-       "team roughly doubles, and it is funded by year-one revenue rather than "
-       "ahead of it"],
-      ["Year 3", "Account manager, more facilitators, designer, more engineers",
-       "Renewal becomes the main revenue event and nobody owned it before"]],
-     [2.6, 5.4, 8.6]),
+       "One senior full-stack engineer, Head of Partnerships — Egypt, Head of "
+       "Growth and Content",
+       "The admin workspace must exist before a cohort can run, the funded "
+       "pilots need somebody to open the doors, and Mission Zero has to start "
+       "recording in the quarter the first cohorts happen or there is nothing "
+       "to record"],
+      ["Year 2 · 3 added",
+       "Country Manager — KSA (Riyadh), a second engineer, partner network "
+       "manager",
+       "A resident principal is the only way Saudi Arabia moves, and the "
+       "partner network manager is the hire the entire operating model rests "
+       "on — the first certified partners cannot be signed without one"],
+      ["Year 3 · 3 added",
+       "Head of Government, Initiatives and Donors; programme delivery "
+       "coordinator; partnerships and bids associate",
+       "Public money arrives on a cycle that had to be worked for two years "
+       "before it paid, the delivery calendar outgrows the CEO, and bids start "
+       "being lost for administrative reasons rather than commercial ones"],
+      ["Year 4 · 4 added",
+       "Chief operating officer, AI and data engineer, Head of Schools and "
+       "Technical Education, second delivery coordinator",
+       "The partner network passes what one person can hold, seat volume makes "
+       "inference cost and assessment quality binding, and the school engine "
+       "finally gets a dedicated owner"],
+      ["Year 5 · 4 added",
+       "Account manager — renewals, student success, product designer, "
+       "bilingual curriculum producer",
+       "The first roles that protect an existing book rather than win a new "
+       "one. Renewal becomes the main revenue event and nobody owned it before"]],
+     [2.4, 5.6, 8.6]),
+    ("note", f"What is conspicuously absent: no facilitators, no finance "
+             f"manager, no marketing team, no customer support function and no "
+             f"regional offices. Delivery is certified rather than employed; "
+             f"finance and legal are bought from firms; marketing is one person "
+             f"and a podcast; support arrives in year five when sponsored-seat "
+             f"volume finally justifies it. Each absence is a decision with a "
+             f"stated cost, and the costs are gathered in the risk register "
+             f"rather than scattered where they are easy to miss."),
 
     ("pb",),
     ("h2", "Role descriptions"),
     ("p", "Every role on the establishment, with the purpose it exists for, the "
           "responsibilities that belong to it and nobody else, and the one measure "
           "it is held to."),
-    ("roles", ["Chief Executive Officer", "Chief Operating Officer",
-               "Chief Technology Officer"]),
+    ("roles", ["Chief Executive Officer", "Chief Technology Officer",
+               "Chief Operating Officer"]),
     ("roles", ["Senior full-stack engineer", "AI and data engineer",
                "Product designer"]),
-    ("roles", ["Head of Curriculum and Certification",
-               "Bilingual curriculum producer", "Lead facilitator",
-               "Programme delivery coordinator"]),
-    ("roles", ["Head of Partnerships — Egypt",
-               "Head of Schools and Technical Education",
+    ("roles", ["Head of Curriculum and Certification", "Partner network manager",
+               "Programme delivery coordinator",
+               "Bilingual curriculum producer"]),
+    ("roles", ["Head of Partnerships — Egypt", "Country Manager — KSA (Riyadh)",
                "Head of Government, Initiatives and Donors",
-               "Country Manager — KSA (Riyadh)", "Partnerships associate",
+               "Partnerships and bids associate",
+               "Head of Schools and Technical Education",
                "Account manager — renewals"]),
-    ("roles", ["Growth and community manager",
-               "Ambassador and events coordinator",
-               "Student success (bilingual)",
-               "Finance, bids and administration"]),
+    ("roles", ["Head of Growth and Content", "Student success (bilingual)"]),
 
     ("h2", "Company culture"),
     ("deflist", [
@@ -1282,23 +1707,26 @@ section("Management and Organization", [
 
     ("h2", "Compensation structure"),
     ("deflist", [
-        ("Cairo base, Riyadh exception",
-         f"Most roles are priced at Cairo. Two are priced at Riyadh — the country "
-         f"manager and the Saudi delivery manager — and together they are "
-         f"{pct((5000+4500)*12/HC['cost_y1'])} of year-one payroll across two of "
-         f"{HC['y1']} people. Under-pricing them is the most common way a plan "
-         f"like this fails quietly."),
+        ("Cairo base, one Riyadh exception",
+         f"Every role is priced at Cairo except one. The Saudi country manager is "
+         f"priced at Riyadh and is {pct(5000*12*MD.RAMP[2]/HC['cost_y2'])} of "
+         f"year-two payroll as a single person out of {HC['y2']}. Under-pricing "
+         f"that role is the most common way a plan like this fails quietly, and "
+         f"the alternative — covering Saudi Arabia from Cairo — fails loudly."),
         ("Founders below market",
          "The three leadership roles sit below what any of them could earn "
          "elsewhere. A deliberate runway decision, to be corrected at the next "
          "raise rather than left as a permanent feature."),
         ("Facilitators are a career, not a gig",
-         "Certification, a rising day rate by tier, first refusal on employed lead "
-         "roles and visible cohort outcomes are what stop the pool leaking to the "
-         "consultancies competing for exactly these people."),
+         "Certification, a rising day rate by tier, first refusal on lead-tier "
+         "assignments and visible cohort outcomes are what stop the pool leaking "
+         "to the consultancies competing for exactly these people. In a company "
+         "with no employed facilitators at all, this is not a staff-welfare "
+         "policy — it is supply-chain management for the only input that "
+         "cannot be bought at short notice."),
         ("Sales paid on signing and on renewal",
          f"Commission at {pct(MD.B2B_COMMISSION)} of institutional revenue. The "
-         f"account manager added in year two is compensated on retained and "
+         f"The account manager added in year five is compensated on retained and "
          f"expanded revenue rather than on new logos, because renewal is where "
          f"this business lives."),
     ]),
@@ -1351,9 +1779,27 @@ section("Strategic Analysis", [
       ["The school variant does not transfer",
        "School cohorts miss the completion gate, or safeguarding proves "
        "prohibitive",
-       "A dedicated curriculum producer and separate lead facilitators from the "
-       "start; safeguarding carried as a standing cost; the engine is gated to "
-       "Expand so there is time to find out"],
+       "A separate curriculum variant rather than a shortened one, and a "
+       "separately certified facilitator tier for school work; safeguarding "
+       "carried as a standing cost from before the first school visit; the "
+       "engine is gated to Expand so there is time to find out"],
+      ["Key-person dependency on the chief executive",
+       "Operations, finance, the quality gates and every senior institutional "
+       "relationship sit with one person until the COO arrives in year four",
+       "The single largest structural risk created by the headcount cap, and "
+       "accepted knowingly. Mitigated by making the quality gates documented and "
+       "auditable rather than judgement-based, by the partner network manager "
+       "owning the capacity forecast independently from year two, and by the "
+       "COO being a dated commitment in the hiring plan rather than a "
+       "contingency. If institutional volume arrives earlier than planned, that "
+       "hire moves forward — it is the one line in the establishment the plan "
+       "would willingly bring forward at the expense of another"],
+      ["The certified network dilutes the standard",
+       "Cohort scores drift at partner-delivered sites while StartPad-run "
+       "cohorts hold, or a partner quietly sends uncertified facilitators",
+       "Sample audits every term; the pass mark owned by the Head of Curriculum "
+       "and by nobody with a revenue target; licence withdrawal used at least "
+       "once early, visibly, so that the network understands the audit is real"],
       ["No national initiative partnership lands",
        "Enthusiastic meetings, no budget line, repeated deferral",
        f"Engine 3 is {share(ENGINE_NAMES[2])} of year-one revenue, so year one "

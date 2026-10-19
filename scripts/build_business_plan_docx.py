@@ -182,6 +182,40 @@ def page_break(doc):
     doc.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
 
 
+def content_count(doc):
+    """Body children excluding the trailing sectPr.
+
+    python-docx inserts new content *before* that sectPr, so a plain len(body)
+    taken beforehand points one past the paragraph that is about to be added.
+    Counting content elements instead gives an index that stays valid, and does
+    not rely on the identity of an lxml proxy, which is not stable across
+    lookups.
+    """
+    return sum(1 for e in doc.element.body if e.tag != qn("w:sectPr"))
+
+
+def break_before_first(doc, before):
+    """Set pageBreakBefore on the first element added since `before` content
+    elements existed.
+
+    Works for a table too: Word cannot break before a table, so the flag goes on
+    the first paragraph inside its first cell, which has the same effect.
+    """
+    content = [e for e in doc.element.body if e.tag != qn("w:sectPr")]
+    for el in content[before:]:
+        tag = el.tag.split("}")[-1]
+        if tag == "p":
+            X.insert_ordered(el.get_or_add_pPr(), "w:pageBreakBefore", X.PPR,
+                             {"w:val": "true"})
+            return
+        if tag == "tbl":
+            first_p = el.find(".//" + qn("w:p"))
+            if first_p is not None:
+                X.insert_ordered(first_p.get_or_add_pPr(), "w:pageBreakBefore",
+                                 X.PPR, {"w:val": "true"})
+            return
+
+
 # ---------------------------------------------------------------- blocks
 def h1(doc, number, text, first=False):
     p = doc.add_paragraph()
@@ -586,8 +620,22 @@ def build(path):
 
     for i, (name, blocks) in enumerate(K.SECTIONS, start=1):
         h1(doc, i, name, first=(i == 1))
+        # A ("pb",) block does not emit a break of its own. An explicit trailing
+        # break lands on a fresh page whenever the content happened to end at the
+        # page boundary, and leaves a blank sheet behind it — which is exactly
+        # what a hard break before "Role descriptions" used to produce. Instead
+        # the break is carried forward and set as pageBreakBefore on the first
+        # paragraph the next block writes, which is a no-op on a fresh page.
+        pending_break = False
         for b in blocks:
+            if b[0] == "pb":
+                pending_break = True
+                continue
+            before = content_count(doc) if pending_break else None
             RENDER[b[0]](doc, b)
+            if pending_break:
+                break_before_first(doc, before)
+                pending_break = False
 
     os.makedirs(os.path.dirname(path), exist_ok=True)
     doc.save(path)

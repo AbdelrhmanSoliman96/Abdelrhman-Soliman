@@ -6,309 +6,330 @@ for, the responsibilities that belong to it and nobody else, and the one measure
 it is held to. An organisation chart that does not say who decides is a picture
 rather than a structure.
 
-The establishment is deliberately small, so most roles here are merged:
-curriculum owns certification, the COO carries finance in year one, one head
-covers every Egyptian engine until each earns its own owner. Where a role carries
-two jobs the description says so rather than pretending otherwise, and names when
-it is expected to split.
+The establishment is capped at six, nine and twelve people in the first three
+years, and twenty by year five. That cap is only honest if the merged roles are
+admitted, so each description below says plainly where a role carries two jobs,
+which of them is temporary, and the year the role splits. A plan that hides the
+merge is a plan that quietly needs eighteen people in year two.
 
 Keyed to ROLES in model.py — counts and costs live there, the job lives here, and
-the builder checks every role on the establishment has a description.
+the builder checks that every role on the establishment has a description and
+that no description describes a role nobody holds.
 """
 
 # (role, reports to, purpose, [responsibilities], success measure)
 ROLE_SPECS = [
     # ---------------------------------------------------------------- Leadership
     ("Chief Executive Officer", "the board",
-     "Owns the institutional relationships the company is built on, and the story "
-     "that opens them.",
-     ["Carry the first conversation at ministry, donor and university-leadership "
-      "level, where the counterparty expects a principal rather than a salesperson",
-      "Personally deliver the Day 01 platform onboarding in every cohort until "
-      "that is handed to certified facilitators in the Expand quarter",
-      "Own the narrative: the podcast, the keynote, the founder stories that make "
-      "a dean take a meeting",
-      "Set the annual plan with the COO and CTO, and arbitrate when delivery "
-      "capacity and sales ambition disagree — which they will, every quarter",
-      "Hold the external face of the company in both markets, including the "
-      "Riyadh relationships the country manager cannot open alone"],
-     "Signed relationships at the level only a founder can reach: national "
-     "programmes, university leadership and anchor sponsors."),
-
-    ("Chief Operating Officer", "CEO",
-     "Makes sure everything sold can actually be delivered, to the same standard, "
-     "by people the customer has never met. In year one this role also carries "
-     "finance and administration.",
-     ["Own the delivery calendar across all cohort types in both markets, and the "
-      "rule that sales sells against capacity rather than the reverse",
-      "Own the four quality gates and the review that follows any cohort failing "
-      "one of them",
-      "Own safeguarding and child-protection compliance before the first school "
-      "cohort runs — a legal obligation before it is an operational one",
-      "Run the readiness checklist for each roadmap phase and report honestly "
-      "when a gate will not be met",
-      "Carry finance, invoicing and statutory compliance in year one with an "
-      "outsourced accountant, handing it over in year two"],
-     "Every scheduled cohort delivered, on standard, with the report issued "
-     "inside five working days."),
+     "Owns the institutional relationships the company is built on, the story "
+     "that opens them, and — until year four — operations as well.",
+     ["Carry the first conversation at ministry, agency, donor and university-"
+      "leadership level, where the counterparty expects a principal rather than "
+      "a salesperson",
+      "Own the delivery calendar and the rule that sales sells against certified "
+      "capacity rather than the reverse — this is the chief operating officer's "
+      "job and the CEO holds it until the partner network passes roughly a dozen "
+      "organisations, which the plan puts in year four",
+      "Host Mission Zero and own the narrative that makes a dean take a meeting",
+      "Hold the quality gates personally in years one and two: a cohort that "
+      "fails one is reviewed by the CEO, not delegated, because the standard is "
+      "the product",
+      "Arbitrate between delivery capacity and sales ambition every quarter, "
+      "and publish the decision so the company can see the trade being made"],
+     "Signed relationships at the level only a founder can reach, and no quarter "
+     "in which more cohorts were sold than the network could deliver."),
 
     ("Chief Technology Officer", "CEO",
-     "Owns the platform the whole commercial plan assumes exists, and writes code "
-     "as well as directing it.",
+     "Owns the platform the whole commercial plan assumes exists, and writes "
+     "code as well as directing it.",
      ["Sequence engineering against the roadmap gates rather than feature "
       "requests — the admin workspace before the competition flow, the "
-      "competition flow before bulk provisioning",
-      "Own the AI review pipeline and the overnight SLA the daily cohort loop "
-      "depends on, personally in year one",
-      "Own data protection, student-controlled sharing and the scoping that keeps "
-      "institutional visibility separate from private student data",
-      "Keep Arabic right-to-left parity a release condition rather than a backlog "
-      "item",
-      "Hold platform cost per active user as volume moves from hundreds to tens "
-      "of thousands of sponsored seats"],
-     "Each roadmap gate met in the quarter it is due, and the overnight review "
-     "SLA held every night of every cohort."),
+      "competition flow before bulk seat provisioning",
+      "Own the bilingual AI mentor: its prompts, its evaluation harness, its "
+      "cost per learner, and the Arabic quality that most of the market gets "
+      "wrong",
+      "Build the certification and audit tooling that lets twelve people stand "
+      "behind a network of certified facilitators and partner organisations",
+      "Own data protection, the safeguarding architecture for accounts held by "
+      "minors, and Saudi data-residency obligations",
+      "Carry product management and design until year five, with the Head of "
+      "Curriculum as the second opinion on anything a learner touches"],
+     "Every roadmap gate met in the quarter it is due, and inference cost per "
+     "learner falling year on year."),
 
-    # ------------------------------------------------- Product and Engineering
+    ("Chief Operating Officer", "CEO",
+     "Takes operations off the CEO once the partner network is too large for "
+     "one person to hold alongside the company's external relationships. Arrives "
+     "in year four, deliberately late.",
+     ["Own the delivery calendar, the partner network and the certification "
+      "regime as a single system rather than three functions",
+      "Own the four quality gates and the review that follows any cohort failing "
+      "one of them",
+      "Own safeguarding and child-protection compliance across both markets, and "
+      "the external attestation that makes it mean something",
+      "Run the readiness review for each roadmap phase and report honestly when "
+      "a gate will not be met",
+      "Manage the outsourced finance, legal and audit relationships, which "
+      "remain outsourced"],
+     "Every scheduled cohort delivered, on standard, with its report issued "
+     "inside five working days — at any network size."),
+
+    # -------------------------------------------------- Product and Engineering
     ("Senior full-stack engineer", "CTO",
-     "Builds the institutional product — the part of the platform the buyer, not "
-     "the student, uses.",
-     ["Build the programme admin workspace: cohort creation, bulk invitation, "
-      "educator assignment, review states",
-      "Build the automatic cohort report, which is the renewal document for every "
-      "education and public engine",
-      "Build the competition entry, qualification and judging flow, then bulk "
-      "seat provisioning and partner reporting",
-      "Hold performance under the load spike of an entire cohort submitting on "
-      "the same evening",
-      "Carry their own testing and release quality — there is no separate QA "
-      "function until the platform is larger than the team"],
-     "Institutional features shipped by their gate quarter, with no manual "
-     "intervention needed to produce a cohort report."),
+     "Builds and runs the platform. Two of these are the entire engineering team "
+     "through year three, which means breadth over specialism.",
+     ["Ship the mission engine, the programme admin workspace, the competition "
+      "flow and bulk provisioning, in the order the gates demand",
+      "Own one vertical slice end to end — database to interface — rather than a "
+      "layer, because a two-engineer team cannot afford hand-offs",
+      "Carry on-call for a platform used in live cohort rooms, where an outage "
+      "is twenty-five people and a facilitator standing still",
+      "Build the reporting that produces a cohort report automatically, since "
+      "that report is what every other engine is sold on",
+      "Keep the Arabic interface first-class rather than translated, including "
+      "right-to-left layout that is tested rather than assumed"],
+     "Gate features shipped on time, and no cohort disrupted by a platform "
+     "failure."),
 
     ("AI and data engineer", "CTO",
-     "Owns the review loop that makes a StartPad score mean something, and the "
-     "data that proves it. Joins in year two.",
-     ["Maintain and tune the review rubric across specificity, depth, evidence, "
-      "actionability and relevance, in both languages",
-      "Keep the AI Co-Founder asking the follow-up a mentor would ask, and stop "
-      "it writing the founder's answer",
-      "Calibrate scoring against human educator review on real cohorts and "
-      "publish the agreement rate internally",
-      "Build the anonymised dataset behind the annual readiness report",
-      "Manage inference cost per review as seat volume grows"],
-     "Educator agreement with AI scores above the internal threshold, and review "
-     "turnaround inside the overnight SLA."),
+     "Makes the mentor good enough to be trusted with a learner, and the "
+     "evidence record good enough to be trusted by a donor. Arrives in year four, "
+     "when seat volume makes inference cost and assessment quality the binding "
+     "problems.",
+     ["Own the mentor's evaluation harness: a fixed set of learner situations, "
+      "scored every release, in both languages",
+      "Drive inference cost per learner down as seat volume rises, which is the "
+      "difference between a seat business that works and one that does not",
+      "Build the assessment model behind the readiness score, and document it "
+      "well enough that a ministry's evaluator can interrogate it",
+      "Own the data pipeline that turns cohort activity into the per-participant "
+      "evidence record donors and initiatives require"],
+     "Mentor quality scores rising while cost per learner falls, and a readiness "
+     "score no evaluator has successfully challenged."),
 
     ("Product designer", "CTO",
-     "Makes the product usable by a sixteen-year-old in a technical school and by "
-     "a programme administrator in a ministry, without building two products. "
-     "Joins in year three; carried by the CTO and engineers before that.",
-     ["Own the mission, dashboard and review interfaces in both languages and "
-      "both reading directions",
-      "Design the institutional workspace for someone trained once and then left "
-      "alone with it",
-      "Run usability testing inside live cohorts rather than in a lab",
-      "Own the design system so a bilingual interface does not drift"],
-     "Students complete missions without facilitator help by the second evening, "
-     "and administrators use the workspace without raising a ticket."),
+     "Owns what a learner and a facilitator actually see. Arrives in year five; "
+     "until then the CTO and the Head of Curriculum share the work and the plan "
+     "says so rather than pretending design is free.",
+     ["Own the learner experience in Arabic first, with English as the "
+      "translation rather than the reverse",
+      "Design for the room: a facilitator with twenty-five people and six days "
+      "needs different screens from a learner at home",
+      "Own the accessibility and reading-age standard for school and technical "
+      "cohorts, where the audience is younger than the platform was built for",
+      "Maintain the design system so two engineers can ship interface work "
+      "without a designer in the loop"],
+     "Measured task completion in the cohort room, and no facilitator workaround "
+     "that exists because a screen was wrong."),
 
-    # ------------------------------------------------- Curriculum and Delivery
-    ("Head of Curriculum and Certification", "COO",
-     "Owns what is taught, how it is assessed, and who is fit to teach it. These "
-     "are one job in a company this size, and separating them would weaken both.",
-     ["Own the fifteen missions, the 121 tools and the standard for what a good "
-      "answer needs",
-      "Own the school and technical variants — what is cut, what is reframed, "
-      "and why",
-      "Run the four-step facilitator certification and sign off every "
-      "certification decision personally",
-      "Certify partner and ministry trainers under the train-the-trainer engine, "
-      "which is what makes seat volume deliverable without StartPad headcount",
-      "Co-design programmes with initiative and donor partners so their objective "
-      "maps onto missions without bespoke content being written each time",
-      "Own the judging rubric used at every showcase and competition"],
-     "Certified pairs available ahead of every quarter's plan, and cohort "
-     "completion above the quality gate."),
+    # -------------------------------------------------- Curriculum and Delivery
+    ("Head of Curriculum and Certification", "CEO",
+     "Owns the standard — what is taught, what is assessed, and who is allowed "
+     "to teach it. In a company that certifies rather than delivers, this is the "
+     "role that protects the asset.",
+     ["Own the mission curriculum and its three variants — university, school and "
+      "technical — and the rule that a variant is a different programme, not a "
+      "shortened one",
+      "Own facilitator certification: the assessment, the pass mark, the "
+      "re-certification cycle, and the willingness to fail candidates the "
+      "company commercially needs to pass",
+      "Own the certification standard that delivery partner organisations are "
+      "audited against, and conduct the audits in year one and two",
+      "Own the train-the-trainer curriculum that makes public-sector volume "
+      "possible at all",
+      "Own the mapping to external methodologies — the ILO's Start and Improve "
+      "Your Business framework in particular — that donor procurement requires",
+      "Carry product input on anything a learner touches, as the CTO's second "
+      "opinion, until a designer arrives in year five"],
+     "Cohort quality scores that do not fall as the network grows — the single "
+     "number that says certification is real."),
+
+    ("Partner network manager", "COO (the CEO until year four)",
+     "Recruits, certifies, supports and audits the organisations and freelancers "
+     "who deliver every cohort in this plan. The leverage of the whole business "
+     "model sits in this one role.",
+     ["Recruit and qualify delivery partner organisations — training providers, "
+      "university innovation centres, youth NGOs — against a written standard, "
+      "and reject the ones that do not meet it",
+      "Run the facilitator pipeline from sourcing to certification to first "
+      "supervised delivery, holding a pool large enough for peak quarters and "
+      "small enough to keep busy",
+      "Own partner economics: the revenue share, the invoicing, and the "
+      "conversation when a partner wants a larger share than the standard",
+      "Audit on sample and escalate any partner whose cohort scores drift, "
+      "including withdrawal of the licence",
+      "Hold the capacity forecast that sales is required to sell against, "
+      "quarter by quarter"],
+     "Certified capacity ahead of booked demand in every quarter, with no cohort "
+     "cancelled for want of a facilitator."),
+
+    ("Programme delivery coordinator", "COO (the CEO until year four)",
+     "Makes the calendar happen: scheduling, logistics, reports and the hundred "
+     "small failures that would otherwise reach the Head of Curriculum.",
+     ["Schedule every cohort across both markets against certified capacity, and "
+      "own the re-scheduling when a campus closes or a partner pulls out",
+      "Provision accounts, materials and venues, and confirm readiness a week "
+      "before each cohort rather than the day before",
+      "Issue every cohort report inside five working days of the showcase",
+      "Run the post-cohort data collection that feeds the evidence record, "
+      "including chasing the facilitators who have not submitted",
+      "Be the first line of support for partners and facilitators in delivery "
+      "week"],
+     "Every cohort starting on its scheduled date, and every report out inside "
+     "five working days."),
 
     ("Bilingual curriculum producer", "Head of Curriculum and Certification",
-     "Produces and localises everything a facilitator and a student actually "
-     "touch, in both languages. One role in year one, specialising by segment as "
-     "the team grows.",
-     ["Produce mission briefs, short lessons, evidence prompts and facilitator "
-      "packs for every format",
-      "Compose — not translate — Egyptian colloquial and Saudi dialect versions "
-      "of every mission, review and exported report",
-      "Own right-to-left correctness in every artefact a student or a ministry "
-      "sees",
-      "Build the teacher-delivery pack so a trained teacher can run a school club "
-      "without StartPad in the room",
-      "Fold facilitator and student feedback into the next revision each term"],
-     "Material revised each term, usable without adaptation, with no cohort where "
-     "language is cited as a barrier."),
+     "Turns the standard into the material a facilitator can pick up and run "
+     "without asking a question. Arrives in year five; until then the Head of "
+     "Curriculum produces, with freelance editors on volume.",
+     ["Produce facilitator guides, learner workbooks and slide decks in Arabic "
+      "and English for all three format variants",
+      "Produce the Mission Zero episode notes that attach each episode to the "
+      "mission it illustrates",
+      "Maintain version control so a partner in Riyadh and a partner in Assiut "
+      "are demonstrably running the same release",
+      "Manage the freelance translation and copy-editing panel against a "
+      "published quality standard"],
+     "No facilitator question that the material should have answered."),
 
-    ("Lead facilitator", "COO",
-     "Delivers cohorts at the standard the freelance pool is certified against, "
-     "and is the reason the pool can exist at all.",
-     ["Deliver the first cohort at every new institution, where the relationship "
-      "is most fragile",
-      "Observe, co-deliver with and score facilitator candidates through "
-      "certification",
-      "Mark daily checkpoints honestly, including Not yet, and coach the teams "
-      "that need it",
-      "Hold safeguarding practice in the room as non-negotiable on school and "
-      "technical cohorts",
-      "Feed what failed in the room back to curriculum within the same week"],
-     "Cohorts above the completion gate, and candidates certified on schedule."),
-
-    ("Programme delivery coordinator", "COO",
-     "Turns a signed contract into a delivered cohort: calendar, pairing, "
-     "materials, logistics. Joins in year two, when volume outgrows the COO.",
-     ["Hold the delivery calendar a term ahead, against each institution's "
-      "academic calendar and around Ramadan",
-      "Assign certified pairs and escalate when a cohort has no qualified pair "
-      "available",
-      "Own materials logistics to venues across both markets, printing locally in "
-      "each rather than shipping across a border",
-      "Issue the cohort report inside five working days of the showcase"],
-     "Cohorts delivered on the agreed dates with reports issued on time."),
-
-    # --------------------------------------------------- Institutional Sales
+    # ----------------------------------------------- Institutional Partnerships
     ("Head of Partnerships — Egypt", "CEO",
-     "Owns the Egyptian institutional pipeline across every engine in year one, "
-     "and the university engine specifically once the others earn their own "
-     "owners.",
-     ["Own the four-door approach into every target university and the "
-      "pilot-to-licence ladder",
-      "Convert pilot cohort reports into paid cohorts, parallel groups and "
-      "faculty licences",
-      "Carry schools, competitions, donors and corporates in year one until each "
-      "is handed to its own head",
-      "Hold the renewal conversation before the term ends, not after",
-      "Keep the pipeline honest against the delivery calendar — never sell a "
-      "cohort there is no certified pair for"],
-     "Paid cohorts and licences signed to plan, and second-term renewal rate."),
-
-    ("Head of Schools and Technical Education", "CEO",
-     "Opens an entirely different buyer — schools, applied-technology schools and "
-     "technical institutes. Joins in year two, once the school variant has been "
-     "proven in the Expand quarter.",
-     ["Build relationships with school groups, operators and technical institute "
-      "directors in both markets",
-      "Own the school club, cohort, technical and whole-school licence ladder",
-      "Navigate ministry approval where a school needs it before buying",
-      "Work with curriculum on national-framework alignment, which is often the "
-      "condition of the sale"],
-     "School and technical cohorts signed to plan, and the first whole-school "
-     "licences."),
-
-    ("Head of Government, Initiatives and Donors", "CEO",
-     "Owns the longest sales cycles and the largest contracts in the company — "
-     "national programmes and donor-funded work, which buy the same way.",
-     ["Open and hold relationships with national programme offices, ministries, "
-      "foundations and INGO country offices in both markets",
-      "Convert a public target or a donor logframe into a scoped, funded order "
-      "with a reporting format attached",
-      "Own the train-the-trainer proposition that makes seat volume deliverable",
-      "Own bid and proposal quality, and the reporting that is the condition of "
-      "the next grant",
-      "Protect the company from contracting to outcomes the product cannot "
-      "measure"],
-     "Signed seat orders and programmes, delivered against, and renewed or "
-     "widened."),
+     "Owns every Egyptian institutional relationship until the engines are large "
+     "enough to split. In year one that is universities, schools, competitions "
+     "and sponsors in one pair of hands, and the plan is explicit that this is a "
+     "merged role.",
+     ["Open and close university cohort and faculty licence business across "
+      "Egypt, working the four doors into an institution rather than the "
+      "front one",
+      "Carry competitions and corporate sponsors in year one, handing "
+      "competitions to the government and initiatives head as that role lands "
+      "in year three",
+      "Carry schools and technical institutes until a dedicated head arrives in "
+      "year four, with the honest consequence that the school engine is "
+      "deliberately slower in years one and two",
+      "Convert delivered cohorts into faculty licences, which is where the "
+      "margin is and where most of this role's quota should come from",
+      "Feed the named-target list and the engagement play applied to each, so "
+      "pipeline is a plan rather than a list of contacts"],
+     "Signed Egyptian revenue against quota, and the ratio of licences to "
+     "one-off cohorts rising each year."),
 
     ("Country Manager — KSA (Riyadh)", "CEO",
-     "Runs Saudi Arabia as a market rather than an export destination, and owns "
-     "every engine inside it.",
-     ["Own all Saudi revenue across every engine — in that market the "
-      "relationship comes before the product line",
-      "Build relationships with Monsha'at, Misk, TVTC, universities and corporate "
-      "sponsors",
-      "Establish and maintain the Saudi entity, compliance and local partnerships",
-      "Build Saudi delivery capacity — a certified local pool, not facilitators "
-      "flown from Cairo",
-      "Localise the commercial approach to Saudi procurement norms and timelines"],
-     "Saudi revenue to plan from the first quarter, with local delivery capacity "
-     "behind it."),
+     "Is the company in Saudi Arabia: a resident, Arabic-speaking principal who "
+     "can sit with Monsha'at, the Misk Foundation and TVTC without an "
+     "introduction.",
+     ["Own the Saudi entity's commercial relationships across every engine — "
+      "there is no engine split in Saudi Arabia until year five",
+      "Open the three Saudi doors that matter most: the SME authority's academy, "
+      "the youth foundations and the technical training corporation, each "
+      "through the engagement play the plan specifies for it",
+      "Recruit and hold the Saudi facilitator pool, where day rates, visas and "
+      "availability work differently from Egypt",
+      "Own Saudi compliance in practice: the entity, data residency, procurement "
+      "registration and the paperwork that decides whether a public body can pay "
+      "an invoice at all",
+      "Localise rather than translate: Saudi institutions buy a Saudi programme, "
+      "and a visibly Egyptian one will lose on preference alone"],
+     "Saudi revenue per Saudi head above the Egyptian equivalent, which is what "
+     "justifies the cost of the role."),
 
-    ("Partnerships associate", "the relevant Head",
-     "Carries the volume of the institutional pipeline below principal level. "
-     "Joins in year two.",
-     ["Research and qualify institutions, programmes and sponsors",
-      "Book and prepare first meetings for the heads",
-      "Maintain pipeline hygiene — every stage, every next action, dated",
-      "Run pilot-to-contract administration so a head is never the bottleneck on "
-      "paperwork"],
-     "Qualified meetings booked and pipeline accuracy at review."),
+    ("Head of Government, Initiatives and Donors", "CEO",
+     "Works the longest sales cycles in the company — ministries, agencies, "
+     "national initiatives, donors and international organisations — and starts "
+     "them years before they pay.",
+     ["Own the seat-rider and trainer-certification plays into national "
+      "initiatives, entering through a university or a governorate branch rather "
+      "than through head office",
+      "Own the donor logframe subcontract play: track published portfolios, "
+      "identify components in design six to nine months out, and get StartPad "
+      "named in the proposal before the call opens",
+      "Own public procurement mechanics in both markets — registration, "
+      "pre-qualification, bid formats and the paperwork that disqualifies "
+      "otherwise winning bids",
+      "Own the evidence record as a commercial asset, working with the Head of "
+      "Curriculum so what a donor's monitoring function needs is what the "
+      "platform already produces",
+      "Carry competitions from year three, since the sponsors and the public "
+      "bodies are substantially the same room"],
+     "Pipeline measured in named opportunities with a dated decision point, not "
+     "in meetings held."),
+
+    ("Head of Schools and Technical Education", "COO",
+     "Owns the engine with the largest population and the smallest budget per "
+     "head, where volume has to come from ministries, chains and partners rather "
+     "than from individual schools. Arrives in year four.",
+     ["Own school and technical institute business across both markets, selling "
+      "to chains, groups and ministry programmes rather than one school at a time",
+      "Own the applied-technology and TVET relationships where the buyer is a "
+      "public body and the play is certification",
+      "Own safeguarding in the commercial conversation, since no school signs "
+      "before it is satisfied and no school asks about it last",
+      "Convert school cohorts into school licences, which is the only way this "
+      "engine's unit economics work"],
+     "School and technical revenue per sales day comparable to the university "
+     "engine, despite a lower price point."),
+
+    ("Partnerships and bids associate", "the relevant Head",
+     "Does the work that would otherwise stop a head from selling: research, "
+     "proposals, bids, contracting and the follow-up nobody has time for.",
+     ["Maintain the named-target list — organisation, engine, engagement play, "
+      "named contact, dated next step — as the company's actual pipeline",
+      "Assemble proposals, tender responses and donor budget annexes against "
+      "deadlines that do not move",
+      "Run contracting and purchase-order chasing through to a payable invoice, "
+      "which in public-sector work is a distinct skill",
+      "Prepare the cohort reports and case studies that each head takes into the "
+      "next meeting"],
+     "No bid missed for an administrative reason, and no signed deal waiting on "
+     "paperwork."),
 
     ("Account manager — renewals", "COO",
-     "Owns the revenue the company already won, which is where this business "
-     "actually lives. Joins in year three, when the signed base outgrows the "
-     "heads who sold it.",
-     ["Own renewal for every signed institution, programme and sponsor",
-      "Run the post-cohort review that turns a report into the next order",
-      "Expand accounts: more cohorts, more faculties, more governorates, a "
-      "licence",
-      "Flag at-risk accounts a term before the renewal date"],
-     "Renewal rate and net revenue retention across the signed base."),
+     "Exists because the second year of an institutional relationship is worth "
+     "more than the first and is nobody's job while everyone is hunting. Arrives "
+     "in year five, when the renewal book is large enough to justify it.",
+     ["Own renewal and expansion for every institution past its first delivered "
+      "cohort",
+      "Run the structured review that turns a delivered cohort into the case for "
+      "a faculty or school licence",
+      "Hold the relationship through the staff turnover that is the real cause "
+      "of institutional churn in this market",
+      "Report renewal rate and expansion rate by engine, honestly"],
+     "Renewal rate by engine at or above the retention assumed in the plan."),
 
-    # ------------------------------------------------- Growth and Operations
-    ("Growth and community manager", "CEO",
-     "Makes the institutional pipeline warm before anyone makes a cold call, and "
-     "runs everything that touches young people directly. One role covering "
-     "content, community, ambassadors and competitions in year one.",
-     ["Run the content engine: founder stories, the podcast, reels — every piece "
-      "ending at Mission 01",
-      "Recruit, train and tier the ambassador network, and route the campus "
-      "intelligence it produces to sales",
-      "Sell and run sponsored competitions in year one, handing delivery to a "
-      "coordinator as volume grows",
-      "Own the annual readiness report that turns a vendor into a cited reference",
-      "Supply sales with collateral answering the buyer's real question: what "
-      "will I be able to report",
-      "Hold the line against cold paid acquisition"],
-     "Share of pipeline arriving warm — referred, inbound or ambassador-sourced — "
-     "and competitions sold to plan."),
-
-    ("Ambassador and events coordinator", "Growth and community manager",
-     "Runs the campus network and the competition calendar as execution, freeing "
-     "the growth manager to sell and position. Joins in year two.",
-     ["Recruit, train and renew ambassadors term by term across target campuses",
-      "Collect and route campus intelligence: which centre has budget, which dean "
-      "is under accreditation pressure",
-      "Run competitions end to end — entry, qualification rounds, judging, final "
-      "and awards",
-      "Deliver every sponsor's reporting and brand obligations in full"],
-     "Active ambassadors per campus, competitions delivered, and qualified "
-     "institutional leads sourced from the network."),
+    # ------------------------------------------------------ Growth and Content
+    ("Head of Growth and Content", "CEO",
+     "Owns demand: Mission Zero, the ambassador network, the content that makes "
+     "an institution call first, and the community the subscription engine is "
+     "drawn from.",
+     ["Own Mission Zero end to end — guest booking, the campus recording "
+      "schedule, the freelance crew, publication and the clip calendar — as a "
+      "pipeline instrument measured in enquiries, not in views",
+      "Run the campus ambassador network: recruitment, training, the stipend, "
+      "and the monthly rhythm that keeps a volunteer network alive rather than "
+      "nominal",
+      "Own the annual readiness report, which is the company's single most "
+      "effective door-opener into institutions and ministries",
+      "Own organic acquisition into subscriptions, which the plan treats as a "
+      "consequence of the institutional engines rather than a channel of its own",
+      "Own brand consistency across two languages and every partner's "
+      "co-branded material"],
+     "Institutional enquiries attributable to content and Mission Zero, and cost "
+     "per subscription from organic channels."),
 
     ("Student success (bilingual)", "COO",
-     "Keeps young people moving, which is what every buyer is actually paying "
-     "for. Joins in year two, when cohort and seat volume makes it a full-time "
-     "job.",
-     ["Cover the support queue in both languages, weighted to cohort weeks when "
-      "load spikes",
-      "Act on follow-up signals — inactivity, repeated failed reviews, unstarted "
-      "missions",
-      "Own activation of issued sponsored seats, which is where seat programmes "
-      "usually fail",
-      "Escalate product problems with the evidence attached"],
-     "Activation and completion rates inside cohorts and sponsored programmes."),
-
-    ("Finance, bids and administration", "COO",
-     "Keeps the company solvent, compliant and able to invoice a ministry. Joins "
-     "in year two; carried by the COO and an outsourced accountant before that.",
-     ["Own invoicing and collections, including the public-sector payment cycle, "
-      "which is slow and unforgiving of paperwork errors",
-      "Own payroll across two jurisdictions and the freelance facilitator pool",
-      "Assemble bids, tenders and grant proposals to the funder's exact format",
-      "Maintain the pre-qualification library — registrations, policies, "
-      "certifications, references — because a missing document loses a bid more "
-      "often than a weak proposal does",
-      "Track contractual deliverables and reporting deadlines across every signed "
-      "programme"],
-     "Clean audit, on-time payroll, collections inside terms, and no contractual "
-     "reporting deadline missed."),
+     "Keeps the learners who arrived through somebody else's programme. Arrives "
+     "in year five, when sponsored-seat volume makes activation the difference "
+     "between a renewed seat order and a cancelled one.",
+     ["Own activation of sponsored and initiative seats, where an unactivated "
+      "seat is a line item the funder will not pay for twice",
+      "Run the bilingual support queue for learners and for partner "
+      "administrators",
+      "Own the progression path from a completed cohort to a paid subscription, "
+      "which is the entire subscription engine",
+      "Feed recurring learner problems back to curriculum and product as "
+      "evidence rather than anecdote"],
+     "Seat activation rate, and the share of cohort completers who continue on "
+     "a paid subscription."),
 ]
 
 BY_ROLE = {r[0]: r for r in ROLE_SPECS}
