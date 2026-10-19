@@ -516,3 +516,100 @@ never break, and `thead` repeats on the continuation page.
 The labour-market and funnel figures in **The Readiness Gap** come from StartPad's own
 market analysis rather than from a single published dataset, and the paper says so on
 the page. Trace them to the underlying statistics before quoting them externally.
+
+---
+
+# StartPad — operational financial model
+
+`output/StartPad_Financial_Model.xlsx` · nineteen sheets · thirty-six months,
+October 2026 to September 2029, summed to three years.
+
+Built by `scripts/build_financial_model_xlsx.py` from the same source as the
+business plan: `business_plan/model.py` supplies the twelve-quarter delivery plan
+and the eighteen-role establishment, and the go-to-market strategy supplies the
+channel taxonomy — five offline channels that create sign-ups, six online ones
+that create reach, and one destination, Mission 01.
+
+## The rule the workbook is built on
+
+**Every cell in the workbook is a formula except the inputs.** Nothing is a value
+Python computed and pasted in. Change an assumption and the acquisition funnel,
+the revenue streams, the expense base, all three statements and every analysis
+sheet move with it. Inputs are blue on a yellow fill, formulas are black, links
+to another sheet are green, and a check that must read nil is red.
+
+This is also why the builder exists rather than a hand-made spreadsheet: the
+business plan's volumes and the model's volumes are the same numbers, read from
+one file, so the two documents cannot drift apart.
+
+## Shape
+
+```
+INPUT      Assumptions   every typed number in the model
+           HR_Model      18 roles, salaries, start months, monthly payroll
+           Actuals       the $50,000 opening position, and a grid to record
+                         each month as it closes
+           Capex         assets driven by new hires, plus shared and intangible
+
+PROCESS    Acquisition   both funnels, 36 months
+           Revenue       13 lines across 8 engines, 36 months
+           Expenses      direct cost, revenue share to three parties,
+                         operating cost, 36 months
+           Depreciation  straight line by asset class
+
+OUTPUT     Income_Statement · Balance_Sheet · Cash_Flow
+
+ANALYSIS   Stress_Test · KPIs · Sensitivity · Break_Even · Payback ·
+           Exit_Strategy
+```
+
+Every monthly sheet has the same geometry — column A the line, B the driver,
+C to AL months 1-36, AN/AO/AP the three annual totals — so a formula on one
+sheet addresses the same month on another without a lookup.
+
+## Three things worth knowing before reading the numbers
+
+**Volume is phased, not spread.** The quarterly plan is the source of truth.
+Each quarter's volume is split across its three months by a phasing weight
+(30/33/37) held on the Assumptions sheet, so an annual total always ties back to
+the business plan exactly while the monthly shape stays realistic.
+
+**Headcount drives assets.** There is no separate capital expenditure forecast.
+Every new employee on the HR model triggers a laptop, a desk, peripherals and a
+handset at the costs and useful lives on the Assumptions sheet, and the
+depreciation schedule follows from that.
+
+**Three counterparties take a share of revenue**, each defined separately:
+certified delivery partners on partner-delivered cohorts, youth and channel
+organisations on competitions and programme seats, and aggregators and payment
+processors on initiative seats and subscriptions.
+
+## The check that matters
+
+`Balance_Sheet` carries a check line that must read nil in every column, and the
+Dashboard repeats it. It is nil by construction — cash comes from the indirect
+cash flow, retained earnings from the income statement, net book value from the
+asset register — so if it ever reads anything else, something upstream has been
+broken rather than merely changed.
+
+## Rebuild
+
+```bash
+python scripts/build_financial_model_xlsx.py
+python scripts/recalc.py output/StartPad_Financial_Model.xlsx 900
+```
+
+openpyxl writes formulas without cached values, so the workbook must be
+recalculated before anything that reads values — pandas, a previewer, or a
+person opening it in a viewer rather than Excel — will show numbers. The
+recalculation takes several minutes: there are a little over twenty thousand
+formulas.
+
+## What still needs a decision
+
+The valuation inputs on `Exit_Strategy` — pre-money at the angel and venture
+rounds, the dilution assumed from later rounds, and the exit multiples — are
+placed at defensible MENA ranges but they are **negotiating positions, not
+facts**. They are inputs for exactly that reason. The same applies to the seed
+round size and the month it lands, which the model currently takes from the
+business plan's funding requirement.
