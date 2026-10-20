@@ -678,6 +678,12 @@ def build_assumptions(wb):
         "sized on the cash trough below, not on a round number")
     one("Month the seed round lands", "seed_month", "#", 3, NUM)
     one("Minimum cash buffer to hold", "min_cash", "USD", 40_000, MONEY)
+    one("Years an institutional relationship is retained", "retention", "#",
+        2.8, NUM1,
+        "used for institutional lifetime value. A delivered cohort renews "
+        "into a second and then into a licence")
+    one("Tax losses carried forward at inception", "open_losses", "USD", 0,
+        MONEY, "none, the company has not traded")
     one("Year one expense ceiling", "y1_ceiling", "USD", 150_000, MONEY,
         "the constraint this plan was built backwards from")
     r += 1
@@ -904,8 +910,12 @@ def build_capex(wb):
                  (f"={ml(m)}{a}" if m == 1
                   else f"={ml(m - 1)}{t}+{ml(m)}{a}"), MONEY, agg="end")
         cum.append((lbl, this, arow, life))
+    # The last row has to be captured before the total is written: a lambda
+    # reading r would see the total's own row and stop one short, which is
+    # exactly what it did, silently dropping the last asset class.
+    cum_last = r - 1
     r = trow(ws, r, "Total gross assets",
-             lambda m: f"=SUM({ml(m)}{cum_first}:{ml(m)}{r - 2})",
+             lambda m: f"=SUM({ml(m)}{cum_first}:{ml(m)}{cum_last})",
              MONEY, bold=True, agg="end", fill_colour=F.BAND)
     rows["gross"] = r - 1
     rows["classes"] = cum
@@ -1748,7 +1758,8 @@ def build_income_statement(wb):
     ebt = arow("Profit before tax", lambda y: f"={acol(y)}{ebit}",
                bold=True, note="no debt in the plan, so no interest")
     cf_open = arow("Tax losses carried forward, opening",
-                   lambda y: (0 if y == 1 else f"={acol(y - 1)}{r + 1}"),
+                   lambda y: (f"={A['open_losses']}" if y == 1
+                              else f"={acol(y - 1)}{r + 1}"),
                    note="an early loss shelters a later profit")
     cf_close = arow("Tax losses carried forward, closing", lambda y:
                     f"=MAX(0,{acol(y)}{cf_open}-MAX(0,{acol(y)}{ebt}))"
@@ -1975,7 +1986,11 @@ def build_actuals(wb):
         ws.cell(r, 2, note).font = f(7.5, False, F.MUTED)
         c = ws.cell(r, 3, val)
         c.number_format = MONEY
-        c.font = f(9, False, F.LINK_FONT if isinstance(val, str) else F.INK)
+        if isinstance(val, str):
+            c.font = f(9, False, F.LINK_FONT)
+        else:
+            c.font = f(9, False, F.IN_FONT)
+            c.fill = fill(F.YELLOW)
         rows[lbl] = r
         r += 1
     ws.cell(r, 1, "Total opening assets").font = f(9, True)
@@ -1986,6 +2001,9 @@ def build_actuals(wb):
     r += 2
     for lbl, note, val in (
             ("Trade and other payables", "none at inception", 0),
+            ("Accrued payroll", "nobody employed before month 1", 0),
+            ("Deferred revenue", "nothing billed in advance yet", 0),
+            ("Tax payable", "no trading, so nothing owed", 0),
             ("Paid in share capital", "the opening cash, recorded as equity",
              f"={A['open_cash']}"),
             ("Retained earnings", "no trading before month 1", 0)):
@@ -1993,13 +2011,16 @@ def build_actuals(wb):
         ws.cell(r, 2, note).font = f(7.5, False, F.MUTED)
         c = ws.cell(r, 3, val)
         c.number_format = MONEY
-        c.font = f(9, False, F.LINK_FONT if isinstance(val, str) else F.INK)
+        if isinstance(val, str):
+            c.font = f(9, False, F.LINK_FONT)
+        else:
+            c.font = f(9, False, F.IN_FONT)
+            c.fill = fill(F.YELLOW)
         rows[lbl] = r
         r += 1
     ws.cell(r, 1, "Total opening liabilities and equity").font = f(9, True)
-    c = ws.cell(r, 3, f"=C{rows['Trade and other payables']}"
-                      f"+C{rows['Paid in share capital']}"
-                      f"+C{rows['Retained earnings']}")
+    c = ws.cell(r, 3, f"=SUM(C{rows['Trade and other payables']}:"
+                      f"C{rows['Retained earnings']})")
     c.number_format = MONEY
     c.font = f(9, True)
     rows["liab_eq"] = r
@@ -2109,24 +2130,30 @@ def build_balance_sheet(wb):
     cash = bs("Cash and cash equivalents", "see the cash flow statement",
               f"={S_ACT}!$C${AC['Cash at bank']}",
               lambda y: f"={S_CF}!{ml(last_m[y])}${CF['cash']}")
-    ar = bs("Trade receivables", "institutional invoices outstanding", 0,
+    ar = bs("Trade receivables", "institutional invoices outstanding",
+            f"={S_ACT}!$C${AC['Trade receivables']}",
             lambda y: f"={S_CF}!{ml(last_m[y])}${CF['ar']}")
-    tang = bs("Property and equipment, net", "laptops, kit and fit out", 0,
+    tang = bs("Property and equipment, net", "laptops, kit and fit out",
+              f"={S_ACT}!$C${AC['Property and equipment, net']}",
               lambda y: f"={S_DEP}!{ml(last_m[y])}${DP['nbv_tangible']}")
-    intang = bs("Intangible assets, net", "trademark, IP and formation", 0,
+    intang = bs("Intangible assets, net", "trademark, IP and formation",
+                f"={S_ACT}!$C${AC['Intangible assets, net']}",
                 lambda y: f"={S_DEP}!{ml(last_m[y])}${DP['nbv_intangible']}")
     ta = bs("Total assets", "", f"=SUM(C{cash}:C{intang})",
             lambda y: f"=SUM({get_column_letter(3 + y)}{cash}:"
                       f"{get_column_letter(3 + y)}{intang})",
             bold=True, fill_c=F.BAND)
     r += 1
-    ap = bs("Trade and other payables", "", 0,
+    ap = bs("Trade and other payables", "",
+            f"={S_ACT}!$C${AC['Trade and other payables']}",
             lambda y: f"={S_CF}!{ml(last_m[y])}${CF['ap']}")
-    acc = bs("Accrued payroll", "", 0,
+    acc = bs("Accrued payroll", "", f"={S_ACT}!$C${AC['Accrued payroll']}",
              lambda y: f"={S_CF}!{ml(last_m[y])}${CF['accrued']}")
-    dfr = bs("Deferred revenue", "billed, not yet earned", 0,
+    dfr = bs("Deferred revenue", "billed, not yet earned",
+             f"={S_ACT}!$C${AC['Deferred revenue']}",
              lambda y: f"={S_CF}!{ml(last_m[y])}${CF['deferred']}")
-    txp = bs("Tax payable", "paid in arrears", 0,
+    txp = bs("Tax payable", "paid in arrears",
+             f"={S_ACT}!$C${AC['Tax payable']}",
              lambda y: f"={S_CF}!{ml(last_m[y])}${CF['taxpay']}")
     tl = bs("Total liabilities", "", f"=SUM(C{ap}:C{txp})",
             lambda y: f"=SUM({get_column_letter(3 + y)}{ap}:"
@@ -2134,10 +2161,11 @@ def build_balance_sheet(wb):
             bold=True, fill_c=F.BAND)
     r += 1
     sc = bs("Share capital", "founder capital plus the seed round",
-            f"={A['open_cash']}",
+            f"={S_ACT}!$C${AC['Paid in share capital']}",
             lambda y: f"={A['open_cash']}"
                       f"+IF({last_m[y]}>={A['seed_month']},{A['seed']},0)")
-    re_ = bs("Retained earnings", "cumulative profit and loss", 0,
+    re_ = bs("Retained earnings", "cumulative profit and loss",
+             f"={S_ACT}!$C${AC['Retained earnings']}",
              lambda y: "=" + "+".join(f"{S_IS}!${acol(k)}${IS['net']}"
                                       for k in range(1, y + 1)))
     teq = bs("Total equity", "", f"=C{sc}+C{re_}",
@@ -2281,9 +2309,11 @@ def build_indicators(wb):
                      f"/{S_ACQ}!{yl(y)}${AQ['won']},0)", store=rows)
     acv = rows["Average institutional contract value"]
     r = ar(ws, r, "Institutional LTV to CAC",
-           "contract value times gross margin times 2.8 years, over CAC",
+           "contract value times gross margin times years retained, over "
+           "CAC",
            lambda y: f"=IFERROR({acol(y)}{acv}"
-                     f"*IFERROR({acol(y)}{gp}/{acol(y)}{rev},0)*2.8"
+                     f"*IFERROR({acol(y)}{gp}/{acol(y)}{rev},0)"
+                     f"*{A['retention']}"
                      f"/{acol(y)}{caci},0)", MULT, bold=True)
     r = ar(ws, r, "Coverage, signings against the plan",
            "below 1.0x means the funnel is short",
@@ -2547,8 +2577,8 @@ def build_sensitivity(wb):
         for j, cv in enumerate(colvals):
             cell = ws.cell(r, 3 + j, cv)
             cell.number_format = PCT
-            cell.font = f(8.5, True, F.WHITE)
-            cell.fill = fill(F.UV_DARK)
+            cell.font = f(8.5, True, F.IN_FONT)
+            cell.fill = fill(F.YELLOW)
             cell.alignment = Alignment(horizontal="center")
         colrow = r
         r += 1
@@ -2556,8 +2586,8 @@ def build_sensitivity(wb):
         for rv in rowvals:
             cell = ws.cell(r, 2, rv)
             cell.number_format = PCT
-            cell.font = f(8.5, True, F.INK)
-            cell.fill = fill(F.LIME)
+            cell.font = f(8.5, True, F.IN_FONT)
+            cell.fill = fill(F.YELLOW)
             ws.cell(r, 1, rowlab if r == first else "").font = f(8, True, F.UV)
             for j, cv in enumerate(colvals):
                 cc = ws.cell(r, 3 + j,

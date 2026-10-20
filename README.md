@@ -570,6 +570,40 @@ sales cycle, from four months for a university to twelve for a donor.
 The coverage row is the control: contracts signed against contracts the
 delivery plan requires. It runs 0.98, 1.13, 1.07, 1.18 and 1.27.
 
+## Three gates, not one
+
+A model can contain nothing but formulas and still be dead, if those formulas
+point at the wrong cells. So there are three checks, and all three have to
+pass before the workbook is worth reading.
+
+```bash
+python3 scripts/audit_financial_model.py      # no static values anywhere
+python3 scripts/verify_financial_model.py     # every figure recomputes
+python3 scripts/test_model_is_dynamic.py      # the whole thing moves
+```
+
+**The audit** walks every cell on every sheet and reports any number sitting
+outside a designated input, and any number buried inside a formula that is
+not structural. Structural means months in a year, days in a month, a year
+boundary, the thirteen column stride of a time sheet, or the sentinel that
+means "did not happen inside the modelled period". It currently reports zero
+of each.
+
+**The verifier** recomputes the model a second time, in Python, from the plan
+and from the input values read back out of the workbook, and compares. 285
+checks: volumes against the plan, every revenue line against volume times
+price, the funnel stage by stage, direct cost against its drivers, payroll
+against the establishment, every profit cross foot, the balance sheet
+identities, the cash flow identities, and that no asset is depreciated below
+nil. This is the check that catches a formula pointing one row off, and it
+found one: the total gross assets row was summing one row short and silently
+dropping the last asset class.
+
+**The dynamic test** moves nine inputs at once, chosen to enter the model at
+nine different points, recalculates, and confirms that twenty six outputs
+spread across every calculating sheet all respond and that the balance sheet
+still checks to nil afterwards.
+
 ## Rebuild
 
 ```bash
