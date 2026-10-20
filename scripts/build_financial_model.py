@@ -11,6 +11,7 @@ changing an assumption changes the model rather than requiring a rebuild.
     python scripts/build_financial_model.py
     python scripts/recalc.py output/StartPad_Financial_Model.xlsx 900
 """
+import datetime
 import os
 import sys
 
@@ -25,7 +26,7 @@ from openpyxl.styles import Alignment, Border, Font             # noqa: E402
 from openpyxl.utils import get_column_letter                    # noqa: E402
 
 import _fm as F                                                 # noqa: E402
-from _fm import (DAYS, MONEY, MONEY2, MULT, NUM, NUM1, NUM2, PCT,  # noqa: E402
+from _fm import (DATEF, DAYS, MONEY, MONEY2, MULT, NUM, NUM1, NUM2, PCT,  # noqa: E402
                  PCT2, TEXT, band, f, fill, label_cell, mcol, ml,
                  months_of, mref, pos_in_quarter, quarter_of, setup_time,
                  sheet_title, time_header, trow, year_agg, year_of, ycol,
@@ -46,6 +47,7 @@ S_IS = "'Income Statement'"
 S_BS = "'Balance Sheet'"
 S_CF = "'Cash Flow Statement'"
 S_FI = "'Financial Indicators'"
+S_GTM = "'GTM Capacity and Timing'"
 
 R = {}      # sheet key -> label -> row
 A = {}      # assumption key -> absolute reference, or a list of five
@@ -190,13 +192,14 @@ def build_assumptions(wb):
     ws.column_dimensions["B"].width = 9
     for col in range(3, 24):
         ws.column_dimensions[get_column_letter(col)].width = 11
-    ws.column_dimensions["X"].width = 60
+    ws.column_dimensions["X"].width = 58
+    ws.column_dimensions["Y"].width = 52
     ws.freeze_panes = "C5"
     r = 5
 
     def head(t):
         nonlocal r
-        r = band(ws, r, t, last_col=24)
+        r = band(ws, r, t, last_col=25)
 
     def note(t):
         nonlocal r
@@ -245,6 +248,10 @@ def build_assumptions(wb):
     # ------------------------------------------------------- 1 basis
     head("1. MODEL BASIS")
     one("Reporting currency", "ccy", "", P.CURRENCY, TEXT)
+    one("First calendar month of the model", "start_date", "",
+        datetime.date(P.START_YEAR, P.START_MONTH, 1), DATEF,
+        "month one. Every month and quarter label in the workbook counts "
+        "from here, so quarter one is Q4 2026")
     one("Egyptian pounds to the dollar", "fx_egp", "EGP", P.EGP_PER_USD, NUM2,
         "used only to convert the prize money already committed")
     one("Corporate income tax rate", "tax_rate", "%", 0.225, PCT,
@@ -291,22 +298,31 @@ def build_assumptions(wb):
     r += 2
 
     # ---------------------------------------------- 3 quarterly plan
-    head("3. VOLUME PLAN, BY QUARTER")
-    note("Twenty quarters. Year one is bounded by what five signed "
-         "institutions can absorb and by the expense ceiling below, not by "
-         "what the market could take.")
+    head("3. VOLUME PLAN, BY QUARTER, STARTING Q4 2026")
+    note("Twenty quarters, the first of them October to December 2026. "
+         "Activity starts in month one in every channel. Volume does not, "
+         "because a deal takes as long to close as its complexity says it "
+         "does: the two columns on the right name the activity that produces "
+         "each line and what sets the quarter it can first appear in. The "
+         "sheet named GTM Capacity and Timing turns both into arithmetic.")
     hdr = r
     ws.cell(hdr, 1, "Driver").font = f(8.5, True, F.WHITE)
     ws.cell(hdr, 2, "Unit").font = f(8.5, True, F.WHITE)
     for col in (1, 2):
         ws.cell(hdr, col).fill = fill(F.UV_DARK)
     for i, q in enumerate(F.QUARTER_LABELS):
-        c = ws.cell(hdr, 3 + i, q.replace("FY", "Y").replace(" ", ""))
+        c = ws.cell(hdr, 3 + i, f"{q}\n{F.QUARTER_FY[i]}")
         c.font = f(7, True, F.WHITE)
         c.fill = fill(F.UV_DARK)
-        c.alignment = Alignment(horizontal="center")
+        c.alignment = Alignment(horizontal="center", wrap_text=True)
         c.number_format = TEXT
-    ws.row_dimensions[hdr].height = 20
+    for col, t in ((24, "What produces this volume"),
+                   (25, "What sets the quarter it can first appear in")):
+        c = ws.cell(hdr, col, t)
+        c.font = f(7.4, True, F.WHITE)
+        c.fill = fill(F.UV_DARK)
+        c.alignment = Alignment(horizontal="left", wrap_text=True)
+    ws.row_dimensions[hdr].height = 26
     r += 1
     drivers = [
         ("University cohorts, Egypt, paid", "uni_cohorts_eg", "cohorts"),
@@ -337,6 +353,14 @@ def build_assumptions(wb):
         ws.cell(r, 2, unit).font = f(8, False, F.MUTED)
         for i in range(20):
             inp(r, 3 + i, P.Q[key][i], NUM)
+        made, gate = P.DRIVER_SOURCE[key]
+        c = ws.cell(r, 24, made)
+        c.font = f(7.5, False, F.INK2)
+        c.alignment = Alignment(vertical="top", wrap_text=True)
+        c = ws.cell(r, 25, gate)
+        c.font = f(7.5, False, F.MUTED)
+        c.alignment = Alignment(vertical="top", wrap_text=True)
+        ws.row_dimensions[r].height = 22
         A["q_" + key] = r
         r += 1
     r += 1
@@ -496,6 +520,7 @@ def build_assumptions(wb):
         r += 1
     A["off_rows"] = [A["off"][k] for _, k, *_ in offline]
     A["off_labels"] = [lbl for lbl, *_ in offline]
+    A["off_keys"] = [k for _, k, *_ in offline]
     r += 1
     one("Institutional enquiries per 1,000 accounts reached directly",
         "inbound", "#", 12, NUM1,
@@ -518,7 +543,8 @@ def build_assumptions(wb):
     ws.cell(hdr, 2).fill = fill(F.UV_DARK)
     for i, t in enumerate(["Share of leads", "Lead to meeting",
                            "Meeting to proposal", "Proposal to win",
-                           "Sales cycle, months"]):
+                           "Sales cycle, months",
+                           "Mobilisation, signature to first delivery"]):
         c = ws.cell(hdr, 3 + i, t)
         c.font = f(7.4, True, F.WHITE)
         c.fill = fill(F.UV_DARK)
@@ -538,6 +564,7 @@ def build_assumptions(wb):
          0.30, 7),
     ]
     A["buyer"] = {}
+    mob = dict((k, (v, why)) for k, v, why in P.MOBILISATION)
     for lbl, key, share, m1, m2, m3, cyc in buyers:
         ws.cell(r, 1, lbl).font = f(8.5)
         ws.cell(r, 2, "%").font = f(8, False, F.MUTED)
@@ -546,9 +573,13 @@ def build_assumptions(wb):
         inp(r, 5, m2, PCT)
         inp(r, 6, m3, PCT)
         inp(r, 7, cyc, NUM)
+        inp(r, 8, mob[key][0], NUM)
+        ws.cell(r, 24, "mobilisation: " + mob[key][1]).font = \
+            f(7.5, False, F.MUTED)
         A["buyer"][key] = r
         r += 1
     A["buyer_rows"] = [(lbl, A["buyer"][key]) for lbl, key, *_ in buyers]
+    A["buyer_keys"] = [key for _, key, *_ in buyers]
     c = ws.cell(r, 3, f"=SUM(C{r - 5}:C{r - 1})")
     c.number_format = PCT
     c.font = f(9, True)
@@ -565,8 +596,61 @@ def build_assumptions(wb):
          "five memoranda already cover year one, so year one is the highest")
     r += 1
 
-    # ------------------------------------------------ 7 direct cost
-    head("7. DIRECT COST OF DELIVERY")
+    # ------------------------ 7 who runs the activity, and how much of it
+    head("7. WHO RUNS THE ACTIVITY, AND HOW MUCH OF IT ONE PERSON CAN RUN")
+    note("The activity plan above is only credible if somebody is free to do "
+         "it. Each activity names the function that owns it and how many one "
+         "person can run in a month. In year one the owning functions are "
+         "largely empty, which is why the founder column matters: the first "
+         "commercial hire starts in month 13, so until then the founders "
+         "carry the bag. The sheet named GTM Capacity and Timing does the "
+         "arithmetic month by month and fails loudly if the plan asks for "
+         "more activity than the establishment can run.")
+    hdr = r
+    ws.cell(hdr, 1, "Activity").font = f(8.5, True, F.WHITE)
+    ws.cell(hdr, 1).fill = fill(F.UV_DARK)
+    ws.cell(hdr, 2, "Owned by").font = f(8.5, True, F.WHITE)
+    ws.cell(hdr, 2).fill = fill(F.UV_DARK)
+    for i, t in enumerate(["Per person in the owning function",
+                           "Per founder", "Per ambassador",
+                           "Per certified partner organisation"]):
+        c = ws.cell(hdr, 3 + i, t)
+        c.font = f(7.4, True, F.WHITE)
+        c.fill = fill(F.UV_DARK)
+        c.alignment = Alignment(horizontal="center", wrap_text=True)
+    ws.row_dimensions[hdr].height = 30
+    r += 1
+    A["cap_act"] = {}
+    A["cap_act_fn"] = {}
+    for key, lbl, function, own, fnd, amb, prt in P.ACTIVITY_CAPACITY:
+        ws.cell(r, 1, lbl).font = f(8.5)
+        ws.cell(r, 2, function).font = f(7.5, False, F.MUTED)
+        inp(r, 3, own, NUM2)
+        inp(r, 4, fnd, NUM2)
+        inp(r, 5, amb, NUM2)
+        inp(r, 6, prt, NUM2)
+        ws.cell(r, 24, "activities one person can run in a month").font = \
+            f(7.5, False, F.MUTED)
+        A["cap_act"][key] = r
+        A["cap_act_fn"][key] = function
+        r += 1
+    r += 1
+    one("Meetings per commercial head per month", "mtg_comm", "#",
+        P.MEETINGS_PER_COMMERCIAL_HEAD, NUM,
+        "a prepared meeting with a dean, a desk officer or a sponsorship "
+        "lead, followed up, not a corridor conversation")
+    one("Meetings per founder per month", "mtg_founder", "#",
+        P.MEETINGS_PER_FOUNDER, NUM,
+        "on top of running the company")
+    one("Meetings per growth and content head per month", "mtg_growth", "#",
+        P.MEETINGS_PER_GROWTH_HEAD, NUM)
+    one("Delivery days one certified facilitator gives per month",
+        "fac_days_avail", "days", P.FACILITATOR_DAYS_PER_MONTH, NUM1,
+        "a freelancer with other work. This is what caps the cohort plan")
+    r += 1
+
+    # ------------------------------------------------ 8 direct cost
+    head("8. DIRECT COST OF DELIVERY")
     year_header()
     five("Facilitator day rate", "fac_rate", "USD",
          (100, 110, 120, 125, 130), MONEY,
@@ -606,8 +690,8 @@ def build_assumptions(wb):
         0.65, MONEY2)
     r += 1
 
-    # ------------------------------------ 8 revenue share, three parties
-    head("8. REVENUE SHARING WITH THIRD PARTIES")
+    # ------------------------------------ 9 revenue share, three parties
+    head("9. REVENUE SHARING WITH THIRD PARTIES")
     note("Three counterparties take a share. Each is margin given up to buy "
          "delivery capacity, distribution or access that would otherwise have "
          "to be hired for.")
@@ -628,8 +712,8 @@ def build_assumptions(wb):
         0.035, PCT)
     r += 1
 
-    # -------------------------------------------- 9 operating cost
-    head("9. OPERATING COST DRIVERS")
+    # ------------------------------------------- 10 operating cost
+    head("10. OPERATING COST DRIVERS")
     note("Nothing here is a flat monthly figure chosen by eye. Every line has "
          "a driver: a desk per employee, inference per active learner, travel "
          "per head on the road.")
@@ -665,8 +749,8 @@ def build_assumptions(wb):
     one("Contingency on operating cost", "contingency", "%", 0.06, PCT)
     r += 1
 
-    # ---------------------------------- 10 working capital and funding
-    head("10. WORKING CAPITAL, FUNDING AND THE YEAR ONE CEILING")
+    # ---------------------------------- 11 working capital and funding
+    head("11. WORKING CAPITAL, FUNDING AND THE YEAR ONE CEILING")
     one("Days sales outstanding, institutional", "dso", "days", 75, DAYS,
         "universities and ministries pay slowly, the largest cash risk here")
     one("Days sales outstanding, subscriptions", "dso_sub", "days", 2, DAYS)
@@ -688,8 +772,8 @@ def build_assumptions(wb):
         "the constraint this plan was built backwards from")
     r += 1
 
-    # ------------------------------------------------- 11 assets
-    head("11. ASSETS, DRIVEN BY HEADCOUNT")
+    # ------------------------------------------------- 12 assets
+    head("12. ASSETS, DRIVEN BY HEADCOUNT")
     note("Every new employee arrives with a kit, so asset purchases follow "
          "the hiring plan instead of being guessed at. Platform development "
          "is not capitalised: it is the engineers' salaries, and it is "
@@ -865,6 +949,28 @@ def build_payroll(wb):
                  f"IF({m}<$C${ir},0,${hcol[year_of(m)]}${ir})" for ir in comm),
              NUM, agg="end")
     rows["commercial"] = r - 1
+    r += 1
+
+    # Capacity is owned by functions, not by job titles, so the establishment
+    # is restated by function here and the GTM capacity sheet reads these
+    # rows rather than guessing which role runs which activity.
+    r = band(ws, r, "HEADCOUNT BY FUNCTION, WHO IS AVAILABLE TO RUN ACTIVITY")
+    r = time_header(ws, r)
+    rows["fn"] = {}
+    for function in dict.fromkeys(fn for _, _, fn in role_rows):
+        irs = [ir for ir, _, fn in role_rows if fn == function]
+        r = trow(ws, r, function,
+                 lambda m, irs=irs: "=" + "+".join(
+                     f"IF({m}<$C${ir},0,${hcol[year_of(m)]}${ir})"
+                     for ir in irs), NUM, agg="end")
+        rows["fn"][function] = r - 1
+    fn_first = min(rows["fn"].values())
+    fn_last = max(rows["fn"].values())
+    r = trow(ws, r, "Check, functions against total establishment",
+             lambda m: f"=SUM({ml(m)}{fn_first}:{ml(m)}{fn_last})"
+                       f"-{ml(m)}{rows['headcount']}",
+             NUM, bold=True, agg="end", colour=F.RED)
+    r += 1
     R["pay"] = rows
     return ws
 
@@ -1210,10 +1316,12 @@ def build_acquisitions(wb):
     r = band(ws, r, "OFFLINE ACTIVITY")
     r = time_header(ws, r)
     off_cost, off_sign, off_lead = [], [], []
-    for lbl, arow in zip(A["off_labels"], A["off_rows"]):
+    rows["act"] = {}
+    for key, lbl, arow in zip(A["off_keys"], A["off_labels"], A["off_rows"]):
         r = trow(ws, r, lbl, lambda m, a=arow:
                  f"={S_ASS}!${ycl[year_of(m)]}${a}", NUM1)
         acts = r - 1
+        rows["act"][key] = acts
         r = trow(ws, r, "Cost", lambda m, a=arow, x=acts:
                  f"={ml(m)}{x}*{S_ASS}!$H${a}", MONEY, indent=1)
         off_cost.append(r - 1)
@@ -1316,13 +1424,16 @@ def build_acquisitions(wb):
     leads = r - 1
     rows["leads"] = leads
     win_rows = []
-    for lbl, brow in A["buyer_rows"]:
+    rows["meet"] = []
+    rows["win"] = {}
+    for (lbl, brow), bkey in zip(A["buyer_rows"], A["buyer_keys"]):
         r = trow(ws, r, lbl, lambda m, b=brow:
                  f"={ml(m)}{leads}*{S_ASS}!$C${b}", NUM1, bold=True)
         bl = r - 1
         r = trow(ws, r, "Meetings held", lambda m, b=brow, x=bl:
                  f"={ml(m)}{x}*{S_ASS}!$D${b}", NUM1, indent=1)
         mt = r - 1
+        rows["meet"].append(mt)
         r = trow(ws, r, "Proposals, pilots and bids", lambda m, b=brow, x=mt:
                  f"={ml(m)}{x}*{S_ASS}!$E${b}", NUM1, indent=1)
         pr = r - 1
@@ -1340,6 +1451,7 @@ def build_acquisitions(wb):
         r = trow(ws, r, "Contracts signed, after the sales cycle", lagged,
                  NUM1, indent=1, bold=True)
         win_rows.append(r - 1)
+        rows["win"][bkey] = r - 1
     r = trow(ws, r, "Total contracts signed",
              lambda m: "=" + "+".join(f"{ml(m)}{x}" for x in win_rows), NUM1,
              bold=True, fill_colour=F.BAND)
@@ -1378,6 +1490,293 @@ def build_acquisitions(wb):
              agg="avg")
     rows["cac_inst"] = r - 1
     R["acq"] = rows
+    return ws
+
+
+# =====================================================================
+#  GTM CAPACITY AND TIMING
+# =====================================================================
+def build_gtm(wb):
+    """
+    The sheet that answers "based on what".
+
+    Three questions, each of them arithmetic rather than assertion:
+
+      1  Who runs the marketing and sales activity the plan needs, and are
+         there enough of them in the month the plan needs it?
+      2  Can the delivery network actually deliver what the funnel sells?
+      3  Activity starts in month one everywhere. Why does the volume plan
+         still show nil for most engines until year two?
+
+    The third is the one that matters most. Nothing here is held back by
+    reluctance to start: the answer is that a deal takes as long to close as
+    its complexity says it does, and then takes longer still to mobilise.
+    """
+    ws = wb.create_sheet("GTM Capacity and Timing")
+    setup_time(ws, "GTM Capacity and Timing",
+               "Activity starts in month one in every channel. This sheet "
+               "shows who runs it, proves the team is large enough to run "
+               "it, and shows how long each kind of deal takes to turn into "
+               "a delivery day.", freeze="C7")
+    rows = {}
+    PAY, ACQ, RV = R["pay"], R["acq"], R["rev"]
+    fn = PAY["fn"]
+    ycl = {y: get_column_letter(2 + y) for y in range(1, 6)}
+
+    def pay_fn(function, m):
+        return mref(S_PAY, fn[function], m)
+
+    # ------------------------------------------- 1 the people available
+    r = band(ws, 5, "1. THE PEOPLE AVAILABLE TO RUN MARKETING AND SALES "
+                    "ACTIVITY")
+    r = time_header(ws, r)
+    for function in fn:
+        r = trow(ws, r, function, lambda m, x=function: f"={pay_fn(x, m)}",
+                 NUM, agg="end", colour=F.LINK_FONT)
+    r = trow(ws, r, "Campus ambassadors on a stipend",
+             lambda m: f"={aref('amb_count', m)}", NUM, agg="end",
+             colour=F.LINK_FONT)
+    amb = r - 1
+    rows["ambassadors"] = amb
+    r = trow(ws, r, "Certified facilitators in the pool",
+             lambda m: f"={mref(S_REV, RV['facilitators'], m)}", NUM,
+             agg="end", colour=F.LINK_FONT)
+    fac = r - 1
+    r = trow(ws, r, "Certified delivery partner organisations",
+             lambda m: f"={mref(S_REV, RV['partners'], m)}", NUM, agg="end",
+             colour=F.LINK_FONT)
+    prt = r - 1
+    r = trow(ws, r, "People and organisations able to run activity",
+             lambda m: (f"={mref(S_PAY, PAY['headcount'], m)}+{ml(m)}{amb}"
+                        f"+{ml(m)}{fac}+{ml(m)}{prt}"),
+             NUM, bold=True, agg="end", fill_colour=F.BAND)
+    c = ws.cell(r, 1, "Year one is four employees, so the founder column in "
+                      "the capacity table is doing most of the work until "
+                      "the first commercial hire starts in month 13. That is "
+                      "the honest reading of a four person company, and it "
+                      "is why year one volume is small rather than cautious.")
+    c.font = f(8, False, F.MUTED, italic=True)
+    r += 2
+
+    # --------------------------------------------- 2 activity capacity
+    r = band(ws, r, "2. ACTIVITY THE PLAN NEEDS, AGAINST ACTIVITY THE TEAM "
+                    "CAN RUN")
+    r = time_header(ws, r)
+    short_rows, plan_rows, cap_rows = [], [], []
+    for key, lbl, function, *_ in P.ACTIVITY_CAPACITY:
+        arow = A["cap_act"][key]
+        r = trow(ws, r, lbl + ", planned",
+                 lambda m, x=ACQ["act"][key]: f"={mref(S_ACQ, x, m)}",
+                 NUM1, colour=F.LINK_FONT)
+        planned = r - 1
+        plan_rows.append(planned)
+        r = trow(ws, r, "Capacity, the people who can run it",
+                 lambda m, a=arow, x=function: (
+                     f"={pay_fn(x, m)}*{S_ASS}!$C${a}"
+                     f"+{pay_fn('Leadership', m)}*{S_ASS}!$D${a}"
+                     f"+{ml(m)}{amb}*{S_ASS}!$E${a}"
+                     f"+{ml(m)}{prt}*{S_ASS}!$F${a}"),
+                 NUM1, indent=1)
+        cap = r - 1
+        cap_rows.append(cap)
+        r = trow(ws, r, "Headroom",
+                 lambda m, c=cap, p=planned: f"={ml(m)}{c}-{ml(m)}{p}",
+                 NUM1, indent=1)
+        short_rows.append((planned, cap))
+    r = trow(ws, r, "Activity the plan asks for beyond what the team can run",
+             lambda m: "=" + "+".join(f"MAX(0,{ml(m)}{p}-{ml(m)}{c})"
+                                      for p, c in short_rows),
+             NUM1, bold=True, agg="max", colour=F.RED, fill_colour=F.BAND)
+    rows["activity_short"] = r - 1
+    r = trow(ws, r, "Activity utilisation",
+             lambda m: ("=IFERROR((" + "+".join(f"{ml(m)}{x}"
+                                                for x in plan_rows)
+                        + ")/(" + "+".join(f"{ml(m)}{x}" for x in cap_rows)
+                        + "),0)"),
+             PCT, bold=True, agg="avg", fill_colour=F.LIME)
+    rows["activity_use"] = r - 1
+    c = ws.cell(r, 1, "The row above must read nil in every month. If it does "
+                      "not, the plan is selling activity nobody is free to "
+                      "run, and either the hiring plan or the volume plan is "
+                      "wrong.")
+    c.font = f(8, False, F.MUTED, italic=True)
+    r += 2
+
+    # ---------------------------------------------- 3 meeting capacity
+    r = band(ws, r, "3. MEETINGS THE FUNNEL GENERATES, AGAINST MEETINGS THE "
+                    "TEAM CAN HOLD")
+    r = time_header(ws, r)
+    r = trow(ws, r, "Meetings the funnel generates",
+             lambda m: "=" + "+".join(f"{mref(S_ACQ, x, m)}"
+                                      for x in ACQ["meet"]),
+             NUM1, colour=F.LINK_FONT)
+    need_m = r - 1
+    r = trow(ws, r, "Meetings the team can hold",
+             lambda m: (f"={mref(S_PAY, PAY['commercial'], m)}"
+                        f"*{A['mtg_comm']}"
+                        f"+{pay_fn('Leadership', m)}*{A['mtg_founder']}"
+                        f"+{pay_fn('Growth and Content', m)}"
+                        f"*{A['mtg_growth']}"),
+             NUM1)
+    cap_m = r - 1
+    r = trow(ws, r, "Meetings asked for beyond capacity",
+             lambda m: f"=MAX(0,{ml(m)}{need_m}-{ml(m)}{cap_m})", NUM1,
+             bold=True, agg="max", colour=F.RED)
+    rows["meeting_short"] = r - 1
+    r = trow(ws, r, "Meeting utilisation",
+             lambda m: f"=IFERROR({ml(m)}{need_m}/{ml(m)}{cap_m},0)", PCT,
+             bold=True, agg="avg", fill_colour=F.LIME)
+    rows["meeting_use"] = r - 1
+    r += 2
+
+    # --------------------------------------------- 4 delivery capacity
+    r = band(ws, r, "4. DELIVERY DAYS THE PLAN SELLS, AGAINST THE CERTIFIED "
+                    "POOL")
+    r = time_header(ws, r)
+    r = trow(ws, r, "Facilitator days the cohort plan needs", lambda m: (
+        f"=(({mref(S_REV, RV['uni_cohorts_eg'], m)}"
+        f"+{mref(S_REV, RV['uni_cohorts_ksa'], m)}"
+        f"+{mref(S_REV, RV['uni_pilots'], m)})*{A['d_uni']}"
+        f"+{mref(S_REV, RV['school_cohorts'], m)}*{A['d_school']}"
+        f"+{mref(S_REV, RV['tvet_cohorts'], m)}*{A['d_tvet']})"
+        f"*{A['fac_per']}"), NUM1, colour=F.LINK_FONT)
+    need_d = r - 1
+    r = trow(ws, r, "Facilitator days the certified pool gives",
+             lambda m: f"={ml(m)}{fac}*{A['fac_days_avail']}", NUM1)
+    cap_d = r - 1
+    r = trow(ws, r, "Delivery days needed beyond the pool",
+             lambda m: f"=MAX(0,{ml(m)}{need_d}-{ml(m)}{cap_d})", NUM1,
+             bold=True, agg="max", colour=F.RED)
+    rows["delivery_short"] = r - 1
+    r = trow(ws, r, "Delivery utilisation",
+             lambda m: f"=IFERROR({ml(m)}{need_d}/{ml(m)}{cap_d},0)", PCT,
+             bold=True, agg="avg", fill_colour=F.LIME)
+    rows["delivery_use"] = r - 1
+    c = ws.cell(r, 1, "This is the row that caps growth. Cohorts are "
+                      "delivered by certified freelancers, so the plan can "
+                      "only sell what the pool can staff, and the pool is "
+                      "grown deliberately on the volume plan.")
+    c.font = f(8, False, F.MUTED, italic=True)
+    r += 2
+
+    # ------------------------------- 5 signature to first delivery day
+    r = band(ws, r, "5. CONTRACTS SIGNED, AND WHEN THEY BECOME DELIVERY")
+    r = time_header(ws, r)
+    ready = []
+    for lbl, bkey in zip([l for l, _ in A["buyer_rows"]], A["buyer_keys"]):
+        brow = A["buyer"][bkey]
+        wrow = ACQ["win"][bkey]
+
+        def mobilised(m, b=brow, x=wrow):
+            k = f"({m}-{S_ASS}!$H${b})"
+            off = f"2+13*INT(({k}-1)/12)+MOD({k}-1,12)"
+            return f"=IF({k}<1,0,OFFSET({S_ACQ}!$A${x},0,{off}))"
+
+        r = trow(ws, r, lbl + ", mobilised and ready to deliver", mobilised,
+                 NUM1)
+        ready.append(r - 1)
+    r = trow(ws, r, "Contracts mobilised and ready to deliver",
+             lambda m: "=" + "+".join(f"{ml(m)}{x}" for x in ready), NUM1,
+             bold=True, fill_colour=F.BAND)
+    rows["ready"] = r - 1
+    rdy = rows["ready"]
+    r = trow(ws, r, "Contracts the delivery plan requires",
+             lambda m: f"={mref(S_ACQ, ACQ['need'], m)}", NUM1,
+             colour=F.LINK_FONT)
+    need_c = r - 1
+    r = trow(ws, r, "Coverage after the sales cycle and mobilisation",
+             lambda m: f"=IFERROR({ml(m)}{rdy}/{ml(m)}{need_c},0)", MULT,
+             bold=True, agg="avg", fill_colour=F.LIME)
+    rows["coverage_mob"] = r - 1
+    c = ws.cell(r, 1, "Year one sits below one, and that is the point: year "
+                      "one is delivered against the five memoranda already "
+                      "signed, not against the funnel. From year two the "
+                      "funnel has to carry the plan on its own, and this row "
+                      "is where that is checked.")
+    c.font = f(8, False, F.MUTED, italic=True)
+    r += 2
+
+    # ---------------------------- 6 first activity to first delivery
+    r = band(ws, r, "6. FROM THE FIRST DAY OF ACTIVITY TO THE FIRST DAY OF "
+                    "DELIVERY")
+    c = ws.cell(r, 1, "Every channel starts in month one, October 2026. What "
+                      "follows is arithmetic on the sales cycle and the "
+                      "mobilisation period, not judgement: this is the "
+                      "earliest a cold conversation opened on day one can "
+                      "become a delivered day, by buyer type.")
+    c.font = f(8, False, F.MUTED, italic=True)
+    r += 1
+    hdr = r
+    heads = ["Buyer type", "Activity starts", "Sales cycle, months",
+             "Signature in month", "Mobilisation, months",
+             "First delivery in month", "Which calendar month that is"]
+    for i, t in enumerate(heads):
+        cc = ws.cell(hdr, 1 + i, t)
+        cc.font = f(7.4, True, F.WHITE)
+        cc.fill = fill(F.UV_DARK)
+        cc.alignment = Alignment(horizontal="center", wrap_text=True)
+    ws.row_dimensions[hdr].height = 30
+    r += 1
+    for lbl, bkey in zip([l for l, _ in A["buyer_rows"]], A["buyer_keys"]):
+        brow = A["buyer"][bkey]
+        ws.cell(r, 1, lbl).font = f(8.5)
+        for col, formula, fmt in (
+                (2, "=1", NUM),
+                (3, f"={S_ASS}!$G${brow}", NUM),
+                (4, f"=B{r}+C{r}", NUM),
+                (5, f"={S_ASS}!$H${brow}", NUM),
+                (6, f"=D{r}+E{r}", NUM),
+                (7, f"=EDATE({A['start_date']},F{r}-1)", DATEF)):
+            cc = ws.cell(r, col, formula)
+            cc.number_format = fmt
+            cc.font = f(8.5, col == 6)
+        r += 1
+    r += 1
+    c = ws.cell(r, 1, "Read the two right hand columns against the volume "
+                      "plan. Where the plan starts later than this table "
+                      "allows, something other than the funnel is holding it "
+                      "back, and the volume plan names it in its own right "
+                      "hand column: safeguarding clearance for schools, a "
+                      "country manager in post for Saudi Arabia, two "
+                      "delivered cohorts before a faculty licence.")
+    c.font = f(8, False, F.MUTED, italic=True)
+    r += 2
+
+    # ------------------------------------ 7 the B2C side of the engine
+    r = band(ws, r, "7. THE DIRECT ENGINE, FROM MARKETING SPEND TO A PAYING "
+                    "ACCOUNT")
+    r = time_header(ws, r)
+    r = trow(ws, r, "Marketing spend, online and offline",
+             lambda m: f"={mref(S_ACQ, ACQ['marketing'], m)}", MONEY,
+             colour=F.LINK_FONT)
+    r = trow(ws, r, "New registered accounts",
+             lambda m: f"={mref(S_ACQ, ACQ['registered'], m)}", NUM,
+             colour=F.LINK_FONT)
+    reg = r - 1
+    r = trow(ws, r, "New paying accounts",
+             lambda m: f"={mref(S_ACQ, ACQ['new_paid'], m)}", NUM1,
+             colour=F.LINK_FONT)
+    paid = r - 1
+    r = trow(ws, r, "Registered to paying, blended",
+             lambda m: f"=IFERROR({ml(m)}{paid}/{ml(m)}{reg},0)", PCT2,
+             bold=True, agg="avg")
+    rows["reg_to_paid"] = r - 1
+    r = trow(ws, r, "Cost per paying account",
+             lambda m: f"={mref(S_ACQ, ACQ['cac_b2c'], m)}", MONEY2,
+             agg="avg", colour=F.LINK_FONT)
+    r = trow(ws, r, "Active paying accounts",
+             lambda m: f"={mref(S_ACQ, ACQ['active_paid'], m)}", NUM,
+             agg="end", bold=True, fill_colour=F.LIME)
+    c = ws.cell(r, 1, "The direct engine needs no sales cycle and no "
+                      "mobilisation, which is why it carries revenue from "
+                      "month one while the institutional engines are still "
+                      "in their cycle. A learner who sat in a cohort "
+                      "converts several times better than a click, so the "
+                      "two routes to a paying account are priced and "
+                      "converted separately on the Acquisitions sheet.")
+    c.font = f(8, False, F.MUTED, italic=True)
+    r += 1
+    R["gtm"] = rows
     return ws
 
 
@@ -3051,14 +3450,18 @@ CONTENTS = [
     ("Summary", "The whole model on one page, with charts"),
     ("Market Research", "Signed institutions and the named programmes"),
     ("Input>>", "Everything typed is here and nowhere else"),
-    ("Assumption Setting", "Basis, traction, the twenty quarter volume plan, "
-                           "pricing, both funnels, cost, revenue share, "
-                           "working capital, funding, assets"),
+    ("Assumption Setting", "Basis, traction, the twenty quarter volume plan "
+                           "from Q4 2026, pricing, both funnels, who runs "
+                           "the activity, cost, revenue share, working "
+                           "capital, funding, assets"),
     ("Capital Expenditure", "Assets driven by new hires, plus shared and "
                             "intangible assets"),
     ("Actuals", "The opening position and a grid to record each month"),
     ("Process>>", "Where the inputs become the model"),
     ("Acquisitions", "Both funnels, sixty months"),
+    ("GTM Capacity and Timing", "Who runs the activity, whether there are "
+                                "enough of them, and how long a deal takes "
+                                "to become a delivery day"),
     ("Revenue Streams", "Fourteen lines across eight engines"),
     ("Total Revenue", "Gathered into four families"),
     ("Payroll", "Eighteen roles, monthly, capped at 4, 7, 12, 16 and 20"),
@@ -3116,6 +3519,7 @@ def build():
     build_revenue(wb)
     build_acquisitions(wb)
     finish_revenue(wb)
+    build_gtm(wb)
     build_total_revenue(wb)
     build_expenses(wb)
     build_income_statement(wb)
@@ -3134,11 +3538,11 @@ def build():
     divider(wb, "Input>>", "Input",
             [(n, b) for n, b in CONTENTS[4:7]])
     divider(wb, "Process>>", "Process",
-            [(n, b) for n, b in CONTENTS[8:14]])
+            [(n, b) for n, b in CONTENTS[8:15]])
     divider(wb, "Output>>", "Output",
-            [(n, b) for n, b in CONTENTS[15:19]])
+            [(n, b) for n, b in CONTENTS[16:20]])
     divider(wb, "Analysis>>", "Analysis",
-            [(n, b) for n, b in CONTENTS[20:]])
+            [(n, b) for n, b in CONTENTS[21:]])
     wb._sheets = [wb[n] for n in ORDER]
     wb.active = 0
     return wb

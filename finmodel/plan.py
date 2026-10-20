@@ -21,6 +21,13 @@ Three constraints shaped this plan and are worth stating before the numbers.
     is carried by certified freelancers and partner organisations, so cohort
     growth cannot become payroll growth.
 
+4.  THE VOLUME PLAN IS EARNED, NOT ASSERTED. Activity starts in month one in
+    every channel, but a deal lands when its complexity says it does: a sales
+    cycle, and then a mobilisation period between signature and the first
+    delivery day. The capacity block at the foot of this file names who runs
+    each activity and how much of it one person can run, and the workbook
+    checks every month that the plan is not selling work nobody is free to do.
+
 Quarters are numbered 1-20 from Q1 = Oct-Dec 2026. Monthly figures are a
 quarter's volume split by the phasing weights, so an annual total always ties
 back to this file exactly.
@@ -226,3 +233,125 @@ ROLES = [
 ]
 
 HEADCOUNT_CAP = (4, 7, 12, 16, 20)
+
+
+# =====================================================================
+#  WHO DOES THE WORK - commercial and marketing capacity
+# =====================================================================
+#
+# The volume plan above is not a wish list. Every cohort in it has to be won by
+# somebody, and in year one that somebody is two founders, one curriculum head
+# and a stipended ambassador network, because the first commercial hire does
+# not start until month 13. So each marketing and sales activity names the
+# function that runs it and how many of that activity one person can run in a
+# month. The model then checks, every month, that the activity the funnel needs
+# fits inside what the people actually on the establishment can do.
+#
+# Four sources of capacity, because four kinds of people run these activities:
+# the function that owns the activity, the founders who still carry a bag in
+# the early years, the ambassadors on a stipend, and the certified delivery
+# partner organisations.
+#
+# (key, label, owning function, per owner, per founder, per ambassador,
+#  per partner organisation)
+ACTIVITY_CAPACITY = [
+    ("ws",  "Campus workshops", "Curriculum and Delivery",
+     4.0, 1.0, 0.10, 0.50),
+    ("amb", "Ambassador campus activity", "Growth and Content",
+     2.0, 0.5, 0.60, 0.00),
+    ("evt", "Events, fairs and conferences", "Institutional Partnerships",
+     0.6, 0.3, 0.02, 0.10),
+    ("prt", "Partner sessions inside somebody else's cohort",
+     "Curriculum and Delivery", 1.5, 0.5, 0.00, 0.80),
+    ("out", "Direct outreach by the heads", "Institutional Partnerships",
+     10.0, 3.0, 0.00, 0.00),
+]
+
+# Meetings one person can hold in a month. A meeting here is a real one: a
+# dean, a ministry desk officer or a sponsorship lead, prepared for and
+# followed up, not a corridor conversation.
+MEETINGS_PER_COMMERCIAL_HEAD = 14
+MEETINGS_PER_FOUNDER = 6
+MEETINGS_PER_GROWTH_HEAD = 4
+
+# A certified facilitator is a freelancer with other work. Three and a half
+# delivery days a month is what one reliably gives, and the model holds the
+# cohort plan to the pool it has certified rather than assuming bodies appear.
+FACILITATOR_DAYS_PER_MONTH = 3.5
+
+# Months between signature and the first delivery day, by buyer type. This is
+# not the sales cycle, which runs before signature. It is mobilisation: a
+# university fits a cohort to a semester, a donor runs an inception phase, a
+# ministry issues a purchase order and provisions seats. Complexity shows up
+# twice, once in the cycle and once here.
+#
+# (buyer key, months from signature to first delivery, why)
+MOBILISATION = [
+    ("inst", 2, "the cohort waits for the next semester window"),
+    ("spon", 1, "a sponsor signs against a season already scheduled"),
+    ("ngo",  3, "inception phase, baselining and a steering committee"),
+    ("govt", 3, "purchase order, bulk provisioning and a pilot governorate"),
+    ("csr",  2, "budget release and an internal nomination round"),
+]
+
+# Where each line of the volume plan comes from, and what holds it back if the
+# funnel could have delivered it sooner. Written out so the plan can be read
+# against the activity that produces it rather than taken on trust.
+DRIVER_SOURCE = {
+    "uni_cohorts_eg": ("Campus workshops and direct outreach, closing into "
+                       "the five signed memoranda first",
+                       "Q4 2026 volume is the signed memoranda, not a new "
+                       "win: a cold university signs in month 5 and delivers "
+                       "in month 7"),
+    "uni_cohorts_ksa": ("Direct outreach and events, once the Riyadh country "
+                        "manager starts in month 25",
+                        "held to year two, no presence in market before it"),
+    "uni_pilots": ("Campus workshops converted to a free first cohort",
+                   "the proof that buys the paid cohorts behind it"),
+    "uni_licences": ("Account expansion after two delivered cohorts at the "
+                     "same faculty",
+                     "cannot precede two delivered cohorts, so year two"),
+    "school_cohorts": ("Direct outreach to school groups and ministry lists",
+                       "gated to year two by safeguarding clearance, "
+                       "parental consent and the school variant of the "
+                       "curriculum"),
+    "school_licences": ("Expansion inside a school group already delivered to",
+                        "follows delivered school cohorts"),
+    "tvet_cohorts": ("Partner sessions and direct outreach to technical "
+                     "institutes",
+                     "follows the schools curriculum build"),
+    "initiative_seats": ("Direct outreach and events into ministries and "
+                         "national programme offices",
+                         "eleven month cycle plus three months mobilisation, "
+                         "so a conversation opened in month 1 provisions "
+                         "seats in month 14 at the earliest"),
+    "tot_cohorts": ("Attached to every national initiative and NGO "
+                    "programme sold",
+                    "follows the initiative that needs trainers"),
+    "ngo_programmes": ("Events, direct outreach and the donor pipeline",
+                       "twelve month cycle plus a three month inception "
+                       "phase"),
+    "competitions_self": ("Already running, StartPad pays the prizes",
+                          "live now, counted as the proof investment it is"),
+    "competitions_sponsored": ("Direct outreach to sponsors, and the youth "
+                               "organisation channel",
+                               "four month cycle, then the season has to fit "
+                               "the academic calendar"),
+    "corporates": ("Direct outreach and events into CSR and corporate "
+                   "innovation budgets",
+                   "seven month cycle plus budget release"),
+    "podcast_seasons": ("Sponsor outreach against a season already in "
+                        "production",
+                        "production capacity is three seasons a year, and "
+                        "year one produces one"),
+    "programme_partners": ("Partner sessions and the incubator network",
+                           "a stock, each partner carries seats every month"),
+    "seats_per_partner": ("Seats the average partner puts through",
+                          "a stock, not a flow"),
+    "certified_facilitators": ("Train the trainer cohorts and the "
+                               "ambassador network graduating into delivery",
+                               "the pool that caps how many cohorts can be "
+                               "delivered at all"),
+    "delivery_partners": ("Partner enablement, certification and audit",
+                          "each one is certified before it delivers"),
+}

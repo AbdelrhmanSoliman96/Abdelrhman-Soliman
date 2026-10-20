@@ -570,6 +570,63 @@ sales cycle, from four months for a university to twelve for a donor.
 The coverage row is the control: contracts signed against contracts the
 delivery plan requires. It runs 0.98, 1.13, 1.07, 1.18 and 1.27.
 
+## Where the volume plan comes from
+
+The twenty quarter plan starts at Q4 2026, October to December, and every
+quarter in the workbook is labelled as the calendar quarter it is, with its
+position in StartPad's October to September year underneath it.
+
+Activity starts in month one in every channel. Volume does not, and the sheet
+named **GTM Capacity and Timing** is where the gap between those two
+statements is turned into arithmetic rather than left as a claim.
+
+It answers three questions.
+
+**Who runs the activity, and are there enough of them?** Each marketing and
+sales activity names the function that owns it and how many of that activity
+one person can run in a month, with four sources of capacity: the owning
+function, the founders, the stipended ambassadors, and the certified partner
+organisations. The founder column is doing most of the work in year one,
+because the first commercial hire does not start until month 13. The sheet
+then compares, month by month, the activity the funnel needs against the
+activity the establishment can run. Peak utilisation is 32 percent on
+activity and 67 percent on meetings.
+
+**Can the network deliver what the funnel sells?** Cohorts are delivered by
+certified freelancers, so the plan is held to the pool it has certified
+times the days one freelancer reliably gives. This is the binding constraint
+in the model: delivery utilisation peaks at 88 percent, and that, not
+ambition, is what caps cohort growth.
+
+**Why is most of the plan nil until year two, if everything starts on day
+one?** Because a deal takes as long to close as its complexity says it does,
+and then takes longer still to mobilise. Each buyer type carries a sales
+cycle and, new here, a mobilisation period between signature and the first
+delivery day. Counted from a first day of activity in month one:
+
+| Buyer type | Cycle | Signs | Mobilisation | First delivery |
+|---|---|---|---|---|
+| Sponsors, banks, telcos | 4 | month 5 | 1 | Mar 2027 |
+| Institutions, universities, schools | 4 | month 5 | 2 | Apr 2027 |
+| CSR and corporate innovation | 7 | month 8 | 2 | Jul 2027 |
+| Government and national initiatives | 11 | month 12 | 3 | Dec 2027 |
+| NGOs, donors, development agencies | 12 | month 13 | 3 | Jan 2028 |
+
+Read that against the volume plan and the two right hand columns on it, which
+name the activity that produces each line and what sets the quarter it can
+first appear in. Where the plan starts later than the funnel allows, something
+other than the funnel is holding it back and it is named: safeguarding
+clearance for schools, a country manager in post for Saudi Arabia, two
+delivered cohorts before a faculty licence, the academic calendar for a
+competition season. Year one university volume is the opposite case: it is
+delivered against the five memoranda already signed, not against the funnel,
+which is why coverage sits below one in year one and has to carry the plan on
+its own from year two.
+
+The direct engine needs neither a cycle nor mobilisation, which is why it
+carries revenue from month one while the institutional engines are still
+running theirs.
+
 ## Three gates, not one
 
 A model can contain nothing but formulas and still be dead, if those formulas
@@ -590,17 +647,21 @@ means "did not happen inside the modelled period". It currently reports zero
 of each.
 
 **The verifier** recomputes the model a second time, in Python, from the plan
-and from the input values read back out of the workbook, and compares. 285
+and from the input values read back out of the workbook, and compares. 438
 checks: volumes against the plan, every revenue line against volume times
 price, the funnel stage by stage, direct cost against its drivers, payroll
 against the establishment, every profit cross foot, the balance sheet
 identities, the cash flow identities, and that no asset is depreciated below
-nil. This is the check that catches a formula pointing one row off, and it
-found one: the total gross assets row was summing one row short and silently
-dropping the last asset class.
+nil. It also recomputes the capacity sheet: activity capacity against the four
+sources of people, meetings against quotas, facilitator days against cohorts,
+the signature and first delivery months against the cycle and the mobilisation
+period, and that all three capacity gates read nil in every month. This is the
+check that catches a formula pointing one row off, and it found one: the total
+gross assets row was summing one row short and silently dropping the last
+asset class.
 
-**The dynamic test** moves nine inputs at once, chosen to enter the model at
-nine different points, recalculates, and confirms that twenty six outputs
+**The dynamic test** moves twelve inputs at once, chosen to enter the model at
+twelve different points, recalculates, and confirms that thirty one outputs
 spread across every calculating sheet all respond and that the balance sheet
 still checks to nil afterwards.
 

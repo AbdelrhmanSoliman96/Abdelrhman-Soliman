@@ -80,6 +80,15 @@ def main(path):
     def ass(label, col=3):
         return A.c(label, col)
 
+    FUNCTIONS = list(dict.fromkeys(fn for fn, *_ in P.ROLES))
+    BUYER_LABELS = {
+        "inst": "Institutions, universities and schools",
+        "spon": "Sponsors, banks, telcos and corporates",
+        "ngo": "NGOs, donors and development agencies",
+        "govt": "Government and national initiatives",
+        "csr": "CSR and corporate innovation budgets",
+    }
+
     # ---------------------------------------------------------- volumes
     plan_labels = {
         "uni_cohorts_eg": "University cohorts, Egypt, paid",
@@ -298,6 +307,96 @@ def main(path):
                   + CF.m("Net cash used in investing activities", m)
                   + CF.m("Net cash from financing activities", m),
                   CF.m("Net movement in cash", m))
+
+    # ------------------------------------------- go to market capacity
+    # The volume plan is only credible if the activity behind it can be run
+    # by the people on the establishment. These recompute that claim rather
+    # than reading the sheet's own answer back.
+    GTM = Sheet(wv, wf, "GTM Capacity and Timing")
+    sample = (1, 6, 13, 24, 30, 42, 55, 60)
+
+    for m in sample:
+        total_fn = sum(GTM.m(fn, m) for fn in FUNCTIONS)
+        check(f"headcount by function month {m} is the establishment",
+              PAY.m("Total headcount", m), total_fn)
+
+    for i, (key, label, function, own, fnd, amb, prt) in enumerate(
+            P.ACTIVITY_CAPACITY):
+        for m in sample:
+            expected = (GTM.m(function, m) * A.c(label, 3, nth=1)
+                        + GTM.m("Leadership", m) * A.c(label, 4, nth=1)
+                        + GTM.m("Campus ambassadors on a stipend", m)
+                        * A.c(label, 5, nth=1)
+                        + GTM.m("Certified delivery partner organisations", m)
+                        * A.c(label, 6, nth=1))
+            check(f"capacity for {key} month {m} is the four sources of "
+                  f"people times their quotas",
+                  expected,
+                  GTM.m("Capacity, the people who can run it", m, nth=i))
+            check(f"activity planned for {key} month {m} is what the "
+                  f"Acquisitions sheet runs",
+                  ACQ.m(label, m), GTM.m(label + ", planned", m))
+
+    for m in sample:
+        expected = sum(ACQ.m("Meetings held", m, nth=i) for i in range(5))
+        check(f"meetings the funnel generates month {m} is the five buyer "
+              f"types added up",
+              expected, GTM.m("Meetings the funnel generates", m))
+        check(f"meeting capacity month {m} is heads times their quotas",
+              PAY.m("Commercial heads", m)
+              * ass("Meetings per commercial head per month")
+              + GTM.m("Leadership", m)
+              * ass("Meetings per founder per month")
+              + GTM.m("Growth and Content", m)
+              * ass("Meetings per growth and content head per month"),
+              GTM.m("Meetings the team can hold", m))
+        expected = ((REV.m("University cohorts, Egypt, paid", m)
+                     + REV.m("University cohorts, Saudi Arabia, paid", m)
+                     + REV.m("University pilot cohorts, unpaid", m))
+                    * ass("Delivery days, university cohort")
+                    + REV.m("School cohorts", m)
+                    * ass("Delivery days, school cohort")
+                    + REV.m("Technical and vocational cohorts", m)
+                    * ass("Delivery days, technical cohort")
+                    ) * ass("Facilitators per cohort")
+        check(f"facilitator days needed month {m} is cohorts times days "
+              f"times facilitators",
+              expected, GTM.m("Facilitator days the cohort plan needs", m))
+        check(f"facilitator days available month {m} is the pool times the "
+              f"days one gives",
+              GTM.m("Certified facilitators in the pool", m)
+              * ass("Delivery days one certified facilitator gives per "
+                    "month"),
+              GTM.m("Facilitator days the certified pool gives", m))
+
+    # The three capacity gates. Every one of them must read nil in every
+    # month, or the plan is selling something nobody can do.
+    for label in ("Activity the plan asks for beyond what the team can run",
+                  "Meetings asked for beyond capacity",
+                  "Delivery days needed beyond the pool"):
+        worst = max(GTM.m(label, m) for m in range(1, 61))
+        results.append((worst <= 0.001,
+                        f"capacity gate, {label.lower()}, reads nil in every "
+                        f"month", 0, worst))
+
+    # Signature and first delivery are arithmetic on the cycle and the
+    # mobilisation period, counted from a first day of activity in month one.
+    for i, (bkey, mob, why) in enumerate(P.MOBILISATION):
+        label = BUYER_LABELS[bkey]
+        start = GTM.c(label, 2)
+        cycle = GTM.c(label, 3)
+        check(f"{bkey} signs in month one plus its sales cycle",
+              start + cycle, GTM.c(label, 4))
+        check(f"{bkey} mobilisation period is the assumption",
+              mob, GTM.c(label, 5))
+        check(f"{bkey} first delivery is signature plus mobilisation",
+              GTM.c(label, 4) + mob, GTM.c(label, 6))
+        for m in (20, 36, 52):
+            check(f"{bkey} contracts ready in month {m} are the ones signed "
+                  f"{mob} months earlier",
+                  ACQ.m("Contracts signed, after the sales cycle", m - mob,
+                        nth=i),
+                  GTM.m(label + ", mobilised and ready to deliver", m))
 
     # ----------------------------------------------- assets never negative
     for y in range(1, 6):

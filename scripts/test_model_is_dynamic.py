@@ -6,10 +6,11 @@ point at the wrong cells. The only convincing test is to change an assumption
 and check that every sheet downstream of it moves, and that the balance sheet
 still balances afterwards.
 
-Nine inputs are moved at once, chosen to enter the model at nine different
+Twelve inputs are moved at once, chosen to enter the model at twelve different
 points: a price, a volume, a cost per click, a conversion rate, a facilitator
-day rate, a salary, a headcount, a collection period and a revenue share. Then
-the whole workbook is recalculated and the outputs are compared.
+day rate, a salary, a headcount, a collection period, a revenue share, an
+activity capacity quota, a meeting quota and the days a facilitator gives.
+Then the whole workbook is recalculated and the outputs are compared.
 
     python scripts/test_model_is_dynamic.py output/StartPad_Financial_Model.xlsx
 """
@@ -35,7 +36,8 @@ def find(ws, label, col=1, nth=1):
     raise KeyError(f"{label} (occurrence {nth})")
 
 
-# (sheet, row label, column, multiplier, what it should move)
+# (sheet, row label, column, multiplier, what it should move,
+#  [occurrence of the label])
 PERTURB = [
     ("Assumption Setting", "University cohort, all in programme fee", 3, 1.40,
      "a price"),
@@ -53,6 +55,13 @@ PERTURB = [
      3, 1.50, "a revenue share"),
     ("Payroll", "Chief Executive Officer", 4, 2.00, "a salary"),
     ("Payroll", "Senior full-stack engineer", 9, 3.00, "a headcount"),
+    ("Assumption Setting", "Campus workshops", 3, 0.50,
+     "an activity capacity quota", 2),
+    ("Assumption Setting", "Meetings per commercial head per month", 3, 0.50,
+     "a meeting quota"),
+    ("Assumption Setting",
+     "Delivery days one certified facilitator gives per month", 3, 0.50,
+     "the days a facilitator gives"),
 ]
 
 # (sheet, row label, column) of outputs that must respond
@@ -85,6 +94,12 @@ WATCH = [
     ("Sensitivity", "Volume change", 5),
     ("Exit Angel and VC", "Proceeds at exit", 3),
     ("Summary", "EBITDA", 4),
+    ("GTM Capacity and Timing", "Activity utilisation", 2),
+    ("GTM Capacity and Timing", "Meeting utilisation", 2),
+    ("GTM Capacity and Timing", "Delivery utilisation", 2),
+    ("GTM Capacity and Timing", "Contracts mobilised and ready to deliver",
+     15),
+    ("GTM Capacity and Timing", "Registered to paying, blended", 2),
 ]
 
 CHECKS = [("Balance Sheet", "CHECK, total assets less liabilities and equity")]
@@ -118,10 +133,12 @@ def main(path):
     base, base_checks = read(path)
 
     wf = load_workbook(work)
-    print("MOVING NINE INPUTS")
-    for sheet, label, col, mult, what in PERTURB:
+    print(f"MOVING {len(PERTURB)} INPUTS")
+    for entry in PERTURB:
+        sheet, label, col, mult, what = entry[:5]
+        nth = entry[5] if len(entry) > 5 else 1
         ws = wf[sheet]
-        r = find(ws, label)
+        r = find(ws, label, nth=nth)
         old = ws.cell(r, col).value
         ws.cell(r, col).value = old * mult
         print(f"  {what:24s} {sheet}!{ws.cell(r, col).coordinate}  "

@@ -71,12 +71,22 @@ for _m in range(1, MONTHS + 1):
     _yr = 2026 + (_m - 1 + 3) // 12
     MONTH_LABELS.append(f"{_MONTH_NAMES[(_m - 1) % 12]}-{str(_yr)[2:]}")
 
-QUARTER_LABELS = []
+# Two ways of naming the same twenty quarters. The calendar label is what a
+# reader outside the company works in: month one is October 2026, so quarter
+# one is Q4 2026, not Q1 of anything. The fiscal label is where that quarter
+# sits in StartPad's own year, which runs October to September.
+QUARTER_LABELS = []        # Q4 2026, Q1 2027, ...
+QUARTER_FY = []            # Y1 Q1, Y1 Q2, ...
+QUARTER_SPAN = []          # Oct-Dec 26, Jan-Mar 27, ...
 for _q in range(1, YEARS * 4 + 1):
     _first = (_q - 1) * 3 + 1
-    _yr = 2026 + (_first - 1 + 3) // 12
-    _qn = ((_first - 1) % 12) // 3 + 1
-    QUARTER_LABELS.append(f"FY{(_q - 1) // 4 + 1} Q{_qn} {_yr}")
+    _cal = (_first - 1) + 9          # months since January 2026
+    _yr = 2026 + _cal // 12
+    QUARTER_LABELS.append(f"Q{(_cal % 12) // 3 + 1} {_yr}")
+    QUARTER_FY.append(f"Y{(_q - 1) // 4 + 1} Q{(_q - 1) % 4 + 1}")
+    _a = _MONTH_NAMES[(_first - 1) % 12]
+    _b = _MONTH_NAMES[(_first + 1) % 12]
+    QUARTER_SPAN.append(f"{_a}-{_b} {str(_yr)[2:]}")
 
 # ---------------------------------------------------------------- palette
 UV, UV_DARK, LIME = "3418E0", "1E0C8C", "CBF24A"
@@ -96,6 +106,7 @@ PCT2 = '0.00%'
 MULT = '0.0x'
 TEXT = '@'
 DAYS = '0 "days"'
+DATEF = 'mmm-yy'
 
 MED = Side(style="medium", color=UV)
 
