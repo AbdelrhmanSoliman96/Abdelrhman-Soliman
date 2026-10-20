@@ -13,6 +13,7 @@ disagree, one of them is wrong, and the difference says where to look.
     python scripts/verify_financial_model.py output/StartPad_Financial_Model.xlsx
 """
 import os
+import math
 import sys
 
 from openpyxl import load_workbook
@@ -77,40 +78,149 @@ def main(path):
     BS = Sheet(wv, wf, "Balance Sheet")
     CF = Sheet(wv, wf, "Cash Flow Statement")
 
-    def ass(label, col=3):
-        return A.c(label, col)
+    def ass(label, col=3, nth=0):
+        return A.c(label, col, nth)
 
     FUNCTIONS = list(dict.fromkeys(fn for fn, *_ in P.ROLES))
-    BUYER_LABELS = {
-        "inst": "Institutions, universities and schools",
-        "spon": "Sponsors, banks, telcos and corporates",
-        "ngo": "NGOs, donors and development agencies",
-        "govt": "Government and national initiatives",
-        "csr": "CSR and corporate innovation budgets",
-    }
 
-    # ---------------------------------------------------------- volumes
-    plan_labels = {
-        "uni_cohorts_eg": "University cohorts, Egypt, paid",
-        "uni_cohorts_ksa": "University cohorts, Saudi Arabia, paid",
-        "uni_pilots": "University pilot cohorts, unpaid",
-        "uni_licences": "Faculty licences",
-        "school_cohorts": "School cohorts",
-        "school_licences": "School licences",
-        "tvet_cohorts": "Technical and vocational cohorts",
-        "initiative_seats": "National initiative seats",
-        "tot_cohorts": "Train the trainer cohorts",
-        "ngo_programmes": "NGO and donor programmes",
-        "competitions_self": "Competitions, self funded",
-        "competitions_sponsored": "Competitions, sponsored",
-        "corporates": "Corporate and CSR programmes",
-        "podcast_seasons": "Mission Zero seasons carrying a sponsor",
-    }
-    for key, label in plan_labels.items():
-        for y in range(1, 6):
-            expected = sum(P.Q[key][(y - 1) * 4:y * 4])
-            check(f"volume {key} year {y} ties to the plan",
-                  expected, REV.y(label, y), tol=0.001)
+    # ------------------------------------------------ the whole engine
+    # Rebuild the acquisition engine from scratch in Python, from the input
+    # cells read back out of the workbook, and compare every month. This is
+    # the check that matters now that volume is an output: if a formula
+    # points one row off, these numbers diverge.
+    nm = F.MONTHS
+    yof = [0] + [F.year_of(m) for m in range(1, nm + 1)]
+
+    on = {}
+    for key, lbl, budgets, *_ in P.ONLINE_CHANNELS:
+        on[key] = dict(label=lbl,
+                       budget=[ass(lbl, 2 + y) for y in range(1, 6)],
+                       cpc=ass(lbl, 8), org=ass(lbl, 9), ref=ass(lbl, 10),
+                       s1=ass(lbl, 11))
+    off = {}
+    for key, lbl, *_ in P.OFFLINE_CHANNELS:
+        off[key] = dict(label=lbl,
+                        acts=[ass(lbl, 2 + y) for y in range(1, 6)],
+                        cost=ass(lbl, 8), signups=ass(lbl, 9),
+                        leads=ass(lbl, 10))
+    buy = {}
+    for key, lbl, *_ in P.BUYERS:
+        buy[key] = dict(label=lbl, share=ass(lbl, 3), l2m=ass(lbl, 4),
+                        m2p=ass(lbl, 5), p2w=ass(lbl, 6),
+                        cycle=int(ass(lbl, 7)), mob=int(ass(lbl, 8)))
+    eng = {}
+    for key, lbl, buyer, *_ in P.ENGINES:
+        eng[key] = dict(label=lbl, buyer=buyer, share=ass(lbl, 3),
+                        units=ass(lbl, 4), life=int(ass(lbl, 5)),
+                        gate=int(ass(lbl, 6)))
+    s2 = [ass("Stage 2, lead to registered account", 2 + y)
+          for y in range(1, 6)]
+    s3o = [ass("Stage 3, registered to paid, reached online", 2 + y)
+           for y in range(1, 6)]
+    s3i = [ass("Stage 3, registered to paid, reached through an institution",
+               2 + y) for y in range(1, 6)]
+    uplift = [ass("Win rate uplift as references accumulate", 2 + y)
+              for y in range(1, 6)]
+    made = [ass("Mission Zero seasons produced per year", 2 + y)
+            for y in range(1, 6)]
+    inbound_rate = ass("Institutional enquiries per 1,000 accounts reached "
+                       "directly")
+    open_n = {}
+    for key, n, _why in P.OPENING_CONTRACTS:
+        open_n[key] = ass("Already signed: " + eng[key]["label"])
+    open_w = [ass(f"Share of them mobilising in month {i + 1}")
+              for i in range(len(P.OPENING_MOBILISATION))]
+
+    z = lambda: [0.0] * (nm + 1)
+    on_leads, off_leads, off_signups, leads = z(), z(), z(), z()
+    reg_on, reg_off = z(), z()
+    prop = {k: z() for k in buy}
+    meet = {k: z() for k in buy}
+    signed = {k: z() for k in buy}
+    mobbed = {k: z() for k in buy}
+    new = {k: z() for k in eng}
+    active = {k: z() for k in eng}
+    volume = {k: z() for k in eng}
+
+    for m in range(1, nm + 1):
+        y = yof[m]
+        on_leads[m] = sum(c["budget"][y - 1] / c["cpc"]
+                          * (1 + c["org"] + c["ref"]) * c["s1"]
+                          for c in on.values() if c["cpc"])
+        off_signups[m] = sum(c["acts"][y - 1] * c["signups"]
+                             for c in off.values())
+        off_leads[m] = sum(c["acts"][y - 1] * c["leads"]
+                           for c in off.values())
+        reg_on[m] = on_leads[m] * s2[y - 1]
+        reg_off[m] = off_signups[m] * s2[y - 1]
+        leads[m] = off_leads[m] + (reg_on[m] + reg_off[m]) / 1000 \
+            * inbound_rate
+        for k, b in buy.items():
+            meet[k][m] = leads[m] * b["share"] * b["l2m"]
+            prop[k][m] = meet[k][m] * b["m2p"]
+            j = m - b["cycle"]
+            signed[k][m] = (prop[k][j] * b["p2w"] * uplift[y - 1]
+                            if j >= 1 else 0.0)
+            j = m - b["mob"]
+            mobbed[k][m] = signed[k][j] if j >= 1 else 0.0
+        for bkey, b in buy.items():
+            es = [k for k, e in eng.items() if e["buyer"] == bkey]
+            open_share = sum(eng[k]["share"] for k in es
+                             if m >= eng[k]["gate"])
+            for k in es:
+                e = eng[k]
+                v = (mobbed[bkey][m] * e["share"] / open_share
+                     if m >= e["gate"] and open_share else 0.0)
+                if k in open_n and m <= len(open_w):
+                    v += open_n[k] * open_w[m - 1]
+                new[k][m] = v
+        for k, e in eng.items():
+            gone = new[k][m - e["life"]] if m - e["life"] >= 1 else 0.0
+            active[k][m] = active[k][m - 1] + new[k][m] - gone
+            volume[k][m] = active[k][m] * e["units"] / e["life"]
+            if k == "podcast_seasons":
+                volume[k][m] = min(volume[k][m], made[y - 1] / 12)
+
+    for m in (1, 4, 9, 14, 20, 27, 33, 41, 50, 60):
+        check(f"total institutional leads month {m} recompute",
+              leads[m], ACQ.m("Total institutional leads", m), tol=0.001)
+        for k, b in buy.items():
+            check(f"{k} contracts signed month {m} recompute",
+                  signed[k][m],
+                  ACQ.m("Contracts signed, after the sales cycle", m,
+                        nth=list(buy).index(k)), tol=0.001)
+            check(f"{k} contracts mobilised month {m} recompute",
+                  mobbed[k][m],
+                  ACQ.m("Contracts mobilised, ready to deliver", m,
+                        nth=list(buy).index(k)), tol=0.001)
+        for k, e in eng.items():
+            check(f"{k} contracts live month {m} recompute",
+                  active[k][m],
+                  ACQ.m(e["label"] + ", contracts live", m), tol=0.001)
+            check(f"{k} volume month {m} recompute",
+                  volume[k][m], REV.m(e["label"], m), tol=0.001)
+
+    for y in range(1, 6):
+        for k, e in eng.items():
+            check(f"{k} volume year {y} recompute",
+                  sum(volume[k][m] for m in F.months_of(y)),
+                  REV.y(e["label"], y), tol=0.001)
+
+    # No volume before the gate, and the opening contracts are the five
+    # memoranda rather than a funnel win.
+    for k, e in eng.items():
+        if e["gate"] > 1:
+            worst = max(REV.m(e["label"], m) for m in range(1, e["gate"]))
+            results.append((worst <= 1e-9,
+                            f"{k} delivers nothing before its gate month "
+                            f"{e['gate']}", 0, worst))
+    check("the five memoranda mobilise in full over the first three months",
+          open_n["uni_cohorts_eg"],
+          sum(new["uni_cohorts_eg"][m] for m in range(1, 4))
+          - sum(mobbed["inst"][m] * eng["uni_cohorts_eg"]["share"]
+                / sum(eng[k]["share"] for k, e in eng.items()
+                      if e["buyer"] == "inst" and m >= e["gate"])
+                for m in range(1, 4)), tol=0.001)
 
     # --------------------------------------------------- revenue by line
     price = {
@@ -139,35 +249,26 @@ def main(path):
         "Corporate and CSR programmes": "Corporate and CSR programmes",
         "Mission Zero sponsorship": "Mission Zero seasons carrying a sponsor",
     }
+    DUP = ("Faculty licences", "School cohorts", "School licences",
+           "Technical and vocational cohorts", "National initiative seats",
+           "Train the trainer cohorts", "NGO and donor programmes",
+           "Corporate and CSR programmes")
     for y in range(1, 6):
         p_col = 2 + y
         for stream, pl in price.items():
             pr = ass(pl, p_col)
             if stream == "University cohort programmes":
-                vol = (sum(P.Q["uni_cohorts_eg"][(y - 1) * 4:y * 4])
-                       + sum(P.Q["uni_cohorts_ksa"][(y - 1) * 4:y * 4]))
+                vol = (REV.y("University cohorts, Egypt", y)
+                       + REV.y("University cohorts, Saudi Arabia", y))
             else:
                 vol = REV.y(vol_for[stream], y)
             check(f"{stream} year {y} equals volume times price",
-                  vol * pr, REV.y(stream, y, nth=1 if stream in
-                                  ("Faculty licences", "School cohorts",
-                                   "School licences",
-                                   "Technical and vocational cohorts",
-                                   "National initiative seats",
-                                   "Train the trainer cohorts",
-                                   "NGO and donor programmes",
-                                   "Corporate and CSR programmes") else 0))
+                  vol * pr,
+                  REV.y(stream, y, nth=1 if stream in DUP else 0))
 
     # ------------------------------------------------- revenue cross foot
     for y in range(1, 6):
-        inst = sum(REV.y(s, y, nth=1 if s in
-                         ("Faculty licences", "School cohorts",
-                          "School licences",
-                          "Technical and vocational cohorts",
-                          "National initiative seats",
-                          "Train the trainer cohorts",
-                          "NGO and donor programmes",
-                          "Corporate and CSR programmes") else 0)
+        inst = sum(REV.y(s, y, nth=1 if s in DUP else 0)
                    for s in price) + REV.y("Programme and incubator seats", y,
                                            nth=1)
         check(f"institutional revenue year {y} is the sum of its lines",
@@ -181,11 +282,10 @@ def main(path):
     # ------------------------------------------------------ the funnel
     for y in (1, 3, 5):
         for m in (F.months_of(y)[0], F.months_of(y)[-1]):
-            spend = ACQ.m("Short video, TikTok, Instagram, Facebook", m)
-            cpc = ass("Short video, TikTok, Instagram, Facebook", 8)
-            org = ass("Short video, TikTok, Instagram, Facebook", 9)
-            ref = ass("Short video, TikTok, Instagram, Facebook", 10)
-            s1 = ass("Short video, TikTok, Instagram, Facebook", 11)
+            lbl = "Short video, TikTok, Instagram, Facebook"
+            spend = ACQ.m(lbl, m)
+            cpc, org = ass(lbl, 8), ass(lbl, 9)
+            ref, s1 = ass(lbl, 10), ass(lbl, 11)
             paid = spend / cpc if cpc else 0
             check(f"short video paid clicks, month {m}", paid,
                   ACQ.m("Paid clicks", m), tol=0.01)
@@ -195,19 +295,15 @@ def main(path):
                   tol=0.01)
             check(f"short video leads, month {m}", paid * (1 + org + ref) * s1,
                   ACQ.m("Stage 1, leads", m), tol=0.01)
-            s2 = ass("Stage 2, lead to registered account", 2 + y)
             check(f"registered from online leads, month {m}",
-                  ACQ.m("Total online leads", m) * s2,
-                  ACQ.m("Registered accounts from online leads, stage 2", m),
-                  tol=0.01)
-            s3i = ass("Stage 3, registered to paid, reached through an "
-                      "institution", 2 + y)
-            s3o = ass("Stage 3, registered to paid, reached online", 2 + y)
+                  ACQ.m("Total online leads", m) * s2[y - 1],
+                  ACQ.m("Registered accounts from online leads", m), tol=0.01)
             check(f"new paid accounts, month {m}",
-                  ACQ.m("Registered accounts from institutions", m) * s3i
-                  + (ACQ.m("Registered accounts from online leads, stage 2", m)
+                  ACQ.m("Registered accounts from institutions", m)
+                  * s3i[y - 1]
+                  + (ACQ.m("Registered accounts from online leads", m)
                      + ACQ.m("Registered accounts from offline sign ups", m))
-                  * s3o,
+                  * s3o[y - 1],
                   ACQ.m("Stage 3, new paid accounts", m), tol=0.01)
 
     # ------------------------------------------------------ direct cost
@@ -215,9 +311,8 @@ def main(path):
         rate = ass("Facilitator day rate", 2 + y)
         per = ass("Facilitators per cohort")
         days = ass("Delivery days, university cohort")
-        uni = (REV.y("University cohorts, Egypt, paid", y)
-               + REV.y("University cohorts, Saudi Arabia, paid", y)
-               + REV.y("University pilot cohorts, unpaid", y))
+        uni = (REV.y("University cohorts, Egypt", y)
+               + REV.y("University cohorts, Saudi Arabia", y))
         check(f"university facilitation year {y}", uni * rate * per * days,
               EXP.y("Facilitation, university cohorts", y))
         pd_share = ass("Party 1, share of cohorts delivered by certified "
@@ -309,9 +404,10 @@ def main(path):
                   CF.m("Net movement in cash", m))
 
     # ------------------------------------------- go to market capacity
-    # The volume plan is only credible if the activity behind it can be run
-    # by the people on the establishment. These recompute that claim rather
-    # than reading the sheet's own answer back.
+    # Volume is already the funnel's own output. What this block proves is
+    # the other half: that the people exist to run the activity, and that the
+    # delivery network the plan implies is sized from the plan rather than
+    # guessed.
     GTM = Sheet(wv, wf, "GTM Capacity and Timing")
     sample = (1, 6, 13, 24, 30, 42, 55, 60)
 
@@ -323,12 +419,12 @@ def main(path):
     for i, (key, label, function, own, fnd, amb, prt) in enumerate(
             P.ACTIVITY_CAPACITY):
         for m in sample:
-            expected = (GTM.m(function, m) * A.c(label, 3, nth=1)
-                        + GTM.m("Leadership", m) * A.c(label, 4, nth=1)
+            expected = (GTM.m(function, m) * ass(label, 3, 1)
+                        + GTM.m("Leadership", m) * ass(label, 4, 1)
                         + GTM.m("Campus ambassadors on a stipend", m)
-                        * A.c(label, 5, nth=1)
+                        * ass(label, 5, 1)
                         + GTM.m("Certified delivery partner organisations", m)
-                        * A.c(label, 6, nth=1))
+                        * ass(label, 6, 1))
             check(f"capacity for {key} month {m} is the four sources of "
                   f"people times their quotas",
                   expected,
@@ -338,9 +434,10 @@ def main(path):
                   ACQ.m(label, m), GTM.m(label + ", planned", m))
 
     for m in sample:
-        expected = sum(ACQ.m("Meetings held", m, nth=i) for i in range(5))
-        check(f"meetings the funnel generates month {m} is the five buyer "
-              f"types added up",
+        expected = sum(ACQ.m("Meetings held", m, nth=i)
+                       for i in range(len(P.BUYERS)))
+        check(f"meetings the funnel generates month {m} is the buyer types "
+              f"added up",
               expected, GTM.m("Meetings the funnel generates", m))
         check(f"meeting capacity month {m} is heads times their quotas",
               PAY.m("Commercial heads", m)
@@ -350,30 +447,41 @@ def main(path):
               + GTM.m("Growth and Content", m)
               * ass("Meetings per growth and content head per month"),
               GTM.m("Meetings the team can hold", m))
-        expected = ((REV.m("University cohorts, Egypt, paid", m)
-                     + REV.m("University cohorts, Saudi Arabia, paid", m)
-                     + REV.m("University pilot cohorts, unpaid", m))
-                    * ass("Delivery days, university cohort")
-                    + REV.m("School cohorts", m)
-                    * ass("Delivery days, school cohort")
-                    + REV.m("Technical and vocational cohorts", m)
-                    * ass("Delivery days, technical cohort")
-                    ) * ass("Facilitators per cohort")
+
+        # The delivery network is sized from the cohorts the funnel sold.
+        days = ((REV.m("University cohorts, Egypt", m)
+                 + REV.m("University cohorts, Saudi Arabia", m))
+                * ass("Delivery days, university cohort")
+                + REV.m("School cohorts", m)
+                * ass("Delivery days, school cohort")
+                + REV.m("Technical and vocational cohorts", m)
+                * ass("Delivery days, technical cohort")
+                ) * ass("Facilitators per cohort")
         check(f"facilitator days needed month {m} is cohorts times days "
               f"times facilitators",
-              expected, GTM.m("Facilitator days the cohort plan needs", m))
-        check(f"facilitator days available month {m} is the pool times the "
-              f"days one gives",
-              GTM.m("Certified facilitators in the pool", m)
-              * ass("Delivery days one certified facilitator gives per "
-                    "month"),
-              GTM.m("Facilitator days the certified pool gives", m))
+              days, GTM.m("Facilitator days the cohort plan needs", m))
+        req = days / ass("Delivery days one certified facilitator gives per "
+                         "month")
+        check(f"facilitators required month {m} is days over days given",
+              req, GTM.m("Certified facilitators the plan requires", m))
+        check(f"the certified pool month {m} is the requirement plus the "
+              f"buffer, rounded up",
+              math.ceil(req * ass("Spare capacity held in the certified "
+                                  "pool") - 1e-9),
+              GTM.m("Certified facilitators in the pool", m))
+        pdc = (REV.m("All in person cohorts delivered", m)
+               * ass("Party 1, share of cohorts delivered by certified "
+                     "partners", 2 + F.year_of(m)))
+        check(f"partner organisations month {m} are the cohorts they "
+              f"deliver over what one delivers",
+              math.ceil(pdc / ass("Cohorts one certified partner "
+                                  "organisation delivers per month") - 1e-9),
+              GTM.m("Certified delivery partner organisations", m))
 
-    # The three capacity gates. Every one of them must read nil in every
-    # month, or the plan is selling something nobody can do.
+    # The two capacity gates. Both must read nil in every month, or the plan
+    # is running activity nobody is free to do.
     for label in ("Activity the plan asks for beyond what the team can run",
-                  "Meetings asked for beyond capacity",
-                  "Delivery days needed beyond the pool"):
+                  "Meetings asked for beyond capacity"):
         worst = max(GTM.m(label, m) for m in range(1, 61))
         results.append((worst <= 0.001,
                         f"capacity gate, {label.lower()}, reads nil in every "
@@ -381,22 +489,14 @@ def main(path):
 
     # Signature and first delivery are arithmetic on the cycle and the
     # mobilisation period, counted from a first day of activity in month one.
-    for i, (bkey, mob, why) in enumerate(P.MOBILISATION):
-        label = BUYER_LABELS[bkey]
-        start = GTM.c(label, 2)
-        cycle = GTM.c(label, 3)
+    for i, (bkey, label, share, l2m, m2p, p2w, cyc, mob, why) in enumerate(
+            P.BUYERS):
         check(f"{bkey} signs in month one plus its sales cycle",
-              start + cycle, GTM.c(label, 4))
+              GTM.c(label, 2) + GTM.c(label, 3), GTM.c(label, 4))
         check(f"{bkey} mobilisation period is the assumption",
               mob, GTM.c(label, 5))
         check(f"{bkey} first delivery is signature plus mobilisation",
               GTM.c(label, 4) + mob, GTM.c(label, 6))
-        for m in (20, 36, 52):
-            check(f"{bkey} contracts ready in month {m} are the ones signed "
-                  f"{mob} months earlier",
-                  ACQ.m("Contracts signed, after the sales cycle", m - mob,
-                        nth=i),
-                  GTM.m(label + ", mobilised and ready to deliver", m))
 
     # ----------------------------------------------- assets never negative
     for y in range(1, 6):

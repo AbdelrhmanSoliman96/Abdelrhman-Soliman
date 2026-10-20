@@ -6,11 +6,12 @@ point at the wrong cells. The only convincing test is to change an assumption
 and check that every sheet downstream of it moves, and that the balance sheet
 still balances afterwards.
 
-Twelve inputs are moved at once, chosen to enter the model at twelve different
-points: a price, a volume, a cost per click, a conversion rate, a facilitator
-day rate, a salary, a headcount, a collection period, a revenue share, an
-activity capacity quota, a meeting quota and the days a facilitator gives.
-Then the whole workbook is recalculated and the outputs are compared.
+Fourteen inputs are moved at once, chosen to enter the model at fourteen
+different points: a price, a marketing activity, the units one won contract
+delivers, a sales cycle, a cost per click, a conversion rate, a facilitator
+day rate, a collection period, a revenue share, an activity capacity quota, a
+meeting quota, the days a facilitator gives, a salary and a headcount. Then
+the whole workbook is recalculated and the outputs are compared.
 
     python scripts/test_model_is_dynamic.py output/StartPad_Financial_Model.xlsx
 """
@@ -41,8 +42,12 @@ def find(ws, label, col=1, nth=1):
 PERTURB = [
     ("Assumption Setting", "University cohort, all in programme fee", 3, 1.40,
      "a price"),
-    ("Assumption Setting", "University cohorts, Egypt, paid", 4, 3.00,
-     "a volume"),
+    ("Assumption Setting", "Direct outreach by the commercial team", 3, 2.00,
+     "a marketing and sales activity"),
+    ("Assumption Setting", "University cohorts, Egypt", 4, 1.50,
+     "units one won contract delivers"),
+    ("Assumption Setting", "Institutions, universities and schools", 7, 2.00,
+     "a sales cycle"),
     ("Assumption Setting", "Short video, TikTok, Instagram, Facebook", 8, 2.00,
      "a cost per click"),
     ("Assumption Setting", "Stage 3, registered to paid, reached online", 3,
@@ -53,8 +58,6 @@ PERTURB = [
      "a collection period"),
     ("Assumption Setting", "Party 1, the partner's share of that cohort fee",
      3, 1.50, "a revenue share"),
-    ("Payroll", "Chief Executive Officer", 4, 2.00, "a salary"),
-    ("Payroll", "Senior full-stack engineer", 9, 3.00, "a headcount"),
     ("Assumption Setting", "Campus workshops", 3, 0.50,
      "an activity capacity quota", 2),
     ("Assumption Setting", "Meetings per commercial head per month", 3, 0.50,
@@ -62,20 +65,27 @@ PERTURB = [
     ("Assumption Setting",
      "Delivery days one certified facilitator gives per month", 3, 0.50,
      "the days a facilitator gives"),
+    ("Payroll", "Chief Executive Officer", 4, 2.00, "a salary"),
+    ("Payroll", "Business development manager", 9, 3.00, "a headcount"),
 ]
 
-# (sheet, row label, column) of outputs that must respond
-# (sheet, row label, column, [occurrence of the label])
+# (sheet, row label, column, [occurrence of the label]) of outputs that must
+# respond to at least one of those moves.
 WATCH = [
     ("Total Revenue", "Total revenue", 2),
+    ("Revenue Streams", "University cohorts, Egypt", 2),
     ("Revenue Streams", "Institutional and sponsor revenue", 2),
     ("Revenue Streams", "Subscription revenue recognised", 15),
+    ("Acquisitions", "Total institutional leads", 2),
+    ("Acquisitions", "Total contracts signed", 15),
+    ("Acquisitions", "Total contracts mobilised", 15),
+    ("Acquisitions", "University cohorts, Egypt, contracts live", 15),
     ("Acquisitions", "Total clicks", 2),
     ("Acquisitions", "Stage 3, new paid accounts", 2),
-    ("Acquisitions", "Total contracts signed", 15),
     ("Expenses", "Total direct cost", 2),
     ("Expenses", "Revenue share, certified delivery partners", 15),
     ("Expenses", "Total operating cost", 2),
+    ("Expenses", "Year one total expense, produced by this sheet", 2),
     ("Payroll", "Total payroll", 2),
     ("Capital Expenditure", "Total capital expenditure", 2),
     ("Depreciation and Amortization", "Total depreciation and amortisation",
@@ -87,7 +97,7 @@ WATCH = [
     ("Balance Sheet", "Total assets", 5),
     ("Financial Indicators", "EBITDA", 3),
     ("Financial Indicators", "Cost per paid account", 3),
-    ("Financial Indicators", "Coverage, signings against the plan", 4),
+    ("Financial Indicators", "Contracts live at year end", 4),
     ("BEP Analysis", "Break even revenue", 3),
     ("PB Analysis", "Cumulative free cash flow", 5),
     ("Stress Test", "Downside", 4, 3),
@@ -96,9 +106,8 @@ WATCH = [
     ("Summary", "EBITDA", 4),
     ("GTM Capacity and Timing", "Activity utilisation", 2),
     ("GTM Capacity and Timing", "Meeting utilisation", 2),
-    ("GTM Capacity and Timing", "Delivery utilisation", 2),
-    ("GTM Capacity and Timing", "Contracts mobilised and ready to deliver",
-     15),
+    ("GTM Capacity and Timing", "Certified facilitators in the pool", 15),
+    ("GTM Capacity and Timing", "Contracts live across all engines", 15),
     ("GTM Capacity and Timing", "Registered to paying, blended", 2),
 ]
 

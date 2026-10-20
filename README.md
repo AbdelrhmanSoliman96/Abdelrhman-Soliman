@@ -521,7 +521,7 @@ the page. Trace them to the underlying statistics before quoting them externally
 
 # StartPad financial model
 
-`output/StartPad_Financial_Model.xlsx` - 25 sheets, 60 months from October 2026
+`output/StartPad_Financial_Model.xlsx` - 26 sheets, 60 months from October 2026
 to September 2031, in US dollars. Built by `scripts/build_financial_model.py`
 from `finmodel/plan.py`.
 
@@ -530,140 +530,125 @@ supplied: year total first, then that year's twelve months (B = Year 1,
 C to N; O = Year 2, P to AA; and so on to BN), with `Input>>`, `Process>>`,
 `Output>>` and `Analysis>>` dividers.
 
-## The rule
+## The rule: an input is a decision, everything else is produced
 
-Every cell is a formula except the typed inputs, which are blue on yellow.
-21,714 of them. Change an assumption and both funnels, the revenue streams,
-the expense base, the three statements and every analysis sheet move with it.
+An input is a decision or a rate. How many campus workshops the team runs,
+who is on the payroll and what they are paid, what a cohort is priced at, how
+long a ministry takes to sign, what share of proposals are won.
 
-A build gate refuses to write the file if an em dash, en dash, middot, curly
-quote or ellipsis appears in any cell, because the founder asked for those
-out of the workbook.
+Everything else is an output and is typed nowhere:
 
-## The three constraints that shaped it
+```
+activity -> leads -> meetings -> proposals -> contracts won
+         -> mobilisation -> the contract book -> cohorts, seats, programmes
+         -> revenue -> cost -> profit -> tax
+```
 
-**Year one spends under $150,000, in total.** Direct delivery, payroll,
-marketing, premises, professional fees, everything. That ceiling, not an
-ambition for revenue, sets the year one volumes: four people on founder
-stipends, fourteen cohorts, one sponsored competition, one podcast season.
-The workbook carries the ceiling as a check on three sheets.
+A cohort exists in month 40 because somebody ran a workshop in month 32. Cut
+the activity and the cohort disappears. **The year one spend is produced the
+same way**: it is what the activity plan, the hiring plan and the cost drivers
+add up to on the Expenses sheet, not a ceiling anybody typed. It lands at
+**$147,821**, and the dynamic test shows it moving to $219,451 when direct
+outreach is doubled, which is the proof that it is an output.
 
-**What is already true is the starting point.** Five signed university
-memoranda (MSA, Coventry Egypt, CIC, ESLSCA, Zewail), a competition running
-now with 100 participants and EGP 100,000 of prizes already committed, 300
-registered users and 2 paying ones. The model opens on those, not on zero,
-and the live competition earns nothing because StartPad is paying for it.
+27,021 formulas. A build gate refuses to write the file if an em dash, en
+dash, middot, curly quote or ellipsis appears in any cell.
 
-**The team is capped** at 4, 7, 12, 16 and 20. Delivery is carried by
-certified freelancers and partner organisations, so cohort growth cannot
-become payroll growth.
+## The order the sheet runs in
 
-## Both funnels
+Assumption Setting is laid out in the order the model uses it: basis, what is
+already true, **acquisition** (online funnel, offline activity, who buys and
+how long each takes, who runs the activity), **revenue** (what a won contract
+turns into, pricing), **expenses** (direct cost, revenue sharing, operating
+cost), working capital and funding, **tax**, assets.
 
-Online: budget divided by cost per click gives paid clicks; organic and
-referral traffic are a stated share of paid, never free. Then three stages,
-click to lead, lead to registered account, registered account to paid
-account. Offline: six activity types produce institutional leads, split
-between five buyer types that each convert differently and on their own
-sales cycle, from four months for a university to twelve for a donor.
+## What is already true is the starting point
 
-The coverage row is the control: contracts signed against contracts the
-delivery plan requires. It runs 0.98, 1.13, 1.07, 1.18 and 1.27.
+Five signed university memoranda (MSA, Coventry Egypt, CIC, ESLSCA, Zewail), a
+competition running now with 100 participants and EGP 100,000 of prizes
+already committed, 300 registered users and 2 paying ones.
 
-## Where the volume plan comes from
+The five memoranda are not a special case in the arithmetic. They enter as
+contracts already signed, mobilising across the first three months, and run
+through the same contract book as anything the funnel wins later. That is why
+year one volume is produced rather than asserted. The live competition earns
+nothing, because StartPad is paying for it.
 
-The twenty quarter plan starts at Q4 2026, October to December, and every
-quarter in the workbook is labelled as the calendar quarter it is, with its
-position in StartPad's October to September year underneath it.
+## The team, and what it is allowed to cost
 
-Activity starts in month one in every channel. Volume does not, and the sheet
-named **GTM Capacity and Timing** is where the gap between those two
-statements is turned into arithmetic rather than left as a claim.
+Capped at **6, 9, 12, 16 and 20**, and salaries are capped with it: the chief
+executive reaches $2,000 a month in year five and not before. Year one is six
+people, the team the founder named:
 
-It answers three questions.
+| Year one | Monthly gross |
+|---|---|
+| Chief Executive Officer | $900 |
+| Chief Technology Officer | $900 |
+| Chief Commercial Officer | $800 |
+| Business development manager | $600 |
+| Sponsorship and partnerships manager | $600 |
+| Marketing manager | $600 |
 
-**Who runs the activity, and are there enough of them?** Each marketing and
-sales activity names the function that owns it and how many of that activity
-one person can run in a month, with four sources of capacity: the owning
-function, the founders, the stipended ambassadors, and the certified partner
-organisations. The founder column is doing most of the work in year one,
-because the first commercial hire does not start until month 13. The sheet
-then compares, month by month, the activity the funnel needs against the
-activity the establishment can run. Peak utilisation is 32 percent on
-activity and 67 percent on meetings.
+Delivery is carried by certified freelancers and partner organisations, so
+cohort growth cannot become payroll growth. The pool itself is an output: the
+model works out how many facilitators must be certified to deliver what the
+funnel sold, and charges for certifying them.
 
-**Can the network deliver what the funnel sells?** Cohorts are delivered by
-certified freelancers, so the plan is held to the pool it has certified
-times the days one freelancer reliably gives. This is the binding constraint
-in the model: delivery utilisation peaks at 88 percent, and that, not
-ambition, is what caps cohort growth.
+## From a won contract to a cohort
 
-**Why is most of the plan nil until year two, if everything starts on day
-one?** Because a deal takes as long to close as its complexity says it does,
-and then takes longer still to mobilise. Each buyer type carries a sales
-cycle and, new here, a mobilisation period between signature and the first
-delivery day. Counted from a first day of activity in month one:
+Each engine takes a share of one buyer type's contracts and delivers a fixed
+number of units evenly across a contract life. A contract signed in month m
+is deliverable from month m plus mobilisation and keeps delivering for its
+life. Volume is the live contract book times units over life, and nothing
+else.
+
+A contract is signed with a buyer, not with an engine, so until an engine
+opens that buyer's contracts go to the engines that are open. A university
+signing in year one buys a cohort, because the licence needs two delivered
+cohorts first and the school curriculum does not exist yet.
+
+## How long each kind of deal takes
+
+Every channel starts in month one. Volume does not, because complexity shows
+up twice: once as the sales cycle before signature, once as mobilisation
+after it.
 
 | Buyer type | Cycle | Signs | Mobilisation | First delivery |
 |---|---|---|---|---|
-| Sponsors, banks, telcos | 4 | month 5 | 1 | Mar 2027 |
-| Institutions, universities, schools | 4 | month 5 | 2 | Apr 2027 |
-| CSR and corporate innovation | 7 | month 8 | 2 | Jul 2027 |
-| Government and national initiatives | 11 | month 12 | 3 | Dec 2027 |
-| NGOs, donors, development agencies | 12 | month 13 | 3 | Jan 2028 |
+| Accelerators and programme operators | 3 | m4 | 1 | Feb 2027 |
+| Sponsors, banks, telcos | 5 | m6 | 1 | Apr 2027 |
+| Institutions, universities, schools | 4 | m5 | 2 | Apr 2027 |
+| CSR and corporate innovation | 7 | m8 | 2 | Jul 2027 |
+| Government and national initiatives | 11 | m12 | 3 | Dec 2027 |
+| NGOs, donors, development agencies | 12 | m13 | 3 | Jan 2028 |
 
-Read that against the volume plan and the two right hand columns on it, which
-name the activity that produces each line and what sets the quarter it can
-first appear in. Where the plan starts later than the funnel allows, something
-other than the funnel is holding it back and it is named: safeguarding
-clearance for schools, a country manager in post for Saudi Arabia, two
-delivered cohorts before a faculty licence, the academic calendar for a
-competition season. Year one university volume is the opposite case: it is
-delivered against the five memoranda already signed, not against the funnel,
-which is why coverage sits below one in year one and has to carry the plan on
-its own from year two.
+The direct engine needs neither, which is why subscriptions carry revenue from
+month one while the institutional engines are still in their cycle.
 
-The direct engine needs neither a cycle nor mobilisation, which is why it
-carries revenue from month one while the institutional engines are still
-running theirs.
+## Capacity is checked, not assumed
 
-## Three gates, not one
+Each activity names the function that owns it and how many one person can run
+in a month, drawing on four sources: the owning function, the founders, the
+stipended ambassadors, and the certified partner organisations. Two gates must
+read nil in every month, and do: activity beyond what the team can run, and
+meetings beyond what it can hold.
 
-A model can contain nothing but formulas and still be dead, if those formulas
-point at the wrong cells. So there are three checks, and all three have to
-pass before the workbook is worth reading.
+| | Y1 | Y2 | Y3 | Y4 | Y5 |
+|---|---|---|---|---|---|
+| Activity utilisation | 58% | 51% | 47% | 40% | 37% |
+| Meeting utilisation | 23% | 28% | 34% | 33% | 31% |
 
-```bash
-python3 scripts/audit_financial_model.py      # no static values anywhere
-python3 scripts/verify_financial_model.py     # every figure recomputes
-python3 scripts/test_model_is_dynamic.py      # the whole thing moves
-```
+## What it produces
 
-**The audit** walks every cell on every sheet and reports any number sitting
-outside a designated input, and any number buried inside a formula that is
-not structural. Structural means months in a year, days in a month, a year
-boundary, the thirteen column stride of a time sheet, or the sentinel that
-means "did not happen inside the modelled period". It currently reports zero
-of each.
+| | Y1 | Y2 | Y3 | Y4 | Y5 |
+|---|---|---|---|---|---|
+| Revenue | $102,742 | $364,281 | $752,581 | $1,316,611 | $2,001,223 |
+| Total expense | $147,821 | $387,101 | $737,413 | $1,157,795 | $1,635,722 |
+| Net profit | ($45,079) | ($22,820) | $15,168 | $134,947 | $283,264 |
 
-**The verifier** recomputes the model a second time, in Python, from the plan
-and from the input values read back out of the workbook, and compares. 438
-checks: volumes against the plan, every revenue line against volume times
-price, the funnel stage by stage, direct cost against its drivers, payroll
-against the establishment, every profit cross foot, the balance sheet
-identities, the cash flow identities, and that no asset is depreciated below
-nil. It also recomputes the capacity sheet: activity capacity against the four
-sources of people, meetings against quotas, facilitator days against cohorts,
-the signature and first delivery months against the cycle and the mobilisation
-period, and that all three capacity gates read nil in every month. This is the
-check that catches a formula pointing one row off, and it found one: the total
-gross assets row was summing one row short and silently dropping the last
-asset class.
-
-**The dynamic test** moves twelve inputs at once, chosen to enter the model at
-twelve different points, recalculates, and confirms that thirty one outputs
-spread across every calculating sheet all respond and that the balance sheet
-still checks to nil afterwards.
+Break even in year three. Revenue is B2B: subscriptions at $15 a year for Pro
+and $35 for Team are a reach product, and most paying accounts come free, from
+learners who sat in a cohort rather than from a paid click.
 
 ## Rebuild
 
@@ -681,3 +666,8 @@ that reads values will show numbers until the workbook is recalculated.
 The valuation inputs on `Exit Angel and VC`, pre-money at each round, the
 dilution assumed from later rounds, and the exit multiples, are negotiating
 positions rather than facts. They are inputs for that reason.
+
+The cash trough is **$12,228 in month 32**, below the $25,000 buffer the model
+itself carries as an assumption. A seed of about $175,000 rather than
+$150,000, or pulling institutional days sales outstanding in from 75, closes
+it. Both are inputs.
