@@ -519,97 +519,70 @@ the page. Trace them to the underlying statistics before quoting them externally
 
 ---
 
-# StartPad — operational financial model
+# StartPad financial model
 
-`output/StartPad_Financial_Model.xlsx` · nineteen sheets · thirty-six months,
-October 2026 to September 2029, summed to three years.
+`output/StartPad_Financial_Model.xlsx` - 25 sheets, 60 months from October 2026
+to September 2031, in US dollars. Built by `scripts/build_financial_model.py`
+from `finmodel/plan.py`.
 
-Built by `scripts/build_financial_model_xlsx.py` from the same source as the
-business plan: `business_plan/model.py` supplies the twelve-quarter delivery plan
-and the eighteen-role establishment, and the go-to-market strategy supplies the
-channel taxonomy — five offline channels that create sign-ups, six online ones
-that create reach, and one destination, Mission 01.
+Sheet order and column layout follow the reference workbook the founder
+supplied: year total first, then that year's twelve months (B = Year 1,
+C to N; O = Year 2, P to AA; and so on to BN), with `Input>>`, `Process>>`,
+`Output>>` and `Analysis>>` dividers.
 
-## The rule the workbook is built on
+## The rule
 
-**Every cell in the workbook is a formula except the inputs.** Nothing is a value
-Python computed and pasted in. Change an assumption and the acquisition funnel,
-the revenue streams, the expense base, all three statements and every analysis
-sheet move with it. Inputs are blue on a yellow fill, formulas are black, links
-to another sheet are green, and a check that must read nil is red.
+Every cell is a formula except the typed inputs, which are blue on yellow.
+21,714 of them. Change an assumption and both funnels, the revenue streams,
+the expense base, the three statements and every analysis sheet move with it.
 
-This is also why the builder exists rather than a hand-made spreadsheet: the
-business plan's volumes and the model's volumes are the same numbers, read from
-one file, so the two documents cannot drift apart.
+A build gate refuses to write the file if an em dash, en dash, middot, curly
+quote or ellipsis appears in any cell, because the founder asked for those
+out of the workbook.
 
-## Shape
+## The three constraints that shaped it
 
-```
-INPUT      Assumptions   every typed number in the model
-           HR_Model      18 roles, salaries, start months, monthly payroll
-           Actuals       the $50,000 opening position, and a grid to record
-                         each month as it closes
-           Capex         assets driven by new hires, plus shared and intangible
+**Year one spends under $150,000, in total.** Direct delivery, payroll,
+marketing, premises, professional fees, everything. That ceiling, not an
+ambition for revenue, sets the year one volumes: four people on founder
+stipends, fourteen cohorts, one sponsored competition, one podcast season.
+The workbook carries the ceiling as a check on three sheets.
 
-PROCESS    Acquisition   both funnels, 36 months
-           Revenue       13 lines across 8 engines, 36 months
-           Expenses      direct cost, revenue share to three parties,
-                         operating cost, 36 months
-           Depreciation  straight line by asset class
+**What is already true is the starting point.** Five signed university
+memoranda (MSA, Coventry Egypt, CIC, ESLSCA, Zewail), a competition running
+now with 100 participants and EGP 100,000 of prizes already committed, 300
+registered users and 2 paying ones. The model opens on those, not on zero,
+and the live competition earns nothing because StartPad is paying for it.
 
-OUTPUT     Income_Statement · Balance_Sheet · Cash_Flow
+**The team is capped** at 4, 7, 12, 16 and 20. Delivery is carried by
+certified freelancers and partner organisations, so cohort growth cannot
+become payroll growth.
 
-ANALYSIS   Stress_Test · KPIs · Sensitivity · Break_Even · Payback ·
-           Exit_Strategy
-```
+## Both funnels
 
-Every monthly sheet has the same geometry — column A the line, B the driver,
-C to AL months 1-36, AN/AO/AP the three annual totals — so a formula on one
-sheet addresses the same month on another without a lookup.
+Online: budget divided by cost per click gives paid clicks; organic and
+referral traffic are a stated share of paid, never free. Then three stages,
+click to lead, lead to registered account, registered account to paid
+account. Offline: six activity types produce institutional leads, split
+between five buyer types that each convert differently and on their own
+sales cycle, from four months for a university to twelve for a donor.
 
-## Three things worth knowing before reading the numbers
-
-**Volume is phased, not spread.** The quarterly plan is the source of truth.
-Each quarter's volume is split across its three months by a phasing weight
-(30/33/37) held on the Assumptions sheet, so an annual total always ties back to
-the business plan exactly while the monthly shape stays realistic.
-
-**Headcount drives assets.** There is no separate capital expenditure forecast.
-Every new employee on the HR model triggers a laptop, a desk, peripherals and a
-handset at the costs and useful lives on the Assumptions sheet, and the
-depreciation schedule follows from that.
-
-**Three counterparties take a share of revenue**, each defined separately:
-certified delivery partners on partner-delivered cohorts, youth and channel
-organisations on competitions and programme seats, and aggregators and payment
-processors on initiative seats and subscriptions.
-
-## The check that matters
-
-`Balance_Sheet` carries a check line that must read nil in every column, and the
-Dashboard repeats it. It is nil by construction — cash comes from the indirect
-cash flow, retained earnings from the income statement, net book value from the
-asset register — so if it ever reads anything else, something upstream has been
-broken rather than merely changed.
+The coverage row is the control: contracts signed against contracts the
+delivery plan requires. It runs 0.98, 1.13, 1.07, 1.18 and 1.27.
 
 ## Rebuild
 
 ```bash
-python scripts/build_financial_model_xlsx.py
-python scripts/recalc.py output/StartPad_Financial_Model.xlsx 900
+python3 scripts/build_financial_model.py
+python3 scripts/recalc.py output/StartPad_Financial_Model.xlsx 900
 ```
 
-openpyxl writes formulas without cached values, so the workbook must be
-recalculated before anything that reads values — pandas, a previewer, or a
-person opening it in a viewer rather than Excel — will show numbers. The
-recalculation takes several minutes: there are a little over twenty thousand
-formulas.
+LibreOffice Calc must be installed for the recalculation; this container did
+not ship with it. openpyxl writes formulas without cached values, so nothing
+that reads values will show numbers until the workbook is recalculated.
 
 ## What still needs a decision
 
-The valuation inputs on `Exit_Strategy` — pre-money at the angel and venture
-rounds, the dilution assumed from later rounds, and the exit multiples — are
-placed at defensible MENA ranges but they are **negotiating positions, not
-facts**. They are inputs for exactly that reason. The same applies to the seed
-round size and the month it lands, which the model currently takes from the
-business plan's funding requirement.
+The valuation inputs on `Exit Angel and VC`, pre-money at each round, the
+dilution assumed from later rounds, and the exit multiples, are negotiating
+positions rather than facts. They are inputs for that reason.
