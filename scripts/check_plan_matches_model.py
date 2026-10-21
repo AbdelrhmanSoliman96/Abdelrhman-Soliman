@@ -5,7 +5,7 @@ The two documents used to hold their own numbers and were asked to agree. They
 did not. The plan now reads the workbook through `business_plan.finlink`, but
 that is an architectural claim, and an architectural claim deserves a test.
 
-Three things are checked:
+Four things are checked:
 
   1  Every headline series the plan prints equals the workbook's own.
   2  Every figure on disk is newer than the workbook, so a chart drawn from a
@@ -14,6 +14,8 @@ Three things are checked:
   3  The plan's own cost roll-up adds back to the model's total, which is the
      test that a cost line added to the model later cannot go missing from the
      plan.
+  4  Both agree with the market size and the headline figures already shown to
+     investors in the October 2026 deck.
 
     python scripts/check_plan_matches_model.py
 """
@@ -73,6 +75,40 @@ def main():
     # The balance sheet check must read nil, or nothing else here means much.
     for y, v in enumerate(FL.summary_check()["balance_check"], start=1):
         check(f"year {y} balance sheet check is nil", 0.0, v)
+
+    # ----------------------------------------------------- the deck
+    # The October 2026 investor deck is the version of these numbers that is
+    # already in front of investors. The plan and the model have to agree with
+    # it, or somebody is reading two different companies. Five figures on the
+    # deck are knowingly superseded and are listed with their reason rather
+    # than checked, because reverting a correction to match a slide would be
+    # the wrong way round.
+    m = MD.market()
+    deck = [
+        ("TAM", 273.4e6, m["tam"], 0.001),
+        ("SAM", 89.9e6, m["sam"], 0.001),
+        ("SOM, year five revenue", 2.48e6, m["som"], 0.005),
+        ("institutional share of SAM", 0.81, m["inst_share"], 0.01),
+        ("young people reached", 17.1e6, m["people"], 0.005),
+        ("buyers who pay", 12_079, m["buyers"], 0.0),
+        ("year one revenue", 272_000, head[0]["revenue"], 0.01),
+        ("year five revenue", 2.48e6, head[4]["revenue"], 0.01),
+        ("year five EBITDA", 651_000, head[4]["ebitda"], 0.01),
+        ("year five net profit", 498_000, head[4]["net"], 0.01),
+        ("year five gross margin", 0.60, head[4]["gross_margin"], 0.01),
+        ("year five EBITDA margin", 0.26, head[4]["ebitda_margin"], 0.01),
+    ]
+    for name, want, got, rel in deck:
+        tol = max(abs(want) * rel, 0.5)
+        check(f"deck: {name}", want, got, tol)
+
+    prices = {p["label"]: p["values"] for p in FL.prices()}
+    for label, want in (
+            ("University cohort, all in programme fee", 3_500),
+            ("Faculty licence, annual", 7_500),
+            ("Sponsored competition season", 10_000),
+            ("NGO or donor programme", 12_000)):
+        check(f"deck price: {label}", want, prices[label][0], 0.5)
 
     # Every figure must be newer than the workbook it claims to draw.
     wb_time = os.path.getmtime(FL.WORKBOOK)

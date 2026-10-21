@@ -666,6 +666,26 @@ Year one spends **$148,425**, which nobody typed. It is what the activity
 plan, the hiring plan and the cost drivers add up to, and the dynamic test
 moves it by changing the activity.
 
+## The market size is the deck's, and is not StartPad's price list
+
+TAM is what the buyers in this market spend on this capability in a year. It
+does not shrink because StartPad decides to charge less. When the price
+constants were repointed at the financial model, the market sized itself on
+StartPad's own fees and halved, which is wrong on its own terms and also broke
+the figure already in front of investors.
+
+Sizing now has its own reference prices, frozen in `MARKET_REFERENCE`, and the
+obtainable share is the plan's own year five revenue read from the model:
+
+| | Plan | October 2026 deck |
+|---|---|---|
+| TAM | $273.4m | $273.4m |
+| SAM | $89.9m | $89.9m |
+| SOM, year five revenue | $2.48m | $2.48m |
+| Institutional share of SAM | 81% | 81% |
+| Young people reached | 17.1m | 17.1m |
+| Buyers who pay | 12,079 | 12,079 |
+
 ## The plan and the model are one set of numbers
 
 `business_plan/finlink.py` reads the recalculated workbook and hands every
@@ -706,7 +726,7 @@ it, if it quotes a copy.
 python3 scripts/audit_financial_model.py        # 0 static, 0 hardcoded
 python3 scripts/verify_financial_model.py       # 840 of 840 recompute
 python3 scripts/test_model_is_dynamic.py        # 36 of 36 outputs respond
-python3 scripts/check_plan_matches_model.py     # 47 of 47, plan equals model
+python3 scripts/check_plan_matches_model.py     # 63 of 63, plan = model = deck
 ```
 
 **The audit** reports any number outside a designated input cell, and any
@@ -729,7 +749,7 @@ thirty-six outputs across every calculating sheet respond with the balance
 check still at 0.000000.
 
 **The plan check** proves the business plan's headline series equal the
-workbook's, that the plan's cost roll-up adds back to the model total so a
+workbook's and that both agree with the October 2026 investor deck, that the plan's cost roll-up adds back to the model total so a
 cost line added later cannot go missing from the document, that headcount sits
 inside its cap, that the balance check is nil, and that no figure on disk
 predates the workbook. That last one is not a precaution: the document

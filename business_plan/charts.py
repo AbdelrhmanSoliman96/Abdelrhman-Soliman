@@ -233,6 +233,65 @@ def fig_segments():
 #  2 · TAM and SAM, engine by engine
 # =====================================================================
 
+def fig_tam_som():
+    """
+    TAM, SAM and SOM as nested circles, the way the investor deck shows them.
+
+    Areas are proportional to value, not radii, because a reader compares the
+    area of a disc. The labels sit stacked down the middle rather than inside
+    their own ring, since the inner rings are too small to hold type at this
+    ratio: SOM is under one percent of TAM by area.
+    """
+    m = M.market()
+    vals = [("TAM", m["tam"], UV, WHITE,
+             "Every buyer in Egypt and KSA, at today's prices, per year"),
+            ("SAM", m["sam"], "#00C8B6", INK,
+             f"What the engines can reach, {m['inst_share']*100:.0f}% of it "
+             f"institutional"),
+            ("SOM", m["som"], "#CBF24A", INK,
+             f"Year five plan revenue, {m['som_share']*100:.1f}% of SAM")]
+    big = vals[0][1]
+    fig, ax = plt.subplots(figsize=(7.1, 4.0))
+    ax.set_aspect("equal")
+    # Area proportional, so radius goes as the square root.
+    radii = [(v / big) ** 0.5 for _, v, _, _, _ in vals]
+    for (name, v, col, ink, _), r in zip(vals, radii):
+        # Nested and bottom-aligned, which is how the deck draws them.
+        ax.add_patch(plt.Circle((0, r - 1.0), r, color=col, zorder=3))
+    for i, ((name, v, col, ink, _), r) in enumerate(zip(vals, radii)):
+        y = (r - 1.0) + r - 0.085
+        # A ring only carries its own label when it is tall enough to hold
+        # two lines of type with padding. SOM is under one percent of TAM by
+        # area, so it never is: it gets a leader out to the right instead.
+        if 2 * r > 0.30:
+            ax.text(0, y, " ".join(name), ha="center", va="top", fontsize=8.0,
+                    color=ink, fontweight="bold", zorder=6)
+            ax.text(0, y - 0.085, _money(v), ha="center", va="top",
+                    fontsize=14.5, color=ink, fontweight="bold", zorder=6)
+        else:
+            cy = r - 1.0
+            ax.plot([r * 0.9, 0.46], [cy, cy], color=INK, linewidth=0.8,
+                    zorder=6)
+            ax.text(0.50, cy + 0.035, " ".join(name), ha="left", va="bottom",
+                    fontsize=7.6, color=INK, fontweight="bold", zorder=6)
+            ax.text(0.50, cy - 0.02, _money(v), ha="left", va="top",
+                    fontsize=12.5, color=INK, fontweight="bold", zorder=6)
+    ax.set_xlim(-1.08, 2.45)
+    ax.set_ylim(-1.12, 1.12)
+    ax.axis("off")
+    # The side notes are advanced by the number of lines each one actually
+    # wrapped to, so a long note cannot run into the heading below it.
+    yy = 0.86
+    for name, v, col, ink, note in vals:
+        lines = _wrap(note, 8.0, 1.24)
+        ax.text(1.16, yy, name, fontsize=7.6, color=MUTED, fontweight="bold",
+                va="top")
+        ax.text(1.16, yy - 0.105, "\n".join(lines), fontsize=8.0, color=INK,
+                va="top", linespacing=1.45)
+        yy -= 0.105 + len(lines) * 0.098 + 0.10
+    return _save(fig, "tam_som")
+
+
 def fig_tam_sam():
     m = M.market()
     rows = m["rows"]
@@ -1948,7 +2007,7 @@ def fig_fin_margin():
     return _save(fig, "fin_margin")
 
 
-ALL = [fig_fin_revenue_mix, fig_fin_cost_stack, fig_fin_cash,
+ALL = [fig_tam_som, fig_fin_revenue_mix, fig_fin_cost_stack, fig_fin_cash,
        fig_fin_funnel, fig_fin_margin,
        fig_segments, fig_tam_sam, fig_engine_mix, fig_roadmap, fig_gates,
        fig_quarterly_volumes, fig_customer_journey, fig_channel_mix, fig_swot,

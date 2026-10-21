@@ -256,7 +256,7 @@ PODCAST_SEASONS_PRODUCED = (1, 2, 3, 3, 3)
 # This is also the lever the year one spending ceiling is held with: the
 # ceiling is a decision about how fast to go, and this is where that decision
 # lives. Set year one to 1.00 and the model runs at the full contract rate.
-DELIVERY_PACE = (0.38, 1.00, 1.00, 1.00, 1.00)
+DELIVERY_PACE = (1.00, 1.00, 1.00, 1.00, 1.00)
 
 PRICES = {
     # key: (label, unit, five years, note)

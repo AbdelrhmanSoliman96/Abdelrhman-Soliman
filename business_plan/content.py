@@ -351,11 +351,30 @@ section("Market Analysis", [
      [4.2, 2.2, 9.6]),
 
     ("h2", "Market size and growth"),
-    ("p", "Sizing is bottom-up and counts, for each engine, the organisation that "
-          "signs the contract — not the student who benefits. That choice is the "
-          "most important methodological decision in this plan: counting students "
-          "produces a large and unconvertible number, while counting buyers "
-          "produces a number a sales team can actually work."),
+    ("p", "Sizing is bottom-up and counts, for each engine, the organisation "
+          "that signs the contract, not the student who benefits. That choice "
+          "is the most important methodological decision in this plan: "
+          "counting students produces a large and unconvertible number, while "
+          "counting buyers produces a number a sales team can actually work."),
+    ("p", f"The market reference prices used for sizing are what a buyer in "
+          f"this market typically pays for one unit of the thing. They are "
+          f"deliberately separate from StartPad's own price list: a total "
+          f"addressable market does not shrink because StartPad decides to "
+          f"charge less than the going rate, and these figures therefore do "
+          f"not move when the financial model is repriced."),
+    ("fig", "tam_som", "TAM, SAM and SOM. Areas are proportional to value, "
+                       "so the obtainable share is drawn at the size it "
+                       "actually is."),
+    ("kpi", [
+        (money(M["tam"]), "TAM, every buyer at today's prices"),
+        (money(M["sam"]), f"SAM, {pct(M['inst_share'])} institutional"),
+        (money(M["som"]), f"SOM, {pct(M['som_share'], 1)} of SAM by year five"),
+    ]),
+    ("p", f"The obtainable figure is not a share chosen to look modest. It is "
+          f"the year five revenue the financial model produces, "
+          f"{money(M['som'])}, read straight from the workbook. Across both "
+          f"markets {n(M['people']/1e6, 1)}m young people sit behind "
+          f"{n(M['buyers'])} organisations that could pay for them."),
     ("fig", "tam_sam", "TAM and SAM, engine by engine."),
     ("table",
      ["Engine", "TAM basis", "TAM", "SAM"],

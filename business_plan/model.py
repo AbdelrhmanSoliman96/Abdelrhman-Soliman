@@ -1994,6 +1994,157 @@ COMPETITION_DIRECT = FL.book().assumption_years(
     "Delivery cost, sponsored competition")[0]
 FACILITATOR_DAY_RATE = FL.book().assumption_years("Facilitator day rate")[0]
 
+
+# =====================================================================
+#  MARKET SIZING IS NOT STARTPAD'S PRICE LIST
+# =====================================================================
+#
+# TAM is what the buyers in this market spend on this capability in a year. It
+# does not shrink because StartPad decides to charge less, and it does not
+# grow because StartPad raises a price. When the price constants above were
+# repointed at the financial model, the market sized itself on StartPad's own
+# fees and halved, which is wrong on its own terms and also broke the figure
+# already presented to investors.
+#
+# So sizing has its own reference prices: what a buyer in this market
+# typically pays for one unit of the thing, benchmarked rather than quoted.
+# They are frozen here, and they are the basis of the TAM, SAM and SOM slide
+# in the October 2026 investor deck.
+#
+# SOM is not a reference price at all. It is the plan's own year five revenue,
+# read from the financial model, so the obtainable share of this market is the
+# thing the rest of the document has already committed to.
+
+MARKET_REFERENCE = {
+    "initiative_seat": 20.0,      # per seat, bulk national programmes
+    "ngo_programme": 38_000.0,    # per donor programme
+    "competition": 32_000.0,      # per sponsored season
+    "corporate": 55_000.0,        # per corporate or CSR programme
+    "programme_seat": 42.0,       # per accelerator or incubator seat
+    "subscription_arpu": 89.0,    # blended self-pay price in this market
+    "subscription_reach": 116_930,   # people reachable through an organisation
+}
+
+
+def market():
+    """
+    TAM, SAM and SOM, bottom up, counting the organisation that signs.
+
+    Identical to the figures on the market slide of the investor deck, because
+    it is the same arithmetic on the same reference prices.
+    """
+    units = sum(BUYING_UNITS.values())
+    schools = sum(SCHOOLS_WITH_BUDGET.values())
+    tvet_inst = sum(TVET_INSTITUTIONS.values())
+    he = sum(HE_STUDENTS.values())
+    grads = sum(ANNUAL_GRADUATES.values()) * GRADUATE_WINDOW_YEARS
+    tvet_s = sum(TVET_STUDENTS.values())
+    sec = sum(SECONDARY_STUDENTS.values())
+    msme = sum(MSME_OWNERS.values())
+    people = he + grads + tvet_s + sec + msme
+
+    reach = sum(HE_STUDENTS[m] * FILTER_REACHABLE[m] for m in HE_STUDENTS) / he
+    unit_fit = FILTER_FACULTY_FIT * reach
+    school_fit = FILTER_SCHOOL_FIT * FILTER_SCHOOL_REACHABLE
+    tvet_fit = FILTER_TVET_FIT * FILTER_SCHOOL_REACHABLE
+
+    R = MARKET_REFERENCE
+    arpu = R["subscription_arpu"]
+    adults = he + grads + msme
+    youth = tvet_s + sec
+    subs_tam = (adults * FILTER_SELF_PAY_ADULT
+                + youth * FILTER_SELF_PAY_YOUTH) * arpu
+
+    rows = [
+        dict(engine=ENGINE_NAMES[0],
+             tam_basis=f"{units:,} university buying units x "
+                       f"${UNIT_ANNUAL_SPEND:,.0f} a year",
+             tam=units * UNIT_ANNUAL_SPEND,
+             sam_basis=f"{units*unit_fit:,.0f} that fit and are reachable",
+             sam=units * unit_fit * UNIT_ANNUAL_SPEND),
+        dict(engine=ENGINE_NAMES[1],
+             tam_basis=f"{schools:,} schools x "
+                       f"${SCHOOL_UNIT_ANNUAL_SPEND:,.0f} and {tvet_inst:,} "
+                       f"technical institutes x ${TVET_UNIT_ANNUAL_SPEND:,.0f}",
+             tam=(schools * SCHOOL_UNIT_ANNUAL_SPEND
+                  + tvet_inst * TVET_UNIT_ANNUAL_SPEND),
+             sam_basis=f"{schools*school_fit:,.0f} schools and "
+                       f"{tvet_inst*tvet_fit:,.0f} institutes",
+             sam=(schools * school_fit * SCHOOL_UNIT_ANNUAL_SPEND
+                  + tvet_inst * tvet_fit * TVET_UNIT_ANNUAL_SPEND)),
+        dict(engine=ENGINE_NAMES[2],
+             tam_basis=f"{INITIATIVE_SEATS_PER_YEAR:,} seats a year x "
+                       f"${R['initiative_seat']:,.0f}, plus trainer "
+                       f"certification",
+             tam=INITIATIVE_SEATS_PER_YEAR * R["initiative_seat"] * 1.25,
+             sam_basis=f"{FILTER_INITIATIVE_SHARE*100:.0f}%, what one "
+                       f"provider could serve",
+             sam=(INITIATIVE_SEATS_PER_YEAR * FILTER_INITIATIVE_SHARE
+                  * R["initiative_seat"] * 1.25)),
+        dict(engine=ENGINE_NAMES[3],
+             tam_basis=f"{NGOS:,} NGOs and donors x "
+                       f"{NGO_PROGRAMMES_PER_ORG:.1f} programmes x "
+                       f"${R['ngo_programme']:,.0f}",
+             tam=NGOS * NGO_PROGRAMMES_PER_ORG * R["ngo_programme"],
+             sam_basis=f"{FILTER_NGO_FIT*100:.0f}% with a live youth "
+                       f"employability budget",
+             sam=(NGOS * FILTER_NGO_FIT * NGO_PROGRAMMES_PER_ORG
+                  * R["ngo_programme"])),
+        dict(engine=ENGINE_NAMES[4],
+             tam_basis=f"{COMPETITIONS_PER_YEAR:,} competitions a year x "
+                       f"${R['competition']:,.0f}",
+             tam=COMPETITIONS_PER_YEAR * R["competition"],
+             sam_basis=f"{FILTER_COMPETITION_FIT*100:.0f}% with budget and "
+                       f"format fit",
+             sam=(COMPETITIONS_PER_YEAR * FILTER_COMPETITION_FIT
+                  * R["competition"])),
+        dict(engine=ENGINE_NAMES[5],
+             tam_basis=f"{CORPORATES:,} corporates x "
+                       f"{CORPORATE_PROGRAMMES_PER_ORG:.1f} programmes x "
+                       f"${R['corporate']:,.0f}",
+             tam=CORPORATES * CORPORATE_PROGRAMMES_PER_ORG * R["corporate"],
+             sam_basis=f"{FILTER_CORPORATE_FIT*100:.0f}% with a live budget",
+             sam=(CORPORATES * FILTER_CORPORATE_FIT
+                  * CORPORATE_PROGRAMMES_PER_ORG * R["corporate"])),
+        dict(engine=ENGINE_NAMES[6],
+             tam_basis=f"{PROGRAMMES:,} programmes x 150 seats x "
+                       f"${R['programme_seat']:,.0f}",
+             tam=PROGRAMMES * 150 * R["programme_seat"],
+             sam_basis=f"{FILTER_PROGRAMME_FIT*100:.0f}% that select and "
+                       f"pre-qualify",
+             sam=PROGRAMMES * FILTER_PROGRAMME_FIT * 150
+                 * R["programme_seat"]),
+        dict(engine=ENGINE_NAMES[7],
+             tam_basis=f"{FILTER_SELF_PAY_ADULT*100:.0f}% of "
+                       f"{adults/1e6:,.1f}m adults and "
+                       f"{FILTER_SELF_PAY_YOUTH*100:.0f}% of "
+                       f"{youth/1e6:,.1f}m under-18s x ${arpu:,.0f}",
+             tam=subs_tam,
+             sam_basis="Those reached through an organisation, plus organic",
+             sam=R["subscription_reach"] * 1.6 * arpu),
+    ]
+    tam = sum(r["tam"] for r in rows)
+    sam = sum(r["sam"] for r in rows)
+    som = FL.headline()[-1]["revenue"]
+    buyers = units + schools + tvet_inst + NGOS + COMPETITIONS_PER_YEAR \
+        + CORPORATES + PROGRAMMES
+    return dict(rows=rows, tam=tam, sam=sam, som=som,
+                som_share=(som / sam) if sam else 0.0,
+                inst_tam=tam - rows[-1]["tam"],
+                inst_sam=sam - rows[-1]["sam"],
+                inst_share=((sam - rows[-1]["sam"]) / sam) if sam else 0.0,
+                units=units, schools=schools, tvet_inst=tvet_inst,
+                buyers=buyers,
+                people=people, he=he, grads=grads, tvet_students=tvet_s,
+                secondary=sec, msme=msme, reach=reach, unit_fit=unit_fit,
+                segments=[
+                    ("University students", he),
+                    ("Recent graduates (3 years)", grads),
+                    ("Technical and vocational students", tvet_s),
+                    ("Secondary students, final two years", sec),
+                    ("Micro and small enterprise owners", msme),
+                ])
+
 if __name__ == "__main__":
     m = market()
     print(f"TAM ${m['tam']/1e6:,.1f}m  (institutional ${m['inst_tam']/1e6:,.1f}m)")
