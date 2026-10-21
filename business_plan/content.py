@@ -83,8 +83,8 @@ def share(engine, year=1):
 
 
 TITLE = "Business Plan"
-SUBTITLE = "Egypt and Saudi Arabia · Years one to three"
-PERIOD = "October 2026 – September 2029"
+SUBTITLE = "Egypt and Saudi Arabia \u00b7 Years one to five"
+PERIOD = "October 2026 to September 2031"
 
 SECTIONS = []
 
@@ -156,7 +156,7 @@ section("Executive Summary", [
           "cannot simply copy the product."),
 
     ("h2", "The eight engines"),
-    ("fig", "engine_mix", "Revenue mix across three years. The business is "
+    ("fig", "engine_mix", "Revenue mix across five years. The business is "
                           "institutional in every year; founder subscriptions "
                           "never become the point."),
     ("table",
@@ -1272,7 +1272,7 @@ section("Operations Plan", [
           f"run — which is the difference between a company that can reach "
           f"national volume and a training provider that cannot."),
     ("fig", "leverage", "Employees against the network that delivers for them, "
-                        "across three years, on one scale."),
+                        "across five years, on one scale."),
     ("table",
      ["", "Year 1", "Year 2", "Year 3"],
      [["StartPad employees"] + [n(r["staff"]) for r in LEV],
@@ -1317,10 +1317,11 @@ section("Operations Plan", [
     ("fig", "cohort_ramp", "Delivery load against the facilitator capacity it "
                            "requires, across all twelve quarters."),
     ("table",
-     ["Quarter", "Phase", "University", "School", "Technical", "Facilitators"],
-     [[c["label"], c["phase"], n(c["uni"]), n(c["school"]), n(c["tvet"]),
-       f"{c['facilitators']:.0f}"] for c in CAP],
-     [2.2, 1.9, 2.4, 2.0, 2.2, 2.4]),
+     ["Year", "Cohorts delivered", "Facilitator days needed",
+      "Certified pool", "Days the pool gives", "Utilisation"],
+     [[c["label"], n(c["total"], 1), n(c["days"]), n(c["facilitators"]),
+       n(c["available"]), pct(c["utilisation"])] for c in CAP],
+     [1.4, 2.3, 2.6, 2.0, 2.4, 1.8]),
 
     ("h2", "Certification — the only thing StartPad does not delegate"),
     ("p", "The certified pool and the certified partner network are the "
@@ -1753,6 +1754,385 @@ section("Management and Organization", [
 ])
 
 # =====================================================================
+#  FINANCIAL PLAN
+# =====================================================================
+#
+# Every figure in this part is read from the recalculated financial model
+# through business_plan.finlink. Nothing here is typed, so the plan and the
+# workbook cannot disagree.
+
+FL = MD.FL
+_HEAD = FL.headline()
+_YL = ["Year 1", "Year 2", "Year 3", "Year 4", "Year 5"]
+_PACE = FL.pace()
+_CASH = FL.cash_profile()
+_WC = FL.working_capital()
+_TAX = FL.tax_basis()
+_EXP = FL.expense_lines()
+_FUN = FL.funnel()
+_CAPY = FL.capacity()
+_FUND = MD.funding()
+
+
+def _full(v):
+    """A statement line, in full dollars. A balance sheet does not round."""
+    return f"({abs(v):,.0f})" if v < 0 else f"{v:,.0f}"
+
+
+# Lines on the three statements that are rates or multiples, not money. The
+# statements used to print every one of them through the money formatter, so a
+# gross margin of 58 per cent appeared as "$1".
+_RATE_WORDS = ("margin", "growth", "ratio", "rate", "per cent", "check",
+               "multiple", "times")
+
+
+def _is_rate(label):
+    low = label.lower()
+    return any(w in low for w in _RATE_WORDS)
+
+
+def _stmt_value(v, kind="money", year=None, label=""):
+    """
+    Format one statement cell by the kind the workbook says it is.
+
+    Guessing from the label or the magnitude is how a count of 107 cohorts
+    prints as $107 and a 58 per cent margin prints as $1. The number format
+    on the cell is the answer, and finlink carries it through.
+    """
+    if isinstance(v, str):
+        return v
+    if label == "Annual growth" and year == 1:
+        return ""          # there is no year nought to grow from
+    if kind == "pct":
+        return f"{v*100:,.1f}%"
+    if kind == "mult":
+        return f"{v:,.2f}x"
+    if kind == "days":
+        return f"{v:,.0f} days"
+    if kind == "money":
+        return _full(v)
+    if kind == "money2":
+        return f"({abs(v):,.2f})" if v < 0 else f"{v:,.2f}"
+    if kind.startswith("num") and kind[3:].isdigit():
+        return f"{v:,.{int(kind[3:])}f}"
+    if abs(v - round(v)) < 1e-9:
+        return f"{v:,.0f}"
+    return f"{v:,.1f}"
+
+
+def _row(label, values, fmt=money, indent=False):
+    head = ("    " if indent else "") + label
+    return [head] + [fmt(v) for v in values]
+
+
+def _statement_rows(rows):
+    out = []
+    for r in rows:
+        if r.get("heading") or r["values"] is None:
+            out.append([r["label"]] + [""] * FL.YEARS)
+        else:
+            out.append([("    " if r["indent"] else "") + r["label"]]
+                       + [_stmt_value(v, r.get("kind", "money"), i + 1,
+                                      r["label"])
+                          for i, v in enumerate(r["values"])])
+    return out
+
+
+_STMT_W = [4.6, 1.9, 1.9, 1.9, 1.9, 1.9]
+
+
+section("Financial Plan", [
+    ("lead", f"Five years, October 2026 to September 2031, in US dollars. "
+             f"Revenue reaches {money(_HEAD[4]['revenue'])} in year five "
+             f"against {money(_HEAD[4]['total_expense'])} of cost, and the "
+             f"company turns a profit in year {MD.FL.first_profitable_year()}. "
+             f"Year one spends {money(_HEAD[0]['total_expense'])}, which is "
+             f"not a budget anybody set: it is what the activity plan, the "
+             f"hiring plan and the cost drivers add up to."),
+
+    ("h2", "How this model is built, and why that matters"),
+    ("p", "An input is a decision or a rate: how many campus workshops the "
+          "team runs, who is on the payroll and what they are paid, what a "
+          "cohort is priced at, how long a buyer takes to sign, what share of "
+          "proposals are won. Everything else is produced from those and is "
+          "typed nowhere."),
+    ("p", "There is no volume plan. A cohort exists in a given month because "
+          "somebody ran a workshop earlier and a contract was won; cut the "
+          "activity and the cohort disappears with it. The chain runs:"),
+    ("num", [
+        "<b>Activity</b> produces leads, online through cost per click and "
+        "offline through workshops, events, partner sessions and direct "
+        "outreach.",
+        "<b>Leads</b> split across six buyer types, each with its own "
+        "conversion and its own clock.",
+        "<b>Meetings, proposals and wins</b> follow those conversion rates, "
+        "with signature lagged by the buyer's sales cycle.",
+        "<b>Mobilisation</b> lags again, between signature and the first "
+        "delivery day.",
+        "<b>The contract book</b> holds every live contract, and each one "
+        "delivers a fixed number of units evenly across its life.",
+        "<b>Revenue, cost, profit and tax</b> fall out of that volume.",
+    ]),
+    ("note", "The same discipline applies to cost. The year one total is an "
+             "output of the Expenses sheet, not a ceiling typed into it. "
+             "Doubling direct outreach in the model raises it immediately, "
+             "which is the test that it is genuinely produced."),
+
+    ("h2", "What the model opens on"),
+    ("p", "Not forecasts. The position the company is actually in on day one, "
+          "carried into the model as fact."),
+    ("table",
+     ["What is already true", "Value", "Note"],
+     [[t["label"], (n(t["value"]) if t["unit"] in ("#", "EGP")
+                    else money(t["value"])), t["note"]]
+      for t in FL.traction()],
+     [4.6, 2.0, 7.6]),
+    ("p", "The five signed memoranda are not a special case in the "
+          "arithmetic. They enter as contracts already signed, mobilising "
+          "across the first three months, and run through the same contract "
+          "book as anything the funnel wins later. That is why year one is "
+          "produced rather than asserted."),
+
+    ("pb",),
+    ("h2", "Acquisition assumptions"),
+    ("h3", "Online channels"),
+    ("p", "Budget divided by cost per click gives paid clicks. Organic and "
+          "referral traffic are taken as a stated share of paid, never "
+          "assumed free. Then the first conversion stage, click to lead."),
+    ("table",
+     ["Channel", "Monthly budget, Y1", "Y5", "Cost per click",
+      "Organic", "Referral", "Click to lead"],
+     [[c["label"], usd(c["budget"][0]), usd(c["budget"][4]),
+       f"${c['cpc']:,.2f}", pct(c["organic"]), pct(c["referral"]),
+       pct(c["click_to_lead"], 1)] for c in FL.online_channels()],
+     [3.5, 2.0, 1.6, 1.7, 1.6, 1.6, 1.8]),
+    ("note", f"Online spend is sized as business to business inbound, not as "
+             f"a consumer channel. At {usd(FL.book().assumption('Subscription, Pro, annual'))} "
+             f"a year for Pro, a paid click cannot pay for itself, so most "
+             f"paying accounts arrive free, from learners who sat in a cohort."),
+
+    ("h3", "Offline activity, what the team actually does"),
+    ("table",
+     ["Activity", "Per month, Y1", "Y5", "Cost each", "Free sign ups",
+      "Institutional leads"],
+     [[c["label"], n(c["activities"][0], 1), n(c["activities"][4], 1),
+       money(c["cost"]), n(c["signups"]), n(c["leads"], 1)]
+      for c in FL.offline_channels()],
+     [4.4, 1.9, 1.5, 1.7, 2.0, 2.3]),
+
+    ("pb",),
+    ("h3", "Who buys, and how long each kind takes"),
+    ("p", "Complexity shows up twice: once as the sales cycle before "
+          "signature, once as mobilisation between signature and the first "
+          "delivery day."),
+    ("table",
+     ["Buyer type", "Share of leads", "Lead to meeting", "Meeting to proposal",
+      "Proposal to win", "Sales cycle", "Mobilisation"],
+     [[b["label"], pct(b["share"]), pct(b["lead_to_meeting"]),
+       pct(b["meeting_to_proposal"]), pct(b["proposal_to_win"]),
+       f"{b['cycle']} mo", f"{b['mobilisation']} mo"]
+      for b in FL.buyers()],
+     [3.5, 1.6, 1.7, 1.8, 1.6, 1.9, 2.1]),
+    ("fig", "fin_funnel", "Year one, from marketing spend to signed "
+                          "contracts, with the conversion at each stage."),
+
+    ("pb",),
+    ("h2", "Revenue assumptions"),
+    ("h3", "What a won contract turns into"),
+    ("p", "Each engine takes a share of one buyer type's contracts and "
+          "delivers a fixed number of units evenly across a contract life. A "
+          "contract is signed with a buyer, not with an engine, so a buyer's "
+          "contracts are spread across whichever of that buyer's engines are "
+          "open."),
+    ("table",
+     ["Engine", "Buyer", "Share", "Units per contract", "Contract life",
+      "Unit"],
+     [[e["label"], e["buyer"], pct(e["share"]), n(e["units"]),
+       f"{e['life']} mo", e["unit"]] for e in FL.engines()],
+     [4.2, 1.5, 1.4, 2.3, 1.8, 2.0]),
+
+    ("h3", "Pricing"),
+    ("table",
+     ["Price", "Year 1", "Year 2", "Year 3", "Year 4", "Year 5"],
+     [[p["label"]] + [usd(v) if v < 100 else money(v) for v in p["values"]]
+      for p in FL.prices()],
+     _STMT_W),
+    ("note", f"The direct engine is priced for the market it is in: "
+             f"{usd(FL.book().assumption('Subscription, Pro, annual'))} a year "
+             f"for Pro and "
+             f"{usd(FL.book().assumption('Subscription, Team, annual'))} for "
+             f"Team. It is a reach product, not the business."),
+
+    ("h3", "Delivery pace, and the year one ceiling"),
+    ("p", f"A contract signed is not a contract delivered at full tilt. In "
+          f"year one an institution is still localising the curriculum and "
+          f"training its own faculty, so cohorts run at "
+          f"{pct(_PACE[0])} of the rate the contract settles at, rising to "
+          f"{pct(_PACE[1])} from year two. This is also where the year one "
+          f"spending ceiling is held: it is a decision about how fast to go, "
+          f"and year one lands at {money(_HEAD[0]['total_expense'])} because "
+          f"of it."),
+    ("fig", "fin_revenue_mix", "Revenue by family across five years, with the "
+                               "total on each column."),
+
+    ("pb",),
+    ("h2", "Expense assumptions"),
+    ("p", "Nothing here is a flat monthly figure chosen by eye. Every line "
+          "has a driver: a desk per employee, facilitator days per cohort, "
+          "inference per active learner, travel per head on the road."),
+    ("h3", "Direct cost of delivery"),
+    ("table",
+     ["Direct cost line", "Year 1", "Year 2", "Year 3", "Year 4", "Year 5"],
+     [_row(l["label"], l["values"], _full) for l in _EXP["direct"]]
+     + [_row("Total direct cost", _EXP["direct_total"], _full)],
+     _STMT_W),
+    ("h3", "Operating cost"),
+    ("table",
+     ["Operating cost line", "Year 1", "Year 2", "Year 3", "Year 4",
+      "Year 5"],
+     [_row(l["label"], l["values"], _full) for l in _EXP["operating"]]
+     + [_row("Total operating cost", _EXP["operating_total"], _full),
+        _row("Total expenses, direct and operating", _EXP["total"], _full)],
+     _STMT_W),
+    ("fig", "fin_cost_stack", "What the money is spent on each year, against "
+                              "the revenue it produces."),
+
+    ("h2", "Working capital, funding and tax"),
+    ("table",
+     ["Basis", "Value", "Why it is set there"],
+     [["Days sales outstanding, institutional", f"{_WC['dso']:.0f} days",
+       "Universities and ministries pay slowly. This is the largest single "
+       "cash risk in the model"],
+      ["Days sales outstanding, subscriptions", f"{_WC['dso_sub']:.0f} days",
+       "Card payment, collected on the day"],
+      ["Days payable outstanding", f"{_WC['dpo']:.0f} days",
+       "What suppliers and freelance facilitators are paid on"],
+      ["Accrued payroll", f"{_WC['accrued']:.0f} days",
+       "Salaries earned but not yet paid at a month end"],
+      ["Invoiced in advance", pct(_WC["advance"]),
+       "The share of institutional contracts billed up front, which creates "
+       "deferred revenue"],
+      ["Seed round", money(_CASH["seed"]),
+       f"Landing in month {_CASH['seed_month']}, sized on the cash trough "
+       f"rather than on a round number"],
+      ["Corporate income tax", pct(_TAX["rate"]),
+       f"Egyptian corporate income tax, paid in month {_TAX['month']} of the "
+       f"following year, after losses carried forward"]],
+     [4.4, 2.2, 7.6]),
+    ("fig", "fin_cash", "Cash month by month across sixty months, with the "
+                        "trough marked."),
+    ("note", f"The trough is {money(_CASH['trough'])} in month "
+             f"{_CASH['trough_month']}, against a stated minimum buffer of "
+             f"{money(_CASH['buffer'])}. The round is sized on that trough: "
+             f"the ask is {money(_FUND['rounded'])}."),
+
+    ("pb",),
+    ("h2", "Income statement"),
+    ("p", "Five years to 30 September. Every line is a formula over the "
+          "assumptions above."),
+    ("table",
+     ["Income statement"] + _YL,
+     _statement_rows(FL.income_statement()),
+     _STMT_W),
+
+    ("pb",),
+    ("h2", "Balance sheet"),
+    ("p", "At each year end. The check line is the test that the statement "
+          "balances, and it reads nil in every column."),
+    ("table",
+     ["Balance sheet", "At inception"] + _YL,
+     [[r["label"]] + ([""] * (FL.YEARS + 1) if r.get("heading")
+                      else [("" if r["opening"] is None
+                             else _stmt_value(r["opening"], r.get("kind")))]
+                      + [_stmt_value(v, r.get("kind"), i + 1, r["label"])
+                         for i, v in enumerate(r["values"])])
+      for r in FL.balance_sheet()],
+     [3.9, 1.7, 1.7, 1.7, 1.7, 1.7, 1.8]),
+
+    ("pb",),
+    ("h2", "Cash flow statement"),
+    ("p", "Indirect method, built monthly and summed to the year. Cash moves "
+          "only through working capital, capital expenditure and funding, so "
+          "the closing balance reconciles to the balance sheet by "
+          "construction."),
+    ("table",
+     ["Cash flow"] + _YL,
+     _statement_rows(FL.cash_flow()),
+     _STMT_W),
+
+    ("pb",),
+    ("h2", "What the numbers say"),
+    ("table",
+     ["Indicator"] + _YL,
+     [[i["label"]] + [_stmt_value(v, i.get("kind", "num"), None, i["label"])
+                      for v in i["values"]] for i in FL.indicators()],
+     _STMT_W),
+    ("h3", "Capacity, checked rather than assumed"),
+    ("p", "The plan is only credible if the people exist to run the activity "
+          "and the network exists to deliver what is sold. Both are tested "
+          "every month in the model, and neither is ever exceeded."),
+    ("table",
+     ["Capacity"] + _YL,
+     [["Activity utilisation"] + [pct(v) for v in _CAPY["activity_use"]],
+      ["Meeting utilisation"] + [pct(v) for v in _CAPY["meeting_use"]],
+      ["Certified facilitators in the pool"]
+      + [n(v) for v in _CAPY["facilitators"]],
+      ["Certified delivery partners"] + [n(v) for v in _CAPY["partners"]],
+      ["Contracts live at year end"] + [n(v, 1) for v in _CAPY["live"]],
+      ["Activity asked for beyond capacity"]
+      + [n(v, 2) for v in _CAPY["activity_short"]],
+      ["Meetings asked for beyond capacity"]
+      + [n(v, 2) for v in _CAPY["meeting_short"]]],
+     _STMT_W),
+    ("note", "The last two rows must read nil in every month of every year, "
+             "and do. If either moved off nil the plan would be selling work "
+             "nobody is free to do."),
+
+    ("h2", "How the model is checked"),
+    ("p", "A model can contain nothing but formulas and still be wrong, if "
+          "those formulas point at the wrong cells. Three independent checks "
+          "run against the workbook, and all three have to pass before any "
+          "figure in this part is quoted."),
+    ("deflist", [
+        ("No static values",
+         "Every cell is audited for a number sitting outside a designated "
+         "input, and for any number buried inside a formula that is not "
+         "structural. Both report zero."),
+        ("Every figure recomputes",
+         "The whole acquisition engine is rebuilt a second time, in Python, "
+         "from the input cells read back out of the workbook, and compared "
+         "month by month: leads, meetings, proposals, contracts signed after "
+         "each buyer's cycle, contracts mobilised after each lag, the live "
+         "contract book, and the volume each engine delivers. Then every "
+         "revenue line against volume times price, cost against its drivers, "
+         "and the balance sheet and cash flow identities."),
+        ("The whole model moves",
+         "Fourteen inputs are changed at once and the workbook recalculated, "
+         "to confirm that outputs across every calculating sheet respond and "
+         "that the balance sheet still checks to nil."),
+    ]),
+
+    ("h2", "What still needs a decision"),
+    ("bul", [
+        f"<b>The cash trough.</b> {money(_CASH['trough'])} in month "
+        f"{_CASH['trough_month']} is thin against a "
+        f"{money(_CASH['buffer'])} buffer. A larger round, or pulling "
+        f"institutional collection in from {_WC['dso']:.0f} days, closes it. "
+        f"Both are inputs.",
+        "<b>The sales cycles.</b> Every buyer type is currently modelled at "
+        "one month from proposal to signature. That is fast for a ministry "
+        "or a donor, and it is the assumption most likely to be challenged "
+        "in a funding conversation. Lengthening it pushes revenue right "
+        "without changing anything else.",
+        "<b>Exit and valuation inputs.</b> Pre-money at each round, the "
+        "dilution assumed from later rounds and the exit multiples are "
+        "negotiating positions rather than facts, which is why they are "
+        "inputs rather than results.",
+    ]),
+])
+
+
+# =====================================================================
 section("Strategic Analysis", [
     ("lead", "An honest view of where the company is strong, where it is exposed, "
              "and what it will do when something goes wrong."),
@@ -1953,9 +2333,11 @@ section("Appendix", [
         "evidence and review scores. It does not certify that a venture will "
         "succeed, and no partnership should be contracted against a metric the "
         "product cannot measure.",
-        "It contains no financial projections, funding request or use of funds. "
-        "Those are being built separately; this document is the strategy they "
-        "will be built on.",
+        "The financial plan in this document is produced by the financial "
+        "model, not written beside it. Every figure in it is read from the "
+        "recalculated workbook, so the two cannot disagree. What the model "
+        "cannot do is make its inputs true: the sales cycles, the conversion "
+        "rates and the prices are decisions and estimates, not observations.",
         "Subscription conversion rates and pipeline conversion rates are "
         "modelled, not measured. Both will be replaced with observed figures "
         "after the first cohort quarter.",

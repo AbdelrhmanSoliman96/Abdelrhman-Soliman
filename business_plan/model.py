@@ -1589,6 +1589,411 @@ def pipeline():
             ("Signed in year one", 58)]
 
 
+
+# =====================================================================
+#  THE NUMBERS COME FROM THE FINANCIAL MODEL, NOT FROM HERE
+# =====================================================================
+#
+# Everything above this line is the plan's own arithmetic, written before the
+# financial model existed. It is kept because it documents the reasoning, the
+# market sizing and the engine definitions, and because the market and
+# positioning sections still read from it.
+#
+# But a number that appears in both documents must be one number, not two that
+# are asked to agree. So every function below is redefined to read the
+# recalculated workbook through `business_plan.finlink`. The workbook is the
+# source of truth; the plan quotes it and cannot drift from it.
+#
+# Build order, because the plan cannot be built before the model:
+#     python scripts/build_financial_model.py
+#     python scripts/recalc.py output/StartPad_Financial_Model.xlsx 1500
+#     python scripts/build_business_plan_docx.py
+
+from business_plan import finlink as FL                          # noqa: E402
+
+YEARS_5 = tuple(range(1, FL.YEARS + 1))
+HEADCOUNT_CAP = {y: c for y, c in enumerate(FL.P.HEADCOUNT_CAP, start=1)}
+PLAN_YEARS = FL.YEARS
+PERIOD_LABEL = "October 2026 to September 2031"
+
+# Which revenue streams on the model's Revenue Streams sheet roll up into
+# which of the engines the plan talks about.
+ENGINE_STREAMS = {
+    ENGINE_NAMES[0]: ["University cohort programmes", "Faculty licences"],
+    ENGINE_NAMES[1]: ["School cohorts", "School licences",
+                      "Technical and vocational cohorts"],
+    ENGINE_NAMES[2]: ["National initiative seats", "Train the trainer cohorts"],
+    ENGINE_NAMES[3]: ["NGO and donor programmes"],
+    ENGINE_NAMES[4]: ["Sponsored competitions", "Mission Zero sponsorship"],
+    ENGINE_NAMES[5]: ["Corporate and CSR programmes"],
+    ENGINE_NAMES[6]: ["Programme and incubator seats"],
+    ENGINE_NAMES[7]: ["Founder subscriptions"],
+}
+
+_STREAM_KEY = {
+    "University cohort programmes": "uni_cohorts",
+    "Faculty licences": "uni_licences",
+    "School cohorts": "school_cohorts",
+    "School licences": "school_licences",
+    "Technical and vocational cohorts": "tvet_cohorts",
+    "National initiative seats": "initiative_seats",
+    "Train the trainer cohorts": "tot",
+    "NGO and donor programmes": "ngo",
+    "Sponsored competitions": "competitions",
+    "Corporate and CSR programmes": "corporates",
+    "Programme and incubator seats": "programme_seats",
+    "Mission Zero sponsorship": "podcast",
+    "Founder subscriptions": "subscriptions",
+}
+
+
+def _lines_by_stream():
+    return {l["stream"]: l for l in FL.revenue_lines()}
+
+
+def revenue(year):
+    """Revenue for one year, rolled up the way the plan talks about it."""
+    by_stream = _lines_by_stream()
+    i = year - 1
+    lines = {}
+    for engine, streams in ENGINE_STREAMS.items():
+        lines[engine] = sum(by_stream[s]["revenue"][i] for s in streams
+                            if s in by_stream)
+    detail = {_STREAM_KEY[s]: l["revenue"][i] for s, l in by_stream.items()}
+    total = sum(lines.values())
+    subs = lines[ENGINE_NAMES[7]]
+    return dict(lines=lines, detail=detail, total=total,
+                institutional=total - subs,
+                institutional_share=((total - subs) / total) if total else 0.0)
+
+
+def volumes(year):
+    """The volume behind each revenue stream, as the model produced it."""
+    i = year - 1
+    return {_STREAM_KEY[l["stream"]]: l["volume"][i]
+            for l in FL.revenue_lines()}
+
+
+def direct_cost(year):
+    return FL.expense_lines()["direct_total"][year - 1]
+
+
+def subscriptions(year):
+    """The direct engine, as the model's funnel produced it."""
+    f = FL.funnel()
+    b = FL.book()
+    i = year - 1
+    arpu = b.year("Revenue Streams", "Blended annual subscription price", year)
+    churn = b.assumption("Subscription monthly churn")
+    margin = 1.0
+    h = headline_rows()[i]
+    if h["revenue"]:
+        margin = h["gross_profit"] / h["revenue"]
+    return dict(rows=[], paid=f["new_paid"][i], arpu=arpu,
+                bookings=b.year("Revenue Streams",
+                                "Subscription bookings, cash received", year),
+                reached=f["registered"][i],
+                active=f["active_paid"][i],
+                revenue=b.year("Revenue Streams",
+                               "Subscription revenue recognised", year),
+                churn=churn,
+                ltv=(arpu / 12 * margin / churn) if churn else 0.0)
+
+
+def headline_rows():
+    return FL.headline()
+
+
+def headcount():
+    """The establishment by function, from the model's own payroll sheet."""
+    est = FL.establishment()
+    by_function, order = {}, []
+    for r in est["roles"]:
+        fn = r["function"]
+        if fn not in by_function:
+            order.append(fn)
+            by_function[fn] = dict(roles=[],
+                                   **{f"y{y}": 0 for y in YEARS_5},
+                                   **{f"cost_y{y}": 0.0 for y in YEARS_5})
+        f = by_function[fn]
+        f["roles"].append((r["role"], r["gross"], r["counts"], r["start"]))
+        for y in YEARS_5:
+            f[f"y{y}"] += r["counts"][y - 1]
+    totals = {}
+    for y in YEARS_5:
+        totals[f"y{y}"] = est["headcount"][y - 1]
+        totals[f"cost_y{y}"] = est["payroll"][y - 1]
+    # Payroll by function comes from the model so the parts add to the whole.
+    for fn in order:
+        series = est["by_function"].get(fn)
+        for y in YEARS_5:
+            by_function[fn][f"y{y}"] = series[y - 1] if series else 0
+    totals["order"] = order
+    totals["cap"] = est["cap"]
+    return by_function, totals
+
+
+def headcount_check():
+    _, hc = headcount()
+    return [(y, hc[f"y{y}"], HEADCOUNT_CAP[y], hc[f"y{y}"] <= HEADCOUNT_CAP[y])
+            for y in YEARS_5]
+
+
+# How the model's expense lines roll up into the four cost headings the plan
+# uses. Anything the model adds later that is not named here lands in
+# "Running the company", so a new cost line can never go missing.
+_COST_GROUPS = [
+    ("Payroll", ["Payroll, fully loaded"]),
+    ("Demand generation", ["Marketing, offline channels",
+                           "Marketing, online channels",
+                           "Ambassador stipends"]),
+    ("Sales commission", ["Sales commission"]),
+]
+
+
+def costs(year):
+    """Cost for one year, rolled up the way the plan talks about it."""
+    i = year - 1
+    ex = FL.expense_lines()
+    op = {l["label"]: l["values"][i] for l in ex["operating"]}
+    used, lines = set(), []
+    lines.append(("Delivery, all engines", ex["direct_total"][i]))
+    for heading, labels in _COST_GROUPS:
+        total = 0.0
+        for lbl in labels:
+            if lbl in op:
+                total += op[lbl]
+                used.add(lbl)
+        lines.append((heading, total))
+    contingency = op.get("Contingency", 0.0)
+    used.add("Contingency")
+    rest = sum(v for k, v in op.items() if k not in used)
+    lines.append(("Running the company", rest))
+    subtotal = sum(v for _, v in lines)
+    lines.append(("Contingency", contingency))
+    return dict(lines=lines, total=subtotal + contingency, subtotal=subtotal,
+                detail=ex)
+
+
+def projection():
+    """Five years, straight off the model's income statement."""
+    _, hc = headcount()
+    out = []
+    cap = FL.capacity()
+    for h in FL.headline():
+        y = h["year"]
+        r = revenue(y)
+        out.append(dict(year=y, label=f"Year {y} \u00b7 {2025 + y}/{(26 + y) % 100:02d}",
+                        revenue=h["revenue"], cost=h["total_expense"],
+                        profit=h["net"], ebitda=h["ebitda"],
+                        gross_profit=h["gross_profit"],
+                        gross_margin=h["gross_margin"],
+                        net_margin=h["net_margin"],
+                        cash_end=h["cash_end"],
+                        lines=r["lines"], detail=r["detail"],
+                        institutional=r["institutional"],
+                        institutional_share=r["institutional_share"],
+                        cohorts=FL.book().year("Revenue Streams",
+                                               "All in person cohorts "
+                                               "delivered", y),
+                        facilitators=cap["facilitators"][y - 1],
+                        headcount=hc[f"y{y}"],
+                        subs=subscriptions(y)))
+    return out
+
+
+def funding():
+    """
+    The ask, sized on the cash trough the model actually produces rather than
+    on a sum of accounting losses.
+    """
+    cp = FL.cash_profile()
+    monthly = cp["monthly"]
+    seed = cp["seed"]
+    # What the trough would have been without the round already modelled.
+    unfunded = min(c - seed if i + 1 >= cp["seed_month"] else c
+                   for i, c in enumerate(monthly))
+    need = max(0.0, -unfunded)
+    reserve = max(0.0, cp["buffer"])
+    ask = need + reserve
+    losses = [h["net"] for h in FL.headline() if h["net"] < 0]
+    return dict(deficit_y1=max(0.0, -FL.headline()[0]["net"]),
+                deficit_y2=max(0.0, -FL.headline()[1]["net"]),
+                cumulative=sum(-x for x in losses),
+                trough=cp["trough"], trough_month=cp["trough_month"],
+                seed=seed, seed_month=cp["seed_month"],
+                reserve=reserve, ask=ask,
+                rounded=max(seed, round(ask / 25_000) * 25_000))
+
+
+def facilitator_capacity():
+    """Delivery capacity, by year, as the capacity sheet computes it."""
+    cap = FL.capacity()
+    b = FL.book()
+    out = []
+    for y in YEARS_5:
+        i = y - 1
+        days = cap["fac_days"][i]
+        pool = cap["facilitators"][i]
+        available = pool * b.assumption("Delivery days one certified "
+                                        "facilitator gives per month") * 12
+        out.append(dict(label=f"Year {y}", year=y,
+                        total=b.year("Revenue Streams",
+                                     "All in person cohorts delivered", y),
+                        days=days, facilitators=pool, available=available,
+                        partners=cap["partners"][i],
+                        utilisation=(days / available) if available else 0.0))
+    return out
+
+
+def pipeline():
+    """The year one funnel, as the acquisition engine produced it."""
+    f = FL.funnel()
+    bs = FL.buyers()
+    leads = f["leads"][0]
+    meetings = sum(b["meetings"][0] for b in bs)
+    proposals = sum(b["proposals"][0] for b in bs)
+    return [("Institutions and sponsors reached", round(leads)),
+            ("First meeting held", round(meetings)),
+            ("Pilot, proposal or bid submitted", round(proposals)),
+            ("Signed in year one", round(f["signed"][0]))]
+
+
+def engine_economics():
+    """Unit economics per engine, from the model's indicators."""
+    f = FL.funnel()
+    rows = []
+    by_stream = _lines_by_stream()
+    gm = FL.headline()[2]["gross_margin"]
+    retention = FL.book().assumption("Years an institutional relationship is "
+                                     "retained")
+    cac = f["cac_inst"][2]
+    for engine, streams in ENGINE_STREAMS.items():
+        if engine == ENGINE_NAMES[7]:
+            continue
+        value = sum(by_stream[s]["revenue"][2] for s in streams
+                    if s in by_stream)
+        live = FL.capacity()["live"][2]
+        per_contract = value / live if live else 0.0
+        rows.append(dict(name=engine, cac=cac, value=per_contract,
+                         years=retention, margin=gm,
+                         ltv=per_contract * retention * gm,
+                         ratio=(per_contract * retention * gm / cac)
+                         if cac else 0.0))
+    subs = subscriptions(3)
+    b2c_cac = f["cac_b2c"][2]
+    rows.append(dict(name=ENGINE_NAMES[7], cac=b2c_cac, value=subs["arpu"],
+                     years=(1 / subs["churn"] / 12) if subs["churn"] else 0.0,
+                     margin=gm, ltv=subs["ltv"],
+                     ratio=(subs["ltv"] / b2c_cac) if b2c_cac else 0.0))
+    return rows
+
+
+# --- volumes, stocks and prices, so nothing downstream reads the old plan ----
+#
+# These names are still imported by the charts and by the prose. They are
+# redefined here to read the financial model, so a figure that used to draw the
+# typed quarterly plan now draws what the funnel actually produced.
+
+_PLAN_TO_ENGINE = {
+    "uni_cohorts_eg": "University cohorts, Egypt",
+    "uni_cohorts_ksa": "University cohorts, Saudi Arabia",
+    "uni_licences": "Faculty licences",
+    "school_cohorts": "School cohorts",
+    "school_licences": "School licences",
+    "tvet_cohorts": "Technical and vocational cohorts",
+    "initiative_seats": "National initiative seats",
+    "tot_cohorts": "Train the trainer cohorts",
+    "ngo_programmes": "NGO and donor programmes",
+    "competitions": "Competitions, sponsored",
+    "corporates": "Corporate and CSR programmes",
+    "podcast_seasons": "Mission Zero seasons carrying a sponsor",
+    "programme_seats": "Programme and incubator seats",
+}
+
+
+def plan(key, year):
+    """Volume of one engine in one year, as the contract book delivered it."""
+    if key == "uni_pilots":
+        return 0.0          # there are no unpaid pilots in the model
+    label = _PLAN_TO_ENGINE.get(key)
+    if label is None:
+        return 0.0
+    return FL.book().year("Revenue Streams", label, year)
+
+
+def stock(key, year):
+    """A level rather than a flow, at the end of the year."""
+    cap = FL.capacity()
+    if key == "certified_facilitators":
+        return cap["facilitators"][year - 1]
+    if key == "delivery_partners":
+        return cap["partners"][year - 1]
+    if key in ("programmes", "programme_partners"):
+        return FL.book().year("Acquisitions",
+                              "Programme and incubator seats, contracts live",
+                              year)
+    return 0.0
+
+
+def cohorts_for(year):
+    """Paid university cohorts delivered in the year."""
+    return (plan("uni_cohorts_eg", year) + plan("uni_cohorts_ksa", year))
+
+
+def all_cohorts(year):
+    return FL.book().year("Revenue Streams",
+                          "All in person cohorts delivered", year)
+
+
+def leverage():
+    """What each employee carries, year by year."""
+    _, hc = headcount()
+    cap = FL.capacity()
+    b = FL.book()
+    out = []
+    for y in YEARS_5:
+        i = y - 1
+        learners = b.year("Acquisitions", "Total new registered accounts", y)
+        staff = hc[f"y{y}"]
+        out.append(dict(year=y, staff=staff,
+                        cohorts=all_cohorts(y),
+                        pool=cap["facilitators"][i],
+                        partners=cap["partners"][i],
+                        learners=learners,
+                        learners_per_employee=(learners / staff)
+                        if staff else 0.0,
+                        revenue_per_employee=(FL.headline()[i]["revenue"]
+                                              / staff) if staff else 0.0))
+    return out
+
+
+def _price(key, year=1):
+    for p in FL.prices():
+        if p["key"] == key:
+            return p["values"][year - 1]
+    return 0.0
+
+
+PRICE_COHORT = _price("p_uni")
+COHORT_PRICE = {y: _price("p_uni", y) for y in YEARS_5}
+PRICE_FACULTY_LICENCE = _price("p_uni_lic", 2)
+PRICE_SCHOOL_COHORT = {y: _price("p_school", y) for y in YEARS_5}
+PRICE_SCHOOL_LICENCE = _price("p_school_lic", 2)
+PRICE_TVET_COHORT = {y: _price("p_tvet", y) for y in YEARS_5}
+PRICE_INITIATIVE_SEAT = {y: _price("p_seat_init", y) for y in YEARS_5}
+PRICE_TOT_COHORT = {y: _price("p_tot", y) for y in YEARS_5}
+PRICE_NGO_PROGRAMME = {y: _price("p_ngo", y) for y in YEARS_5}
+PRICE_COMPETITION = {y: _price("p_comp", y) for y in YEARS_5}
+PRICE_CORPORATE = {y: _price("p_corp", y) for y in YEARS_5}
+PRICE_SEAT = {y: _price("p_seat_prog", y) for y in YEARS_5}
+PRICE_PODCAST = {y: _price("p_podcast", y) for y in YEARS_5}
+PRICE_PRO_YEAR = FL.book().assumption("Subscription, Pro, annual")
+PRICE_TEAM_YEAR = FL.book().assumption("Subscription, Team, annual")
+COMPETITION_DIRECT = FL.book().assumption_years(
+    "Delivery cost, sponsored competition")[0]
+FACILITATOR_DAY_RATE = FL.book().assumption_years("Facilitator day rate")[0]
+
 if __name__ == "__main__":
     m = market()
     print(f"TAM ${m['tam']/1e6:,.1f}m  (institutional ${m['inst_tam']/1e6:,.1f}m)")

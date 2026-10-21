@@ -900,78 +900,107 @@ def fig_competition_model():
 # =====================================================================
 
 def fig_subscription_sources():
-    """Where paying founders come from. Almost none of them are strangers."""
-    s = M.subscriptions(1)
-    rows = sorted(s["rows"], key=lambda r: -r["paid"])
-    fig, ax = plt.subplots(figsize=(7.1, 2.55))
-    for i, r in enumerate(rows):
-        organic = r["name"].startswith("Organic")
-        ax.barh(i, r["paid"], 0.52, color="#C9CEDB" if organic else UV, zorder=3)
-        ax.text(r["paid"] + 3, i, f"{r['paid']:,.0f} paying",
-                va="center", fontsize=7.8, color=INK, fontweight="bold")
-        ax.text(r["paid"] + 3, i - 0.30,
-                f"from {r['reached']:,} reached, at {r['conversion']*100:.0f}%",
-                va="center", fontsize=6.6, color=MUTED)
+    """
+    Where paying founders come from, and at what rate.
+
+    Two routes, drawn at the same scale: a learner who sat in a cohort, and a
+    stranger who arrived from a click. The first converts several times better
+    than the second, which is the whole reason the direct engine is a
+    consequence of the institutional business rather than a channel beside it.
+    """
+    FL = M.FL
+    b = FL.book()
+    y = 1
+    inst = b.year("Acquisitions", "Registered accounts from institutions", y)
+    online = b.year("Acquisitions", "Registered accounts from online leads", y)
+    offline = b.year("Acquisitions",
+                     "Registered accounts from offline sign ups", y)
+    r_inst = b.assumption("Stage 3, registered to paid, reached through an "
+                          "institution", 3)
+    r_online = b.assumption("Stage 3, registered to paid, reached online", 3)
+    rows = [
+        ("Reached through an institution", inst, r_inst, UV),
+        ("Reached by StartPad's own channels", online + offline, r_online,
+         "#C9CEDB"),
+    ]
+    paid_total = sum(v * r for _, v, r, _ in rows)
+    fig, ax = plt.subplots(figsize=(7.1, 2.5))
+    top = max(v for _, v, _, _ in rows)
+    for i, (name, reached, rate, col) in enumerate(rows):
+        ax.barh(i, reached, 0.46, color=col, zorder=3)
+        paid = reached * rate
+        ax.text(reached + top * 0.02, i + 0.10,
+                f"{paid:,.0f} paying accounts", va="center", fontsize=8.0,
+                color=INK, fontweight="bold")
+        ax.text(reached + top * 0.02, i - 0.18,
+                f"from {reached:,.0f} registered, at {rate*100:.1f}%",
+                va="center", fontsize=6.9, color=MUTED)
     ax.set_yticks(range(len(rows)))
-    ax.set_yticklabels([r["name"] for r in rows], fontsize=8.0, color=INK)
+    ax.set_yticklabels([r[0] for r in rows], fontsize=8.0, color=INK)
     ax.invert_yaxis()
-    ax.set_xlim(0, max(r["paid"] for r in rows) * 1.55)
-    ax.set_xlabel("Paying subscribers, year one")
+    ax.set_xlim(0, top * 1.62)
+    ax.set_xlabel("Registered accounts, year one")
     _clean(ax, grid="x")
-    inst = sum(r["paid"] for r in rows if not r["name"].startswith("Organic"))
-    ax.text(max(r["paid"] for r in rows) * 1.5, len(rows) - 0.35,
-            f"{inst/s['paid']*100:.0f}% arrive through an organisation",
-            ha="right", fontsize=7.6, color=INK2, fontweight="bold")
+    share = (rows[0][1] * rows[0][2] / paid_total) if paid_total else 0.0
+    ax.set_title(f"{share*100:.0f}% of paying accounts arrive through an "
+                 f"organisation, not a click",
+                 fontsize=7.8, color=INK2, loc="left", pad=8)
     return _save(fig, "subscription_sources")
 
 
 def fig_cohort_ramp():
     """
-    Delivery load against certified capacity, all twelve quarters.
+    Delivery load against certified capacity, five years.
 
-    Two lines, not one. The old version of this chart showed only the facilitators
-    required, which answers the easy question. The honest question is whether the
-    pool exists, so the available capacity of the certified pool in that same
-    quarter is drawn beside it. The plan is only credible where the dashed line
-    stays above the solid one, and it does, in every quarter, by design.
+    Two questions on one page. The bars answer the easy one, how many cohorts
+    are delivered. The lines answer the honest one: whether the certified pool
+    can actually staff them. The plan is only credible where the dashed line
+    stays above the solid one, and it does, in every year, because the pool is
+    sized from the load rather than assumed.
     """
     cap = M.facilitator_capacity()
-    fig, ax = plt.subplots(figsize=(7.1, 3.25))
+    fig, ax = plt.subplots(figsize=(7.1, 3.3))
     x = list(range(len(cap)))
-    uni = [c["uni"] for c in cap]
-    sch = [c["school"] for c in cap]
-    tv = [c["tvet"] for c in cap]
-    ax.bar(x, uni, 0.62, color=UV, label="University cohorts", zorder=3)
-    ax.bar(x, sch, 0.62, bottom=uni, color="#0096DF", label="School cohorts",
-           zorder=3)
-    ax.bar(x, tv, 0.62, bottom=[a + b for a, b in zip(uni, sch)], color="#00D3A4",
-           label="Technical cohorts", zorder=3)
+    cohorts = [c["total"] for c in cap]
+    ax.bar(x, cohorts, 0.5, color=UV, label="Cohorts delivered", zorder=3)
+    for i, v in enumerate(cohorts):
+        # Inside the bar, because the right hand scale puts its own labels in
+        # the space just above the bar top and the two used to collide.
+        if v > max(cohorts) * 0.14:
+            ax.text(i, v * 0.5, f"{v:,.0f}", ha="center", va="center",
+                    fontsize=9.0, fontweight="bold", color=WHITE, zorder=6)
+        else:
+            ax.text(i, v + max(cohorts) * 0.02, f"{v:,.0f}", ha="center",
+                    va="bottom", fontsize=9.0, fontweight="bold", color=INK,
+                    zorder=6)
     ax2 = ax.twinx()
-    need = [c["facilitators"] for c in cap]
-    have = [c["available"] * 2 for c in cap]
-    ax2.plot(x, need, color=INK, linewidth=1.8, marker="o", markersize=3.6,
-             zorder=6, label="Facilitators the plan needs")
+    need = [c["days"] for c in cap]
+    have = [c["available"] for c in cap]
+    ax2.plot(x, need, color=INK, linewidth=1.8, marker="o", markersize=4.0,
+             zorder=6, label="Facilitator days the plan needs")
     ax2.plot(x, have, color="#C2185B", linewidth=1.6, linestyle=(0, (4, 2)),
-             marker="s", markersize=3.2, zorder=5,
-             label="Certified pool available")
-    ax2.set_ylim(0, max(have) * 1.52)
-    ax2.set_ylabel("Facilitator-equivalents", color=INK2, fontsize=8.2)
+             marker="s", markersize=3.6, zorder=5,
+             label="Days the certified pool gives")
+    for i, c in enumerate(cap):
+        ax2.text(i, have[i] + max(have) * 0.045,
+                 f"{c['utilisation']*100:.0f}% used", ha="center",
+                 fontsize=6.8, color="#C2185B", zorder=7)
+    ax2.set_ylim(0, max(have) * 1.30)
+    ax2.set_ylabel("Facilitator days in the year", color=INK2, fontsize=8.2)
     ax2.spines["top"].set_visible(False)
     ax2.spines["left"].set_visible(False)
     ax2.spines["right"].set_color(HAIR)
     ax2.tick_params(labelsize=7.4)
     ax.set_xticks(x)
-    ax.set_xticklabels([c["label"].replace(" ", "\n") for c in cap], fontsize=6.4,
-                       color=INK2)
-    ax.set_ylabel("Cohorts in the quarter")
-    ax.set_ylim(0, max(c["total"] for c in cap) * 1.34)
+    ax.set_xticklabels([c["label"] for c in cap], fontsize=8.4, color=INK)
+    ax.set_ylabel("Cohorts in the year")
+    ax.set_ylim(0, max(cohorts) * 1.30)
     _clean(ax, grid="y")
-    for b in (3.5, 7.5):
-        ax.axvline(b, color=HAIR, linewidth=0.9, zorder=1)
     h1, l1 = ax.get_legend_handles_labels()
     h2, l2 = ax2.get_legend_handles_labels()
-    ax.legend(h1 + h2, l1 + l2, frameon=False, fontsize=7.0, loc="upper left",
-              labelcolor=INK2, ncol=2, columnspacing=1.2)
+    ax.legend(h1 + h2, l1 + l2, frameon=False, fontsize=7.2,
+              loc="upper center", bbox_to_anchor=(0.5, -0.10), ncol=3,
+              labelcolor=INK2, columnspacing=1.4, handlelength=1.5)
     return _save(fig, "cohort_ramp")
 
 
@@ -1358,10 +1387,11 @@ def fig_leverage():
              ("Certified partner organisations", "partners", "#00C8B6"),
              ("Cohorts delivered in the year", "cohorts", "#8FD92F")]
     W = 7.1
-    labw, rpad = 2.16, 0.62
-    barh, bargap, bandgap = 0.125, 0.028, 0.20
-    bandh = 3 * barh + 2 * bargap
-    footer = 0.56
+    labw, rpad = 2.16, 0.92
+    barh, bargap, bandgap = 0.115, 0.026, 0.20
+    nrows = len(rows)
+    bandh = nrows * barh + (nrows - 1) * bargap
+    footer = 0.74
     H = footer + len(bands) * (bandh + bandgap) + 0.06
     fig, ax = _canvas(W, H)
     barw = W - labw - rpad
@@ -1374,20 +1404,25 @@ def fig_leverage():
             yy = top - barh - ri * (barh + bargap)
             v = r[key]
             w = max(0.030, barw * v / maxv)
+            # The alpha ramp has to span however many years there are, not a
+            # hardcoded three, or a fourth year raises IndexError.
+            alpha = 0.34 + 0.66 * (ri / max(1, nrows - 1))
             ax.add_patch(Rectangle((labw, yy), w, barh, color=col,
-                                   alpha=[0.38, 0.66, 1.0][ri], zorder=3))
+                                   alpha=alpha, zorder=3))
             ax.text(labw + w + 0.06, yy + barh / 2,
-                    f"Y{r['year']}  {v:,}", fontsize=6.6, color=INK2,
+                    f"Y{r['year']}  {v:,.0f}", fontsize=6.4, color=INK2,
                     va="center", zorder=4)
         top -= bandh + bandgap
 
     ax.add_patch(Rectangle((0, footer - 0.10), W, 0.012, color=HAIR, zorder=2))
     ax.text(0, footer - 0.30, "Learners reached per employee", fontsize=7.5,
             color=INK, va="center", zorder=4)
+    step = (W - labw) / nrows
     for ri, r in enumerate(rows):
-        ax.text(labw + ri * 1.46, footer - 0.30,
-                f"Y{r['year']}   {r['learners_per_employee']:,.0f}", fontsize=9.2,
-                color=UV, fontweight="bold", va="center", zorder=4)
+        ax.text(labw + ri * step, footer - 0.30,
+                f"Y{r['year']}  {r['learners_per_employee']:,.0f}",
+                fontsize=8.4, color=UV, fontweight="bold", va="center",
+                zorder=4)
     ax.text(0, 0.08, "Every cohort in this plan is delivered by a certified "
             "facilitator or a certified partner organisation, never by an "
             "employee. Headcount therefore tracks the number of partners to "
@@ -1631,7 +1666,291 @@ def fig_podcast_targets():
     return _save(fig, "podcast_targets")
 
 
-ALL = [fig_segments, fig_tam_sam, fig_engine_mix, fig_roadmap, fig_gates,
+# =====================================================================
+#  FINANCIAL PLAN FIGURES
+# =====================================================================
+#
+# These five read the financial model through the bridge, so they cannot show
+# anything the workbook does not say. Every one of them is laid out by
+# measurement: a label goes inside a bar only when the bar is wide or tall
+# enough to hold it with padding, and outside it otherwise.
+
+def _fin():
+    return M.FL
+
+
+def _year_labels():
+    return [f"Y{y}" for y in M.YEARS_5]
+
+
+def _stack_labels(values, gap):
+    """
+    Label positions for several points sharing one x, never closer than `gap`.
+
+    Returns a list of y positions in the same order as `values`. Points are
+    walked from the lowest up and each label is pushed above the one below it
+    when it would otherwise collide, which is the only way three series on one
+    scale can be labelled without the type touching.
+    """
+    order = sorted(range(len(values)), key=lambda i: values[i])
+    out = [0.0] * len(values)
+    last = None
+    for i in order:
+        y = values[i] + gap * 0.55
+        if last is not None and y - last < gap:
+            y = last + gap
+        out[i] = y
+        last = y
+    return out
+
+
+def fig_fin_revenue_mix():
+    """
+    Revenue by family across five years.
+
+    Stacked, because the question the page asks is what share of the business
+    each family carries, not what each one is worth on its own. A segment
+    label is only drawn when the segment is tall enough to hold it.
+    """
+    FL = _fin()
+    fams = FL.revenue_by_family()
+    order = [f for f in ("Education", "Public", "Commercial", "Direct")
+             if f in fams]
+    totals = [sum(fams[f][i] for f in order) for i in range(FL.YEARS)]
+    fig, ax = plt.subplots(figsize=(7.1, 3.5))
+    x = list(range(FL.YEARS))
+    bottoms = [0.0] * FL.YEARS
+    cols = [UV, "#0087E8", "#00C8B6", "#A1EE58"]
+    top = max(totals) if totals else 1.0
+    for fam, c in zip(order, cols):
+        vals = fams[fam]
+        ax.bar(x, vals, 0.54, bottom=bottoms, color=c, label=fam,
+               edgecolor=WHITE, linewidth=1.1, zorder=3)
+        for i, v in enumerate(vals):
+            # Only label a segment that is at least a tenth of the tallest
+            # column: below that the type collides with the segment above.
+            if v > top * 0.10:
+                ink = INK if c == "#A1EE58" else WHITE
+                ax.text(i, bottoms[i] + v / 2, _money(v), ha="center",
+                        va="center", fontsize=7.6, color=ink, zorder=6)
+        bottoms = [b + v for b, v in zip(bottoms, vals)]
+    for i, t in enumerate(totals):
+        ax.text(i, t + top * 0.035, _money(t), ha="center", fontsize=10,
+                fontweight="bold", color=INK, zorder=7)
+    ax.set_xticks(x)
+    ax.set_xticklabels([f"Year {y}" for y in M.YEARS_5], fontsize=9,
+                       color=INK)
+    ax.set_ylabel("Revenue")
+    ax.set_ylim(0, top * 1.20)
+    ax.set_yticklabels([])
+    ax.tick_params(axis="y", length=0)
+    _clean(ax, grid="y")
+    ax.legend(frameon=False, fontsize=7.6, loc="upper left", ncol=2,
+              labelcolor=INK2)
+    return _save(fig, "fin_revenue_mix")
+
+
+def fig_fin_cost_stack():
+    """
+    What the money goes on each year, against the revenue it produces.
+
+    Cost is stacked and revenue is a line, because the comparison is the
+    point: the year the line clears the stack is the year the company turns.
+    """
+    FL = _fin()
+    head = FL.headline()
+    rev = [h["revenue"] for h in head]
+    groups = [M.costs(y)["lines"] for y in M.YEARS_5]
+    names = [k for k, _ in groups[0]]
+    fig, ax = plt.subplots(figsize=(7.1, 3.6))
+    x = list(range(FL.YEARS))
+    bottoms = [0.0] * FL.YEARS
+    # Six headings need six colours a reader can tell apart in print; the two
+    # adjacent blues in the house ramp were indistinguishable at legend size.
+    cols = [UV, "#0071ED", "#00ABD4", "#00DC91", "#A1EE58", "#C9CEDA"]
+    light = {"#00DC91", "#A1EE58", "#C9CEDA"}
+    top = max(max(rev), max(sum(v for _, v in g) for g in groups))
+    for idx, name in enumerate(names):
+        vals = [dict(g)[name] for g in groups]
+        c = cols[idx % len(cols)]
+        ax.bar(x, vals, 0.54, bottom=bottoms, color=c, label=name,
+               edgecolor=WHITE, linewidth=1.0, zorder=3)
+        for i, v in enumerate(vals):
+            if v > top * 0.085:
+                ink = INK if c in light else WHITE
+                ax.text(i, bottoms[i] + v / 2, _money(v), ha="center",
+                        va="center", fontsize=7.2, color=ink, zorder=6)
+        bottoms = [b + v for b, v in zip(bottoms, vals)]
+    ax.plot(x, rev, color="#C2185B", linewidth=2.0, marker="o",
+            markersize=5, zorder=8, label="Revenue")
+    for i, v in enumerate(rev):
+        # Always above, and above the stack as well as the point, so the
+        # label can never land on a segment or on the axis labels below.
+        y = max(v, bottoms[i]) + top * 0.045
+        ax.text(i, y, _money(v), ha="center", va="bottom", fontsize=8.6,
+                fontweight="bold", color="#C2185B", zorder=9)
+    ax.set_xticks(x)
+    ax.set_xticklabels([f"Year {y}" for y in M.YEARS_5], fontsize=9,
+                       color=INK)
+    ax.set_ylim(0, top * 1.16)
+    ax.set_yticklabels([])
+    ax.tick_params(axis="y", length=0)
+    ax.set_ylabel("Cost, stacked, against revenue")
+    _clean(ax, grid="y")
+    # Below the axes: seven entries will not fit beside the bars without
+    # covering year five.
+    ax.legend(frameon=False, fontsize=7.4, loc="upper center",
+              bbox_to_anchor=(0.5, -0.09), ncol=4, labelcolor=INK2,
+              handlelength=1.4, columnspacing=1.4)
+    return _save(fig, "fin_cost_stack")
+
+
+def fig_fin_cash():
+    """
+    Cash across sixty months, with the trough marked.
+
+    A line, not bars: the shape is the argument, and the one number a reader
+    needs is the lowest point and the month it happens in.
+    """
+    FL = _fin()
+    cp = FL.cash_profile()
+    cash = cp["monthly"]
+    x = list(range(1, len(cash) + 1))
+    fig, ax = plt.subplots(figsize=(7.1, 3.2))
+    ax.axhline(0, color=HAIR, linewidth=0.9, zorder=1)
+    ax.fill_between(x, cash, 0, color=UV, alpha=0.10, zorder=2)
+    ax.plot(x, cash, color=UV, linewidth=1.9, zorder=4)
+    ti, tv = cp["trough_month"], cp["trough"]
+    ax.plot([ti], [tv], marker="o", markersize=6, color="#C2185B", zorder=6)
+    top = max(cash)
+    ax.annotate(f"Trough {_money(tv)}\nmonth {ti}",
+                xy=(ti, tv), xytext=(ti + 4, tv + top * 0.20),
+                fontsize=8.2, color="#C2185B",
+                arrowprops=dict(arrowstyle="-", color="#C2185B",
+                                linewidth=0.9))
+    sm = cp["seed_month"]
+    ax.axvline(sm, color=MUTED, linewidth=0.9, linestyle=(0, (3, 3)),
+               zorder=3)
+    ax.text(sm + 0.8, top * 0.94, f"Seed {_money(cp['seed'])}\nlands month "
+                                  f"{sm}", fontsize=7.6, color=MUTED,
+            va="top")
+    ax.set_xlim(0, len(cash) + 1)
+    ax.set_ylim(min(0, min(cash)) - top * 0.06, top * 1.12)
+    ax.set_xticks([y * 12 - 6 for y in M.YEARS_5])
+    ax.set_xticklabels([f"Year {y}" for y in M.YEARS_5], fontsize=8.6,
+                       color=INK)
+    ax.tick_params(axis="x", length=0)
+    ax.set_ylabel("Cash at month end")
+    ax.set_yticks([0, top / 2, top])
+    ax.set_yticklabels(["0", _money(top / 2), _money(top)], fontsize=8)
+    _clean(ax, grid="y")
+    return _save(fig, "fin_cash")
+
+
+def fig_fin_funnel():
+    """
+    Year one, from spend to signature.
+
+    A horizontal bar per stage, widths proportional to the count, with the
+    conversion from the stage above printed on the right so the page carries
+    the rate as well as the number.
+    """
+    FL = _fin()
+    f = FL.funnel()
+    bs = FL.buyers()
+    stages = [
+        ("Marketing spend", f["marketing"][0], True),
+        ("Institutional leads", f["leads"][0], False),
+        ("Meetings held", sum(b["meetings"][0] for b in bs), False),
+        ("Proposals and bids", sum(b["proposals"][0] for b in bs), False),
+        ("Contracts signed", f["signed"][0], False),
+    ]
+    counts = [v for _, v, is_money in stages if not is_money]
+    top = max(counts) if counts else 1.0
+    fig, ax = plt.subplots(figsize=(7.1, 3.1))
+    rows = stages[1:]
+    yy = list(range(len(rows)))[::-1]
+    cols = [UV, "#0071ED", "#00ABD4", "#00D3A4"]
+    for i, ((label, v, _), c) in enumerate(zip(rows, cols)):
+        y = yy[i]
+        ax.barh(y, v, height=0.56, color=c, zorder=3)
+        txt = f"{v:,.0f}"
+        # Inside the bar when it is wide enough to hold the number with
+        # padding, outside it when it is not.
+        if v > top * 0.22:
+            ax.text(v - top * 0.015, y, txt, ha="right", va="center",
+                    fontsize=9.4, fontweight="bold", color=WHITE, zorder=6)
+        else:
+            ax.text(v + top * 0.015, y, txt, ha="left", va="center",
+                    fontsize=9.4, fontweight="bold", color=INK, zorder=6)
+        if i:
+            prev = rows[i - 1][1]
+            rate = (v / prev) if prev else 0.0
+            ax.text(top * 1.12, y, f"{rate*100:,.0f}% of the stage above",
+                    ha="left", va="center", fontsize=7.8, color=MUTED,
+                    zorder=6)
+    ax.set_yticks(yy)
+    ax.set_yticklabels([r[0] for r in rows], fontsize=9, color=INK)
+    ax.set_xlim(0, top * 1.55)
+    ax.set_xticks([])
+    ax.set_title(f"Year one. {_money(stages[0][1])} of marketing spend, "
+                 f"{rows[-1][1]:,.0f} contracts signed",
+                 fontsize=8.6, color=INK2, loc="left", pad=10)
+    _clean(ax, grid=None)
+    ax.spines["bottom"].set_visible(False)
+    return _save(fig, "fin_funnel")
+
+
+def fig_fin_margin():
+    """
+    Gross margin, EBITDA margin and net margin across five years.
+
+    Three lines on one percentage scale, because the shape of the three
+    together is what says whether the business scales or merely grows.
+    """
+    FL = _fin()
+    head = FL.headline()
+    x = list(range(FL.YEARS))
+    series = [("Gross margin", [h["gross_margin"] for h in head], UV),
+              ("EBITDA margin", [h["ebitda_margin"] for h in head], "#00ABD4"),
+              ("Net margin", [h["net_margin"] for h in head], "#C2185B")]
+    fig, ax = plt.subplots(figsize=(7.1, 3.1))
+    ax.axhline(0, color=HAIR, linewidth=0.9, zorder=1)
+    lo = min(min(v) for _, v, _ in series)
+    hi = max(max(v) for _, v, _ in series)
+    span = max(hi - lo, 0.05)
+    for name, vals, c in series:
+        ax.plot(x, vals, color=c, linewidth=1.9, marker="o", markersize=4.6,
+                label=name, zorder=4)
+    # Labels are placed per column rather than per series, so three values
+    # that sit close together are spread instead of printed on top of one
+    # another.
+    gap = span * 0.115
+    tops = []
+    for i in range(len(x)):
+        col = [vals[i] for _, vals, _ in series]
+        ys = _stack_labels(col, gap)
+        tops.append(max(ys))
+        for (name, vals, c), y in zip(series, ys):
+            ax.text(i, y, f"{vals[i]*100:,.0f}%", ha="center", va="bottom",
+                    fontsize=7.8, color=c, zorder=6)
+    ax.set_xticks(x)
+    ax.set_xticklabels([f"Year {y}" for y in M.YEARS_5], fontsize=9,
+                       color=INK)
+    ax.set_ylim(lo - span * 0.16, max(max(tops), hi) + span * 0.20)
+    ax.set_yticklabels([])
+    ax.tick_params(axis="y", length=0)
+    ax.set_ylabel("Margin")
+    _clean(ax, grid="y")
+    ax.legend(frameon=False, fontsize=7.6, loc="upper center",
+              bbox_to_anchor=(0.5, -0.09), ncol=3, labelcolor=INK2,
+              handlelength=1.4)
+    return _save(fig, "fin_margin")
+
+
+ALL = [fig_fin_revenue_mix, fig_fin_cost_stack, fig_fin_cash,
+       fig_fin_funnel, fig_fin_margin,
+       fig_segments, fig_tam_sam, fig_engine_mix, fig_roadmap, fig_gates,
        fig_quarterly_volumes, fig_customer_journey, fig_channel_mix, fig_swot,
        fig_porter, fig_pestle, fig_moat, fig_school_ladder,
        fig_engine_economics, fig_deal_sizes, fig_pipeline,

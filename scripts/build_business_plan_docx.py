@@ -642,7 +642,27 @@ def build(path):
     return path
 
 
+def draw_figures():
+    """
+    Redraw every figure before the document is written.
+
+    The renderer embeds whatever PNG is on disk, so a document built after a
+    model change used to carry the previous run's charts beside the new
+    sentences. That is the one failure nobody notices by reading the source,
+    because both halves look correct on their own. Drawing them here makes it
+    impossible.
+    """
+    from business_plan import charts as C
+    for fn in C.ALL:
+        fn()
+    return len(C.ALL)
+
+
 if __name__ == "__main__":
+    if "--no-figures" in sys.argv:
+        print("skipping figures, embedding whatever is on disk")
+    else:
+        print(f"drew {draw_figures()} figures")
     out = os.path.join(OUT, "StartPad_Business_Plan.docx")
     build(out)
     print(f"wrote {out}  ({os.path.getsize(out)/1024:,.0f} KB)")

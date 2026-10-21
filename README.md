@@ -548,8 +548,8 @@ A cohort exists in month 40 because somebody ran a workshop in month 32. Cut
 the activity and the cohort disappears. **The year one spend is produced the
 same way**: it is what the activity plan, the hiring plan and the cost drivers
 add up to on the Expenses sheet, not a ceiling anybody typed. It lands at
-**$147,821**, and the dynamic test shows it moving to $219,451 when direct
-outreach is doubled, which is the proof that it is an output.
+**$148,425**, and the dynamic test moves it by changing the activity, which is
+the proof that it is an output rather than a target.
 
 27,021 formulas. A build gate refuses to write the file if an em dash, en
 dash, middot, curly quote or ellipsis appears in any cell.
@@ -602,10 +602,17 @@ is deliverable from month m plus mobilisation and keeps delivering for its
 life. Volume is the live contract book times units over life, and nothing
 else.
 
-A contract is signed with a buyer, not with an engine, so until an engine
-opens that buyer's contracts go to the engines that are open. A university
-signing in year one buys a cohort, because the licence needs two delivered
-cohorts first and the school curriculum does not exist yet.
+A contract is signed with a buyer, not with an engine, so a buyer's contracts
+are spread across whichever of that buyer's engines are open. Every engine is
+currently open from month one, which is the founder's own setting; the gate
+column on the engine table is where that is changed.
+
+Contract life is twelve months, so a contract delivers its units inside a year
+and must then be re-won. Year one additionally runs at a **delivery pace of
+38%** of the full contract rate, because an institution is still localising
+the curriculum and training its faculty. That pace is also where the year one
+spending ceiling is held: it is a decision about how fast to go, not a budget
+line.
 
 ## How long each kind of deal takes
 
@@ -615,12 +622,16 @@ after it.
 
 | Buyer type | Cycle | Signs | Mobilisation | First delivery |
 |---|---|---|---|---|
-| Accelerators and programme operators | 3 | m4 | 1 | Feb 2027 |
-| Sponsors, banks, telcos | 5 | m6 | 1 | Apr 2027 |
-| Institutions, universities, schools | 4 | m5 | 2 | Apr 2027 |
-| CSR and corporate innovation | 7 | m8 | 2 | Jul 2027 |
-| Government and national initiatives | 11 | m12 | 3 | Dec 2027 |
-| NGOs, donors, development agencies | 12 | m13 | 3 | Jan 2028 |
+| Accelerators and programme operators | 1 | m2 | 1 | Dec 2026 |
+| Sponsors, banks, telcos | 1 | m2 | 1 | Dec 2026 |
+| Institutions, universities, schools | 1 | m2 | 2 | Jan 2027 |
+| CSR and corporate innovation | 1 | m2 | 2 | Jan 2027 |
+| Government and national initiatives | 1 | m2 | 3 | Feb 2027 |
+| NGOs, donors, development agencies | 1 | m2 | 3 | Feb 2027 |
+
+Those one-month cycles are the founder's setting, carried over from V5. They
+are the single assumption most worth revisiting: a ministry signing a national
+initiative thirty days after first contact is fast.
 
 The direct engine needs neither, which is why subscriptions carry revenue from
 month one while the institutional engines are still in their cycle.
@@ -642,32 +653,103 @@ meetings beyond what it can hold.
 
 | | Y1 | Y2 | Y3 | Y4 | Y5 |
 |---|---|---|---|---|---|
-| Revenue | $102,742 | $364,281 | $752,581 | $1,316,611 | $2,001,223 |
-| Total expense | $147,821 | $387,101 | $737,413 | $1,157,795 | $1,635,722 |
-| Net profit | ($45,079) | ($22,820) | $15,168 | $134,947 | $283,264 |
+| Revenue | $103,587 | $598,106 | $1,085,654 | $1,759,672 | $2,483,099 |
+| Total expense | $148,425 | $471,814 | $871,339 | $1,342,251 | $1,840,464 |
+| Net profit | ($44,838) | $107,964 | $166,094 | $323,501 | $498,042 |
+| Cash at year end | $127,330 | $185,024 | $310,257 | $609,759 | $1,079,788 |
 
-Break even in year three. Revenue is B2B: subscriptions at $15 a year for Pro
+Profitable from year two. Revenue is B2B: subscriptions at $15 a year for Pro
 and $35 for Team are a reach product, and most paying accounts come free, from
 learners who sat in a cohort rather than from a paid click.
 
+Year one spends **$148,425**, which nobody typed. It is what the activity
+plan, the hiring plan and the cost drivers add up to, and the dynamic test
+moves it by changing the activity.
+
+## The plan and the model are one set of numbers
+
+`business_plan/finlink.py` reads the recalculated workbook and hands every
+figure to the business plan. The plan holds no financial numbers of its own:
+volumes, prices, the cost stack, the three statements, the capacity tables,
+the establishment and all five financial figures are read from the model. A
+number can be wrong, but the two files cannot disagree.
+
+The document carries a full **Financial Plan** part, from assumptions to the
+three statements: method, what the model opens on, acquisition assumptions
+online and offline, who buys and how long each kind takes, what a won contract
+turns into, pricing, delivery pace and the year one ceiling, direct and
+operating cost, working capital, funding and tax, then the income statement,
+balance sheet and cash flow statement in full, the indicators, the capacity
+checks, how the model is verified, and what still needs a decision.
+
 ## Rebuild
+
+Order matters. The plan cannot be built before the model.
 
 ```bash
 python3 scripts/build_financial_model.py
-python3 scripts/recalc.py output/StartPad_Financial_Model.xlsx 900
+python3 scripts/recalc.py output/StartPad_Financial_Model.xlsx 1500
+python3 scripts/build_business_plan_docx.py      # redraws all 42 figures
 ```
 
 LibreOffice Calc must be installed for the recalculation; this container did
 not ship with it. openpyxl writes formulas without cached values, so nothing
 that reads values will show numbers until the workbook is recalculated.
 
+## Four gates, not one
+
+A model can contain nothing but formulas and still be dead, if those formulas
+point at the wrong cells. A document can quote a model and still contradict
+it, if it quotes a copy.
+
+```bash
+python3 scripts/audit_financial_model.py        # 0 static, 0 hardcoded
+python3 scripts/verify_financial_model.py       # 840 of 840 recompute
+python3 scripts/test_model_is_dynamic.py        # 36 of 36 outputs respond
+python3 scripts/check_plan_matches_model.py     # 47 of 47, plan equals model
+```
+
+**The audit** reports any number outside a designated input cell, and any
+number inside a formula that is not structural. Zero of each across 27,021
+formulas.
+
+**The verifier** rebuilds the entire acquisition engine a second time, in
+Python, from the input cells read back out of the workbook, and compares every
+month: leads, meetings, proposals, contracts signed after each buyer's cycle,
+contracts mobilised after each lag, the live contract book by engine, and the
+volume each engine delivers. Then every revenue line against volume times
+price, direct cost against its drivers, payroll against the establishment,
+every profit cross-foot, the balance sheet and cash flow identities, that no
+asset depreciates below nil, and the capacity sheet. It has already caught two
+real defects: a total gross assets row summing one row short, and four engines
+booking year one revenue against nil delivery cost.
+
+**The dynamic test** moves fourteen inputs at once, recalculates, and confirms
+thirty-six outputs across every calculating sheet respond with the balance
+check still at 0.000000.
+
+**The plan check** proves the business plan's headline series equal the
+workbook's, that the plan's cost roll-up adds back to the model total so a
+cost line added later cannot go missing from the document, that headcount sits
+inside its cap, that the balance check is nil, and that no figure on disk
+predates the workbook. That last one is not a precaution: the document
+renderer embeds whatever PNG is on disk, so a plan built after a model change
+used to carry the previous run's charts beside the new sentences, and both
+halves looked correct on their own.
+
 ## What still needs a decision
+
+The **sales cycles** are set to one month for every buyer type. That is fast
+for a ministry or a donor, and it is the assumption most likely to be
+challenged in a funding conversation. Lengthening it pushes revenue right
+without changing anything else.
+
+The **cash trough** is $13,012 in month 3, against the $25,000 minimum buffer
+the model itself carries. The seed lands in month 4. A larger round, or
+pulling institutional days sales outstanding in from 75, closes it. Both are
+inputs.
 
 The valuation inputs on `Exit Angel and VC`, pre-money at each round, the
 dilution assumed from later rounds, and the exit multiples, are negotiating
 positions rather than facts. They are inputs for that reason.
 
-The cash trough is **$12,228 in month 32**, below the $25,000 buffer the model
-itself carries as an assumption. A seed of about $175,000 rather than
-$150,000, or pulling institutional days sales outstanding in from 75, closes
-it. Both are inputs.
