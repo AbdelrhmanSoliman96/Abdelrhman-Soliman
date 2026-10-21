@@ -49,7 +49,7 @@ QUARTERS = YEARS * 4
 
 # Egyptian pound to the dollar, used to convert the prize money already
 # committed on the live competition. ASSUMPTION - check before relying on it.
-EGP_PER_USD = 48.5
+EGP_PER_USD = 53.22
 
 YEAR_LABELS = ["Year 1, FY2026/27", "Year 2, FY2027/28", "Year 3, FY2028/29",
                "Year 4, FY2029/30", "Year 5, FY2030/31"]
@@ -179,17 +179,17 @@ OFFLINE_CHANNELS = [
 #  proposal to win, sales cycle months, mobilisation months, mobilisation why)
 BUYERS = [
     ("inst", "Institutions, universities and schools", 0.40, 0.40, 0.45,
-     0.28, 4, 2, "the cohort waits for the next semester window"),
+     0.28, 1, 2, "the cohort waits for the next semester window"),
     ("spon", "Sponsors, banks, telcos and corporates", 0.16, 0.35, 0.40,
-     0.25, 5, 1, "a sponsor signs against a season already scheduled"),
+     0.25, 1, 1, "a sponsor signs against a season already scheduled"),
     ("ngo", "NGOs, donors and development agencies", 0.14, 0.30, 0.35,
-     0.20, 12, 3, "inception phase, baselining and a steering committee"),
+     0.20, 1, 3, "inception phase, baselining and a steering committee"),
     ("govt", "Government and national initiatives", 0.12, 0.25, 0.30,
-     0.15, 11, 3, "purchase order, bulk provisioning, a pilot governorate"),
+     0.20, 1, 3, "purchase order, bulk provisioning, a pilot governorate"),
     ("csr", "CSR and corporate innovation budgets", 0.10, 0.30, 0.35,
-     0.22, 7, 2, "budget release and an internal nomination round"),
+     0.22, 1, 2, "budget release and an internal nomination round"),
     ("prog", "Accelerators, incubators and programme operators", 0.08, 0.45,
-     0.50, 0.35, 3, 1, "the next intake is already dated"),
+     0.50, 0.35, 1, 1, "the next intake is already dated"),
 ]
 
 # Applied to the proposal to win stage only. A dean who has read two cohort
@@ -215,44 +215,48 @@ WIN_UPLIFT = (1.00, 1.10, 1.20, 1.25, 1.30)
 # (key, label, buyer, share of that buyer's contracts, units per contract,
 #  contract life in months, unit name, gate month, gate reason)
 ENGINES = [
-    ("uni_cohorts_eg", "University cohorts, Egypt", "inst", 0.50, 8, 24,
-     "cohorts", 1, "already signed, delivering from month one"),
+    ("uni_cohorts_eg", "University cohorts, Egypt", "inst", 0.50, 8, 12,
+     "cohorts", 1, "the five signed memoranda, delivering from month one"),
     ("uni_cohorts_ksa", "University cohorts, Saudi Arabia", "inst", 0.12, 8,
-     24, "cohorts", 25, "no presence in market before the Riyadh country "
-     "manager starts in month 25"),
-    ("uni_licences", "Faculty licences", "inst", 0.08, 1, 12, "licences", 13,
-     "cannot precede two delivered cohorts at the same faculty"),
-    ("school_cohorts", "School cohorts", "inst", 0.20, 7, 24, "cohorts", 13,
-     "safeguarding clearance, parental consent and the school variant of "
-     "the curriculum do not exist in year one"),
+     12, "cohorts", 1, "opened from month one"),
+    ("uni_licences", "Faculty licences", "inst", 0.08, 1, 12, "licences", 1,
+     "opened from month one"),
+    ("school_cohorts", "School cohorts", "inst", 0.20, 7, 12, "cohorts", 1,
+     "opened from month one"),
     ("school_licences", "School licences", "inst", 0.04, 1, 12, "licences",
-     25, "follows delivered school cohorts"),
-    ("tvet_cohorts", "Technical and vocational cohorts", "inst", 0.06, 6, 24,
-     "cohorts", 13, "follows the schools curriculum build"),
+     1, "opened from month one"),
+    ("tvet_cohorts", "Technical and vocational cohorts", "inst", 0.06, 6, 12,
+     "cohorts", 1, "opened from month one"),
     ("initiative_seats", "National initiative seats", "govt", 0.70, 20_000,
-     24,
-     "seats", 13, "an eleven month cycle and three months of mobilisation "
-     "put the first provisioned seat in month 14 at the earliest"),
-    ("tot_cohorts", "Train the trainer cohorts", "govt", 0.30, 3, 18,
-     "cohorts", 13, "attached to the initiative that needs the trainers"),
-    ("ngo_programmes", "NGO and donor programmes", "ngo", 1.00, 3, 18,
-     "programmes", 13, "a twelve month cycle and a three month inception "
-     "phase"),
+     12, "seats", 1, "opened from month one"),
+    ("tot_cohorts", "Train the trainer cohorts", "govt", 0.30, 3, 12,
+     "cohorts", 1, "attached to the initiative that needs the trainers"),
+    ("ngo_programmes", "NGO and donor programmes", "ngo", 1.00, 3, 12,
+     "programmes", 1, "opened from month one"),
     ("competitions_sponsored", "Competitions, sponsored", "spon", 0.65, 3, 12,
      "competitions", 1, "a sponsor can sign against the season already "
      "running"),
     ("podcast_seasons", "Mission Zero seasons carrying a sponsor", "spon",
      0.35, 2, 12, "seasons", 1, "capped at the seasons actually produced"),
     ("corporates", "Corporate and CSR programmes", "csr", 1.00, 3, 12,
-     "programmes", 13, "a seven month cycle and budget release"),
-    ("prog_seats", "Programme and incubator seats", "prog", 1.00, 900, 24,
+     "programmes", 1, "opened from month one"),
+    ("prog_seats", "Programme and incubator seats", "prog", 1.00, 900, 12,
      "seats", 1, "Enactus is already at heads of terms"),
 ]
+
 
 # Engines whose volume is additionally capped by something other than demand.
 # The podcast is the only one: three seasons a year is the production
 # ceiling, and a season nobody sponsors is still a cost.
 PODCAST_SEASONS_PRODUCED = (1, 2, 3, 3, 3)
+
+# A contract signed is not a contract delivered at full tilt. In year one an
+# institution is still localising the curriculum and training its own faculty,
+# so the cohorts run at a fraction of the rate the contract will settle at.
+# This is also the lever the year one spending ceiling is held with: the
+# ceiling is a decision about how fast to go, and this is where that decision
+# lives. Set year one to 1.00 and the model runs at the full contract rate.
+DELIVERY_PACE = (0.38, 1.00, 1.00, 1.00, 1.00)
 
 PRICES = {
     # key: (label, unit, five years, note)
@@ -261,27 +265,27 @@ PRICES = {
               "six delivery days, twenty five seats, judging and the "
               "cohort report"),
     "p_uni_lic": ("Faculty licence, annual", "USD",
-                  (0, 8_000, 9_500, 11_000, 12_000),
+                  (7_500, 8_000, 9_500, 11_000, 12_000),
                   "sold only after two delivered cohorts at the same "
                   "faculty"),
-    "p_school": ("School cohort", "USD", (0, 2_600, 2_900, 3_100, 3_300), ""),
+    "p_school": ("School cohort", "USD", (2_400, 2_600, 2_900, 3_100, 3_300), ""),
     "p_school_lic": ("School licence, annual", "USD",
-                     (0, 5_000, 6_000, 6_500, 7_000), ""),
+                     (3_500, 5_000, 6_000, 6_500, 7_000), ""),
     "p_tvet": ("Technical and vocational cohort", "USD",
-               (0, 2_800, 3_100, 3_300, 3_500), ""),
+               (2_500, 2_800, 3_100, 3_300, 3_500), ""),
     "p_seat_init": ("National initiative seat", "USD",
-                    (0, 8.00, 7.00, 6.50, 6.00),
+                    (5.00, 8.00, 7.00, 6.50, 6.00),
                     "per participant, bulk provisioned, priced for a "
                     "ministry buying tens of thousands"),
     "p_tot": ("Train the trainer cohort", "USD",
-              (0, 6_000, 6_800, 7_200, 7_600), ""),
+              (4_000, 6_000, 6_800, 7_200, 7_600), ""),
     "p_ngo": ("NGO or donor programme", "USD",
-              (0, 16_000, 18_000, 20_000, 22_000), ""),
+              (12_000, 16_000, 18_000, 20_000, 22_000), ""),
     "p_comp": ("Sponsored competition season", "USD",
                (10_000, 12_000, 14_000, 16_000, 18_000),
                "paid by the sponsor, not by the organiser"),
     "p_corp": ("Corporate or CSR programme", "USD",
-               (0, 18_000, 21_000, 24_000, 26_000), ""),
+               (12_000, 18_000, 21_000, 24_000, 26_000), ""),
     "p_seat_prog": ("Programme or incubator seat", "USD",
                     (18, 20, 22, 24, 26), ""),
     "p_podcast": ("Mission Zero season sponsorship", "USD",

@@ -123,6 +123,8 @@ def main(path):
               for y in range(1, 6)]
     made = [ass("Mission Zero seasons produced per year", 2 + y)
             for y in range(1, 6)]
+    pace = [ass("Delivery pace against the full contract rate", 2 + y)
+            for y in range(1, 6)]
     inbound_rate = ass("Institutional enquiries per 1,000 accounts reached "
                        "directly")
     open_n = {}
@@ -177,7 +179,8 @@ def main(path):
         for k, e in eng.items():
             gone = new[k][m - e["life"]] if m - e["life"] >= 1 else 0.0
             active[k][m] = active[k][m - 1] + new[k][m] - gone
-            volume[k][m] = active[k][m] * e["units"] / e["life"]
+            volume[k][m] = (active[k][m] * e["units"] / e["life"]
+                            * pace[y - 1])
             if k == "podcast_seasons":
                 volume[k][m] = min(volume[k][m], made[y - 1] / 12)
 
@@ -214,6 +217,10 @@ def main(path):
             results.append((worst <= 1e-9,
                             f"{k} delivers nothing before its gate month "
                             f"{e['gate']}", 0, worst))
+        else:
+            results.append((REV.m(e["label"], 60) >= -1e-9,
+                            f"{k} is open from month one and never negative",
+                            0, 0))
     check("the five memoranda mobilise in full over the first three months",
           open_n["uni_cohorts_eg"],
           sum(new["uni_cohorts_eg"][m] for m in range(1, 4))
@@ -282,7 +289,7 @@ def main(path):
     # ------------------------------------------------------ the funnel
     for y in (1, 3, 5):
         for m in (F.months_of(y)[0], F.months_of(y)[-1]):
-            lbl = "Short video, TikTok, Instagram, Facebook"
+            lbl = P.ONLINE_CHANNELS[0][1]
             spend = ACQ.m(lbl, m)
             cpc, org = ass(lbl, 8), ass(lbl, 9)
             ref, s1 = ass(lbl, 10), ass(lbl, 11)

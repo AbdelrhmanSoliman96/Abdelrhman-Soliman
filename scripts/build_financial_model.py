@@ -345,10 +345,11 @@ def build_assumptions(wb):
          "referral traffic are then taken as a stated share of paid, never "
          "assumed free. Three conversion stages follow: click to lead, lead "
          "to registered account, registered account to paid account.")
-    table_header(["Budget Y1", "Y2", "Y3", "Y4", "Y5", "Cost per click",
+    table_header(["Monthly budget, Y1", "Monthly, Y2", "Monthly, Y3",
+                  "Monthly, Y4", "Monthly, Y5", "Cost per click",
                   "Organic % of paid", "Referral % of paid",
                   "Stage 1, click to lead"],
-                 "Online channel, monthly budget", "")
+                 "Online channel", "Every budget on this row is per month")
     A["on"] = {}
     for key, lbl, budgets, cpc, org, ref, s1 in P.ONLINE_CHANNELS:
         ws.cell(r, 1, lbl).font = f(8.5)
@@ -515,6 +516,13 @@ def build_assumptions(wb):
         c.font = f(8.5, True)
         r += 1
     r += 1
+    five("Delivery pace against the full contract rate", "pace", "x",
+         P.DELIVERY_PACE, MULT,
+         "a contract signed is not a contract delivered at full tilt. In "
+         "year one the institution is still localising the curriculum and "
+         "training its own faculty. This is also where the year one "
+         "spending ceiling is held: set it to 1.00 to run every contract at "
+         "its full rate from month one")
     five("Mission Zero seasons produced per year", "podcast_made", "#",
          P.PODCAST_SEASONS_PRODUCED, NUM,
          "the production ceiling. A season nobody sponsors is still a cost, "
@@ -573,13 +581,13 @@ def build_assumptions(wb):
          (2_500, 3_500, 4_500, 5_200, 5_800), MONEY,
          "a freelance two person crew")
     five("Delivery cost, NGO or donor programme", "c_ngo", "USD",
-         (0, 4_500, 5_200, 5_600, 6_000), MONEY)
+         (4_500, 4_500, 5_200, 5_600, 6_000), MONEY)
     five("Delivery cost, corporate programme", "c_corp", "USD",
-         (0, 5_000, 6_000, 6_800, 7_400), MONEY)
+         (5_000, 5_000, 6_000, 6_800, 7_400), MONEY)
     five("Delivery cost, train the trainer cohort", "c_tot", "USD",
-         (0, 1_600, 1_800, 1_950, 2_100), MONEY)
+         (1_600, 1_600, 1_800, 1_950, 2_100), MONEY)
     five("Support cost per national initiative seat", "c_seat_init", "USD",
-         (0, 2.20, 2.00, 1.85, 1.75), MONEY2,
+         (2.20, 2.20, 2.00, 1.85, 1.75), MONEY2,
          "provisioning, a bilingual support queue and partner reporting")
     one("Support cost per programme seat", "c_seat_prog", "USD", 2.20, MONEY2)
     one("Hosting and inference per paid subscriber per month", "c_sub", "USD",
@@ -603,7 +611,7 @@ def build_assumptions(wb):
     one("Party 2, share of programme and incubator seat revenue", "ch_seat",
         "%", 0.10, PCT)
     five("Party 3, share of national initiative seat revenue", "ag_seat", "%",
-         (0.0, 0.07, 0.07, 0.06, 0.06), PCT,
+         (0.07, 0.07, 0.07, 0.06, 0.06), PCT,
          "government aggregators and local distributors")
     one("Party 3, payment processing on subscriptions", "pay_rate", "%",
         0.035, PCT)
@@ -1122,7 +1130,8 @@ def finish_revenue(wb):
         act = acq["active"][key]
 
         def vol(m, a=act, e=er, k=key):
-            base = (f"{mref(S_ACQ, a, m)}*{S_ASS}!$D${e}/{S_ASS}!$E${e}")
+            base = (f"{mref(S_ACQ, a, m)}*{S_ASS}!$D${e}/{S_ASS}!$E${e}"
+                    f"*{aref('pace', m)}")
             if k == "podcast_seasons":
                 return f"=MIN({base},{aref('podcast_made', m)}/12)"
             return f"={base}"
