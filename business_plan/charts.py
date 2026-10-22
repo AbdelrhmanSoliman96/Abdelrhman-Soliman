@@ -58,17 +58,39 @@ plt.rcParams.update({
     "axes.spines.right": False,
     "figure.dpi": 200,
     "savefig.dpi": 200,
-    "savefig.bbox": "tight",
     "savefig.facecolor": WHITE,
 })
+
+# Every figure is placed in the document at the same printed width, so the
+# saved width has to be the same for all of them or the point sizes authored
+# here are not the point sizes that print. A tight bounding box crops each
+# figure to its own content, which produced twenty five different pixel
+# widths across forty five figures and a 1.9x spread in apparent type size:
+# the leverage diagram printed at 73% and the market circles at 141%. So the
+# canvas is fixed and the layout is fitted inside it instead.
+FIG_W = 7.1          # inches, every figure, without exception
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "figures")
 
 
 def _save(fig, name):
+    """
+    Write the figure at the fixed canvas width, with nothing cropped.
+
+    Plot figures are fitted with the constrained layout engine, which makes
+    room for anything placed outside the axes, legends under the x-axis
+    above all. Hand-composed diagrams already fill their own canvas and are
+    left alone. Either way the saved width is identical, so a point size
+    chosen here is the point size the reader sees.
+    """
     os.makedirs(OUT, exist_ok=True)
     path = os.path.join(OUT, f"{name}.png")
-    fig.savefig(path, facecolor=WHITE)
+    if not getattr(fig, "_startpad_canvas", False):
+        try:
+            fig.set_layout_engine("constrained")
+        except Exception:
+            fig.tight_layout()
+    fig.savefig(path, facecolor=WHITE, bbox_inches=None)
     plt.close(fig)
     return path
 
@@ -109,11 +131,19 @@ LINE = 1.52         # line spacing multiple
 
 
 def _canvas(w, h):
+    """
+    A drawing surface where one data unit is one inch.
+
+    The axes fill the figure exactly, so the inch coordinates the diagrams
+    are composed in survive all the way to the page. That only holds if the
+    figure is saved without a tight bounding box, which `_save` guarantees.
+    """
     fig, ax = plt.subplots(figsize=(w, h))
     ax.set_xlim(0, w)
     ax.set_ylim(0, h)
     ax.axis("off")
     fig.subplots_adjust(left=0, right=1, top=1, bottom=0)
+    fig._startpad_canvas = True
     return fig, ax
 
 
@@ -437,7 +467,7 @@ def fig_engine_mix():
     """
     yrs = M.projection()
     n = len(yrs)
-    fig, axes = plt.subplots(1, n, figsize=(7.1, 2.35))
+    fig, axes = plt.subplots(1, n, figsize=(7.1, 2.55))
     for ax, y in zip(axes, yrs):
         vals = [y["lines"][k] for k in M.ENGINE_NAMES]
         ax.pie(vals, colors=ENGINE_COLOURS, startangle=90,
@@ -446,12 +476,22 @@ def fig_engine_mix():
                 fontsize=8.6, fontweight="bold", color=INK)
         ax.text(0, -0.17, _money(y["revenue"]), ha="center", va="center",
                 fontsize=7.6, color=INK2)
-        ax.text(0, -1.38, f"{y['institutional_share']*100:.0f}% institutional",
-                ha="center", fontsize=6.8, color=MUTED)
-    axes[n // 2].legend(ENGINE_1LINE, frameon=False, fontsize=6.3, ncol=4,
-                        loc="upper center", bbox_to_anchor=(0.5, -0.10),
-                        labelcolor=INK2, handlelength=1.0,
-                        columnspacing=0.8)
+    # The caption is the axes label rather than free text. A pie axes is
+    # square and its data range is far wider than the column it sits in, so
+    # text placed in data coordinates ran off the canvas, and text placed in
+    # figure coordinates landed on top of the ring. An xlabel is positioned
+    # under the axes box by the layout engine, which is the only one of the
+    # three that is measured rather than guessed.
+    for ax, y in zip(axes, yrs):
+        ax.set_xlabel(f"{y['institutional_share']*100:.0f}% institutional",
+                      fontsize=6.8, color=MUTED, labelpad=2)
+    # A figure legend rather than one hung off the middle axes: an axes
+    # legend is sized against that axes, and a four column legend on a pie
+    # axes reached past the edge of the page.
+    handles = axes[0].patches[:len(ENGINE_1LINE)]
+    fig.legend(handles, ENGINE_1LINE, frameon=False, fontsize=6.3, ncol=4,
+               loc="lower center", labelcolor=INK2, handlelength=1.0,
+               columnspacing=0.8)
     return _save(fig, "engine_mix")
 
 
@@ -474,11 +514,13 @@ def fig_roadmap():
         ("Corporate and CSR programmes", "corporates", None),
         ("Programme and incubator seats", "programmes", None),
     ]
-    W, H = 7.1, 3.95
+    # Tall enough to carry the year band above the grid; at 3.95 the year
+    # labels sat a tenth of an inch above the canvas and were clipped.
+    W, H = 7.1, 4.08
     fig, ax = _canvas(W, H)
     left = 2.05
     cell = (W - left - 0.06) / 12
-    top = H - 0.52
+    top = H - 0.66          # leaves room above for the year band
 
     # Year bands and quarter labels
     for yi, (y0, y1) in enumerate([(0, 4), (4, 8), (8, 12)]):
@@ -523,10 +565,11 @@ def fig_roadmap():
             ax.text(left + first * cell + cell / 2, cy, "G", fontsize=5.0,
                     color=WHITE, ha="center", va="center", fontweight="bold",
                     zorder=7)
-    ax.text(left, 0.11, "G  marks the gate — the quarter an engine can first earn, "
-            "once its prerequisite is met.  Bar height is volume;  a grey cell "
-            "means the engine is not yet open.",
-            fontsize=6.5, color=MUTED, va="center")
+    ax.text(left, 0.16, "\n".join(_wrap(
+        "G marks the gate, the quarter an engine can first earn once its "
+        "prerequisite is met. Bar height is volume; a grey cell means the "
+        "engine is not yet open.", 6.5, W - left - 0.08)),
+        fontsize=6.5, color=MUTED, va="center", linespacing=1.45)
     return _save(fig, "roadmap")
 
 
@@ -600,7 +643,11 @@ def fig_quarterly_volumes():
 
 def fig_customer_journey():
     """Two journeys, because there are two customers and only one of them pays."""
-    W, H = 7.1, 3.25
+    # Tall enough to carry a footnote band under the second row. At 3.25 the
+    # note was drawn inside the second row's own vertical space and ran
+    # underneath the cards.
+    W, H = 7.1, 3.62
+    LABEL, RMARGIN = 1.15, 0.06
     fig, ax = _canvas(W, H)
     inst = [("AWARE", "Hears of us", "A founder story, a competition on a "
              "neighbouring campus, a ministry naming us"),
@@ -620,20 +667,27 @@ def fig_customer_journey():
               "sponsored seat"),
              ("PAYS", "Pro or Team", "To finish 11–15 after the programme ends")]
     gap = 0.09
-    w = (W - 1.15 - 4 * gap) / 5
+    # The last card has to stop short of the canvas edge, or it prints flush
+    # against the text column with no margin at all.
+    w = (W - LABEL - RMARGIN - 4 * gap) / 5
     for ri, (title, rows, col) in enumerate(
             [("THE BUYER", inst, UV), ("THE YOUNG PERSON", youth, "#00B8C8")]):
         ytop = H - 0.18 - ri * 1.62
-        ax.text(0, ytop - 0.14, title, fontsize=7.0, color=col, fontweight="bold",
-                va="top")
+        ax.text(0, ytop - 0.14, "\n".join(_wrap(title, 7.0, LABEL - 0.10,
+                                                bold=True)),
+                fontsize=7.0, color=col, fontweight="bold", va="top",
+                linespacing=1.35)
         for i, (stage, act, trigger) in enumerate(rows):
-            x = 1.15 + i * (w + gap)
+            x = LABEL + i * (w + gap)
             _chip(ax, x, ytop - 1.44, w, 1.26, act, trigger,
-                  spec(i, 5) if ri == 0 else WASH, tag=stage, tsize=8.0, bsize=6.3)
+                  spec(i, 5) if ri == 0 else WASH, tag=stage, tsize=8.0,
+                  bsize=6.3)
             if i < 4:
-                _arrow(ax, x + w + 0.01, ytop - 0.80, x + w + gap - 0.01, ytop - 0.80)
-    ax.text(0, 0.22, "The two journeys meet in the room: the buyer's pilot is the "
-            "young person's activation.", fontsize=6.9, color=MUTED, va="center")
+                _arrow(ax, x + w + 0.01, ytop - 0.80,
+                       x + w + gap - 0.01, ytop - 0.80)
+    ax.text(0, 0.16, "The two journeys meet in the room: the buyer's pilot is "
+            "the young person's activation.", fontsize=6.9, color=MUTED,
+            va="center")
     return _save(fig, "customer_journey")
 
 
@@ -648,13 +702,17 @@ def fig_channel_mix():
     fig, ax = plt.subplots(figsize=(7.1, 2.6))
     for i, (label, val, why) in enumerate(rows):
         ax.barh(i, val, 0.5, color=spec(i, len(rows)), zorder=3)
-        ax.text(val + 0.7, i + 0.07, f"{val}%", va="center", fontsize=8,
+        # The share and the note are two separate labels on one line, so the
+        # note has to clear the widest share, not the bar it happens to sit
+        # on. At val + 3.4 they touched.
+        ax.text(val + 0.9, i + 0.07, f"{val}%", va="center", fontsize=8,
                 color=INK, fontweight="bold")
-        ax.text(val + 3.4, i + 0.07, why, va="center", fontsize=6.9, color=MUTED)
+        ax.text(val + 5.2, i + 0.07, why, va="center", fontsize=6.9,
+                color=MUTED)
     ax.set_yticks(range(len(rows)))
     ax.set_yticklabels([r[0] for r in rows], fontsize=8, color=INK)
     ax.invert_yaxis()
-    ax.set_xlim(0, 52)
+    ax.set_xlim(0, 56)
     ax.set_xticks([])
     ax.spines["bottom"].set_visible(False)
     ax.spines["left"].set_visible(False)
@@ -1063,9 +1121,15 @@ def fig_competition_model():
                                     facecolor=WASH, edgecolor="none", zorder=2))
         ax.text(x + PAD, 1.22, label.upper(), fontsize=6.3, color=MUTED,
                 fontweight="bold", va="top", zorder=4)
-        ax.text(x + PAD, 0.98, value, fontsize=14, color=UV, fontweight="bold",
-                va="top", zorder=4)
-        ax.text(x + PAD, 0.58, "\n".join(_wrap(sub, 6.7, w - 2 * PAD)),
+        # A headline value can be two words long, so it wraps like any other
+        # text. Unwrapped, "Two relationships" ran a third of an inch past
+        # the canvas and was clipped.
+        vsize = 14 if len(value) <= 8 else 10.5
+        ax.text(x + PAD, 0.98,
+                "\n".join(_wrap(value, vsize, w - 2 * PAD, bold=True)),
+                fontsize=vsize, color=UV, fontweight="bold", va="top",
+                zorder=4, linespacing=1.25)
+        ax.text(x + PAD, 0.52, "\n".join(_wrap(sub, 6.7, w - 2 * PAD)),
                 fontsize=6.7, color=INK2, va="top", zorder=4, linespacing=1.45)
     return _save(fig, "competition_model")
 
@@ -1287,7 +1351,8 @@ def fig_bootcamp_map():
     ]
     W, H = 7.1, 2.30
     fig, ax = _canvas(W, H)
-    left = 0.62
+    # Wide enough for the longest band label, which is right aligned into it.
+    left = 0.80
     gap = 0.08
     w = (W - left - 6 * gap) / 7
     bands = [("In the room", 1.28, 0.68), ("On StartPad", 0.60, 0.56),
@@ -1415,9 +1480,11 @@ def fig_flywheel():
     nodes = ["Universities open campuses", "Ambassadors run workshops",
              "Founders complete missions", "Stories become content",
              "Partners fund cohorts"]
-    W, H = 5.2, 3.25
+    # Full canvas width like every other figure, so it prints at the size it
+    # was drawn at rather than being scaled up by a third on the page.
+    W, H = 7.1, 3.35
     fig, ax = _canvas(W, H)
-    cx, cy, R = W / 2, H / 2 + 0.05, 1.16
+    cx, cy, R = W / 2, H / 2 + 0.05, 1.24
     pts = []
     for i in range(len(nodes)):
         a = math.pi / 2 - i * 2 * math.pi / len(nodes)
@@ -1602,11 +1669,12 @@ def fig_leverage():
                 f"Y{r['year']}  {r['learners_per_employee']:,.0f}",
                 fontsize=8.4, color=UV, fontweight="bold", va="center",
                 zorder=4)
-    ax.text(0, 0.08, "Every cohort in this plan is delivered by a certified "
-            "facilitator or a certified partner organisation, never by an "
-            "employee. Headcount therefore tracks the number of partners to "
-            "audit, not the number of cohorts to run.",
-            fontsize=6.5, color=MUTED, va="center", zorder=4)
+    ax.text(0, 0.14, "\n".join(_wrap(
+        "Every cohort in this plan is delivered by a certified facilitator "
+        "or a certified partner organisation, never by an employee. "
+        "Headcount therefore tracks the number of partners to audit, not the "
+        "number of cohorts to run.", 6.5, W - 0.08)),
+        fontsize=6.5, color=MUTED, va="center", zorder=4, linespacing=1.45)
     return _save(fig, "leverage")
 
 
@@ -1843,9 +1911,10 @@ def fig_podcast_targets():
     ax.legend(frameon=False, fontsize=7.0, loc="upper center",
               bbox_to_anchor=(0.5, -0.02), labelcolor=INK2, ncol=5,
               handlelength=1.2)
-    ax.text(0, len(labels) - 0.10, "Each row is scaled to its own year-five "
-            "value, so the shape of the growth is comparable across metrics "
-            "measured in different units.", fontsize=6.4, color=MUTED)
+    ax.set_title("Each row is scaled to its own year-five value, so measures "
+                 "in different units can be compared by shape rather than by "
+                 "size.", fontsize=6.6, color=MUTED, loc="left", pad=8,
+                 wrap=True)
     return _save(fig, "podcast_targets")
 
 

@@ -2149,6 +2149,15 @@ def market():
                     ("Micro and small enterprise owners", msme),
                 ])
 
+
+# The ambassador network is a cost line in the financial model, so its size
+# is read from there rather than kept as a second opinion here. It used to
+# say sixty rising to three hundred and forty, against a model that funds
+# sixteen rising to two hundred and fifty.
+AMBASSADORS = {y: int(v) for y, v in
+               zip(YEARS_5, FL.book().assumption_years(
+                   "Campus ambassadors on a stipend"))}
+
 if __name__ == "__main__":
     m = market()
     print(f"TAM ${m['tam']/1e6:,.1f}m  (institutional ${m['inst_tam']/1e6:,.1f}m)")

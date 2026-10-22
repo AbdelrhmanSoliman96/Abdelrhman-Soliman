@@ -672,6 +672,22 @@ def draw_figures():
     from business_plan import charts as C
     for fn in C.ALL:
         fn()
+    widths = set()
+    figs = os.path.join(ROOT, "business_plan", "figures")
+    try:
+        from PIL import Image
+        for f in os.listdir(figs):
+            if f.endswith(".png"):
+                widths.add(Image.open(os.path.join(figs, f)).size[0])
+    except ImportError:
+        widths = set()
+    if len(widths) > 1:
+        raise SystemExit(
+            f"figures were saved at {len(widths)} different widths "
+            f"({sorted(widths)}). Every figure is placed at the same printed "
+            f"width, so a point size chosen in charts.py is only the point "
+            f"size the reader sees if the saved widths all match. Run "
+            f"scripts/check_figure_fit.py.")
     return len(C.ALL)
 
 

@@ -735,6 +735,26 @@ LibreOffice Calc must be installed for the recalculation; this container did
 not ship with it. openpyxl writes formulas without cached values, so nothing
 that reads values will show numbers until the workbook is recalculated.
 
+## Every figure is the same width, on purpose
+
+Each figure is placed in the document at the same printed width, so a point
+size chosen in `charts.py` is only the point size the reader sees if every
+saved figure has the same pixel width. They did not. `savefig.bbox="tight"`
+cropped each one to its own content, which produced **25 different widths
+across 45 figures and a 1.9x spread in apparent type size**: the leverage
+diagram printed at 73% of the size it was drawn at and the market circles at
+141%. That is the real reason some charts looked crowded and others oversized.
+
+The canvas is now fixed at 7.1 inches for every figure, the constrained layout
+engine fits plot content inside it, and hand-composed diagrams already fill
+their own canvas. All 45 save at exactly 1420px.
+
+A fixed canvas clips anything drawn outside it, where a tight box silently
+rescued it, so `scripts/check_figure_fit.py` measures every figure against its
+canvas and names the overflowing edge. It found six real clips, among them an
+unwrapped footnote running two and a half inches off the leverage diagram. The
+document builder refuses to run if the saved widths ever diverge again.
+
 ## Four gates, not one
 
 A model can contain nothing but formulas and still be dead, if those formulas
@@ -746,6 +766,7 @@ python3 scripts/audit_financial_model.py        # 0 static, 0 hardcoded
 python3 scripts/verify_financial_model.py       # 840 of 840 recompute
 python3 scripts/test_model_is_dynamic.py        # 36 of 36 outputs respond
 python3 scripts/check_plan_matches_model.py     # 95 of 95, plan = model = deck
+python3 scripts/check_figure_fit.py             # no figure overflows its canvas
 ```
 
 **The audit** reports any number outside a designated input cell, and any
