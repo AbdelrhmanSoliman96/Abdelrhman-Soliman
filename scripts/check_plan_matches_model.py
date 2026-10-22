@@ -5,7 +5,7 @@ The two documents used to hold their own numbers and were asked to agree. They
 did not. The plan now reads the workbook through `business_plan.finlink`, but
 that is an architectural claim, and an architectural claim deserves a test.
 
-Four things are checked:
+Five things are checked:
 
   1  Every headline series the plan prints equals the workbook's own.
   2  Every figure on disk is newer than the workbook, so a chart drawn from a
@@ -16,6 +16,8 @@ Four things are checked:
      plan.
   4  Both agree with the market size and the headline figures already shown to
      investors in the October 2026 deck.
+  5  Every role on the establishment has a description, and no description
+     describes a role nobody holds.
 
     python scripts/check_plan_matches_model.py
 """
@@ -109,6 +111,29 @@ def main():
             ("Sponsored competition season", 10_000),
             ("NGO or donor programme", 12_000)):
         check(f"deck price: {label}", want, prices[label][0], 0.5)
+
+    # ------------------------------------------------------- the team
+    # Every role on the establishment needs a description, and no description
+    # may describe a role nobody holds. This was silently false: ten of the
+    # fifteen roles in the model had no description, and thirteen descriptions
+    # were left over from a team that no longer existed.
+    from business_plan.roles import BY_ROLE                      # noqa: E402
+    model_roles = [r[1] for r in MD.FL.P.ROLES]
+    missing = [r for r in model_roles if r not in BY_ROLE]
+    orphans = [r for r in BY_ROLE if r not in model_roles]
+    results.append((not missing,
+                    f"every role on the establishment is described "
+                    f"({len(missing)} missing)", 0, len(missing)))
+    results.append((not orphans,
+                    f"no description describes a role nobody holds "
+                    f"({len(orphans)} orphaned)", 0, len(orphans)))
+    for name, spec in BY_ROLE.items():
+        results.append((len(spec) == 6,
+                        f"role {name!r} carries all six fields", 6,
+                        len(spec)))
+        results.append((bool(spec[4]),
+                        f"role {name!r} says how it engages", 1,
+                        1 if spec[4] else 0))
 
     # Every figure must be newer than the workbook it claims to draw.
     wb_time = os.path.getmtime(FL.WORKBOOK)

@@ -78,8 +78,9 @@ def pct(v, dp=0):
 
 
 def share(engine, year=1):
-    r = {1: R1, 2: R2, 3: R3}[year]
-    return pct(r["lines"][engine] / r["total"])
+    r = revenue(year)
+    total = r["total"]
+    return pct(r["lines"][engine] / total) if total else "0%"
 
 
 TITLE = "Business Plan"
@@ -160,8 +161,8 @@ section("Executive Summary", [
                           "institutional in every year; founder subscriptions "
                           "never become the point."),
     ("table",
-     ["Engine", "Who signs the contract", "Share, Y1", "Share, Y3"],
-     [[e, who, share(e, 1), share(e, 3)]
+     ["Engine", "Who signs the contract", "Y1", "Y2", "Y3", "Y4", "Y5"],
+     [[e, who] + [share(e, y) for y in MD.YEARS_5]
       for e, who in zip(ENGINE_NAMES, [
           "A dean, an entrepreneurship centre or a capstone coordinator",
           "A school group, a principal or a technical institute director",
@@ -171,7 +172,7 @@ section("Executive Summary", [
           "A corporate CSR or innovation budget holder",
           "An incubator or accelerator director",
           "The founder, out of their own pocket"])],
-     [4.0, 6.4, 2.1, 2.1]),
+     [3.4, 4.6, 1.2, 1.2, 1.2, 1.2, 1.2]),
 
     ("h2", "What this plan concludes"),
     ("deflist", [
@@ -791,12 +792,12 @@ section("Marketing Strategy", [
           "thousand people and produces no institutional conversation has failed "
           "at the job it was funded for."),
     ("table",
-     ["Measure", "Year 1", "Year 2", "Year 3"],
-     [[k, n(a), n(b), n(c)] for k, a, b, c in PC["targets"]],
-     [7.2, 2.4, 2.4, 2.4]),
-    ("fig", "podcast_targets", "Each row scaled to its own year-three value, so "
-                               "measures in different units can be compared by "
-                               "shape rather than by size."),
+     ["Measure"] + [f"Year {y}" for y in MD.YEARS_5],
+     [[t[0]] + [n(v) for v in t[1:]] for t in PC["targets"]],
+     [5.8, 1.6, 1.6, 1.6, 1.6, 1.6]),
+    ("fig", "podcast_targets", "Each row scaled to its own year-five value, "
+                               "so measures in different units can be "
+                               "compared by shape rather than by size."),
     ("note", "Guest supply is the risk, and it is managed structurally rather "
              "than hoped for: every cohort showcase, every competition final and "
              "every partner event in this plan is also a recording opportunity, "
@@ -1003,6 +1004,215 @@ section("Sales Strategy", [
         "it is large, certification is behind.",
     ]),
 ])
+
+# =====================================================================
+#  THE DIRECT ENGINE - B2C
+# =====================================================================
+#
+# Every figure in this section is read from the financial model through
+# business_plan.finlink, so it cannot drift from the workbook.
+
+_FLB = MD.FL.book()
+
+
+def _acq(label):
+    return _FLB.years("Acquisitions", label)
+
+
+_REG = _acq("Total new registered accounts")
+_REG_INST = _acq("Registered accounts from institutions")
+_REG_ON = _acq("Registered accounts from online leads")
+_REG_OFF = _acq("Registered accounts from offline sign ups")
+_NEW_PAID = _acq("Stage 3, new paid accounts")
+_ACTIVE = _acq("Active paid accounts")
+_CAC = _acq("Cost per paid account")
+_S2 = _FLB.assumption_years("Stage 2, lead to registered account")
+_S3_ON = _FLB.assumption_years("Stage 3, registered to paid, reached online")
+_S3_IN = _FLB.assumption_years("Stage 3, registered to paid, reached through "
+                               "an institution")
+_AMB = _FLB.assumption_years("Campus ambassadors on a stipend")
+_SUBREV = _FLB.years("Revenue Streams", "Subscription revenue recognised")
+_IND = {i["label"]: i["values"] for i in MD.FL.indicators()}
+_ARPU = _FLB.years("Revenue Streams", "Blended annual subscription price")
+_Y = MD.YEARS_5
+_YH = [f"Year {y}" for y in _Y]
+
+
+section("The Direct Engine", [
+    ("lead", f"Alongside the institutional business there is a second, much "
+             f"smaller engine: individual founders who pay for themselves. It "
+             f"grows from {n(_ACTIVE[0])} paying accounts at the end of year "
+             f"one to {n(_ACTIVE[4])} by year five, on "
+             f"{n(_REG[4])} registered accounts a year. It is "
+             f"{pct(_SUBREV[4] / MD.FL.headline()[4]['revenue'], 1)} of "
+             f"revenue in year five, and it is deliberately not the point."),
+
+    ("h2", "Why this engine is a consequence, not a channel"),
+    ("p", f"Pro costs {usd(MD.PRICE_PRO_YEAR)} a year and Team "
+          f"{usd(MD.PRICE_TEAM_YEAR)}. Those are Egyptian student prices, not "
+          f"western software prices, and they settle the strategy on their "
+          f"own: at a blended {usd(_ARPU[0])} a year, no amount of paid "
+          f"advertising can acquire a subscriber profitably in a market where "
+          f"a qualified click costs a meaningful fraction of that."),
+    ("p", f"So the direct engine is not built on advertising. It is built on "
+          f"the learners the institutional business already reaches. In year "
+          f"five, {pct(_REG_INST[4] / _REG[4])} of all registered accounts "
+          f"arrive because somebody sat in a cohort, a competition, a "
+          f"sponsored seat or an NGO programme that an institution had "
+          f"already paid for. Acquiring them costs nothing extra, because "
+          f"the acquisition was the B2B sale."),
+    ("fig", "b2c_engine", "Registered accounts by where they came from, and "
+                          "the paying accounts they produce."),
+    ("note", f"This is the single most important fact about the direct "
+             f"engine, and it is why online spend is sized as business to "
+             f"business inbound rather than as a consumer channel. Cut the "
+             f"institutional business and the subscription business goes with "
+             f"it."),
+
+    ("h2", "The three stages, and the two routes through them"),
+    ("p", "Every account that is not placed on the platform by an "
+          "institution passes three gates. Budget divided by cost per click "
+          "gives paid clicks; organic and referral traffic are taken as a "
+          "stated share of paid rather than assumed free."),
+    ("num", [
+        f"<b>Click to lead.</b> Between 1.5% and 14% depending on the "
+        f"channel. A webinar converts ten times better than a short video, "
+        f"and costs ten times more per click.",
+        f"<b>Lead to registered account.</b> {pct(_S2[0])} in year one, "
+        f"rising to {pct(_S2[4])} as the onboarding improves. This is the "
+        f"stage the product team owns.",
+        f"<b>Registered account to paid account.</b> This is where the two "
+        f"routes separate, and they separate by a factor of three.",
+    ]),
+    ("fig", "b2c_conversion", "The free to paid conversion, by route. A "
+                              "learner who sat in a cohort converts several "
+                              "times better than somebody who arrived from a "
+                              "click, in every year."),
+    ("table",
+     ["Free to paid conversion"] + _YH,
+     [["Reached through an institution"] + [pct(v, 1) for v in _S3_IN],
+      ["Reached by StartPad's own channels"] + [pct(v, 1) for v in _S3_ON],
+      ["New paying accounts in the year"] + [n(v) for v in _NEW_PAID],
+      ["Paying accounts at year end"] + [n(v) for v in _ACTIVE]],
+     [4.4, 1.9, 1.9, 1.9, 1.9, 1.9]),
+    ("p", "The gap is not an accident of the model, it is the product "
+          "working. A learner who has completed missions, had work reviewed "
+          "and pitched at a showcase has already seen what the paid tier is "
+          "for. Somebody who clicked an advertisement has not."),
+
+    ("pb",),
+    ("h2", "How accounts are actually acquired"),
+    ("h3", "Online channels"),
+    ("p", f"Six channels, each with its own cost per click and its own "
+          f"conversion. Total online spend is {money(_FLB.years('Acquisitions', 'Online marketing cost')[0])} "
+          f"in year one rising to {money(_FLB.years('Acquisitions', 'Online marketing cost')[4])} "
+          f"in year five, and a stated "
+          f"{pct(_FLB.assumption('Share of online spend serving institutional demand'))} "
+          f"of it is there to serve institutional demand rather than "
+          f"subscriptions."),
+    ("table",
+     ["Channel", "Monthly budget, Y1", "Y5", "Cost per click", "Click to lead",
+      "What it is for"],
+     [[c["label"], usd(c["budget"][0]), usd(c["budget"][4]),
+       f"${c['cpc']:,.2f}", pct(c["click_to_lead"], 1), why]
+      for c, why in zip(MD.FL.online_channels(), [
+          "Reach at the top of the funnel, cheap and shallow",
+          "Targeted by age, city and university, for cohort recruitment",
+          "Student creators who already have the audience",
+          "Mission Zero, which doubles as institutional pipeline",
+          "Live Mission 01 sessions, the highest intent traffic there is",
+          "The readiness report and content that earns inbound enquiries"])],
+     [3.0, 1.9, 1.3, 1.5, 1.4, 4.4]),
+
+    ("h3", "Offline activity"),
+    ("p", "Five activity types, every one of which produces both free sign "
+          "ups and institutional leads. This is the part of the plan where "
+          "the B2C and B2B engines are genuinely the same activity: a campus "
+          "workshop fills the room with students who register, and books the "
+          "meeting that sells the cohort."),
+    ("table",
+     ["Activity", "Per month, Y1", "Y5", "Free sign ups each",
+      "Institutional leads each"],
+     [[c["label"], n(c["activities"][0], 1), n(c["activities"][4], 1),
+       n(c["signups"]), n(c["leads"], 1)]
+      for c in MD.FL.offline_channels()],
+     [4.6, 2.2, 1.7, 2.6, 2.9]),
+
+    ("h3", "The ambassador network"),
+    ("p", f"Students on a small stipend who run activity on their own "
+          f"campus. The network grows from {n(_AMB[0])} in year one to "
+          f"{n(_AMB[4])} by year five, at "
+          f"{usd(_FLB.assumption('Ambassador stipend per month'))} a month "
+          f"for {n(_FLB.assumption('Ambassador active months per year'))} "
+          f"active months a year. It is the cheapest reach the company has "
+          f"and the hardest to manage, which is why a dedicated content and "
+          f"community associate arrives in year five when the network passes "
+          f"two hundred people."),
+    ("bul", [
+        "<b>What they do.</b> Run campus activity, staff the stand at "
+        "faculty events, recruit teams for competitions, and carry the "
+        "invitation into societies that StartPad cannot reach from outside.",
+        "<b>What they are not.</b> They are not a sales channel and they do "
+        "not carry a quota. An ambassador who is asked to sell stops being "
+        "trusted by their peers, which destroys the only asset they have.",
+        "<b>How they are held.</b> On activity run and accounts registered, "
+        "not on revenue. The stipend is small enough that it is recognition "
+        "rather than employment, and the plan says so rather than pretending "
+        "otherwise.",
+        "<b>Where they go next.</b> The strongest ambassadors are the "
+        "recruitment pool for certified facilitators, which is a real career "
+        "path and the reason the role attracts people who are good at it.",
+    ]),
+
+    ("h2", "What a paying subscriber is worth"),
+    ("table",
+     ["Direct engine economics"] + _YH,
+     [["Cost per paying account acquired"]
+      + [f"${v:,.2f}" for v in _CAC],
+      ["Subscriber lifetime value"]
+      + [f"${v:,.2f}" for v in _IND["Subscriber lifetime value"]],
+      ["Lifetime value to cost of acquisition"]
+      + [f"{v:,.2f}x" for v in _IND["Subscriber LTV to CAC"]],
+      ["Subscription revenue recognised"] + [money(v) for v in _SUBREV]],
+     [4.4, 1.9, 1.9, 1.9, 1.9, 1.9]),
+    ("note", f"Around {n(_IND['Subscriber LTV to CAC'][4], 1)}x is a thin "
+             f"ratio by software standards and the plan does not dress it up. "
+             f"It is acceptable here only because the cost in the numerator "
+             f"is the share of online spend that was not already paid for by "
+             f"the institutional business, and because the subscriber was "
+             f"acquired as a by-product of a cohort somebody else funded. A "
+             f"company that tried to buy these subscribers directly would "
+             f"lose money on every one."),
+
+    ("h2", "What would make this engine bigger"),
+    ("p", "Three levers, in the order they are worth pulling. All three are "
+          "inputs in the financial model, so the effect of any of them can "
+          "be seen immediately rather than argued about."),
+    ("deflist", [
+        ("Raise the institutional conversion",
+         f"The single largest lever by a wide margin. Moving the "
+         f"institutional free to paid rate from {pct(_S3_IN[4], 1)} to four "
+         f"points higher adds more paying accounts than doubling the entire "
+         f"online budget, because it applies to "
+         f"{pct(_REG_INST[4] / _REG[4])} of the base. It is an onboarding "
+         f"and product problem, not a marketing one."),
+        ("Reach more learners per contract",
+         "Every additional seat inside a contract already signed arrives at "
+         "no acquisition cost. Larger cohorts, more seats per initiative and "
+         "more competition entrants all feed this engine for free."),
+        ("Raise the price",
+         f"Last, and cautiously. At {usd(MD.PRICE_PRO_YEAR)} the price is a "
+         f"deliberate choice about who can afford the product in this "
+         f"market. Raising it improves every ratio on this page and narrows "
+         f"the audience the company exists to serve, which is a strategic "
+         f"decision rather than a financial one."),
+    ]),
+    ("note", "What is deliberately not on this list is paid acquisition at "
+             "scale. The arithmetic does not work at this price, and a plan "
+             "that assumed it would is a plan that would spend the seed round "
+             "finding out."),
+])
+
 
 # =====================================================================
 section("Engagement Model", [
@@ -1293,7 +1503,7 @@ section("Operations Plan", [
     ("fig", "leverage", "Employees against the network that delivers for them, "
                         "across five years, on one scale."),
     ("table",
-     ["", "Year 1", "Year 2", "Year 3"],
+     [""] + [f"Year {y}" for y in MD.YEARS_5],
      [["StartPad employees"] + [n(r["staff"]) for r in LEV],
       ["Certified facilitators in the pool"] + [n(r["pool"]) for r in LEV],
       ["Certified partner organisations"] + [n(r["partners"]) for r in LEV],
@@ -1301,7 +1511,7 @@ section("Operations Plan", [
       ["Learners reached, cohorts and seats"] + [n(r["learners"]) for r in LEV],
       ["Learners per employee"]
       + [n(r["learners_per_employee"]) for r in LEV]],
-     [5.6, 3.1, 3.1, 3.1]),
+     [4.6, 1.9, 1.9, 1.9, 1.9, 1.9]),
     ("deflist", [
         ("Two ratios hold the whole structure up",
          f"One partner network manager can hold roughly "
@@ -1689,22 +1899,42 @@ section("Management and Organization", [
 
     ("pb",),
     ("h2", "Role descriptions"),
-    ("p", "Every role on the establishment, with the purpose it exists for, the "
-          "responsibilities that belong to it and nobody else, and the one measure "
-          "it is held to."),
+    ("p", "All fifteen roles on the establishment, with the purpose each "
+          "exists for, the responsibilities that belong to it and nobody "
+          "else, who it works with inside and outside the company, and the "
+          "one measure it is held to. The engagement lines matter as much as "
+          "the responsibilities: a company this small only works if everybody "
+          "knows which three people they talk to every week, and which "
+          "conversation does not delegate."),
+    ("h3", "Leadership"),
+    ("p", "Three founders from month one. Between them they carry the "
+          "institutional relationships, the platform and the number, and each "
+          "of them holds a job that is later handed to somebody else."),
     ("roles", ["Chief Executive Officer", "Chief Technology Officer",
-               "Chief Operating Officer"]),
-    ("roles", ["Senior full-stack engineer", "AI and data engineer",
-               "Product designer"]),
-    ("roles", ["Head of Curriculum and Certification", "Partner network manager",
-               "Programme delivery coordinator",
-               "Bilingual curriculum producer"]),
-    ("roles", ["Head of Partnerships — Egypt", "Country Manager — KSA (Riyadh)",
-               "Head of Government, Initiatives and Donors",
-               "Partnerships and bids associate",
-               "Head of Schools and Technical Education",
-               "Account manager — renewals"]),
-    ("roles", ["Head of Growth and Content", "Student success (bilingual)"]),
+               "Chief Commercial Officer"]),
+    ("h3", "Institutional Partnerships"),
+    ("p", "Everything that signs a contract reports here. Five roles across "
+          "the five years, added in the order the engines open."),
+    ("roles", ["Business development manager",
+               "Sponsorship and partnerships manager",
+               "Government and donor programmes manager",
+               "Country manager, KSA (Riyadh)",
+               "Account manager, renewals"]),
+    ("h3", "Growth and Content"),
+    ("p", "The demand side, and the direct engine that turns reached "
+          "learners into paying accounts."),
+    ("roles", ["Marketing manager", "Content and community associate"]),
+    ("h3", "Product and Engineering"),
+    ("p", "Two engineers across five years. The chief technology officer "
+          "carries engineering alone through year one."),
+    ("roles", ["Full stack engineer", "AI and data engineer"]),
+    ("h3", "Curriculum and Delivery"),
+    ("p", "Three people who stand behind every cohort the network runs. "
+          "Delivery itself is done by certified freelancers and partner "
+          "organisations, never by an employee, which is the whole reason "
+          "twenty people can carry two hundred cohorts a year."),
+    ("roles", ["Head of curriculum and certification", "Partner network "
+               "manager", "Programme delivery coordinator"]),
 
     ("h2", "Company culture"),
     ("deflist", [

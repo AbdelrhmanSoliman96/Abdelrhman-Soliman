@@ -395,7 +395,7 @@ def figure(doc, name, caption):
 def role_cards(doc, names):
     """One card per role: purpose, responsibilities, and the measure it is held to."""
     for name in names:
-        role, reports_to, purpose, duties, measure = BY_ROLE[name]
+        role, reports_to, purpose, duties, engages, measure = BY_ROLE[name]
         p = para(doc, role, size=11.4, colour=INK, bold=True, before=12, after=1,
                  indent=0.3, keep=True)
         left_bar(p, UV_HEX, size="24")
@@ -419,7 +419,24 @@ def role_cards(doc, names):
             X.run_cs(r, FALLBACK, 9.3)
             write(q, d, 9.3)
             left_bar(q, HAIR_HEX)
-        pm = para(doc, measure, size=8.8, colour=INK, bold=True, before=3,
+        ph = para(doc, "<b>How it engages</b>", size=8.4, colour=UV,
+                  before=5, after=2, indent=0.3, keep=True)
+        left_bar(ph, HAIR_HEX)
+        for e in engages:
+            q = doc.add_paragraph()
+            pf = q.paragraph_format
+            pf.left_indent = Cm(1.02)
+            pf.first_line_indent = Cm(-0.42)
+            pf.space_after = Pt(2)
+            pf.line_spacing = 1.3
+            r = q.add_run("\u2013  ")
+            r.font.name = FONT
+            r.font.size = Pt(8.8)
+            r.font.color.rgb = FAINT
+            X.run_cs(r, FALLBACK, 8.8)
+            write(q, e, 8.8, colour=SECOND)
+            left_bar(q, HAIR_HEX)
+        pm = para(doc, measure, size=8.8, colour=INK, bold=True, before=4,
                   after=9, indent=0.3)
         shade_par(pm, WASH_HEX)
         left_bar(pm, LIME_HEX, size="24")

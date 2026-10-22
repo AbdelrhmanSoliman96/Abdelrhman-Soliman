@@ -706,15 +706,19 @@ PODCAST = dict(
                                 "a learner stuck on pricing is handed the episode "
                                 "about pricing"),
     ],
-    # (metric, Y1, Y2, Y3)
+    # (metric, Y1 ... Y5). Episodes follow the seasons the financial model
+    # actually funds, twelve to a season, so the podcast plan cannot promise
+    # more episodes than the production budget pays for.
     targets=[
-        ("Episodes published", 24, 36, 36),
-        ("Founders featured", 16, 24, 24),
-        ("Student teams featured on camera", 24, 36, 36),
-        ("Partner institutions named in an episode", 14, 30, 44),
-        ("Average views per episode", 4_000, 12_000, 30_000),
-        ("Inbound institutional enquiries credited to it", 18, 55, 130),
-        ("Episodes mapped into the curriculum as mission material", 24, 60, 96),
+        ("Episodes published", 12, 24, 36, 36, 36),
+        ("Founders featured", 8, 16, 24, 24, 24),
+        ("Student teams featured on camera", 12, 24, 36, 36, 36),
+        ("Partner institutions named in an episode", 10, 24, 40, 56, 72),
+        ("Average views per episode", 4_000, 12_000, 30_000, 46_000, 60_000),
+        ("Inbound institutional enquiries credited to it", 18, 55, 130, 190,
+         240),
+        ("Episodes mapped into the curriculum as mission material", 12, 36, 72,
+         108, 144),
     ],
     # Why it earns its budget, in the order the effects arrive.
     chain=[

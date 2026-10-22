@@ -702,6 +702,25 @@ operating cost, working capital, funding and tax, then the income statement,
 balance sheet and cash flow statement in full, the indicators, the capacity
 checks, how the model is verified, and what still needs a decision.
 
+It also carries a **Direct Engine** part for the B2C side: why a $15 a year
+price settles the strategy on its own, the three stage funnel, the two routes
+to a paying account and why a cohort learner converts about three times better
+than a click, the online channels, the offline activity, the ambassador
+network, the subscriber economics, and the three levers that would make the
+engine bigger. In year five 83% of registered accounts arrive through an
+institution, which is why the direct engine is a consequence of the B2B
+business rather than a channel beside it.
+
+Everything is five years. Every table, every chart and every target runs Year 1
+to Year 5, including the engine mix donuts, the revenue share by engine, the
+leverage bands and the podcast targets, all of which previously stopped at
+year three while the model ran to five.
+
+**All fifteen roles** on the establishment are described, each with the
+purpose it exists for, the responsibilities that belong to it and nobody else,
+**who it works with inside and outside the company**, and the one measure it
+is held to.
+
 ## Rebuild
 
 Order matters. The plan cannot be built before the model.
@@ -709,7 +728,7 @@ Order matters. The plan cannot be built before the model.
 ```bash
 python3 scripts/build_financial_model.py
 python3 scripts/recalc.py output/StartPad_Financial_Model.xlsx 1500
-python3 scripts/build_business_plan_docx.py      # redraws all 42 figures
+python3 scripts/build_business_plan_docx.py      # redraws all 45 figures
 ```
 
 LibreOffice Calc must be installed for the recalculation; this container did
@@ -726,7 +745,7 @@ it, if it quotes a copy.
 python3 scripts/audit_financial_model.py        # 0 static, 0 hardcoded
 python3 scripts/verify_financial_model.py       # 840 of 840 recompute
 python3 scripts/test_model_is_dynamic.py        # 36 of 36 outputs respond
-python3 scripts/check_plan_matches_model.py     # 63 of 63, plan = model = deck
+python3 scripts/check_plan_matches_model.py     # 95 of 95, plan = model = deck
 ```
 
 **The audit** reports any number outside a designated input cell, and any
@@ -749,7 +768,9 @@ thirty-six outputs across every calculating sheet respond with the balance
 check still at 0.000000.
 
 **The plan check** proves the business plan's headline series equal the
-workbook's and that both agree with the October 2026 investor deck, that the plan's cost roll-up adds back to the model total so a
+workbook's, that both agree with the October 2026 investor deck, that every
+role on the establishment has a description and no description describes a
+role nobody holds, that the plan's cost roll-up adds back to the model total so a
 cost line added later cannot go missing from the document, that headcount sits
 inside its cap, that the balance check is nil, and that no figure on disk
 predates the workbook. That last one is not a precaution: the document

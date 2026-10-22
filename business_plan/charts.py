@@ -233,6 +233,115 @@ def fig_segments():
 #  2 · TAM and SAM, engine by engine
 # =====================================================================
 
+def fig_b2c_engine():
+    """
+    Where registered accounts come from, and how many of them pay.
+
+    Two panels on one x-axis rather than two y-axes on one panel. The
+    quantities differ by a factor of twenty, so overlaying them put the
+    paying-account line straight through the bar labels; stacking the panels
+    removes the collision by construction and keeps both readable.
+
+    The point of the chart is the proportion: almost every account arrives
+    through an institution rather than through a click, which is why the
+    direct engine is a consequence of the B2B business rather than a channel
+    beside it.
+    """
+    FL = M.FL
+    b = FL.book()
+    years = list(M.YEARS_5)
+    inst = b.years("Acquisitions", "Registered accounts from institutions")
+    off = b.years("Acquisitions", "Registered accounts from offline sign ups")
+    on = b.years("Acquisitions", "Registered accounts from online leads")
+    paid = b.years("Acquisitions", "Active paid accounts")
+    fig, (ax, axp) = plt.subplots(
+        2, 1, figsize=(7.1, 4.3), sharex=True,
+        gridspec_kw=dict(height_ratios=[2.5, 1.0], hspace=0.16))
+    x = list(range(len(years)))
+    series = [("Reached through an institution", inst, UV),
+              ("Offline activity and ambassadors", off, "#00ABD4"),
+              ("Online channels", on, "#A1EE58")]
+    bottoms = [0.0] * len(years)
+    top = max(i + o + n for i, o, n in zip(inst, off, on))
+    for name, vals, col in series:
+        ax.bar(x, vals, 0.52, bottom=bottoms, color=col, label=name,
+               edgecolor=WHITE, linewidth=1.0, zorder=3)
+        for i, v in enumerate(vals):
+            if v > top * 0.055:
+                ink = INK if col == "#A1EE58" else WHITE
+                ax.text(i, bottoms[i] + v / 2, f"{v:,.0f}", ha="center",
+                        va="center", fontsize=7.4, color=ink, zorder=6)
+        bottoms = [bt + v for bt, v in zip(bottoms, vals)]
+    for i, t in enumerate(bottoms):
+        ax.text(i, t + top * 0.035, f"{t:,.0f}", ha="center", fontsize=9.2,
+                fontweight="bold", color=INK, zorder=7)
+    ax.set_ylabel("Registered accounts in the year")
+    ax.set_ylim(0, top * 1.20)
+    ax.tick_params(labelsize=7.4)
+    _clean(ax, grid="y")
+    ax.legend(frameon=False, fontsize=7.2, loc="upper left", ncol=1,
+              labelcolor=INK2, handlelength=1.4)
+
+    axp.bar(x, paid, 0.52, color="#C2185B", zorder=3)
+    for i, v in enumerate(paid):
+        axp.text(i, v + max(paid) * 0.06, f"{v:,.0f}", ha="center",
+                 fontsize=8.4, fontweight="bold", color="#C2185B", zorder=6)
+    axp.set_ylabel("Paying accounts\nat year end", fontsize=8.2)
+    axp.set_ylim(0, max(paid) * 1.30)
+    axp.set_yticklabels([])
+    axp.tick_params(axis="y", length=0)
+    axp.set_xticks(x)
+    axp.set_xticklabels([f"Year {y}" for y in years], fontsize=9, color=INK)
+    _clean(axp, grid="y")
+    return _save(fig, "b2c_engine")
+
+
+def fig_b2c_conversion():
+    """
+    The two routes to a paying account, and why they are priced differently.
+
+    A learner who sat in a cohort converts several times better than somebody
+    who arrived from a click, every year. Drawn as paired bars on a
+    percentage scale so the gap is the thing the reader sees.
+    """
+    FL = M.FL
+    b = FL.book()
+    years = list(M.YEARS_5)
+    inst = b.assumption_years("Stage 3, registered to paid, reached through "
+                              "an institution")
+    online = b.assumption_years("Stage 3, registered to paid, reached online")
+    s2 = b.assumption_years("Stage 2, lead to registered account")
+    fig, ax = plt.subplots(figsize=(7.1, 3.0))
+    x = list(range(len(years)))
+    w = 0.26
+    for off, vals, col, name in ((-w / 2 - 0.02, inst, UV,
+                                  "Reached through an institution"),
+                                 (w / 2 + 0.02, online, "#00ABD4",
+                                  "Reached by StartPad's own channels")):
+        ax.bar([i + off for i in x], vals, w, color=col, label=name, zorder=3)
+        for i, v in enumerate(vals):
+            ax.text(i + off, v + max(inst) * 0.04, f"{v*100:.1f}%",
+                    ha="center", fontsize=7.6, color=col, fontweight="bold",
+                    zorder=6)
+    ax.plot(x, s2, color=MUTED, linewidth=1.4, linestyle=(0, (4, 2)),
+            marker="s", markersize=3.4, zorder=5,
+            label="Lead to registered account")
+    for i, v in enumerate(s2):
+        ax.text(i, v + max(inst) * 0.04, f"{v*100:.0f}%", ha="center",
+                fontsize=7.2, color=MUTED, zorder=6)
+    ax.set_xticks(x)
+    ax.set_xticklabels([f"Year {y}" for y in years], fontsize=9, color=INK)
+    ax.set_ylim(0, max(max(s2), max(inst)) * 1.22)
+    ax.set_yticklabels([])
+    ax.tick_params(axis="y", length=0)
+    ax.set_ylabel("Conversion rate")
+    _clean(ax, grid="y")
+    ax.legend(frameon=False, fontsize=7.2, loc="upper center",
+              bbox_to_anchor=(0.5, -0.10), ncol=3, labelcolor=INK2,
+              handlelength=1.4)
+    return _save(fig, "b2c_conversion")
+
+
 def fig_tam_som():
     """
     TAM, SAM and SOM as nested circles, the way the investor deck shows them.
@@ -318,20 +427,31 @@ def fig_tam_sam():
 
 
 def fig_engine_mix():
+    """
+    Revenue mix in every one of the five years, as donuts on one row.
+
+    Five rings rather than three, because the plan runs five years and showing
+    three invited the reader to assume the other two look the same. They do
+    not: the institutional share holds, but which engine carries it moves a
+    long way between year one and year five.
+    """
     yrs = M.projection()
-    fig, axes = plt.subplots(1, 3, figsize=(7.1, 2.7))
+    n = len(yrs)
+    fig, axes = plt.subplots(1, n, figsize=(7.1, 2.35))
     for ax, y in zip(axes, yrs):
         vals = [y["lines"][k] for k in M.ENGINE_NAMES]
         ax.pie(vals, colors=ENGINE_COLOURS, startangle=90,
-               wedgeprops=dict(width=0.42, edgecolor=WHITE, linewidth=1.5))
-        ax.text(0, 0.12, f"Year {y['year']}", ha="center", va="center",
-                fontsize=9.5, fontweight="bold", color=INK)
-        ax.text(0, -0.16, f"{y['institutional_share']*100:.0f}%", ha="center",
-                va="center", fontsize=8, color=MUTED)
-        ax.text(0, -1.34, "institutional", ha="center", fontsize=7.4, color=INK2)
-    axes[1].legend(ENGINE_1LINE, frameon=False, fontsize=6.4, ncol=4,
-                   loc="upper center", bbox_to_anchor=(0.5, -0.04),
-                   labelcolor=INK2, handlelength=1.0, columnspacing=0.8)
+               wedgeprops=dict(width=0.44, edgecolor=WHITE, linewidth=1.3))
+        ax.text(0, 0.14, f"Year {y['year']}", ha="center", va="center",
+                fontsize=8.6, fontweight="bold", color=INK)
+        ax.text(0, -0.17, _money(y["revenue"]), ha="center", va="center",
+                fontsize=7.6, color=INK2)
+        ax.text(0, -1.38, f"{y['institutional_share']*100:.0f}% institutional",
+                ha="center", fontsize=6.8, color=MUTED)
+    axes[n // 2].legend(ENGINE_1LINE, frameon=False, fontsize=6.3, ncol=4,
+                        loc="upper center", bbox_to_anchor=(0.5, -0.10),
+                        labelcolor=INK2, handlelength=1.0,
+                        columnspacing=0.8)
     return _save(fig, "engine_mix")
 
 
@@ -1697,18 +1817,21 @@ def fig_podcast():
 def fig_podcast_targets():
     """What the podcast is held to, year by year. Views are last on purpose."""
     tg = M.PODCAST["targets"]
-    fig, ax = plt.subplots(figsize=(7.1, 2.85))
+    fig, ax = plt.subplots(figsize=(7.1, 4.0))
     labels = [t[0] for t in tg]
     y = list(range(len(labels)))[::-1]
-    width = 0.26
-    for j, (yr, col) in enumerate(zip((1, 2, 3), [UV, "#0096DF", "#00D3A4"])):
+    years = list(M.YEARS_5)
+    cols = [UV, "#0071ED", "#00ABD4", "#00DC91", "#A1EE58"]
+    width = 0.80 / len(years)
+    mid = (len(years) - 1) / 2
+    for j, (yr, col) in enumerate(zip(years, cols)):
         vals = [t[1 + j] for t in tg]
-        mx = [max(t[1], t[2], t[3]) for t in tg]
+        mx = [max(t[1:]) for t in tg]
         norm = [v / m if m else 0 for v, m in zip(vals, mx)]
-        ax.barh([yy + (1 - j) * width for yy in y], norm, width, color=col,
+        ax.barh([yy + (mid - j) * width for yy in y], norm, width, color=col,
                 label=f"Year {yr}", zorder=3)
         for yy, nv, v in zip(y, norm, vals):
-            ax.text(nv + 0.012, yy + (1 - j) * width, f"{v:,}", fontsize=6.6,
+            ax.text(nv + 0.012, yy + (mid - j) * width, f"{v:,}", fontsize=6.0,
                     color=INK2, va="center", zorder=4)
     ax.set_yticks(y)
     ax.set_yticklabels(labels, fontsize=7.2, color=INK)
@@ -1717,9 +1840,10 @@ def fig_podcast_targets():
     for s in ("top", "right", "bottom", "left"):
         ax.spines[s].set_visible(False)
     ax.tick_params(length=0)
-    ax.legend(frameon=False, fontsize=7.2, loc="lower right", labelcolor=INK2,
-              ncol=3)
-    ax.text(0, len(labels) - 0.15, "Each row is scaled to its own year-three "
+    ax.legend(frameon=False, fontsize=7.0, loc="upper center",
+              bbox_to_anchor=(0.5, -0.02), labelcolor=INK2, ncol=5,
+              handlelength=1.2)
+    ax.text(0, len(labels) - 0.10, "Each row is scaled to its own year-five "
             "value, so the shape of the growth is comparable across metrics "
             "measured in different units.", fontsize=6.4, color=MUTED)
     return _save(fig, "podcast_targets")
@@ -2007,7 +2131,7 @@ def fig_fin_margin():
     return _save(fig, "fin_margin")
 
 
-ALL = [fig_tam_som, fig_fin_revenue_mix, fig_fin_cost_stack, fig_fin_cash,
+ALL = [fig_b2c_engine, fig_b2c_conversion, fig_tam_som, fig_fin_revenue_mix, fig_fin_cost_stack, fig_fin_cash,
        fig_fin_funnel, fig_fin_margin,
        fig_segments, fig_tam_sam, fig_engine_mix, fig_roadmap, fig_gates,
        fig_quarterly_volumes, fig_customer_journey, fig_channel_mix, fig_swot,
