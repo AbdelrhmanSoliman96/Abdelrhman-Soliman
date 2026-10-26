@@ -815,3 +815,20 @@ The valuation inputs on `Exit Angel and VC`, pre-money at each round, the
 dilution assumed from later rounds, and the exit multiples, are negotiating
 positions rather than facts. They are inputs for that reason.
 
+
+## Egypt CSR, NGO and youth organisation prospect registry
+
+116 organisations in Egypt that could fund, host or carry the One Million
+Entrepreneurs initiative: corporates with CSR, corporate and family
+foundations, bilateral donors and development agencies, UN agencies, NGOs,
+youth organisations, national initiatives and business chambers. For each
+one: what they actually fund, why they fit, what they are looking for in
+return, what to ask them for, who decides, how to reach them and when.
+
+```bash
+python3 scripts/build_prospects_xlsx.py output/StartPad_Egypt_CSR_NGO_Prospects.xlsx
+```
+
+The data is in `outreach/prospects.py`; the builder only lays it out. Every
+row carries a confidence rating, and no individual's name, email address or
+phone number appears anywhere in the file by design.
