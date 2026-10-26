@@ -65,7 +65,7 @@ def tr_header(row):
 
 
 def tr_cant_split(row):
-    """Never break a row across a page — a half-row reads as missing data."""
+    """Never break a row across a page, a half-row reads as missing data."""
     X.insert_ordered(row._tr.get_or_add_trPr(), "w:cantSplit", X.TRPR,
                      {"w:val": "true"})
 
@@ -76,7 +76,7 @@ def tbl_fixed(table, widths_cm):
 
     Without an explicit fixed layout and a tblGrid, Word and LibreOffice both
     re-fit columns to their content, which silently throws away the widths set on
-    the cells — a one-character column ends up as wide as a sentence.
+    the cells, a one-character column ends up as wide as a sentence.
     """
     X.insert_ordered(table._tbl.tblPr, "w:tblLayout", X.TBLPR,
                      {"w:type": "fixed"})
@@ -137,7 +137,7 @@ def para(doc, markup="", size=9.8, colour=INK, bold=False, italic=False,
         pf.keep_with_next = True
     # Widow and orphan control only. Setting keepLines as well would make every
     # paragraph atomic, so a paragraph that does not fit jumps whole to the next
-    # page and leaves a near-empty one behind it — which is a worse artefact than
+    # page and leaves a near-empty one behind it, which is a worse artefact than
     # the split it was meant to prevent. Headings keep with the next paragraph
     # instead, via `keep`, which is where that behaviour actually belongs.
     X.insert_ordered(p._p.get_or_add_pPr(), "w:widowControl", X.PPR,
@@ -260,7 +260,7 @@ def bullets(doc, items, size=9.8):
         pf.first_line_indent = Cm(-0.42)
         pf.space_after = Pt(4)
         pf.line_spacing = 1.32
-        r = p.add_run("▪  ")
+        r = p.add_run("-  ")
         r.font.name = FONT
         r.font.size = Pt(size)
         r.font.color.rgb = UV
@@ -412,7 +412,7 @@ def role_cards(doc, names):
             pf.first_line_indent = Cm(-0.42)
             pf.space_after = Pt(3)
             pf.line_spacing = 1.3
-            r = q.add_run("\u2013  ")
+            r = q.add_run("-  ")
             r.font.name = FONT
             r.font.size = Pt(9.3)
             r.font.color.rgb = FAINT
@@ -429,7 +429,7 @@ def role_cards(doc, names):
             pf.first_line_indent = Cm(-0.42)
             pf.space_after = Pt(2)
             pf.line_spacing = 1.3
-            r = q.add_run("\u2013  ")
+            r = q.add_run("-  ")
             r.font.name = FONT
             r.font.size = Pt(8.8)
             r.font.color.rgb = FAINT
@@ -498,7 +498,7 @@ def field(par, instr):
 def furniture(section):
     hp = section.header.paragraphs[0]
     hp.paragraph_format.space_after = Pt(0)
-    write(hp, "STARTPAD  ·  BUSINESS PLAN  ·  EGYPT AND SAUDI ARABIA", 7.4,
+    write(hp, "STARTPAD  |  BUSINESS PLAN  |  EGYPT AND SAUDI ARABIA", 7.4,
           FAINT, bold=True, spacing=24)
     pbdr = X.insert_ordered(hp._p.get_or_add_pPr(), "w:pBdr", X.PPR)
     el = OxmlElement("w:bottom")
@@ -543,7 +543,7 @@ def cover(doc):
 
     para(doc, "A gamified, AI-native venture-building platform that takes MENA "
               "founders from a raw idea to a live product in fifteen guided "
-              "missions — and the six institutional engines built around it.",
+              "missions, and the six institutional engines built around it.",
          size=11.4, colour=INK, after=20, line=1.42)
 
     kpi(doc, [(K.money(K.M["tam"]), "Total addressable market, Egypt and KSA"),
@@ -558,7 +558,7 @@ def cover(doc):
     c0.width = Cm(8.3)
     c1.width = Cm(8.3)
     for cell, (k, v) in zip((c0, c1), [("PLANNING PERIOD", K.PERIOD),
-                                       ("MARKETS", "Egypt · Saudi Arabia")]):
+                                       ("MARKETS", "Egypt | Saudi Arabia")]):
         X.tc_margins(cell, top=0.1, start=0.0, bottom=0.1, end=0.1)
         p = cell.paragraphs[0]
         p.paragraph_format.space_after = Pt(1)
@@ -590,7 +590,7 @@ def contents(doc):
                               "institutional pipeline, and the brand",
         "Sales Strategy": "Four selling motions, the team that runs them, and "
                           "the pipeline they feed",
-        "Go-to-Market Roadmap": "Eight engines, eight gates, twelve quarters — "
+        "Go-to-Market Roadmap": "Eight engines, eight gates, twelve quarters, "
                                 "and the critical path through them",
         "Operations Plan": "How a contract becomes a delivered cohort, and what "
                            "breaks first if it does not",
@@ -622,6 +622,83 @@ def contents(doc):
     page_break(doc)
 
 
+FORBIDDEN = {"\u2014": "em dash", "\u2013": "en dash", "\u00b7": "middot",
+             "\u2018": "curly quote", "\u2019": "curly quote",
+             "\u201c": "curly quote", "\u201d": "curly quote",
+             "\u2026": "ellipsis", "\u2192": "arrow",
+             "\u00d7": "multiplication sign", "\u2212": "minus sign",
+             "\u25aa": "square bullet"}
+
+PLAN_SOURCES = ("charts.py", "content.py", "model.py", "roles.py", "finlink.py")
+
+
+def document_text(doc):
+    """Every string a reader can select in the finished document."""
+    for p in doc.paragraphs:
+        yield p.text
+    for t in doc.tables:
+        for row in t.rows:
+            for cell in row.cells:
+                yield cell.text
+    for s in doc.sections:
+        for part in (s.header, s.footer):
+            for p in part.paragraphs:
+                yield p.text
+
+
+def check_document(doc):
+    """The same gate, on the document rather than the source.
+
+    The source scan cannot see a mark written as an escape, and it cannot see
+    one the renderer adds itself, which is how an en dash survived as the
+    bullet marker on every role card.
+    """
+    found = []
+    for text in document_text(doc):
+        for ch, label in FORBIDDEN.items():
+            if ch in text:
+                found.append(f"{label} in {text.strip()[:60]!r}")
+    return found
+
+
+def check_characters():
+    """
+    No typographic marks that read as machine written.
+
+    The founder asked these out of the plan the way they were taken out of the
+    financial model, so this is a build gate rather than something to watch for
+    by eye. The source files are scanned rather than the finished document
+    because a third of the plan's words are drawn into the figures as images,
+    where no document reader could find them again.
+    """
+    found = []
+    for name in PLAN_SOURCES:
+        path = os.path.join(ROOT, "business_plan", name)
+        for i, line in enumerate(open(path, encoding="utf-8"), start=1):
+            for ch, label in FORBIDDEN.items():
+                if ch in line:
+                    found.append(f"business_plan/{name}:{i} carries {label}")
+    return found
+
+
+def properties(doc):
+    """Name the company in the file properties.
+
+    python-docx stamps its own name as the author and "generated by
+    python-docx" as the description. A reader who opens the properties panel
+    of a document sent to an investor should see the company, so the fields
+    are set here and the tool-generated ones are cleared.
+    """
+    cp = doc.core_properties
+    cp.title = "StartPad Business Plan"
+    cp.subject = "Business plan, Egypt and Saudi Arabia"
+    cp.author = "StartPad"
+    cp.last_modified_by = "StartPad"
+    cp.comments = ""
+    cp.category = ""
+    cp.keywords = ""
+
+
 def build(path):
     doc = Document()
     st = doc.styles["Normal"]
@@ -639,7 +716,7 @@ def build(path):
         h1(doc, i, name, first=(i == 1))
         # A ("pb",) block does not emit a break of its own. An explicit trailing
         # break lands on a fresh page whenever the content happened to end at the
-        # page boundary, and leaves a blank sheet behind it — which is exactly
+        # page boundary, and leaves a blank sheet behind it, which is exactly
         # what a hard break before "Role descriptions" used to produce. Instead
         # the break is carried forward and set as pageBreakBefore on the first
         # paragraph the next block writes, which is a no-op on a fresh page.
@@ -654,6 +731,10 @@ def build(path):
                 break_before_first(doc, before)
                 pending_break = False
 
+    properties(doc)
+    bad = check_document(doc)
+    if bad:
+        raise SystemExit("\n".join(bad[:20] + [f"{len(bad)} in all"]))
     os.makedirs(os.path.dirname(path), exist_ok=True)
     doc.save(path)
     return path
@@ -696,6 +777,9 @@ if __name__ == "__main__":
         print("skipping figures, embedding whatever is on disk")
     else:
         print(f"drew {draw_figures()} figures")
+    bad = check_characters()
+    if bad:
+        raise SystemExit("\n".join(bad[:20] + [f"{len(bad)} in all"]))
     out = os.path.join(OUT, "StartPad_Business_Plan.docx")
     build(out)
     print(f"wrote {out}  ({os.path.getsize(out)/1024:,.0f} KB)")

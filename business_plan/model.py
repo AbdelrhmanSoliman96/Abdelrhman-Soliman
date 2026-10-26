@@ -35,8 +35,8 @@ Twelve people, three hundred cohorts
 The establishment is capped at twelve in year three and twenty in year five. That
 cap is the central design constraint of this plan, not an aspiration bolted onto
 it. It is only possible because StartPad does not deliver cohorts itself at scale:
-it certifies delivery partners — training providers, university innovation
-centres, youth NGOs — and a pool of certified freelance facilitators, and employs
+it certifies delivery partners, training providers, university innovation
+centres, youth NGOs, and a pool of certified freelance facilitators, and employs
 the people who define, audit and sell the standard. Headcount therefore grows with
 the number of partners to manage, not with the number of cohorts to run.
 
@@ -53,12 +53,12 @@ Currency is USD throughout.
 """
 
 # =====================================================================
-#  PART 1 — THE POPULATION (external figures where they exist)
+#  PART 1, THE POPULATION (external figures where they exist)
 # =====================================================================
 
 # --- Higher education -------------------------------------------------
-# Egypt: CAPMAS annual bulletin 2024/25 — 3.9m enrolled in higher education.
-# KSA:   UNESCO UIS tertiary enrolment 2022 — 1.57m.
+# Egypt: CAPMAS annual bulletin 2024/25, 3.9m enrolled in higher education.
+# KSA:   UNESCO UIS tertiary enrolment 2022, 1.57m.
 HE_STUDENTS = {"Egypt": 3_900_000, "KSA": 1_600_000}
 
 # Egypt: 547,200 graduated in 2023 (CAPMAS via Ahram Online).
@@ -69,7 +69,7 @@ GRADUATE_WINDOW_YEARS = 3
 # --- Technical and vocational ----------------------------------------
 # Egypt technical secondary: ~2.2m (CAPMAS, 2021/22, reported via Statista). The
 # Ministry reported 595,848 students passing first-term technical diploma exams in
-# 2024/25 at a 70.47% pass rate, implying ~845,000 sitting — a very large annual
+# 2024/25 at a 70.47% pass rate, implying ~845,000 sitting, a very large annual
 # cohort and the reason this segment matters.
 # KSA: TVTC reported 336,150 trainees across 314 institutions in 2024.
 TVET_STUDENTS = {"Egypt": 2_200_000, "KSA": 336_000}
@@ -128,12 +128,12 @@ INITIATIVE_SEATS_PER_YEAR = 1_200_000   # ASSUMPTION
 
 
 # =====================================================================
-#  PART 1b — THE NAMED TARGETS, AND HOW TO GET INSIDE THEM
+#  PART 1b, THE NAMED TARGETS, AND HOW TO GET INSIDE THEM
 # =====================================================================
 #
 # Every engine in this plan is sold to specific, named organisations that already
 # run the programmes StartPad would sit inside. These are named targets and the
-# published evidence that the budget line exists — not signed partners, and no
+# published evidence that the budget line exists, not signed partners, and no
 # revenue in this plan is attributed to any one of them.
 #
 # Naming them is only half the work. A plan that lists institutions without saying
@@ -153,7 +153,7 @@ INITIATIVE_SEATS_PER_YEAR = 1_200_000   # ASSUMPTION
 
 ENGAGEMENT_PLAYS = [
     ("P1", "The funded pilot",
-     "The programme manager who owns delivery — never the chief executive, who "
+     "The programme manager who owns delivery, never the chief executive, who "
      "will refer it down and lose a month doing so",
      "One cohort inside a programme you already run, at our cost, with your name "
      "on the report and your logo on the showcase",
@@ -165,7 +165,7 @@ ENGAGEMENT_PLAYS = [
 
     ("P2", "The competition platform",
      "The competition's operations lead, and separately the title sponsor's CSR "
-     "or marketing manager — two conversations, held in that order",
+     "or marketing manager, two conversations, held in that order",
      "Run your next season's entry, team formation, mentor matching, judging and "
      "scoring on our platform, under your brand, with a build cohort for teams "
      "between rounds",
@@ -174,7 +174,7 @@ ENGAGEMENT_PLAYS = [
      "and a sponsor has a budget it must spend visibly",
      "One competition already run end to end, and a judging rubric a sponsor "
      "can put its name beside",
-     "One season — three to five months — because competitions buy on an annual "
+     "One season: three to five months, because competitions buy on an annual "
      "calendar and a missed cycle costs a year"),
 
     ("P3", "The sponsored-seat rider",
@@ -195,12 +195,12 @@ ENGAGEMENT_PLAYS = [
      "Deliver StartPad cohorts yourselves under licence. We certify your "
      "facilitators, audit the delivery and keep the standard; you keep the "
      "relationship and the larger share of the fee",
-     f"Revenue share — the partner keeps 40 per cent of the cohort fee, StartPad "
+     f"Revenue share: the partner keeps 40 per cent of the cohort fee, StartPad "
      f"keeps 60 per cent and the platform. The margin given away is the margin "
      f"StartPad does not have to hire for",
      "A written certification standard, a facilitator assessment that genuinely "
      "fails people, and an audit the partner knows can withdraw the licence",
-     "A certification cohort plus one supervised delivery — about one quarter"),
+     "A certification cohort plus one supervised delivery, about one quarter"),
 
     ("P5", "Trainer certification",
      "The director of training inside a ministry, agency or technical "
@@ -208,7 +208,7 @@ ENGAGEMENT_PLAYS = [
      "Certify your trainers to run this themselves. You stop buying delivery "
      "and start buying the standard",
      "Per certification cohort, plus per-seat licensing for every participant "
-     "those trainers go on to teach — the annuity is in the seats, not the "
+     "those trainers go on to teach, the annuity is in the seats, not the "
      "certification",
      "A train-the-trainer curriculum, and cohort reports at enough volume that "
      "a public body can defend the choice internally",
@@ -217,12 +217,12 @@ ENGAGEMENT_PLAYS = [
 
     ("P6", "The logframe subcontract",
      "The international organisation's programme design lead, approached six to "
-     "nine months before the funding call closes — not after",
+     "nine months before the funding call closes, not after",
      "Name StartPad as the delivery partner for the entrepreneurship component "
      "of the proposal you are writing now",
      "A budget line inside the awarded grant, paid against indicators achieved",
      "The ability to report against outcome indicators rather than activity "
-     "counts, and alignment with a methodology the donor already accepts — the "
+     "counts, and alignment with a methodology the donor already accepts, the "
      "ILO's Start and Improve Your Business framework being the common one",
      "Twelve to eighteen months from first conversation to first delivery, "
      "which is why this engine must be started long before it is needed"),
@@ -236,7 +236,7 @@ PLAY_NAMES = {code: name for code, name, *_ in ENGAGEMENT_PLAYS}
 #  plays, the route in)
 
 NAMED_INITIATIVES = [
-    ("Rowad 2030 — One Million Entrepreneurs, Ministry of Planning and Economic "
+    ("Rowad 2030: One Million Entrepreneurs, Ministry of Planning and Economic "
      "Development", "Egypt",
      "A state-backed programme to qualify one million entrepreneurs by 2030, "
      "delivered as a three-stage online curriculum with the Rowad Meter data "
@@ -247,14 +247,14 @@ NAMED_INITIATIVES = [
      "The build-and-pitch stage the online curriculum does not have: seats, "
      "missions, a bilingual AI mentor, and a per-participant evidence record the "
      "Rowad Meter can ingest.",
-     "P1 → P3 → P5",
+     "P1 > P3 > P5",
      "Do not approach the ministry first. Approach a university that has already "
      "signed a Rowad protocol and run a funded pilot (P1) for its students on "
      "the programme, so the first ministry conversation opens with a completed "
      "cohort inside their own initiative rather than a proposal about it. Take "
      "the report to the programme's delivery unit with one ask: a priced seat "
      "block for one governorate (P3). The destination is trainer certification "
-     "(P5) — a million seats cannot be facilitated by any provider, so the only "
+     "(P5), a million seats cannot be facilitated by any provider, so the only "
      "version of this that reaches the stated target is one where the "
      "programme's own trainers are certified."),
 
@@ -264,10 +264,10 @@ NAMED_INITIATIVES = [
      "A single platform standard across governorates, so a participant in Sohag "
      "and a participant in Alexandria are assessed the same way, plus "
      "certification for the agency's own field staff.",
-     "P1 → P5 → P3",
+     "P1 > P5 > P3",
      "Enter through one governorate branch, not head office. The branch manager "
      "can authorise a pilot; head office cannot authorise anything without a "
-     "precedent. Run two funded cohorts in a governorate outside Cairo — the "
+     "precedent. Run two funded cohorts in a governorate outside Cairo, the "
      "geography is the point, because the agency's internal problem is that "
      "quality collapses away from the capital. Certify that branch's own field "
      "officers (P5), then let the comparison between a certified branch and an "
@@ -278,7 +278,7 @@ NAMED_INITIATIVES = [
      "patronage of school-level competitions such as Startup Teen.",
      "A venture-building layer on top of digital skills, so a trained young "
      "person leaves with a tested idea rather than a certificate.",
-     "P2 → P3",
+     "P2 > P3",
      "The route is through the competitions the ministry already patronises "
      "rather than through the ministry. Win the platform role on one patronised "
      "competition (P2); the ministry's name is already on it, so the pilot is "
@@ -286,13 +286,13 @@ NAMED_INITIATIVES = [
      "Convert that into a seat rider on a digital-skills programme (P3) at the "
      "next budget cycle."),
 
-    ("Central Bank of Egypt — the FinYology initiative", "Egypt",
+    ("Central Bank of Egypt: the FinYology initiative", "Egypt",
      "A university financial-technology initiative spanning more than thirty "
      "Egyptian universities, with the FinTech Got Talent competition as its "
      "annual showcase.",
      "The structured pre-competition cohort: the eight weeks in which a student "
      "team actually builds something worth judging.",
-     "P1 → P2",
+     "P1 > P2",
      "Enter at one participating university, through the faculty staff member "
      "who manages its FinYology involvement, with a funded build cohort (P1) "
      "ahead of the competition. Teams that went through a cohort and teams that "
@@ -301,28 +301,28 @@ NAMED_INITIATIVES = [
      "proposal for the following season (P2), funded by one of the participating "
      "banks rather than by the central bank itself."),
 
-    ("Ministry of Technical Education and Training — applied technology schools",
+    ("Ministry of Technical Education and Training: applied technology schools",
      "Egypt",
      "A reform programme converting technical secondary schools into applied "
      "technology schools with employer partnerships.",
      "The five-day technical variant of the curriculum, and an employability "
      "record the school can show an employer partner.",
-     "P1 → P5",
+     "P1 > P5",
      "Enter through a single applied technology school with an active employer "
      "partner, because that employer is the one who will say the graduates are "
      "not ready, and that complaint is the opening. Run a funded cohort (P1), "
-     "then certify the school's own workshop instructors (P5) — they already "
+     "then certify the school's own workshop instructors (P5), they already "
      "teach practical work and are a better fit for this curriculum than an "
      "academic. Safeguarding clearance must be in place before the first school "
      "visit, not negotiated during it."),
 
-    ("Monsha'at — the Small and Medium Enterprises General Authority", "KSA",
+    ("Monsha'at: the Small and Medium Enterprises General Authority", "KSA",
      "Monsha'at Academy, an online academy that has run more than two hundred "
-     "training events — bootcamps, workshops and self-paced programmes — across "
+     "training events, bootcamps, workshops and self-paced programmes, across "
      "planning, finance, marketing, e-commerce and franchising.",
      "The missing practice layer: a cohort format, a mentor and a judged "
      "showcase that turns a completed course into a tested venture.",
-     "P1 → P3",
+     "P1 > P3",
      "The academy's own catalogue is the opening, because a two-hundred-course "
      "catalogue with no build stage has a completion problem its managers "
      "already know about. The country manager approaches the academy's "
@@ -337,7 +337,7 @@ NAMED_INITIATIVES = [
      "SDG Innovation Competition with UNDP.",
      "Cohort delivery and assessment infrastructure for Saudi youth programmes, "
      "in Arabic, with a comparable score across every cohort.",
-     "P2 → P3",
+     "P2 > P3",
      "Approach through the competition rather than the foundation: the SDG "
      "Innovation Competition has a UN partner, which means it already reports "
      "against indicators and therefore already has the problem StartPad solves "
@@ -350,8 +350,8 @@ NAMED_INITIATIVES = [
      "mandate to connect training to employment and self-employment.",
      "A self-employment track inside the technical diploma, delivered by TVTC's "
      "own trainers once certified.",
-     "P1 → P5",
-     "This is a certification sale from the beginning — at 314 institutions, no "
+     "P1 > P5",
+     "This is a certification sale from the beginning, at 314 institutions, no "
      "external provider could ever staff it, and proposing to would signal "
      "misunderstanding. Run one funded cohort at a single college in Riyadh (P1) "
      "with the explicit framing that it is a certification pilot, then price "
@@ -362,7 +362,7 @@ NAMED_INITIATIVES = [
      "KSA",
      "Subsidised training and finance for Saudi job-seekers and micro-enterprise "
      "owners, with per-beneficiary funding already in place.",
-     "A readiness assessment before finance is advanced — the lender's own "
+     "A readiness assessment before finance is advanced, the lender's own "
      "screening problem, solved as a by-product of the cohort.",
      "P3",
      "Lead with the lender's problem, not the learner's: default rates on "
@@ -383,28 +383,28 @@ NAMED_COMPETITIONS = [
      "supporter.",
      "The qualification and judging layer, plus a build cohort for teams between "
      "the campus round and the national final.",
-     "P1 → P2 → P4",
+     "P1 > P2 > P4",
      "Start at one campus team, not at the national office. A university Enactus "
      "team is run by students who want to win and have no budget, which makes a "
      "funded build cohort (P1) an easy yes and a visible result at the national "
      "final. With one campus result, approach the national office for the "
      "platform role across the season (P2) and Orange Egypt's CSR function "
-     "separately for the funding — the sponsor has renewed for seventeen years "
+     "separately for the funding, the sponsor has renewed for seventeen years "
      "and needs new substance to renew against, which is the actual sale. "
      "Long-term, Enactus Egypt is a certified delivery partner (P4): it has "
      "campus presence StartPad will never build."),
 
-    ("INJAZ Egypt — the Company Program and the Youth Entrepreneurship "
+    ("INJAZ Egypt: the Company Program and the Youth Entrepreneurship "
      "Celebration", "Egypt",
      "A six-month student venture programme with separate school and university "
      "tracks, culminating in an annual celebration now in its nineteenth edition "
      "and feeding the regional INJAZ Al-Arab final.",
      "Platform delivery of the six-month programme, mentor matching at scale, "
      "and a comparable score across both tracks.",
-     "P1 → P4",
+     "P1 > P4",
      "INJAZ's constraint is mentor matching: a corporate volunteer base that has "
      "to be paired with hundreds of student companies by hand, every cycle. Lead "
-     "with that, not with curriculum — INJAZ has curriculum. Run one funded "
+     "with that, not with curriculum, INJAZ has curriculum. Run one funded "
      "track (P1) with platform mentor matching, then move directly to a "
      "certified delivery partner licence (P4) rather than selling cohorts: "
      "INJAZ has the schools, the universities, the volunteers and the regional "
@@ -427,12 +427,12 @@ NAMED_COMPETITIONS = [
      "that to the first meeting. Forty schools reached through one competition "
      "is the cheapest route into the school engine that exists."),
 
-    ("FinTech Got Talent — Central Bank of Egypt FinYology initiative", "Egypt",
+    ("FinTech Got Talent: Central Bank of Egypt FinYology initiative", "Egypt",
      "A university competition in its third edition, reaching across more than "
      "thirty Egyptian universities.",
      "The eight-week build cohort that precedes the pitch, run identically on "
      "every participating campus.",
-     "P1 → P2",
+     "P1 > P2",
      "Enter campus by campus with funded build cohorts (P1), then sell the "
      "season (P2) with one of the participating banks as sponsor. The argument "
      "is standardisation: thirty universities currently prepare teams thirty "
@@ -446,7 +446,7 @@ NAMED_COMPETITIONS = [
      "report the bank needs and does not currently get.",
      "P2",
      "The sponsor is the customer. A bank that has funded the same event for "
-     "six years has an internal reporting problem — it cannot evidence what the "
+     "six years has an internal reporting problem, it cannot evidence what the "
      "money produced beyond attendance. Approach the bank's CSR or marketing "
      "function with the impact report as the product and the platform as the "
      "means of producing it (P2), and bring the academy in as co-signer rather "
@@ -458,7 +458,7 @@ NAMED_COMPETITIONS = [
      "Improve Your Business methodology.",
      "A platform record that maps onto the ILO methodology, so the donor's "
      "framework and StartPad's missions report the same thing.",
-     "P2 → P6",
+     "P2 > P6",
      "This one is a bridge, not a revenue target. Winning the platform role on a "
      "small governorate competition (P2) buys something disproportionate: a "
      "working relationship with an ILO country programme and a demonstrated "
@@ -471,7 +471,7 @@ NAMED_COMPETITIONS = [
      "rounds feeding regional finals.",
      "The on-campus round delivered as a StartPad cohort: a chapter receives a "
      "programme instead of organising one.",
-     "P1 → P4",
+     "P1 > P4",
      "Campus chapters are run by student organisers with no budget and a hard "
      "deadline, which makes a delivered programme (P1) genuinely welcome. The "
      "value is not the fee but the door: a Hult chapter sits inside a university "
@@ -484,15 +484,15 @@ NAMED_COMPETITIONS = [
      "themes.",
      "Arabic-first cohort delivery and judging, with an impact record a UN "
      "partner can report against.",
-     "P2 → P6",
+     "P2 > P6",
      "A competition with a UN co-organiser is two engines at once: the "
      "competition itself (P2) and a relationship with a UNDP country office "
      "that commissions programmes (P6). Approach the foundation's programme "
      "lead and the UNDP focal point in the same week, with the same material, "
-     "framed differently — the foundation buys a better competition, the UN "
+     "framed differently, the foundation buys a better competition, the UN "
      "office buys measurable indicators."),
 
-    ("Entrepreneurship World Cup — Saudi national round", "KSA",
+    ("Entrepreneurship World Cup: Saudi national round", "KSA",
      "A global competition with a national Saudi round reaching students and "
      "early-stage founders.",
      "National-round qualification, plus a build track for entrants who arrive "
@@ -513,7 +513,7 @@ NAMED_PARTNERS = [
      "A youth employability and entrepreneurship network with school and "
      "university tracks and a corporate volunteer mentor base.",
      "Certified delivery partner, running StartPad cohorts inside its own "
-     "programmes — and the single highest-value partnership in this plan.",
+     "programmes, and the single highest-value partnership in this plan.",
      "P4",
      "Begin with the mentor-matching problem, prove it on one track, then "
      "negotiate a network licence rather than a per-cohort price. The regional "
@@ -525,7 +525,7 @@ NAMED_PARTNERS = [
      "campuses and long-standing corporate sponsors.",
      "Channel partner for the competition engine and, later, a certified "
      "delivery partner with its own campus footprint.",
-     "P2 → P4",
+     "P2 > P4",
      "Campus team first, national office second, sponsor third. Never reverse "
      "that order: the national office will ask what campus has done it, and the "
      "sponsor will ask what the national office thinks."),
@@ -535,9 +535,9 @@ NAMED_PARTNERS = [
      "collaborator on Rowad 2030 training programmes.",
      "Programme-seat partner, and the reference institution that makes every "
      "subsequent faculty licence easier to sell.",
-     "P1 → P3",
+     "P1 > P3",
      "Approach as a peer, not a vendor: V-Lab selects and accelerates, and does "
-     "not need a curriculum. The offer is pre-acceleration — seats for the "
+     "not need a curriculum. The offer is pre-acceleration, seats for the "
      "applicants it rejects, who are not bad founders but unready ones. That "
      "turns a rejection list into a pipeline and costs V-Lab nothing."),
 
@@ -566,7 +566,7 @@ NAMED_PARTNERS = [
      "Lab under the Rowad 2030 umbrella.",
      "Donor-funded programme buyer, and a bridge between the university engine "
      "and the national initiative engine.",
-     "P6 → P3",
+     "P6 > P3",
      "Enter through a grantee rather than the foundation: become the delivery "
      "component of a proposal an existing grantee is writing (P6). A foundation "
      "meets its best delivery partners through the organisations it already "
@@ -591,7 +591,7 @@ NAMED_PARTNERS = [
      "Same pre-acceleration argument as the V-Lab route, priced per seat. A "
      "selective incubator's rejection list is its most underused asset."),
 
-    ("International Labour Organization — Start and Improve Your Business",
+    ("International Labour Organization: Start and Improve Your Business",
      "Egypt and the region",
      "A standard enterprise-training methodology used by governments and donors "
      "across the region, already visible in Egypt through Rowad Domiat.",
@@ -620,18 +620,18 @@ NAMED_PARTNERS = [
      "Established sponsors of youth entrepreneurship competitions and CSR "
      "programmes, several for more than a decade.",
      "Sponsors of competitions and of seats, through the commercial engines.",
-     "P2 → P3",
+     "P2 > P3",
      "Sell reporting, not goodwill. A sponsor renewing a decade-old commitment "
      "needs to show its board something new, and currently receives attendance "
      "figures and photographs. Offer a named season, a measurable outcome per "
-     "participant and a report it can publish — then ask for the seat block as "
+     "participant and a report it can publish, then ask for the seat block as "
      "the second-year extension."),
 
     ("Monsha'at Academy", "KSA",
      "The Saudi SME authority's training arm, with a large catalogue and no "
      "practice layer.",
      "Platform partner for the build stage that follows a course.",
-     "P1 → P3",
+     "P1 > P3",
      "Attach to a specific existing course as its capstone, measured on "
      "completion and on ventures started. Do not propose a parallel programme; "
      "the academy's managers are judged on their own catalogue, not on "
@@ -663,7 +663,7 @@ ENGAGEMENT_PREREQUISITES = [
 
 
 # =====================================================================
-#  PART 1c — MISSION ZERO: THE FOUNDER PODCAST
+#  PART 1c, MISSION ZERO: THE FOUNDER PODCAST
 # =====================================================================
 #
 # The podcast is in this plan as a demand-generation asset with a measurable job,
@@ -676,7 +676,7 @@ PODCAST = dict(
     name="Mission Zero",
     arabic="المهمة صفر",
     premise="A first-time founder walks through the one decision that nearly ended "
-            "the venture — the mission they got wrong — and what they would do "
+            "the venture, the mission they got wrong, and what they would do "
             "differently. No success stories; the failure is the content.",
     format=[
         ("Length", "Thirty to thirty-five minutes, video-first, published as video, "
@@ -686,7 +686,7 @@ PODCAST = dict(
         ("Cadence", "Weekly within a season; twelve episodes a season, three seasons "
                     "a year with production breaks between them"),
         ("Guests", "Two in three are first-time founders two to five years in; one in "
-                   "three are the people who decide — a dean, a programme director, "
+                   "three are the people who decide, a dean, a programme director, "
                    "an investor, a judge"),
         ("The student segment", "Every episode closes with one cohort team pitching "
                                 "to the guest for eight minutes, filmed on their own "
@@ -739,7 +739,7 @@ PODCAST = dict(
 
 
 # =====================================================================
-#  PART 2 — PRICING (assumptions, with reasoning)
+#  PART 2, PRICING (assumptions, with reasoning)
 # =====================================================================
 
 # --- Engine 1: universities ------------------------------------------
@@ -790,7 +790,7 @@ B2C_RECOGNITION = {1: 0.50, 2: 0.78, 3: 0.82}
 
 
 # =====================================================================
-#  PART 3 — SAM FILTERS (assumptions, with reasoning)
+#  PART 3, SAM FILTERS (assumptions, with reasoning)
 # =====================================================================
 
 FILTER_FACULTY_FIT = 0.35        # faculties where venture-building fits
@@ -816,7 +816,7 @@ CORPORATE_PROGRAMMES_PER_ORG = 0.30
 
 
 # =====================================================================
-#  PART 4 — THE QUARTERLY PLAN
+#  PART 4, THE QUARTERLY PLAN
 # =====================================================================
 #
 # Twelve quarters. Everything downstream is summed from here, so a ramp cannot be
@@ -890,8 +890,8 @@ ENGINE_GATES = [
      "A dean buys a faculty-wide licence off two reports, not off a pitch. The "
      "earliest an institution that piloted in Q4 2026 can reach that is Q3 2027"),
     ("School and technical cohorts", 2,
-     "A school variant of the curriculum — four days, larger groups, an "
-     "employability frame — plus safeguarding and parental consent",
+     "A school variant of the curriculum, four days, larger groups, an "
+     "employability frame, plus safeguarding and parental consent",
      "The university format does not transfer to sixteen-year-olds. Building the "
      "variant is a Prove-quarter job; selling it starts in Expand"),
     ("Sponsored competitions", 1,
@@ -907,7 +907,7 @@ ENGINE_GATES = [
     ("National initiative seats", 3,
      "Cohort reports at volume, bulk seat provisioning, and a train-the-trainer "
      "curriculum",
-     "The longest cycle of any engine — nine to fifteen months from first meeting "
+     "The longest cycle of any engine, nine to fifteen months from first meeting "
      "to a signed seat order. Conversations open in the Land quarter and the "
      "first pilot seats land in Scale"),
     ("Corporate and CSR programmes", 3,
@@ -920,7 +920,7 @@ ENGINE_GATES = [
      "onboard a partner onto"),
     ("Founder subscriptions", 1,
      "Students who have completed missions inside a paid engine",
-     "Subscriptions lag the engines that produce them by a quarter — a student "
+     "Subscriptions lag the engines that produce them by a quarter, a student "
      "who finishes a camp in the Prove quarter subscribes in Expand"),
 ]
 
@@ -939,13 +939,13 @@ SUBSCRIPTION_SOURCES = [
     ("Participants on sponsored seats",        2_000, 21_000, 65_000, 0.030),
     ("NGO and corporate programme participants", 540,  2_800,  5_400, 0.045),
     ("Programme and incubator participants",     540,  1_960,  3_680, 0.055),
-    ("Organic — Mission Zero, content, community",
+    ("Organic: Mission Zero, content, community",
                                                3_200, 11_000, 26_000, 0.050),
 ]
 
 
 # =====================================================================
-#  PART 5 — DIRECT COST OF DELIVERY
+#  PART 5, DIRECT COST OF DELIVERY
 # =====================================================================
 
 FACILITATORS_PER_COHORT = 2
@@ -969,8 +969,8 @@ COHORTS_PER_PAIR = {"university": 18, "school": 26, "tvet": 22}
 # the payroll is not. ASSUMPTION.
 FACILITATOR_UTILISATION = 0.45
 
-# A certified delivery partner organisation — a training provider, a university
-# innovation centre, a youth NGO — runs this many cohorts a year once it is past
+# A certified delivery partner organisation, a training provider, a university
+# innovation centre, a youth NGO, runs this many cohorts a year once it is past
 # its own certification year. ASSUMPTION, set low on purpose.
 COHORTS_PER_PARTNER = 9
 
@@ -996,7 +996,7 @@ PARTNER_REVENUE_SHARE = 0.40
 
 
 # =====================================================================
-#  PART 6 — HEADCOUNT (the HR plan, costed)
+#  PART 6, HEADCOUNT (the HR plan, costed)
 # =====================================================================
 #
 # (function, role, monthly fully-loaded USD, Y1, Y2, Y3, Y4, Y5)
@@ -1010,8 +1010,8 @@ PARTNER_REVENUE_SHARE = 0.40
 #       cohort growth cannot become payroll growth.
 #   2.  No role is created until it is genuinely full-time. Until then it is part
 #       of a larger role, and the role description says so, and says when it splits.
-#   3.  Functions that are standard and regulated — bookkeeping, payroll, audit,
-#       legal, the KSA entity's compliance — are bought from firms, not hired.
+#   3.  Functions that are standard and regulated, bookkeeping, payroll, audit,
+#       legal, the KSA entity's compliance, are bought from firms, not hired.
 #       They appear in operating costs, not on the establishment.
 #   4.  The CEO carries operations until the partner network outgrows one person,
 #       which the plan puts in year four. That is when the COO arrives, and not
@@ -1041,9 +1041,9 @@ ROLES = [
     ("Curriculum and Delivery", "Bilingual curriculum producer",
      1_300, 0, 0, 0, 0, 1),
 
-    ("Institutional Partnerships", "Head of Partnerships — Egypt",
+    ("Institutional Partnerships", "Head of Partnerships, Egypt",
      2_200, 1, 1, 1, 1, 1),
-    ("Institutional Partnerships", "Country Manager — KSA (Riyadh)",
+    ("Institutional Partnerships", "Country Manager, KSA (Riyadh)",
      5_000, 0, 1, 1, 1, 1),
     ("Institutional Partnerships", "Head of Government, Initiatives and Donors",
      2_600, 0, 0, 1, 1, 1),
@@ -1051,7 +1051,7 @@ ROLES = [
      1_200, 0, 0, 1, 1, 1),
     ("Institutional Partnerships", "Head of Schools and Technical Education",
      2_200, 0, 0, 0, 1, 1),
-    ("Institutional Partnerships", "Account manager — renewals",
+    ("Institutional Partnerships", "Account manager, renewals",
      1_600, 0, 0, 0, 0, 1),
 
     ("Growth and Content", "Head of Growth and Content",
@@ -1074,7 +1074,7 @@ OUTSOURCED = [
     ("Video production and editing for Mission Zero",
      "A freelance two-person crew per shoot day, briefed by the Head of Growth "
      "and Content",
-     "Production is bursty — three recording blocks a year. A staff videographer "
+     "Production is bursty: three recording blocks a year. A staff videographer "
      "would be idle most of it."),
     ("Arabic copy-editing and translation quality assurance",
      "A certified freelance panel",
@@ -1097,22 +1097,22 @@ AMBASSADOR_ACTIVE_MONTHS = 7
 B2B_COMMISSION = 0.06
 
 DEMAND_SPEND = {
-    1: [("Mission Zero — production, editing and distribution", 26_000),
+    1: [("Mission Zero: production, editing and distribution", 26_000),
         ("Ambassador network", 10_500),
         ("Conferences, events and ecosystem presence", 20_000),
-        ("Targeted digital — retargeting and event fill", 10_000),
+        ("Targeted digital: retargeting and event fill", 10_000),
         ("Collateral, case studies and cohort reports", 10_000),
         ("Sector research and the annual readiness report", 12_000)],
-    2: [("Mission Zero — production, editing and distribution", 48_000),
+    2: [("Mission Zero: production, editing and distribution", 48_000),
         ("Ambassador network", 28_000),
         ("Conferences, events and ecosystem presence", 52_000),
-        ("Targeted digital — retargeting and event fill", 24_000),
+        ("Targeted digital: retargeting and event fill", 24_000),
         ("Collateral, case studies and cohort reports", 22_000),
         ("Sector research and the annual readiness report", 24_000)],
-    3: [("Mission Zero — production, editing and distribution", 96_000),
+    3: [("Mission Zero: production, editing and distribution", 96_000),
         ("Ambassador network", 59_500),
         ("Conferences, events and ecosystem presence", 118_000),
-        ("Targeted digital — retargeting and event fill", 56_000),
+        ("Targeted digital: retargeting and event fill", 56_000),
         ("Collateral, case studies and cohort reports", 48_000),
         ("Sector research and the annual readiness report", 52_000)],
 }
@@ -1120,30 +1120,30 @@ DEMAND_SPEND = {
 OTHER_COSTS = {
     1: [("Cloud, AI inference and third-party APIs", 28_000),
         ("Software and tooling", 16_000),
-        ("Travel — Cairo, Riyadh, campuses and governorates", 38_000),
+        ("Travel: Cairo, Riyadh, campuses and governorates", 38_000),
         ("Outsourced finance, legal, audit and the KSA entity", 46_000),
         ("Safeguarding, child protection and compliance", 14_000),
-        ("Office — Cairo, plus a Riyadh desk", 26_000)],
+        ("Office: Cairo, plus a Riyadh desk", 26_000)],
     2: [("Cloud, AI inference and third-party APIs", 92_000),
         ("Software and tooling", 34_000),
-        ("Travel — Cairo, Riyadh, campuses and governorates", 112_000),
+        ("Travel: Cairo, Riyadh, campuses and governorates", 112_000),
         ("Outsourced finance, legal, audit and compliance", 64_000),
         ("Safeguarding, child protection and compliance", 30_000),
-        ("Offices — Cairo and Riyadh", 62_000)],
+        ("Offices: Cairo and Riyadh", 62_000)],
     3: [("Cloud, AI inference and third-party APIs", 232_000),
         ("Software and tooling", 72_000),
-        ("Travel — Cairo, Riyadh, campuses and governorates", 248_000),
+        ("Travel: Cairo, Riyadh, campuses and governorates", 248_000),
         ("Outsourced finance, legal, audit and compliance", 116_000),
         ("Safeguarding, child protection and compliance", 58_000),
-        ("Partner enablement — certification, audits and regional hubs", 140_000),
-        ("Offices — Cairo and Riyadh", 128_000)],
+        ("Partner enablement: certification, audits and regional hubs", 140_000),
+        ("Offices: Cairo and Riyadh", 128_000)],
 }
 
 CONTINGENCY = 0.08
 
 
 # =====================================================================
-#  PART 7 — ACQUISITION ECONOMICS, BY ENGINE
+#  PART 7, ACQUISITION ECONOMICS, BY ENGINE
 # =====================================================================
 # (engine, cost to win one, annual value, years retained, gross margin)
 ACQUISITION = [
@@ -1160,7 +1160,7 @@ ACQUISITION = [
 
 
 # =====================================================================
-#  COMPUTATION — nothing below here is an assumption
+#  COMPUTATION, nothing below here is an assumption
 # =====================================================================
 
 ENGINE_NAMES = [
@@ -1194,7 +1194,7 @@ def quarters_of(year):
 def plan(key, year):
     """Sum a quarterly flow over a year."""
     if key in STOCK_KEYS:
-        raise KeyError(f"{key} is a stock, not a flow — use stock()")
+        raise KeyError(f"{key} is a stock, not a flow, use stock()")
     return sum(QUARTERLY[key][i] for i in quarters_of(year))
 
 
@@ -1380,14 +1380,14 @@ def market():
 
     rows = [
         dict(engine=ENGINE_NAMES[0],
-             tam_basis=f"{units:,} university buying units × "
+             tam_basis=f"{units:,} university buying units x "
                        f"${UNIT_ANNUAL_SPEND:,.0f} a year",
              tam=units * UNIT_ANNUAL_SPEND,
              sam_basis=f"{units*unit_fit:,.0f} that fit and are reachable",
              sam=units * unit_fit * UNIT_ANNUAL_SPEND),
         dict(engine=ENGINE_NAMES[1],
-             tam_basis=f"{schools:,} schools × ${SCHOOL_UNIT_ANNUAL_SPEND:,.0f} and "
-                       f"{tvet_inst:,} technical institutes × "
+             tam_basis=f"{schools:,} schools x ${SCHOOL_UNIT_ANNUAL_SPEND:,.0f} and "
+                       f"{tvet_inst:,} technical institutes x "
                        f"${TVET_UNIT_ANNUAL_SPEND:,.0f}",
              tam=schools * SCHOOL_UNIT_ANNUAL_SPEND + tvet_inst * TVET_UNIT_ANNUAL_SPEND,
              sam_basis=f"{schools*school_fit:,.0f} schools and "
@@ -1395,44 +1395,44 @@ def market():
              sam=(schools * school_fit * SCHOOL_UNIT_ANNUAL_SPEND
                   + tvet_inst * tvet_fit * TVET_UNIT_ANNUAL_SPEND)),
         dict(engine=ENGINE_NAMES[2],
-             tam_basis=f"{INITIATIVE_SEATS_PER_YEAR:,} seats a year × "
+             tam_basis=f"{INITIATIVE_SEATS_PER_YEAR:,} seats a year x "
                        f"${PRICE_INITIATIVE_SEAT[2]:,.0f}, plus trainer certification",
              tam=INITIATIVE_SEATS_PER_YEAR * PRICE_INITIATIVE_SEAT[2] * 1.25,
-             sam_basis=f"{FILTER_INITIATIVE_SHARE*100:.0f}% — what one provider "
+             sam_basis=f"{FILTER_INITIATIVE_SHARE*100:.0f}%, what one provider "
                        f"could serve",
              sam=INITIATIVE_SEATS_PER_YEAR * FILTER_INITIATIVE_SHARE
                  * PRICE_INITIATIVE_SEAT[2] * 1.25),
         dict(engine=ENGINE_NAMES[3],
-             tam_basis=f"{NGOS:,} NGOs and donors × "
-                       f"{NGO_PROGRAMMES_PER_ORG:.1f} programmes × "
+             tam_basis=f"{NGOS:,} NGOs and donors x "
+                       f"{NGO_PROGRAMMES_PER_ORG:.1f} programmes x "
                        f"${PRICE_NGO_PROGRAMME[2]:,.0f}",
              tam=NGOS * NGO_PROGRAMMES_PER_ORG * PRICE_NGO_PROGRAMME[2],
              sam_basis=f"{FILTER_NGO_FIT*100:.0f}% with a live youth employability "
                        f"budget",
              sam=NGOS * FILTER_NGO_FIT * NGO_PROGRAMMES_PER_ORG * PRICE_NGO_PROGRAMME[2]),
         dict(engine=ENGINE_NAMES[4],
-             tam_basis=f"{COMPETITIONS_PER_YEAR:,} competitions a year × "
+             tam_basis=f"{COMPETITIONS_PER_YEAR:,} competitions a year x "
                        f"${PRICE_COMPETITION[2]:,.0f}",
              tam=COMPETITIONS_PER_YEAR * PRICE_COMPETITION[2],
              sam_basis=f"{FILTER_COMPETITION_FIT*100:.0f}% with budget and format fit",
              sam=COMPETITIONS_PER_YEAR * FILTER_COMPETITION_FIT * PRICE_COMPETITION[2]),
         dict(engine=ENGINE_NAMES[5],
-             tam_basis=f"{CORPORATES:,} corporates × "
-                       f"{CORPORATE_PROGRAMMES_PER_ORG:.1f} programmes × "
+             tam_basis=f"{CORPORATES:,} corporates x "
+                       f"{CORPORATE_PROGRAMMES_PER_ORG:.1f} programmes x "
                        f"${PRICE_CORPORATE[2]:,.0f}",
              tam=CORPORATES * CORPORATE_PROGRAMMES_PER_ORG * PRICE_CORPORATE[2],
              sam_basis=f"{FILTER_CORPORATE_FIT*100:.0f}% with a live budget",
              sam=CORPORATES * FILTER_CORPORATE_FIT * CORPORATE_PROGRAMMES_PER_ORG
                  * PRICE_CORPORATE[2]),
         dict(engine=ENGINE_NAMES[6],
-             tam_basis=f"{PROGRAMMES:,} programmes × 150 seats × ${PRICE_SEAT[2]:,.0f}",
+             tam_basis=f"{PROGRAMMES:,} programmes x 150 seats x ${PRICE_SEAT[2]:,.0f}",
              tam=PROGRAMMES * 150 * PRICE_SEAT[2],
              sam_basis=f"{FILTER_PROGRAMME_FIT*100:.0f}% that select and pre-qualify",
              sam=PROGRAMMES * FILTER_PROGRAMME_FIT * 150 * PRICE_SEAT[2]),
         dict(engine=ENGINE_NAMES[7],
              tam_basis=f"{FILTER_SELF_PAY_ADULT*100:.0f}% of {adults/1e6:,.1f}m adults "
                        f"and {FILTER_SELF_PAY_YOUTH*100:.0f}% of {youth/1e6:,.1f}m "
-                       f"under-18s × ${arpu:,.0f}",
+                       f"under-18s x ${arpu:,.0f}",
              tam=subs_tam,
              sam_basis="Those reached through an organisation, plus organic",
              sam=subscriptions(3)["reached"] * 1.6 * arpu),
@@ -1492,7 +1492,7 @@ def costs(year):
     demand = sum(v for _, v in DEMAND_SPEND[year])
     commission = rev["institutional"] * B2B_COMMISSION
     lines = [("Payroll", hc[f"cost_y{year}"]),
-             ("Delivery — all engines", direct_cost(year)),
+             ("Delivery: all engines", direct_cost(year)),
              ("Demand generation", demand),
              ("Sales commission", commission)]
     lines += OTHER_COSTS[year]
@@ -1507,7 +1507,7 @@ def projection():
     out = []
     for y in (1, 2, 3):
         r, c = revenue(y), costs(y)
-        out.append(dict(year=y, label=f"Year {y} · {2025+y}/{26+y}",
+        out.append(dict(year=y, label=f"Year {y} | {2025+y}/{26+y}",
                         revenue=r["total"], cost=c["total"],
                         profit=r["total"] - c["total"],
                         lines=r["lines"], detail=r["detail"],
@@ -1787,7 +1787,7 @@ def projection():
     for h in FL.headline():
         y = h["year"]
         r = revenue(y)
-        out.append(dict(year=y, label=f"Year {y} \u00b7 {2025 + y}/{(26 + y) % 100:02d}",
+        out.append(dict(year=y, label=f"Year {y} | {2025 + y}/{(26 + y) % 100:02d}",
                         revenue=h["revenue"], cost=h["total_expense"],
                         profit=h["net"], ebitda=h["ebitda"],
                         gross_profit=h["gross_profit"],
@@ -2178,9 +2178,9 @@ if __name__ == "__main__":
           f"{max(c['facilitators'] for c in facilitator_capacity()):.0f}")
     print("\n  leverage:")
     for r in leverage():
-        print(f"    Y{r['year']}: {r['staff']:>2} staff · {r['cohorts']:>3} cohorts · "
-              f"pool {r['pool']:>2} · partners {r['partners']:>2} · "
-              f"{r['learners']:>7,.0f} learners · "
+        print(f"    Y{r['year']}: {r['staff']:>2} staff | {r['cohorts']:>3} cohorts | "
+              f"pool {r['pool']:>2} | partners {r['partners']:>2} | "
+              f"{r['learners']:>7,.0f} learners | "
               f"{r['learners_per_employee']:>7,.0f} per employee")
     for c in facilitator_capacity():
         flag = "  OVER" if c["facilitators"] > c["available"] else ""

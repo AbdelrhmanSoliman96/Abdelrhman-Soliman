@@ -10,7 +10,7 @@ Mark specification, applied uniformly
 * ultraviolet is the data colour; lime is ground and never carries type
   (it measures 1.29:1 against white, so type on lime is unreadable)
 * one axis only, gridlines 0.6px and recessive, no chart junk, no 3-D, no shadows
-* every value a reader needs is on the page as type — these are printed pages and
+* every value a reader needs is on the page as type, these are printed pages and
   there is no hover layer to fall back on
 * a label goes inside a mark only when it fits with padding, otherwise outside
 * when one item is the point, it is coloured and everything else is grey
@@ -114,7 +114,7 @@ def _clean(ax, grid="x"):
 
 
 # =====================================================================
-#  1 · TAM / SAM / SOM
+#  1 | TAM / SAM / SOM
 # =====================================================================
 
 #
@@ -236,7 +236,7 @@ ENGINE_1LINE = ["University cohorts and licences", "Schools and technical educat
 
 
 # =====================================================================
-#  1 · The population we serve
+#  1 | The population we serve
 # =====================================================================
 
 def fig_segments():
@@ -260,7 +260,7 @@ def fig_segments():
 
 
 # =====================================================================
-#  2 · TAM and SAM, engine by engine
+#  2 | TAM and SAM, engine by engine
 # =====================================================================
 
 def fig_b2c_engine():
@@ -451,7 +451,7 @@ def fig_tam_sam():
     _clean(ax, grid="x")
     ax.legend([Rectangle((0, 0), 1, 1, color=HAIR),
                Rectangle((0, 0), 1, 1, color=UV)],
-              ["TAM — the whole universe", "SAM — fits, reachable, has a budget"],
+              ["TAM: the whole universe", "SAM: fits, reachable, has a budget"],
               frameon=False, fontsize=7.8, loc="lower right", labelcolor=INK2)
     return _save(fig, "tam_sam")
 
@@ -496,7 +496,7 @@ def fig_engine_mix():
 
 
 # =====================================================================
-#  3 · The roadmap — when each engine switches on
+#  3 | The roadmap, when each engine switches on
 # =====================================================================
 
 def fig_roadmap():
@@ -536,7 +536,10 @@ def fig_roadmap():
         ax.text(x + cell / 2, top + 0.07, phase, fontsize=5.9, color=INK2,
                 ha="center", va="top", fontweight="bold")
 
-    rowh = (top - 0.42) / len(series)
+    # The footnote occupies the bottom 0.3in of the canvas, so the rows stop
+    # above it. At the old pitch the last row's bars ran down through the
+    # footnote text.
+    rowh = (top - 0.66) / len(series)
     for r, (name, k1, k2) in enumerate(series):
         y = top - 0.24 - (r + 1) * rowh
         vals = [Q[k1][i] + (Q[k2][i] if k2 else 0) for i in range(12)]
@@ -590,7 +593,7 @@ def fig_gates():
         ax.text(0.17, y + rowh - 0.18, name, fontsize=8.0, fontweight="bold",
                 color=INK, va="top", zorder=4)
         q = M.QUARTERS[qi]
-        ax.text(0.17, y + rowh - 0.36, f"Opens {q[0]} · {q[1]} quarter",
+        ax.text(0.17, y + rowh - 0.36, f"Opens {q[0]} | {q[1]} quarter",
                 fontsize=6.5, color=UV, va="top", zorder=4, fontweight="bold")
         ax.text(2.35, y + rowh - 0.18,
                 "\n".join(_wrap("GATE  " + prereq, 6.8, 4.55)),
@@ -638,7 +641,7 @@ def fig_quarterly_volumes():
 
 
 # =====================================================================
-#  4 · Marketing — the customer journey
+#  4 | Marketing, the customer journey
 # =====================================================================
 
 def fig_customer_journey():
@@ -663,9 +666,9 @@ def fig_customer_journey():
              ("JOINS", "Free account", "One tap, no payment"),
              ("ACTIVATES", "Finishes Mission 01", "Live, in a room, with a "
               "facilitator"),
-             ("PROGRESSES", "Missions 02–10", "Inside a paid cohort or a "
+             ("PROGRESSES", "Missions 02-10", "Inside a paid cohort or a "
               "sponsored seat"),
-             ("PAYS", "Pro or Team", "To finish 11–15 after the programme ends")]
+             ("PAYS", "Pro or Team", "To finish 11-15 after the programme ends")]
     gap = 0.09
     # The last card has to stop short of the canvas edge, or it prints flush
     # against the text column with no margin at all.
@@ -722,7 +725,7 @@ def fig_channel_mix():
 
 
 # =====================================================================
-#  5 · Strategic analysis
+#  5 | Strategic analysis
 # =====================================================================
 
 def fig_swot():
@@ -730,7 +733,7 @@ def fig_swot():
         ("STRENGTHS", UV, [
             "A sequenced method with a review gate, not a content library",
             "Bilingual and MENA-composed, not translated",
-            "The institutional workspace and cohort report — a reporting line",
+            "The institutional workspace and cohort report, a reporting line",
             "Eight engines, so no single buyer type is existential"]),
         ("WEAKNESSES", "#0096DF", [
             "Delivery depends on certified facilitators who do not exist yet",
@@ -765,7 +768,7 @@ def fig_swot():
         yy = y + h - 0.52
         for it in items:
             lines = _wrap(it, 6.9, w - 2 * PAD - 0.14)
-            ax.text(x + PAD, yy, "▪", fontsize=6.0, color=col, va="top", zorder=4)
+            ax.text(x + PAD, yy, "-", fontsize=6.0, color=col, va="top", zorder=4)
             ax.text(x + PAD + 0.14, yy, "\n".join(lines), fontsize=6.9,
                     color=INK2, va="top", zorder=4, linespacing=1.45)
             yy -= _lines_h(lines, 6.9) + 0.07
@@ -780,7 +783,7 @@ def fig_porter():
          "StartPad does.", 0.55),
         ("Threat of new entrants", "MODERATE TO HIGH",
          "The software is replicable. The certified facilitator pool, the "
-         "bilingual curriculum and the institutional relationships are not — and "
+         "bilingual curriculum and the institutional relationships are not, and "
          "they take years.", 0.65),
         ("Bargaining power of buyers", "HIGH",
          "Universities and ministries are slow, price-sensitive and used to being "
@@ -821,12 +824,12 @@ def fig_porter():
 def fig_pestle():
     items = [
         ("POLITICAL", "Both states have made youth entrepreneurship a stated "
-         "national priority with named programmes and budgets.政 policy "
+         "national priority with named programmes and budgets. That policy "
          "direction is a tailwind; political attention also means procurement "
          "scrutiny."),
         ("ECONOMIC", "EGP devaluation cuts the cost base faster than local "
          "willingness to pay. Gulf capital is deepening while Egyptian funding "
-         "tightens — which is the case for serving both."),
+         "tightens, which is the case for serving both."),
         ("SOCIAL", "A very young population, high graduate unemployment and "
          "strong social legitimacy for entrepreneurship as a route out. Family "
          "approval still favours employment, which the Bazaar is designed to "
@@ -849,7 +852,7 @@ def fig_pestle():
     for i, (title, body) in enumerate(items):
         x = (i % 3) * (w + gap)
         y = H - h if i < 3 else 0
-        _chip(ax, x, y, w, h - 0.02, title, body.replace("政 ", ""),
+        _chip(ax, x, y, w, h - 0.02, title, body,
               spec(i, 6) if i < 3 else WASH, tsize=7.6, bsize=6.6)
     return _save(fig, "pestle")
 
@@ -863,7 +866,7 @@ def fig_moat():
             ("The cohort evidence record", 24,
              "Switching means abandoning the history a dean reports on"),
             ("Bilingual MENA-composed curriculum", 18,
-             "Composed, not translated — and dialect-specific"),
+             "Composed, not translated, and dialect-specific"),
             ("The AI review rubric, tuned on real cohorts", 14,
              "Improves with every cohort; a cold start cannot match it"),
             ("The platform itself", 6, "The least defensible layer, and the one "
@@ -887,7 +890,7 @@ def fig_moat():
 
 
 # =====================================================================
-#  6 · Engine 2 — the schools ladder
+#  6 | Engine 2, the schools ladder
 # =====================================================================
 
 def fig_school_ladder():
@@ -900,7 +903,7 @@ def fig_school_ladder():
          f"{su['days']} in-person days for {su['size']} students, ending in a "
          f"public showcase.", _money(su["price"])),
         ("FORMAT 03", "Technical institute",
-         f"{tu['days']} days with an employability frame — a trade turned into a "
+         f"{tu['days']} days with an employability frame, a trade turned into a "
          f"business.", _money(tu["price"])),
         ("FORMAT 04", "Whole-school licence",
          "Every student for an academic year, with teacher certification.",
@@ -953,7 +956,7 @@ def fig_engine_economics():
 
 
 def fig_deal_sizes():
-    """Deal size against how many of them there are — why the mix is the mix."""
+    """Deal size against how many of them there are, why the mix is the mix."""
     rows = M.engine_economics()
     fig, ax = plt.subplots(figsize=(7.1, 2.4))
     names = [r["name"] for r in rows]
@@ -976,7 +979,7 @@ def fig_deal_sizes():
 
 
 # =====================================================================
-#  4 · The institutional pipeline — the funnel the company actually runs
+#  4 | The institutional pipeline, the funnel the company actually runs
 # =====================================================================
 
 def fig_pipeline():
@@ -1003,7 +1006,7 @@ def fig_pipeline():
 
 
 # =====================================================================
-#  5 · Engine 1 — the university ladder
+#  5 | Engine 1, the university ladder
 # =====================================================================
 
 def fig_university_ladder():
@@ -1066,7 +1069,7 @@ def fig_initiative_model():
         ("01", "Co-design", "The initiative's objective, our missions, and the "
          "reporting format their own donor expects."),
         ("02", "Certify their trainers", "Train-the-trainer cohorts put delivery "
-         "in the programme's hands — the only way to reach tens of thousands."),
+         "in the programme's hands, the only way to reach tens of thousands."),
         ("03", "Provision in bulk", "Seats issued by governorate or region, with "
          "no facilitator needed for the platform itself."),
         ("04", "Report to the donor", "Participation, progress and evidence per "
@@ -1086,7 +1089,7 @@ def fig_initiative_model():
 
 
 # =====================================================================
-#  7 · Engine 3 — competitions, as a revenue line
+#  7 | Engine 3, competitions, as a revenue line
 # =====================================================================
 
 def fig_competition_model():
@@ -1135,11 +1138,11 @@ def fig_competition_model():
 
 
 # =====================================================================
-#  8 · Revenue, cost and the path to breakeven
+#  8 | Revenue, cost and the path to breakeven
 # =====================================================================
 
 # =====================================================================
-#  9 · Subscriptions, as a consequence of the engines
+#  9 | Subscriptions, as a consequence of the engines
 # =====================================================================
 
 def fig_subscription_sources():
@@ -1284,7 +1287,7 @@ def fig_headcount():
 
 
 # =====================================================================
-#  9 · Where a cohort's $7,500 goes
+#  9 | Where a cohort's $7,500 goes
 def fig_gtm_moves():
     """The five moves, and what each one unlocks."""
     moves = [
@@ -1317,11 +1320,11 @@ def fig_gtm_moves():
 def fig_institution_workflow():
     """Map to Report: the six steps that turn a meeting into a cohort report."""
     steps = [
-        ("01", "Map", "The right person at each of the four doors", "Week −4"),
-        ("02", "Meet", "Agree the objective and the cohort size", "Week −3"),
-        ("03", "Sign", "One contract: bootcamp, workshops, seats", "Week −2"),
-        ("04", "Set up", "Admin account, cohort, students invited", "Week −1"),
-        ("05", "Run", "6 bootcamp days, missions every evening", "Weeks 1–2"),
+        ("01", "Map", "The right person at each of the four doors", "Week -4"),
+        ("02", "Meet", "Agree the objective and the cohort size", "Week -3"),
+        ("03", "Sign", "One contract: bootcamp, workshops, seats", "Week -2"),
+        ("04", "Set up", "Admin account, cohort, students invited", "Week -1"),
+        ("05", "Run", "6 bootcamp days, missions every evening", "Weeks 1-2"),
         ("06", "Report", "Bazaar, certificates, cohort report, renew", "Week 3"),
     ]
     W, H = 7.1, 1.92
@@ -1341,13 +1344,13 @@ def fig_institution_workflow():
 def fig_bootcamp_map():
     """Learn it in the room, build it on StartPad that evening."""
     days = [
-        ("DAY 01", "Idea generation", "01–03", "Accounts live"),
-        ("DAY 02", "Market research", "04–06", "01–03 in"),
-        ("DAY 03", "Business finance", "07–08", "04–06 in"),
-        ("DAY 04", "Prototype and brand", "09–10", "07–08 in"),
-        ("DAY 05", "Pitch skills", "Catch up 01–10", "09–10 in"),
+        ("DAY 01", "Idea generation", "01-03", "Accounts live"),
+        ("DAY 02", "Market research", "04-06", "01-03 in"),
+        ("DAY 03", "Business finance", "07-08", "04-06 in"),
+        ("DAY 04", "Prototype and brand", "09-10", "07-08 in"),
+        ("DAY 05", "Pitch skills", "Catch up 01-10", "09-10 in"),
         ("DAY 06", "Projects Bazaar", "Judges' pack", "Cohort report"),
-        ("BEYOND", "Keep building", "11–15", "Progress"),
+        ("BEYOND", "Keep building", "11-15", "Progress"),
     ]
     W, H = 7.1, 2.30
     fig, ax = _canvas(W, H)
@@ -1383,14 +1386,14 @@ def fig_org_chart():
 
     The grey notes matter more than the boxes. A chart showing only the six would
     hide that operations, finance, design and the school engine are each carried
-    by somebody whose title says something else — which is the honest cost of a
+    by somebody whose title says something else, which is the honest cost of a
     six-person year one.
     """
     by_fn, totals = M.headcount()
     W, H = 7.1, 3.34
     fig, ax = _canvas(W, H)
     _chip(ax, 2.00, 2.64, 3.10, 0.62, "Chief Executive Officer",
-          "Institutional relationships · hosts Mission Zero · carries operations, "
+          "Institutional relationships | hosts Mission Zero | carries operations, "
           "finance and the quality gates until year four",
           UV, tsize=9.2, bsize=6.3, centre=True, vcentre=True)
 
@@ -1400,7 +1403,7 @@ def fig_org_chart():
          "four and five"),
         ("Head of Curriculum and Certification", [],
          "Certifies and audits the facilitator pool rather than employing it"),
-        ("Head of Partnerships — Egypt", [],
+        ("Head of Partnerships, Egypt", [],
          "Also carries competitions, schools and corporate sponsors through "
          "year one"),
         ("Head of Growth and Content", [],
@@ -1421,7 +1424,7 @@ def fig_org_chart():
                 fontsize=6.3, color=MUTED, va="top", zorder=4, linespacing=1.46)
 
     ax.add_patch(Rectangle((0, 0.60), W, 0.012, color=HAIR, zorder=2))
-    ax.text(0, 0.66, "NOT ON THE PAYROLL — and this is the design, not a gap",
+    ax.text(0, 0.66, "NOT ON THE PAYROLL, and this is the design, not a gap",
             fontsize=6.3, color=UV, fontweight="bold", va="bottom", zorder=4)
     off = [("Certified facilitator pool",
             f"{M.QUARTERLY['certified_facilitators'][3]} certified by the end of "
@@ -1524,9 +1527,9 @@ def fig_ngo_initiatives():
     cells = []
     for row in items:
         org, market, runs, supply, plays, route = row
-        name = org.split(" — ")[0].split(", and ")[0]
-        sub = org.split(" — ")[1] if " — " in org else market
-        cells.append((name, f"{market} · {sub}" if sub != market else market,
+        name = org.split(": ")[0].split(", and ")[0]
+        sub = org.split(": ")[1] if ": " in org else market
+        cells.append((name, f"{market} | {sub}" if sub != market else market,
                       supply, plays))
     rowh = []
     for name, sub, supply, plays in cells:
@@ -1587,7 +1590,7 @@ def fig_team_arc():
          "A chief operating officer, an AI and data engineer, a schools and "
          "technical head, and a second coordinator."),
         ("YEAR 5", "20", "Keep what has been won",
-         "Renewals, student success, a designer and a curriculum producer — the "
+         "Renewals, student success, a designer and a curriculum producer, the "
          "first roles that protect an existing book rather than win a new one."),
     ]
     W = 7.1
@@ -1623,7 +1626,7 @@ def fig_leverage():
     """
     Why twelve people can stand behind three hundred cohorts.
 
-    Four bands, three bars each — year one palest, year three solid. The bands
+    Four bands, three bars each, year one palest, year three solid. The bands
     share one scale, which is the only way the ratio between the employee bar and
     the cohort bar reads honestly rather than being asserted in a caption.
     """
@@ -1743,16 +1746,16 @@ def fig_engagement_route():
     procedure rather than a series of lucky introductions.
     """
     steps = [
-        ("01", "Find the edge", "Enter at one campus, one branch, one chapter — "
+        ("01", "Find the edge", "Enter at one campus, one branch, one chapter, "
          "never at head office, which cannot authorise a first.", "Week 0"),
         ("02", "Fund the proof", "One cohort at StartPad's cost, inside their "
-         "programme, with their name on the report.", "Weeks 1–8"),
+         "programme, with their name on the report.", "Weeks 1-8"),
         ("03", "Publish it", "The report, a Mission Zero episode recorded there, "
          "and the showcase their leadership attends.", "Week 9"),
         ("04", "Price the block", "Take the report upward and ask for seats or a "
-         "season — a line in their budget, not a new programme.", "Months 3–9"),
+         "season, a line in their budget, not a new programme.", "Months 3-9"),
         ("05", "Certify them", "Their trainers, their facilitators, our standard "
-         "and our audit. Volume without headcount.", "Months 9–18"),
+         "and our audit. Volume without headcount.", "Months 9-18"),
     ]
     W, H = 7.1, 2.08
     fig, ax = _canvas(W, H)
@@ -1788,8 +1791,8 @@ def fig_named_targets():
     Nothing in this plan's revenue is attributed to any one of these. They are
     here so a reader can check that the market described has real buyers running
     real programmes, and that there is a stated route into each. Column heights
-    are measured from the wrapped content — including the column heading, which
-    wraps to two lines in two of the three columns — so no entry can fall
+    are measured from the wrapped content, including the column heading, which
+    wraps to two lines in two of the three columns, so no entry can fall
     outside its own panel.
     """
     groups = [
@@ -1810,9 +1813,9 @@ def fig_named_targets():
         entries = []
         for row in items:
             org, market, plays = row[0], row[1], row[4]
-            name = (org.split(" — ")[0].split(", under")[0]
+            name = (org.split(": ")[0].split(", under")[0]
                        .split(" and the ")[0].split(", and ")[0])
-            entries.append((_wrap(name, 7.0, inner - 0.12), f"{market}  ·  {plays}"))
+            entries.append((_wrap(name, 7.0, inner - 0.12), f"{market}  |  {plays}"))
         h = (BAR + 0.09 + _lines_h(head, 7.6) + HEADGAP
              + sum(_lines_h(e[0], 7.0) + ENTRYGAP for e in entries) + FOOT)
         cols.append((head, entries, col, h))
@@ -1847,14 +1850,14 @@ def fig_podcast():
     Mission Zero: the chain by which a podcast becomes institutional pipeline.
 
     Drawn as a chain rather than a funnel because each link produces the next and
-    the last one feeds the first — a founder featured becomes the reason the next
+    the last one feeds the first, a founder featured becomes the reason the next
     founder agrees.
     """
     chain = M.PODCAST["chain"]
     W = 7.1
     H = 0.60 + len(chain) * 0.455
     fig, ax = _canvas(W, H)
-    ax.text(0, H - 0.09, f"{M.PODCAST['name']}  ·  {M.PODCAST['arabic']}",
+    ax.text(0, H - 0.09, f"{M.PODCAST['name']}  |  {M.PODCAST['arabic']}",
             fontsize=11.5, color=INK, fontweight="bold", va="top", zorder=4)
     ax.text(0, H - 0.33, "\n".join(_wrap(M.PODCAST["premise"], 7.0, W)),
             fontsize=7.0, color=MUTED, va="top", zorder=4, linespacing=1.45)
