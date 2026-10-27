@@ -74,14 +74,19 @@ def sheet_readme(wb):
         ("", ""),
         ("THE NUMBER THIS LIST HAS TO PRODUCE", ""),
         ("", f"Full coalition value if every capped slot sells: "
-             f"{money(I.target_money())}. The wave is planned at "
-             f"{I.TARGET_FILL:.0%} fill, which is {money(total)}, and that "
-             f"is the budget the funnel in the framework is quoted at."),
+             f"{money(I.target_money())}, which is EGP "
+             f"{I.egp(I.target_money()):,.0f}. The wave is planned at "
+             f"{I.TARGET_FILL:.0%} fill, which is {money(total)}."),
         ("", f"At that budget the wave reaches {f['People reached']:,.0f} "
              f"people, registers {f['Registered founders']:,.0f} first-time "
              f"founders, puts {f['Sponsored full journeys, all 15 missions']:,.0f} "
-             f"of them through all fifteen missions, and leaves "
-             f"{f['Ideas in the bank']:,.0f} ideas in the bank."),
+             f"of them through all fifteen missions at "
+             f"{money(I.SEAT_PRICE)} each, runs {f['Cohorts run']:,.0f} "
+             f"in-person cohorts at {money(I.COHORT_PRICE)} each, and "
+             f"leaves {f['Ideas in the bank']:,.0f} ideas in the bank."),
+        ("", "The full budget, the events, the field operations and what "
+             "StartPad gets back are in the companion workbook: "
+             "StartPad_Initiative_Budget.xlsx."),
         ("", "The million is not a six-month number. The framework says so "
              "in the arithmetic, and so should anyone using this list."),
         ("", ""),
@@ -310,212 +315,6 @@ def sheet_values(wb):
     return ws
 
 
-# ------------------------------------------------------------- THE NUMBERS
-def sheet_numbers(wb):
-    ws = wb.create_sheet("THE NUMBERS")
-    ws.sheet_view.showGridLines = False
-    banner(ws, f"{I.WAVE}: the arithmetic",
-           "Built from the coalition rather than asserted. Change a channel "
-           "and the funnel moves.", 6)
-    for col, w in zip("ABCDEF", [3, 46, 16, 14, 14, 78]):
-        ws.column_dimensions[col].width = w
-
-    r = 4
-    ws.cell(row=r, column=2, value="WHERE THE REACH COMES FROM").font = Font(
-        bold=True, size=11, color=ACCENT)
-    r += 1
-    for i, h in enumerate(["Channel", "Partners", "Reach each", "Registers",
-                           "Why"], start=2):
-        c = ws.cell(row=r, column=i, value=h)
-        c.font = Font(bold=True, size=10, color="FFFFFF")
-        c.fill = SUBHEAD
-        c.border = BOX
-        c.alignment = Alignment(vertical="center", indent=1, wrap_text=True)
-    ws.row_dimensions[r].height = 26
-    r += 1
-    first = r
-    for label, n, per, rate, why in I.CHANNELS:
-        ws.cell(row=r, column=2, value=label).font = Font(size=10, bold=True)
-        ws.cell(row=r, column=3, value=n)
-        ws.cell(row=r, column=4, value=per)
-        ws.cell(row=r, column=5, value=rate).number_format = "0%"
-        c = ws.cell(row=r, column=6, value=why)
-        c.alignment = Alignment(wrap_text=True, vertical="top", indent=1)
-        c.font = Font(size=9.5, color="3A4050")
-        for i in range(2, 7):
-            ws.cell(row=r, column=i).border = BOX
-            if i in (3, 4, 5):
-                ws.cell(row=r, column=i).alignment = Alignment(
-                    horizontal="center")
-                ws.cell(row=r, column=i).number_format = (
-                    "0%" if i == 5 else "#,##0")
-        ws.cell(row=r, column=2).alignment = Alignment(
-            wrap_text=True, vertical="top", indent=1)
-        ws.row_dimensions[r].height = max(26, 12.4 * (len(why) // 74 + 1))
-        r += 1
-    tot = ws.cell(row=r, column=2, value="Total reach")
-    tot.font = Font(size=10, bold=True, color="FFFFFF")
-    tot.fill = HEAD
-    tot.alignment = Alignment(indent=1)
-    t2 = ws.cell(row=r, column=4,
-                 value=f"=SUMPRODUCT(C{first}:C{r-1},D{first}:D{r-1})")
-    t2.font = Font(size=10, bold=True, color="FFFFFF")
-    t2.fill = HEAD
-    t2.number_format = "#,##0"
-    t2.alignment = Alignment(horizontal="center")
-    for i in (3, 5, 6):
-        ws.cell(row=r, column=i).fill = HEAD
-    r += 2
-
-    ws.cell(row=r, column=2, value="THE FUNNEL").font = Font(
-        bold=True, size=11, color=ACCENT)
-    r += 1
-    for label, value, why in I.funnel():
-        ws.cell(row=r, column=2, value=label).font = Font(size=10, bold=True)
-        v = ws.cell(row=r, column=3, value=round(value))
-        v.number_format = "#,##0"
-        v.font = Font(size=11, bold=True, color=ACCENT)
-        v.alignment = Alignment(horizontal="center")
-        v.border = BOX
-        v.fill = SUNK
-        c = ws.cell(row=r, column=6, value=why)
-        c.alignment = Alignment(wrap_text=True, vertical="top", indent=1)
-        c.font = Font(size=9.5, color="3A4050")
-        ws.row_dimensions[r].height = max(18, 12.4 * (len(why) // 74 + 1))
-        r += 1
-    r += 1
-
-    ws.cell(row=r, column=2, value="WHAT IT COSTS").font = Font(
-        bold=True, size=11, color=ACCENT)
-    r += 1
-    total, lines = I.budget()
-    ws.cell(row=r, column=2,
-            value="Coalition value if every capped slot sells").font = Font(
-        size=10)
-    ws.cell(row=r, column=3, value=I.target_money()).number_format = "#,##0"
-    r += 1
-    ws.cell(row=r, column=2,
-            value=f"Wave 1 budget at {I.TARGET_FILL:.0%} fill").font = Font(
-        size=10, bold=True)
-    b = ws.cell(row=r, column=3, value=total)
-    b.number_format = "#,##0"
-    b.font = Font(size=11, bold=True, color=ACCENT)
-    r += 2
-    for label, share, value in lines:
-        ws.cell(row=r, column=2, value=label).font = Font(size=10)
-        s = ws.cell(row=r, column=3, value=share)
-        s.number_format = "0%"
-        s.alignment = Alignment(horizontal="center")
-        v = ws.cell(row=r, column=4, value=value)
-        v.number_format = "#,##0"
-        v.alignment = Alignment(horizontal="center")
-        for i in (3, 4):
-            ws.cell(row=r, column=i).border = BOX
-        r += 1
-    r += 1
-
-    ws.cell(row=r, column=2, value="COST PER OUTCOME").font = Font(
-        bold=True, size=11, color=ACCENT)
-    r += 1
-    for label, value in I.unit_costs():
-        ws.cell(row=r, column=2, value=label).font = Font(size=10)
-        v = ws.cell(row=r, column=3, value=round(value, 2))
-        v.number_format = '"$"#,##0.00'
-        v.font = Font(size=10, bold=True, color=ACCENT)
-        v.alignment = Alignment(horizontal="center")
-        v.border = BOX
-        r += 1
-    r += 1
-    ws.cell(row=r, column=2,
-            value="The cost per sponsored full journey is above the $15 "
-                  "list price of a Pro subscription because it carries its "
-                  "share of facilitation, community activation, content, "
-                  "events and measurement, not only the licence.").font = (
-        Font(size=9.5, italic=True, color="6B7A74"))
-    ws.cell(row=r, column=2).alignment = Alignment(wrap_text=True,
-                                                   vertical="top")
-    ws.merge_cells(start_row=r, start_column=2, end_row=r, end_column=6)
-    ws.row_dimensions[r].height = 32
-    return ws
-
-
-# ----------------------------------------------------------- THE SIX MONTHS
-def sheet_calendar(wb):
-    ws = wb.create_sheet("THE SIX MONTHS")
-    ws.sheet_view.showGridLines = False
-    banner(ws, f"{I.WAVE}", "Why this window and not another, month by "
-                            "month.", 6)
-    for col, w in zip("ABCDEF", [3, 14, 18, 24, 76, 30]):
-        ws.column_dimensions[col].width = w
-    f = dict((k, v) for k, v, _ in I.funnel())
-
-    r = 4
-    ws.cell(row=r, column=2, value="BEFORE THE WAVE").font = Font(
-        bold=True, size=11, color=ACCENT)
-    r += 1
-    for when, what, why in I.PRE_WAVE:
-        ws.cell(row=r, column=2, value=when).font = Font(size=10, bold=True,
-                                                         color=ACCENT)
-        ws.cell(row=r, column=3, value=what).font = Font(size=10, bold=True)
-        ws.cell(row=r, column=3).alignment = Alignment(wrap_text=True,
-                                                       vertical="top")
-        c = ws.cell(row=r, column=5, value=why)
-        c.font = Font(size=10)
-        c.alignment = Alignment(wrap_text=True, vertical="top")
-        ws.row_dimensions[r].height = max(20, 12.4 * (len(why) // 74 + 1))
-        r += 1
-    r += 1
-
-    ws.cell(row=r, column=2, value="THE WAVE").font = Font(
-        bold=True, size=11, color=ACCENT)
-    r += 1
-    for i, h in enumerate(["Month", "When", "What it is", "What happens",
-                           "Where it should be by month end"], start=2):
-        c = ws.cell(row=r, column=i, value=h)
-        c.font = Font(bold=True, size=10, color="FFFFFF")
-        c.fill = SUBHEAD
-        c.border = BOX
-        c.alignment = Alignment(vertical="center", indent=1, wrap_text=True)
-    ws.row_dimensions[r].height = 28
-    r += 1
-    for label, when, title, body, reg, coh in I.MONTHS:
-        ws.cell(row=r, column=2, value=label).font = Font(size=10, bold=True,
-                                                          color=ACCENT)
-        ws.cell(row=r, column=3, value=when).font = Font(size=10)
-        ws.cell(row=r, column=4, value=title).font = Font(size=10, bold=True)
-        ws.cell(row=r, column=5, value=body).font = Font(size=10)
-        cohorts = f["Cohorts run"] * coh
-        target = (f"{f['Registered founders'] * reg:,.0f} registered"
-                  + (f"; {cohorts:,.0f} cohorts" if cohorts >= 1 else ""))
-        ws.cell(row=r, column=6, value=target).font = Font(
-            size=10, bold=True, color=INK)
-        for i in range(2, 7):
-            ws.cell(row=r, column=i).border = BOX
-            ws.cell(row=r, column=i).alignment = Alignment(
-                wrap_text=True, vertical="top", indent=1)
-        ws.row_dimensions[r].height = max(30, 12.4 * (len(body) // 74 + 1))
-        r += 1
-    r += 2
-
-    ws.cell(row=r, column=2, value="AND WHEN IS THE MILLION").font = Font(
-        bold=True, size=11, color=ACCENT)
-    r += 1
-    for wave, when, where, why in I.PATH_TO_MILLION:
-        ws.cell(row=r, column=2, value=wave).font = Font(size=10, bold=True,
-                                                         color=ACCENT)
-        ws.cell(row=r, column=3, value=when).font = Font(size=10)
-        ws.cell(row=r, column=4, value=where).font = Font(size=10)
-        c = ws.cell(row=r, column=5, value=why)
-        c.font = Font(size=10)
-        c.alignment = Alignment(wrap_text=True, vertical="top")
-        for i in range(2, 6):
-            ws.cell(row=r, column=i).alignment = Alignment(
-                wrap_text=True, vertical="top", indent=1)
-        ws.row_dimensions[r].height = max(24, 12.4 * (len(why) // 74 + 1))
-        r += 1
-    return ws
-
-
 # ------------------------------------------------------------------ COVERAGE
 def sheet_coverage(wb, list_rows):
     ws = wb.create_sheet("COVERAGE")
@@ -631,8 +430,6 @@ def build(path):
     sheet_tiers(wb)
     sheet_inkind(wb)
     sheet_values(wb)
-    sheet_numbers(wb)
-    sheet_calendar(wb)
     sheet_coverage(wb, list_rows)
     wb.properties.creator = "StartPad"
     wb.properties.title = f"{I.NAME}: sponsorship invitation list"

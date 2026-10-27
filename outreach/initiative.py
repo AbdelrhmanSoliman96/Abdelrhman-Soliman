@@ -120,12 +120,153 @@ ROLE_OVERRIDE = {
 }
 
 
+# ------------------------------------------------------------------ pricing
+# The two unit prices this whole initiative is costed on. Neither is invented
+# for this document: both come from the company's own financial model, which
+# is what makes them defensible in a room where somebody has read both.
+#
+#   A sponsored founder costs $5. That is the national initiative seat price
+#   in the financial model, year one, described there as "per participant,
+#   bulk provisioned, priced for a ministry buying tens of thousands". It is
+#   an Egyptian price, not a western one, and the cost base is sized for it.
+#
+#   A sponsored in-person cohort costs $3,000 for 25 seats, which is $120 a
+#   seat. The model's direct cost for the same cohort is $1,770: two
+#   certified facilitators for six days at $85 a day, $450 of materials and
+#   $300 for the showcase. The rest is the part a model built around Cairo
+#   leaves out and a national initiative cannot: getting the team to Qena
+#   and keeping them there for eight days. Intercity transport,
+#   accommodation, a daily allowance paid in advance, local transport,
+#   shipping the materials, and the venue where a university does not
+#   donate one. It sits just below the $3,500 the company charges a
+#   university for the same cohort, because a sponsor is funding delivery at
+#   cost with no margin and no institutional reporting layer.
+EGP_PER_USD = 53.22          # the rate in finmodel/plan.py
+SEAT_PRICE = 5.00            # one founder, all fifteen missions, all in
+COHORT_PRICE = 3_000.00      # one in-person cohort, all in, travelled
+COHORT_SEATS = 25
+
+# What the wave spends on, beside the cohorts. These are the national lines
+# that do not belong to any one cohort, and dividing them by the founders
+# sponsored is where the $5 seat price comes from rather than the other way
+# round.
+PLATFORM_COST = 26_000.0
+CONTENT_COST = 12_500.0
+MEASUREMENT_COST = 9_000.0
+
+COHORT_BREAKDOWN = [
+    ("Facilitation: two certified facilitators, six days", 1_020.0,
+     "In the financial model, at $85 a facilitator day"),
+    ("Materials for 25 participants", 450.0, "In the financial model"),
+    ("Showcase and bazaar", 300.0, "In the financial model"),
+    ("Intercity transport: three people, return", 35.0,
+     "Two facilitators and a coordinator, about EGP 600 each return"),
+    ("Local transport for six delivery days", 20.0,
+     "About EGP 150 a day across the team"),
+    ("Accommodation: two rooms, seven nights", 240.0,
+     "About EGP 900 a room a night, outside the home governorate"),
+    ("Daily allowance: three people, eight days", 180.0,
+     "EGP 400 a person a day, paid in advance, not reimbursed after"),
+    ("Shipping the materials to the governorate", 10.0, ""),
+    ("Venue and catering, where the host does not donate", 260.0,
+     "A university usually donates the room. A youth centre usually does "
+     "not"),
+    ("Facilitator certification and quality assurance", 230.0, ""),
+    ("Cohort reporting and showcase media", 170.0, ""),
+    ("Contingency", 85.0,
+     "A cohort that has to be moved a week costs money nobody budgeted"),
+]
+
+# The field is six of the eleven lines above. Stated separately because it is
+# the part that is invisible in a Cairo spreadsheet and decides whether a
+# governorate programme happens at all.
+FIELD_LINES = {"Intercity transport: three people, return",
+               "Local transport for six delivery days",
+               "Accommodation: two rooms, seven nights",
+               "Daily allowance: three people, eight days",
+               "Shipping the materials to the governorate",
+               "Venue and catering, where the host does not donate"}
+
+FIELD_POLICY = [
+    ("The allowance is paid in advance",
+     "EGP 400 a person a day, in hand before the team travels. A certified "
+     "facilitator is a freelancer, not a salaried employee, and cannot "
+     "float a week of expenses and wait for a reimbursement cycle. A "
+     "programme that reimburses after the fact loses its best facilitators "
+     "to whoever pays up front."),
+    ("Travel is two facilitators and a coordinator",
+     "Two facilitators deliver and one coordinator runs the room, the "
+     "venue, the host relationship and the showcase. Sending two people "
+     "and asking one of them to coordinate is how cohorts fail in week "
+     "one."),
+    ("Eight days away for six delivery days",
+     "A travel day each side. Pretending a team can arrive and deliver the "
+     "same morning is the commonest way a governorate budget turns out to "
+     "be wrong."),
+    ("The venue is the first thing to ask the host for",
+     "A university or a corporate branch donating the room takes $260 off "
+     "the cohort, which goes straight back into founders sponsored. This "
+     "is the single highest-value item on the in-kind menu for a "
+     "governorate partner."),
+    ("Recruit facilitators where the cohorts are",
+     "Every facilitator certified in Assiut removes the travel, the "
+     "accommodation and most of the allowance from every cohort they run. "
+     "The certification programme is targeted at the governorates with the "
+     "most cohorts for exactly this reason, and it is why the second wave "
+     "costs less per founder than the first."),
+]
+
+# Every event the initiative runs, and what each costs in cash. The cohorts
+# are not here: they are the delivery line, costed above. Chapter sessions
+# cost nothing to host because the chapter hosts them; what costs money is
+# getting somebody there.
+EVENTS = [
+    ("National launch, Cairo", 1, 6_000.0, "March 2027",
+     "The coalition on stage, the patron ministries present, the press in "
+     "the room. Nothing is announced until three Founding Partners have "
+     "signed, so this event is the proof the coalition exists."),
+    ("Chapter activation visits", 40, 175.0, "March to April 2027",
+     "150 chapters, visited in 40 clustered trips. A chapter that has been "
+     "visited activates. A chapter that has only been emailed does not, "
+     "and that is the whole difference between 150 chapters and 40."),
+    ("Campus awareness sessions", 60, 90.0, "March to May 2027",
+     "An hour on a campus, run with the chapter, that turns a poster into "
+     "registrations. Five per governorate."),
+    ("Governorate partner and host meetings", 36, 220.0,
+     "March to August 2027",
+     "Twelve governorates, three visits each: open the relationship, agree "
+     "the venues, run the showcase."),
+    ("Governorate showcases", 6, 1_700.0, "May to July 2027",
+     "Venue, judges' travel, prizes and media. Six of them, in the "
+     "governorates carrying the most cohorts."),
+    ("Partner council meetings", 6, 200.0, "Monthly",
+     "One hour, one dashboard, and the room where partners meet each "
+     "other, which several of them will value more than the reporting."),
+    ("Judge and mentor briefings", 4, 150.0, "Before each showcase wave",
+     "Sponsor staff cannot judge well without being briefed, and a badly "
+     "judged showcase costs a renewal."),
+]
+
+
+def events_total():
+    return sum(n * cost for _, n, cost, _, _ in EVENTS)
+
+
+def egp(usd):
+    return usd * EGP_PER_USD
+
+
 # ------------------------------------------------------------------- tiers
-# Slots are capped on purpose. A tier that anybody can buy is not worth
-# buying, and a coalition of forty equal logos gives nobody a reason to be
-# the first to sign.
+# Every tier price is the sum of what it buys, so a partner can see exactly
+# what their money turns into rather than what percentage of a pie it is.
+# Slots are capped on purpose: a tier anybody can buy is not worth buying,
+# and a coalition of forty equal logos gives nobody a reason to be first.
+def _price(founders, cohorts):
+    return founders * SEAT_PRICE + cohorts * COHORT_PRICE
+
+
 TIERS = [
-    dict(name="Founding Partner", price=150_000, slots=3,
+    dict(name="Founding Partner", founders=4_400, cohorts=6, slots=3,
          role="CSR sponsor",
          gives="Cash, plus a seat on the steering committee.",
          benefits=[
@@ -151,7 +292,7 @@ TIERS = [
              "governorate and gender disaggregation, and SDG mapping, "
              "written to go straight into their own annual report.",
          ]),
-    dict(name="Lead Partner", price=75_000, slots=6,
+    dict(name="Lead Partner", founders=2_200, cohorts=3, slots=6,
          role="CSR sponsor",
          gives="Cash.",
          benefits=[
@@ -163,7 +304,7 @@ TIERS = [
              "Up to 20 staff certified as mentors and judges.",
              "The closing report, disaggregated and SDG mapped.",
          ]),
-    dict(name="Governorate Partner", price=30_000, slots=12,
+    dict(name="Governorate Partner", founders=400, cohorts=2, slots=12,
          role="CSR sponsor",
          gives="Cash, usually from a community investment budget tied to "
                "where they operate.",
@@ -171,12 +312,12 @@ TIERS = [
              "One named governorate for the wave, which is the version of "
              "this that an oil, cement or industrial sponsor can fund out "
              "of an existing licence-to-operate budget.",
-             "Cohorts, a local showcase and a governorate report with "
+             "Two cohorts, a local showcase and a governorate report with "
              "named participants.",
              "The direction report for their governorate.",
              "Up to 10 staff as mentors and judges.",
          ]),
-    dict(name="Mission Partner", price=12_000, slots=15,
+    dict(name="Mission Partner", founders=600, cohorts=0, slots=15,
          role="CSR sponsor",
          gives="Cash. The entry tier, and the one a mid-sized Egyptian "
                "company or a second-tier foundation can sign inside a "
@@ -188,18 +329,18 @@ TIERS = [
              "Named on the platform and in the closing report.",
              "Staff as mentors on their own mission.",
          ]),
-    dict(name="In-kind Partner", price=0, slots=0,
+    dict(name="In-kind Partner", founders=0, cohorts=0, slots=0,
          role="CSR sponsor or NGO and development partner",
          gives="Anything on the in-kind menu, valued at its market rate and "
                "credited at the cash tier it matches.",
          benefits=[
              "Credited at the tier their contribution values at, with the "
-             "same benefits. Media airtime at a rate card value of $75,000 "
-             "is a Lead Partner.",
+             "same benefits. Media airtime at a rate card value of EGP 1.1 "
+             "million is a Lead Partner.",
              "This is how a telco, a broadcaster or a venue owner joins "
              "without a cash approval, and it is usually faster.",
          ]),
-    dict(name="Community Supporter", price=0, slots=0,
+    dict(name="Community Supporter", founders=0, cohorts=0, slots=0,
          role="Community supporter",
          gives="Members, chapters and leadership time. No cash is asked "
                "for, ever.",
@@ -216,6 +357,9 @@ TIERS = [
              "through fifteen missions.",
          ]),
 ]
+for _t in TIERS:
+    _t["price"] = _price(_t["founders"], _t["cohorts"])
+
 
 # ----------------------------------------------------------------- in kind
 INKIND = [
@@ -481,34 +625,16 @@ RATES = [
     ("Mission 01 complete to Missions 01-03 complete", 0.56,
      "The free tier ends here. This is the honest conversion from "
      "curiosity to effort."),
-    ("Sponsored full journeys, as a share of 01-03 completers", 0.33,
-     "Sponsorship pays for the remaining twelve missions for a third of "
-     "those who finish the free tier."),
-    ("In-person cohort seats, as a share of full journeys", 0.15,
-     "The premium layer: a facilitator, a room and six days. Held at 15 "
-     "per cent because the delivery budget is sized against the business "
-     "plan's own direct cost of $1,770 for a cohort of 30, and a larger "
-     "in-person share would cost more than the whole wave raises."),
     ("Ideas entering the bank, as a share of Mission 01 completers", 0.68,
      "Mission 01 is where a problem becomes a stated idea."),
-    ("Ventures trading at month 12, as a share of full journeys", 0.10,
+    ("Ventures trading at month 12, as a share of sponsored journeys", 0.10,
      "The number that matters and the one nobody else reports. Ten per "
      "cent is deliberately conservative."),
 ]
 
-COHORT_SIZE = 30
-
-# Wave 1 budget, at the sponsorship fill assumed below.
+# How much of the capped coalition is assumed to sell. Everything in this
+# file is quoted at this fill rather than at the optimistic one.
 TARGET_FILL = 0.50
-BUDGET_SPLIT = [
-    ("Delivery: facilitators, cohorts, venues, travel", 0.38),
-    ("Platform, AI review and infrastructure", 0.18),
-    ("Community activation: chapters, ambassadors, campus", 0.12),
-    ("Content, localisation and Arabic production", 0.10),
-    ("Events: launch, governorate showcases, national demo day", 0.09),
-    ("Programme management and overhead", 0.07),
-    ("Measurement, evaluation and reporting", 0.06),
-]
 
 
 def reach():
@@ -523,15 +649,92 @@ def rate(label):
     return next(v for k, v, _ in RATES if k.startswith(label))
 
 
+def target_money():
+    """Full coalition value if every capped tier sells."""
+    return sum(t["price"] * t["slots"] for t in TIERS)
+
+
+def bought(fill=None):
+    """What the coalition buys at a given fill: founders and cohorts.
+
+    Sponsorship does not create completers, it pays for the ones the free
+    tier produces, so the founders bought are capped by how many finish
+    missions 01 to 03. At full coalition fill the money outruns the funnel,
+    which is a good problem and the reason wave two widens reach rather than
+    budget.
+    """
+    fill = TARGET_FILL if fill is None else fill
+    founders = sum(t["founders"] * t["slots"] for t in TIERS) * fill
+    cohorts = sum(t["cohorts"] * t["slots"] for t in TIERS) * fill
+    return min(founders, free_tier()), cohorts
+
+
+def free_tier():
+    """Founders who finish the free three missions, which money cannot buy."""
+    m01 = registered() * rate("Registered account to Mission 01")
+    return m01 * rate("Mission 01 complete to Missions 01-03")
+
+
+def budget(fill=None):
+    """The whole wave budget, bottom up.
+
+    Programme management is the balancing line rather than a guess, which is
+    deliberate: every other line is a real quantity at a real price, and if
+    the sponsorship raised moves, the thing that has to flex is how much
+    coordination the wave can afford, not how many founders it serves.
+    """
+    founders, cohorts = bought(fill)
+    income = founders * SEAT_PRICE + cohorts * COHORT_PRICE
+    delivery = cohorts * COHORT_PRICE
+    events = events_total()
+    named = delivery + events + PLATFORM_COST + CONTENT_COST + MEASUREMENT_COST
+    management = income - named
+    lines = [
+        (f"Delivery: {cohorts:,.0f} in-person cohorts at "
+         f"${COHORT_PRICE:,.0f}", delivery,
+         f"{cohorts * COHORT_SEATS:,.0f} seats, six days each, two "
+         f"certified facilitators and a coordinator. Of this, "
+         f"${cohorts * field_cost():,.0f} is field operations: transport, "
+         f"accommodation and the daily allowance."),
+        ("Events and field activation", events,
+         "The launch, the chapter and governorate visits, the campus "
+         "sessions, six governorate showcases, the partner council and the "
+         "judge briefings. Itemised in the events table."),
+        ("Platform, AI review and infrastructure", PLATFORM_COST,
+         "Six months of hosting and inference for the whole registered "
+         "base, not only the sponsored founders. The platform itself is "
+         "already built and carried by the company."),
+        ("Content, Arabic production and localisation", CONTENT_COST,
+         "Governorate and sector variants, the facilitator pack, and the "
+         "showcase materials."),
+        ("Measurement, evaluation and reporting", MEASUREMENT_COST,
+         "The dashboard, the direction report, the month 12 follow-up "
+         "survey and the independent evaluation."),
+        ("Programme management and coordination", management,
+         "A programme manager and a field coordinator for eight months, "
+         "plus part-time admin and finance, at Egyptian salaries. This is "
+         "the balancing line."),
+    ]
+    return income, lines
+
+
+def field_cost():
+    """The travel, accommodation and allowance inside one cohort."""
+    return sum(v for k, v, _ in COHORT_BREAKDOWN if k in FIELD_LINES)
+
+
 def funnel():
-    """The Wave 1 funnel, every line derived from CHANNELS and RATES."""
+    """The Wave 1 funnel.
+
+    The free tier is driven by reach, because it costs almost nothing per
+    head. Everything below it is driven by the budget, because it does.
+    """
     reg = registered()
     m01 = reg * rate("Registered account to Mission 01")
-    m03 = m01 * rate("Mission 01 complete to Missions 01-03")
-    full = m03 * rate("Sponsored full journeys")
-    seats = full * rate("In-person cohort seats")
+    m03 = free_tier()
+    founders, cohorts = bought()
     ideas = m01 * rate("Ideas entering the bank")
-    trading = full * rate("Ventures trading at month 12")
+    trading = founders * rate("Ventures trading at month 12")
     return [
         ("People reached", reach(),
          "Sum of every channel's reach, before anybody registers."),
@@ -540,32 +743,23 @@ def funnel():
         ("Mission 01 completed", m01,
          "The first real act of work, and the first honest number."),
         ("Missions 01 to 03 completed", m03,
-         "The end of the free tier."),
-        ("Sponsored full journeys, all 15 missions", full,
-         "What sponsorship actually buys."),
-        ("In-person cohort seats", seats,
-         f"Delivered in cohorts of {COHORT_SIZE}, with certified "
+         "The end of the free tier, and the ceiling on what sponsorship "
+         "can buy."),
+        ("Sponsored full journeys, all 15 missions", founders,
+         f"What the coalition buys at {TARGET_FILL:.0%} fill, at "
+         f"${SEAT_PRICE:,.2f} a founder."),
+        ("In-person cohort seats", cohorts * COHORT_SEATS,
+         f"Delivered in cohorts of {COHORT_SEATS}, with certified "
          f"facilitators."),
-        ("Cohorts run", seats / COHORT_SIZE,
-         "Each one is six days, a room, a facilitator and a showcase."),
+        ("Cohorts run", cohorts,
+         f"Each one is six days, a room, two facilitators and a showcase, "
+         f"at ${COHORT_PRICE:,.0f}."),
         ("Ideas in the bank", ideas,
          "Consented, structured, and the asset the wave leaves behind."),
         ("Ventures trading at month 12", trading,
          "Measured twelve months after the wave closes, not at the end of "
          "it."),
     ]
-
-
-def target_money():
-    """Full coalition value if every capped tier sells."""
-    return sum(t["price"] * t["slots"] for t in TIERS)
-
-
-def budget():
-    """Wave 1 budget at the assumed fill, split by line."""
-    total = target_money() * TARGET_FILL
-    return total, [(label, share, total * share)
-                   for label, share in BUDGET_SPLIT]
 
 
 def unit_costs():
@@ -576,9 +770,8 @@ def unit_costs():
         ("Cost per registered founder", total / f["Registered founders"]),
         ("Cost per founder completing the free tier",
          total / f["Missions 01 to 03 completed"]),
-        ("Cost per sponsored full journey",
-         total / f["Sponsored full journeys, all 15 missions"]),
-        ("Cost per in-person seat", total / f["In-person cohort seats"]),
+        ("Cost per sponsored founder, all 15 missions", SEAT_PRICE),
+        ("Cost per in-person seat", COHORT_PRICE / COHORT_SEATS),
         ("Cost per venture trading at month 12",
          total / f["Ventures trading at month 12"]),
     ]
@@ -734,9 +927,10 @@ RISKS = [
      "and by publishing the completion rate rather than the registration "
      "number as the headline.", "Mitigated"),
     ("Delivery capacity",
-     "259 cohorts could not be staffed; 97 can. The in-person share is "
-     "set by the certified facilitator pool, which is certified before the "
-     "wave opens rather than recruited during it.", "Mitigated"),
+     "Thirty cohorts in twelve governorates needs a certified pool that "
+     "exists before the wave opens rather than one recruited during it, "
+     "which is why certification runs in January 2027 and why facilitators "
+     "are recruited where the cohorts are.", "Mitigated"),
     ("A partner expects exclusivity over the ideas",
      "Refused in writing, in the charter and in the sponsorship agreement. "
      "The founder owns the idea. A partner who cannot accept this is not a "
@@ -865,3 +1059,125 @@ def coverage():
             out.append((t["name"], t["slots"], n, t["price"],
                         t["slots"] * t["price"]))
     return out
+
+
+# ------------------------------------------------- what StartPad gets back
+# Wave 1 takes no margin from sponsorship. Every dollar raised is in the
+# budget above, which is the strongest sentence available to a sponsor and
+# is also the honest one. The return is somewhere else, and it is real.
+#
+# Prices come from the company's financial model rather than from this
+# document, so a reader who has both cannot find two different numbers for
+# the same product.
+from finmodel.plan import PRICES, SUBSCRIPTION            # noqa: E402
+
+PRICE_PRO = SUBSCRIPTION["p_pro"][1]
+PRICE_UNI_COHORT = PRICES["p_uni"][2][0]
+PRICE_FACULTY_LICENCE = PRICES["p_uni_lic"][2][0]
+PRICE_CORPORATE = PRICES["p_corp"][2][0]
+PRICE_NGO = PRICES["p_ngo"][2][0]
+
+# What the company puts in that the initiative budget does not pay for.
+STARTPAD_INVESTMENT = [
+    ("Founder and executive time", 8_800.0,
+     "About 0.4 of a full-time equivalent across the chief executive and "
+     "chief commercial officer for eleven months, at the capped salaries "
+     "in the financial model."),
+    ("Platform engineering for the initiative", 9_000.0,
+     "Bulk provisioning, the partner dashboard, the consent flow and the "
+     "ideas bank aggregation. Built for this and kept afterwards."),
+    ("Coalition building before any money arrives", 9_400.0,
+     "October 2026 to February 2027. Five months of approaches, "
+     "memoranda and charters, funded by the company because sponsorship "
+     "cannot be spent before it is raised."),
+]
+
+# Conversion assumptions for the twelve months after the wave closes.
+RETURN_RATES = [
+    ("Unsponsored free-tier completers who buy Pro", 0.04,
+     f"At ${PRICE_PRO:,.0f} a year. Conservative: these are people who "
+     f"finished three missions unpaid and were not sponsored for the rest."),
+    ("Host institutions that buy a commercial cohort", 0.17,
+     f"At ${PRICE_UNI_COHORT:,.0f}. A university that has hosted a "
+     f"delivered cohort and holds its report is the warmest institutional "
+     f"lead the company can have."),
+    ("Host institutions that buy a faculty licence", 0.07,
+     f"At ${PRICE_FACULTY_LICENCE:,.0f}, and only after two delivered "
+     f"cohorts, which is the rule in the financial model."),
+    ("Sponsors that continue commercially", 0.15,
+     f"At ${PRICE_CORPORATE:,.0f} for a corporate or CSR programme. A "
+     f"sponsor who has seen the reporting buys the programme next year "
+     f"instead of sponsoring it."),
+    ("NGO partners that bring a funded programme", 0.08,
+     f"At ${PRICE_NGO:,.0f}. The evidence base from the wave is what wins "
+     f"these, and they are the slowest and the largest."),
+]
+
+
+def _rr(prefix):
+    return next(v for k, v, _ in RETURN_RATES if k.startswith(prefix))
+
+
+def startpad_return():
+    """The twelve months after the wave, priced at the model's own prices."""
+    f = dict((k, v) for k, v, _ in funnel())
+    sponsored = f["Sponsored full journeys, all 15 missions"]
+    unsponsored = f["Missions 01 to 03 completed"] - sponsored
+    hosts = f["Cohorts run"]            # one host institution per cohort
+    sponsors = sum(t["slots"] for t in TIERS if t["slots"]) * TARGET_FILL
+    ngos = 18                            # the NGO partners in the channel mix
+
+    pro = unsponsored * _rr("Unsponsored") * PRICE_PRO
+    cohorts = hosts * _rr("Host institutions that buy a commercial")
+    licences = hosts * _rr("Host institutions that buy a faculty")
+    corp = sponsors * _rr("Sponsors that continue")
+    ngo = ngos * _rr("NGO partners")
+    return [
+        (f"Pro subscriptions from {unsponsored:,.0f} unsponsored completers",
+         pro, f"{unsponsored * _rr('Unsponsored'):,.0f} subscriptions at "
+              f"${PRICE_PRO:,.0f}"),
+        ("University cohorts sold to host institutions",
+         cohorts * PRICE_UNI_COHORT,
+         f"{cohorts:,.0f} cohort{'' if round(cohorts) == 1 else 's'} at "
+         f"${PRICE_UNI_COHORT:,.0f}"),
+        ("Faculty licences", licences * PRICE_FACULTY_LICENCE,
+         f"{licences:,.0f} licence{'' if round(licences) == 1 else 's'} at "
+         f"${PRICE_FACULTY_LICENCE:,.0f}"),
+        ("Corporate and CSR programmes from sponsors",
+         corp * PRICE_CORPORATE,
+         f"{corp:,.0f} programme{'' if round(corp) == 1 else 's'} at "
+         f"${PRICE_CORPORATE:,.0f}"),
+        ("NGO and donor programmes won on the evidence base",
+         ngo * PRICE_NGO,
+         f"{ngo:,.0f} programme{'' if round(ngo) == 1 else 's'} at "
+         f"${PRICE_NGO:,.0f}"),
+    ]
+
+
+def startpad_assets():
+    f = dict((k, v) for k, v, _ in funnel())
+    return [
+        ("A certified facilitator pool across twelve governorates",
+         f"Capacity is the binding constraint on every commercial engine in "
+         f"the business plan. The initiative pays to certify facilitators "
+         f"where the cohorts are, and every one of them removes travel, "
+         f"accommodation and most of the allowance from every future cohort "
+         f"in that governorate."),
+        (f"{f['Registered founders']:,.0f} registered accounts",
+         f"The direct engine's entire addressable base in year one, "
+         f"acquired at ${budget()[0] / f['Registered founders']:,.2f} a head "
+         f"by somebody else's money."),
+        (f"{f['Ideas in the bank']:,.0f} consented ideas",
+         "The ideas bank and the direction report. No competitor in Egypt "
+         "has the sample, and it is the basis of the company's own "
+         "incubation product as well as a sponsor benefit."),
+        (f"{f['Cohorts run']:,.0f} host institutions with a delivered cohort",
+         "Each one holds a cohort report with its own students named in "
+         "it, which is the reference that opens the next institution."),
+        ("An audited delivery record at national scale",
+         "The thing that makes donor and ministry procurement possible, "
+         "and the thing a four-year-old company cannot otherwise buy."),
+        ("The coalition itself",
+         "Twenty to thirty organisations that have worked with the company "
+         "for six months and have seen its reporting."),
+    ]

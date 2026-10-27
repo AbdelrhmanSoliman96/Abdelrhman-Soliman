@@ -26,6 +26,7 @@ from startpad.missions import MISSIONS
 
 F = dict((k, v) for k, v, _ in I.funnel())
 BUDGET_TOTAL, BUDGET_LINES = I.budget()
+FOUNDERS, COHORTS = I.bought()
 
 
 def n(v, dp=0):
@@ -34,6 +35,10 @@ def n(v, dp=0):
 
 def usd(v, dp=0):
     return f"${v:,.{dp}f}"
+
+
+def egp(v):
+    return f"EGP {I.egp(v):,.0f}"
 
 
 TITLE = I.NAME
@@ -253,20 +258,34 @@ SECTIONS = [
                  "coalition of forty equal logos gives nobody a reason to be "
                  "first."),
         ("table",
-         ["Tier", "Price", "Slots", "Who it is for"],
+         ["Tier", "USD", "EGP", "Slots", "What it buys"],
          [[t["name"],
            usd(t["price"]) if t["price"] else "No cash",
+           egp(t["price"]) if t["price"] else "",
            str(t["slots"]) if t["slots"] else "Uncapped",
-           t["gives"]] for t in I.TIERS],
-         [3.0, 2.0, 1.6, 10.0]),
+           (f"{n(t['founders'])} founders through all 15 missions"
+            + (f", and {t['cohorts']} in-person cohorts"
+               if t["cohorts"] else "")) if t["price"] else t["gives"]]
+          for t in I.TIERS],
+         [2.8, 1.8, 2.4, 1.3, 8.3]),
+        ("p", f"Every price above is the sum of what it buys, at "
+              f"{usd(I.SEAT_PRICE, 2)} a sponsored founder and "
+              f"{usd(I.COHORT_PRICE)} an in-person cohort of "
+              f"{I.COHORT_SEATS}. There is no overhead percentage hidden "
+              f"in it: the shared costs sit inside those two unit "
+              f"prices and are the lines in the budget table in "
+              f"Section 11."),
         ("p", f"Full coalition value if every capped slot sells is "
-              f"{usd(I.target_money())}. The wave is planned and budgeted at "
-              f"{I.TARGET_FILL:.0%} of that, which is {usd(BUDGET_TOTAL)}, "
-              f"and every number in this document is quoted at that fill "
-              f"rather than at the optimistic one."),
+              f"{usd(I.target_money())}, which is "
+              f"{egp(I.target_money())}. The wave is planned and budgeted "
+              f"at {I.TARGET_FILL:.0%} of that, which is "
+              f"{usd(BUDGET_TOTAL)} or {egp(BUDGET_TOTAL)}, and every "
+              f"number in this document is quoted at that fill rather than "
+              f"at the optimistic one."),
     ] + [b for t in I.TIERS for b in [
         ("h2", f"{t['name']}"),
         ("p", f"<b>{usd(t['price']) if t['price'] else 'No cash'}</b>"
+              f"{'  |  ' + egp(t['price']) if t['price'] else ''}"
               f"{'  |  ' + str(t['slots']) + ' slots' if t['slots'] else ''}"
               f"  |  {t['role']}"),
         ("bullets", t["benefits"]),
@@ -364,33 +383,42 @@ SECTIONS = [
          ["Rate", "Assumed", "Why"],
          [[label, f"{value:.0%}", why] for label, value, why in I.RATES],
          [4.6, 2.0, 10.0]),
-        ("h2", "What it costs"),
+        ("h2", "What it costs, and what it buys"),
+        ("p", f"The whole wave, at {I.TARGET_FILL:.0%} coalition fill. "
+              f"Programme management is the balancing line rather than a "
+              f"guess: every other line is a real quantity at a real "
+              f"price, and if the sponsorship raised moves, the thing that "
+              f"flexes is how much coordination the wave can afford, not "
+              f"how many founders it serves."),
         ("table",
-         ["Budget line", "Share", "Wave 1"],
-         [[label, f"{share:.0%}", usd(value)]
-          for label, share, value in BUDGET_LINES]
-         + [["Total", "100%", usd(BUDGET_TOTAL)]],
-         [9.6, 2.0, 5.0]),
+         ["Budget line", "USD", "EGP", "Share"],
+         [[label, usd(value), egp(value), f"{value / BUDGET_TOTAL:.0%}"]
+          for label, value, _ in BUDGET_LINES]
+         + [["Total", usd(BUDGET_TOTAL), egp(BUDGET_TOTAL), "100%"]],
+         [7.6, 2.6, 3.4, 1.6]),
+        ("p", f"The two unit prices this rests on are not invented for "
+              f"this document. {usd(I.SEAT_PRICE, 2)} a sponsored founder "
+              f"is the national initiative seat price in the company's "
+              f"financial model, year one, described there as priced for a "
+              f"ministry buying tens of thousands. "
+              f"{usd(I.COHORT_PRICE)} for an in-person cohort of "
+              f"{I.COHORT_SEATS} is the model's own direct cost of $1,770 "
+              f"plus the field, which Section 12 itemises."),
         ("h2", "Cost per outcome"),
         ("p", "The numbers a partner's finance function will ask for, and "
               "the ones most programmes cannot produce."),
         ("table",
-         ["Measure", "Wave 1"],
-         [[label, usd(value, 2)] for label, value in I.unit_costs()],
-         [11.6, 5.0]),
-        ("note", "<b>Two cross-checks, so these are not round numbers.</b> "
-                 "The delivery line divides to about "
-                 + usd(next(v for l, s, v in BUDGET_LINES
-                            if l.startswith("Delivery"))
-                       / F["Cohorts run"])
-                 + " per cohort of 30, against a direct cost of $1,770 per "
-                   "cohort in the company's own financial model, which "
-                   "leaves the difference for facilitator certification, "
-                   "travel and governorate logistics. And the cost per "
-                   "sponsored full journey is above the $15 list price of a "
-                   "Pro subscription because it carries its share of "
-                   "facilitation, community activation, content, events and "
-                   "measurement, not only the licence."),
+         ["Measure", "USD", "EGP"],
+         [[label, usd(value, 2), f"{I.egp(value):,.2f}"]
+          for label, value in I.unit_costs()],
+         [9.6, 3.0, 4.0]),
+        ("note", f"<b>The sponsored founder and the in-person seat are "
+                 f"prices, not averages.</b> They are what a partner pays "
+                 f"and what the wave spends, and they are equal because "
+                 f"the wave takes no margin: the surplus on the budget "
+                 f"above is nil by design. StartPad's own return is "
+                 f"elsewhere, and Section 14 sets it out rather than "
+                 f"leaving a partner to wonder about it."),
         ("h2", "And when is the million"),
         ("table",
          ["Wave", "When", "Where", "What it adds"],
@@ -401,6 +429,128 @@ SECTIONS = [
               "that mandates participation across the university and "
               "technical education systems, or a step change in "
               "sponsorship. Both are possible. Neither is assumed here."),
+    ]),
+
+    ("Operations in the field", [
+        ("lead", "A budget written in Cairo for a programme that runs in "
+                 "Qena is wrong in one predictable way: it leaves out the "
+                 "cost of getting there. This section is that cost, stated "
+                 "in full, because it is the difference between a "
+                 "governorate programme that happens and one that is "
+                 "announced."),
+        ("h2", f"What an in-person cohort actually costs"),
+        ("table",
+         ["Line", "USD", "EGP", "Field", "Note"],
+         [[label, usd(value), f"{I.egp(value):,.0f}",
+           "Yes" if label in I.FIELD_LINES else "", note]
+          for label, value, note in I.COHORT_BREAKDOWN]
+         + [["Total", usd(I.COHORT_PRICE), f"{I.egp(I.COHORT_PRICE):,.0f}",
+             "", f"{I.COHORT_SEATS} seats, six delivery days"]],
+         [5.4, 1.8, 2.0, 1.2, 6.2]),
+        ("kpi", [
+            (usd(I.field_cost()), "field cost in every cohort"),
+            (f"{I.field_cost() / I.COHORT_PRICE:.0%}",
+             "of the cohort price"),
+            (usd(COHORTS * I.field_cost()),
+             f"across {n(COHORTS)} cohorts in the wave"),
+            ("8", "days away for six delivery days"),
+        ]),
+        ("h2", "The rules that make it work"),
+        ("deflist", I.FIELD_POLICY),
+        ("note", f"<b>The single highest-value thing a governorate partner "
+                 f"can do is donate the room.</b> It takes $260 off every "
+                 f"cohort, and that saving goes straight back into founders "
+                 f"sponsored rather than into a surplus. A university, a "
+                 f"corporate branch or a youth centre with a hall is worth "
+                 f"more to this initiative in kind than most of them would "
+                 f"write a cheque for."),
+    ]),
+
+    ("Every event in the wave", [
+        ("lead", "The events are not decoration. They are how 150 chapters "
+                 "activate in the same week, how twelve governorates get "
+                 "opened, and how a wave ends with something a partner can "
+                 "photograph and report. This is every one of them, with "
+                 "what it costs."),
+        ("table",
+         ["Event", "How many", "Each", "Total", "When"],
+         [[label, n(count), usd(cost), usd(count * cost), when]
+          for label, count, cost, when, _ in I.EVENTS]
+         + [["Total", "", "", usd(I.events_total()), I.WAVE]],
+         [5.0, 1.8, 1.8, 2.2, 5.8]),
+        ("h2", "What each one is for"),
+        ("deflist", [(label, why) for label, _, _, _, why in I.EVENTS]),
+        ("p", f"That is {usd(I.events_total() / FOUNDERS, 2)} of every "
+              f"sponsored founder's {usd(I.SEAT_PRICE, 2)}, and the second "
+              f"largest line in the budget after delivery. It is also the "
+              f"line most likely to be cut by somebody reading quickly, "
+              f"which would be a mistake: a chapter that has been visited "
+              f"activates, and a chapter that has only been emailed does "
+              f"not."),
+        ("note", f"<b>Beside these, every one of the {n(COHORTS)} cohorts "
+                 f"ends with its own showcase</b> for its participants and "
+                 f"its host institution, with the host's own students "
+                 f"presenting. Those sit inside the "
+                 f"{usd(I.COHORT_PRICE)} cohort cost rather than in the "
+                 f"events line, which is why the events table does not "
+                 f"list thirty showcases."),
+    ]),
+
+    ("What StartPad gets back", [
+        ("lead", "A partner is entitled to ask what the company running "
+                 "this gets out of it, and a framework that does not "
+                 "answer invites the worst assumption. The answer is that "
+                 "wave one takes no margin from sponsorship at all, and "
+                 "the return is somewhere else."),
+        ("h2", "No margin on the sponsorship"),
+        ("p", f"The budget in Section 11 balances to nil. Every dollar "
+              f"raised is spent on delivery, events, platform, content, "
+              f"measurement and the coordination to run it. The programme "
+              f"management line of {usd(dict((l, v) for l, v, _ in BUDGET_LINES)['Programme management and coordination'])} "
+              f"pays for a programme manager, a field coordinator and "
+              f"part-time admin at Egyptian salaries. It is cost recovery, "
+              f"not profit."),
+        ("h2", "What the company puts in that nobody pays for"),
+        ("table",
+         ["Line", "USD", "EGP", "What it is"],
+         [[label, usd(value), f"{I.egp(value):,.0f}", note]
+          for label, value, note in I.STARTPAD_INVESTMENT]
+         + [["Total",
+             usd(sum(v for _, v, _ in I.STARTPAD_INVESTMENT)),
+             f"{I.egp(sum(v for _, v, _ in I.STARTPAD_INVESTMENT)):,.0f}",
+             "Time and engineering, not recovered"]],
+         [4.2, 1.8, 2.2, 8.4]),
+        ("h2", "What comes back in the twelve months after the wave"),
+        ("p", "Priced at the financial model's own prices, so a reader "
+              "with both documents cannot find two different numbers for "
+              "the same product."),
+        ("table",
+         ["Line", "USD", "How it is counted"],
+         [[label, usd(value), note]
+          for label, value, note in I.startpad_return()]
+         + [["Total",
+             usd(sum(v for _, v, _ in I.startpad_return())),
+             "Twelve months after the wave closes"]],
+         [5.6, 2.2, 8.8]),
+        ("kpi", [
+            (usd(sum(v for _, v, _ in I.STARTPAD_INVESTMENT)),
+             "StartPad puts in"),
+            (usd(sum(v for _, v, _ in I.startpad_return())),
+             "comes back in 12 months"),
+            (f"{sum(v for _, v, _ in I.startpad_return()) / sum(v for _, v, _ in I.STARTPAD_INVESTMENT):.1f}x",
+             "on what the company put in"),
+            ("0", "margin taken from sponsorship"),
+        ]),
+        ("h2", "And what is not in that number"),
+        ("deflist", I.startpad_assets()),
+        ("note", "<b>Why this is in a document sent to sponsors.</b> "
+                 "Because a sponsor who discovers it later will assume the "
+                 "worst version of it, and because the return being real "
+                 "is what makes the initiative durable. A programme the "
+                 "operator loses money on for six months is a campaign. A "
+                 "programme that builds the operator's capability while it "
+                 "serves the sponsor's purpose is an institution, and it "
+                 "will still be running in 2029."),
     ]),
 
     ("Governance, measurement and risk", [
