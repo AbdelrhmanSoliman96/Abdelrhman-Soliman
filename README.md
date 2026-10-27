@@ -832,3 +832,22 @@ python3 scripts/build_prospects_xlsx.py output/StartPad_Egypt_CSR_NGO_Prospects.
 The data is in `outreach/prospects.py`; the builder only lays it out. Every
 row carries a confidence rating, and no individual's name, email address or
 phone number appears anywhere in the file by design.
+
+## One Million First-Time Founders: the initiative
+
+The sponsorship framework and the invitation list for the named initiative,
+built on top of the prospect registry above. The registry asks who in Egypt
+could fund entrepreneurship work at all; these two ask who we invite to
+sponsor one initiative, in which of three roles, for what contribution, and
+what they get back.
+
+```bash
+python3 scripts/build_initiative_xlsx.py output/StartPad_Initiative_Sponsor_List.xlsx
+python3 scripts/build_initiative_docx.py output/StartPad_Initiative_Framework.docx
+```
+
+`outreach/initiative.py` holds the roles, the tiers, the in-kind menu, the
+value each kind of partner gets, the six-month plan and the arithmetic.
+`outreach/framework.py` is the document's prose. Both builders read the same
+module, so the workbook and the framework cannot disagree about the funnel,
+the budget or a month target.
