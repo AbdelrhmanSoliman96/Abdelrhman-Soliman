@@ -1,9 +1,9 @@
-"""Build the 360 budget for One Million First-Time Founders."""
+"""Build the budget for One Million First-Time Founders. One page of money."""
 import os
 import sys
 
 from openpyxl import Workbook
-from openpyxl.styles import Alignment, Font, PatternFill
+from openpyxl.styles import Alignment, Font
 from openpyxl.utils import get_column_letter
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -16,7 +16,7 @@ from scripts.build_prospects_xlsx import (                      # noqa: E402
 
 MONEY = '"$"#,##0'
 MONEY2 = '"$"#,##0.00'
-EGP = '#,##0'
+EGPF = '#,##0'
 
 
 def row_head(ws, r, heads, widths, start=2):
@@ -60,475 +60,378 @@ def total_row(ws, r, label, cells, start=2):
     return r + 1
 
 
+def footnote(ws, r, text, last_col, height=44):
+    c = ws.cell(row=r, column=2, value=text)
+    c.font = Font(size=9.5, italic=True, color="6B7A74")
+    c.alignment = Alignment(wrap_text=True, vertical="top")
+    ws.merge_cells(start_row=r, start_column=2, end_row=r,
+                   end_column=last_col)
+    ws.row_dimensions[r].height = height
+    return r + 1
+
+
 # ------------------------------------------------------------------ READ ME
 def sheet_readme(wb):
     ws = wb.create_sheet("READ ME FIRST")
     ws.sheet_view.showGridLines = False
-    income, lines = I.budget()
     f = dict((k, v) for k, v, _ in I.funnel())
+    total = I.budget_total()
     ret = sum(v for _, v, _ in I.startpad_return())
-    inv = sum(v for _, v, _ in I.STARTPAD_INVESTMENT)
-    banner(ws, f"{I.NAME}: the whole budget",
-           f"{I.WAVE}. Every line, in dollars and in pounds, and what "
-           f"StartPad gets back.", 5)
-    ws.column_dimensions["B"].width = 32
-    ws.column_dimensions["C"].width = 106
+    banner(ws, f"{I.NAME}: the budget",
+           f"{I.WAVE}. Six lines, {ws and ''}funded entirely by partners.", 5)
+    ws.column_dimensions["B"].width = 30
+    ws.column_dimensions["C"].width = 108
 
     blocks = [
-        ("THE TWO PRICES EVERYTHING IS BUILT ON", ""),
-        ("", f"A sponsored founder costs ${I.SEAT_PRICE:,.2f}. That is the "
-             f"national initiative seat price in the company's financial "
-             f"model, year one, described there as priced for a ministry "
-             f"buying tens of thousands. It is an Egyptian price and the "
-             f"cost base is sized for it."),
-        ("", f"An in-person cohort costs ${I.COHORT_PRICE:,.0f} for "
-             f"{I.COHORT_SEATS} seats, which is "
-             f"${I.COHORT_PRICE / I.COHORT_SEATS:,.0f} a seat. The "
-             f"financial model's direct cost for the same cohort is $1,770. "
-             f"The difference is the field: getting two facilitators and a "
-             f"coordinator to the governorate and keeping them there for "
-             f"eight days, which is ${I.field_cost():,.0f} of every cohort "
-             f"and is the line a budget written in Cairo leaves out."),
+        ("THE WHOLE THING IN FOUR NUMBERS", ""),
+        ("", f"It costs ${total:,.0f}, which is EGP {I.egp(total):,.0f}. It "
+             f"registers {f['Registered entrepreneurs']:,.0f} "
+             f"entrepreneurs. That is "
+             f"${total / f['Registered entrepreneurs']:,.2f} a head. And "
+             f"StartPad puts in no cash at all."),
+        ("", ""),
+        ("WHY IT IS THIS CHEAP", ""),
+        ("", "Because there are no paid in-person cohorts in this wave. A "
+             "cohort serves 25 people for $3,000. A webinar serves twenty "
+             "thousand for $500. Everything is online, everything is free "
+             "to the participant, and the offline part happens only where "
+             "a partner asks for a session and hosts it in their own "
+             "venue with their own people."),
+        ("", f"And because the million is not bought, it is referred. "
+             f"{I.seed_total():,.0f} registrations come from partner "
+             f"channels, chapters and ambassadors; the rest comes from the "
+             f"referral loop built into the product. The viral coefficient "
+             f"of {I.VIRAL_K:.2f} is the riskiest number in this file and "
+             f"the SENSITIVITY sheet shows what happens if it is wrong."),
         ("", ""),
         ("THE SHEETS", ""),
-        ("THE 360 BUDGET", "Income and every expenditure line, in dollars "
-                           "and pounds. It balances to the cent, because "
-                           "programme management is the balancing line."),
-        ("WHAT A SEAT BUYS", "The $5, divided back into the budget lines it "
-                             "came from."),
-        ("WHAT A COHORT COSTS", "All eleven lines of the $3,000, with the "
-                                "six field lines marked, checked against "
-                                "the financial model's own direct cost."),
-        ("EVENTS", "Every event the initiative runs, what each costs and "
-                   "when. The cohorts are not here; they are the delivery "
-                   "line."),
-        ("THE FUNNEL", "Reach to registered to completed to sponsored to "
-                       "trading, with the conversion rate behind each step."),
-        ("SPEND BY MONTH", "When the money actually leaves, which is not "
-                           "evenly."),
-        ("RETURN ON STARTPAD", "What the company puts in that the budget "
-                               "does not pay for, and what comes back in "
-                               "the twelve months after the wave."),
-        ("SENSITIVITY", "What happens at 30, 50, 75 and 100 per cent "
-                        "coalition fill."),
+        ("THE BUDGET", "Six lines, in dollars and pounds, and what the "
+                       "coalition has to raise to cover them."),
+        ("HOW THE MILLION HAPPENS", "The seed channels, the referral loop, "
+                                    "and the nine mechanics that make it "
+                                    "spread."),
+        ("THE FUNNEL", "Registered to finished to trading, with the rate "
+                       "behind each step."),
+        ("EVENTS AND WEBINARS", "Every event and every piece of live "
+                                "delivery, itemised. The two lines "
+                                "reconcile to the budget exactly."),
+        ("SPEND BY MONTH", "When the money leaves, which is not evenly."),
+        ("RETURN ON STARTPAD", "What the company contributes, which is not "
+                               "cash, and what comes back in the twelve "
+                               "months after."),
+        ("SENSITIVITY", "What happens if the loop is weaker, or the "
+                        "coalition smaller."),
         ("", ""),
-        ("THE HEADLINE", ""),
-        ("", f"At {I.TARGET_FILL:.0%} coalition fill the wave raises and "
-             f"spends ${income:,.0f}, which is EGP {I.egp(income):,.0f}. It "
-             f"sponsors {f['Sponsored full journeys, all 15 missions']:,.0f} "
-             f"founders through all fifteen missions and runs "
-             f"{f['Cohorts run']:,.0f} in-person cohorts in twelve "
-             f"governorates."),
-        ("", f"StartPad takes no margin from sponsorship in wave one. Every "
-             f"dollar raised is in the budget. The company's own return is "
-             f"${ret:,.0f} in the twelve months after the wave, against "
-             f"${inv:,.0f} it puts in that the budget does not pay for, "
-             f"which is {ret / inv:,.1f} times. That is on the RETURN ON "
-             f"STARTPAD sheet, priced at the financial model's own prices "
-             f"rather than at numbers invented here."),
-        ("", ""),
-        ("WHAT IS NOT IN THIS BUDGET", ""),
-        ("In-kind", "Valued separately and never counted as cash. A "
-                    "donated venue takes $260 off a cohort and that saving "
-                    "goes back into founders sponsored, not into the "
-                    "surplus."),
-        ("The platform itself", "Already built and carried by the company. "
-                                "The budget pays for hosting, inference and "
-                                "the initiative-specific work, not for the "
-                                "product."),
-        ("Wave 2", "A separate budget, and cheaper per founder, because the "
-                   "facilitator pool and the chapters will already exist."),
+        ("WHAT STARTPAD PUTS IN", ""),
+        ("", "No cash. Not a token amount, none. The company contributes "
+             "the platform, which is already built and paid for, the "
+             "fifteen missions and the review rubric, the team's time, "
+             "which is already on its payroll, and five months of "
+             "coalition building before any money arrives."),
+        ("", f"It also takes no margin from the sponsorship: the budget "
+             f"balances to the raise. What it gets back is ${ret:,.0f} of "
+             f"commercial revenue in the twelve months after the wave, "
+             f"priced at the financial model's own prices, and a set of "
+             f"assets it could not otherwise buy. That is on the RETURN ON "
+             f"STARTPAD sheet, stated rather than left to a partner's "
+             f"imagination."),
         ("", ""),
         ("A WARNING ABOUT THESE NUMBERS", ""),
         ("", "Nothing here is a measured result. Every quantity is an "
-             "assumption with its driver written next to it, and the "
-             "initiative has not run. The conversion rates on the FUNNEL "
-             "sheet and the return rates on the RETURN sheet are the two "
-             "places where being wrong costs the most, and both are stated "
-             "so they can be argued with."),
+             "assumption with its driver written next to it. The viral "
+             "coefficient and the completion rates are where being wrong "
+             "costs the most, and both are stated so they can be argued "
+             "with rather than buried."),
     ]
     prose(ws, blocks, wrap_at=103)
     return ws
 
 
-# ------------------------------------------------------------ THE 360 BUDGET
+# --------------------------------------------------------------- THE BUDGET
 def sheet_budget(wb):
-    ws = wb.create_sheet("THE 360 BUDGET")
+    ws = wb.create_sheet("THE BUDGET")
     ws.sheet_view.showGridLines = False
-    income, lines = I.budget()
+    total = I.budget_total()
     f = dict((k, v) for k, v, _ in I.funnel())
-    banner(ws, f"The whole wave, in and out",
-           f"{I.WAVE}, at {I.TARGET_FILL:.0%} coalition fill. The "
-           f"percentage column is a formula, so edit a line and the shares "
-           f"move.", 7)
+    banner(ws, "Six lines", f"{I.WAVE}. Funded entirely by the coalition. "
+                            f"StartPad contributes no cash and takes no "
+                            f"margin.", 7)
     ws.column_dimensions["A"].width = 3
 
     r = 4
-    ws.cell(row=r, column=2, value="INCOME").font = Font(bold=True, size=11,
-                                                          color=ACCENT)
-    r += 1
-    r = row_head(ws, r, ["Source", "Quantity", "Unit", "USD", "EGP",
-                         "Note"], [40, 12, 12, 14, 16, 60])
-    first = r
-    founders, cohorts = I.bought()
-    for label, qty, unit, note in [
-        ("Sponsored founders", founders, I.SEAT_PRICE,
-         "Founding, Lead, Governorate and Mission partners, at "
-         f"{I.TARGET_FILL:.0%} of the capped slots"),
-        ("In-person cohorts", cohorts, I.COHORT_PRICE,
-         "Funded inside the Founding, Lead and Governorate tiers"),
-    ]:
-        put(ws, r, 2, label, bold=True)
-        put(ws, r, 3, qty, "#,##0", centre=True)
-        put(ws, r, 4, unit, MONEY2 if unit < 100 else MONEY, centre=True)
-        put(ws, r, 5, f"=C{r}*D{r}", MONEY, centre=True)
-        put(ws, r, 6, f"=E{r}*{I.EGP_PER_USD}", EGP, centre=True)
-        put(ws, r, 7, note, wrap=True, size=9.5, colour="3A4050")
-        ws.row_dimensions[r].height = max(22, 12.4 * (len(note) // 58 + 1))
-        r += 1
-    r = total_row(ws, r, "Total income",
-                  {5: (f"=SUM(E{first}:E{r-1})", MONEY),
-                   6: (f"=SUM(F{first}:F{r-1})", EGP)})
-    income_row = r - 1
-    r += 1
-
-    ws.cell(row=r, column=2, value="EXPENDITURE").font = Font(
+    ws.cell(row=r, column=2, value="WHAT IT COSTS").font = Font(
         bold=True, size=11, color=ACCENT)
     r += 1
-    r = row_head(ws, r, ["Line", "Share", "", "USD", "EGP", "What it is"],
-                 [40, 12, 12, 14, 16, 60])
+    r = row_head(ws, r, ["Line", "USD", "EGP", "Share", "What it is"],
+                 [38, 14, 16, 10, 66])
     first = r
-    for label, value, note in lines:
+    for label, value, note in I.BUDGET:
         put(ws, r, 2, label, bold=True, wrap=True)
-        put(ws, r, 3, f"=E{r}/$E${income_row}", "0.0%", centre=True)
-        put(ws, r, 4, "")
-        put(ws, r, 5, value, MONEY, centre=True)
-        put(ws, r, 6, f"=E{r}*{I.EGP_PER_USD}", EGP, centre=True)
-        put(ws, r, 7, note, wrap=True, size=9.5, colour="3A4050")
-        ws.row_dimensions[r].height = max(26, 12.4 * (len(note) // 58 + 1))
+        put(ws, r, 3, value, MONEY, centre=True, colour=ACCENT, bold=True)
+        put(ws, r, 4, f"=C{r}*{I.EGP_PER_USD}", EGPF, centre=True)
+        put(ws, r, 5, f"=C{r}/{total}", "0.0%", centre=True)
+        put(ws, r, 6, note, wrap=True, size=9.5, colour="3A4050")
+        ws.row_dimensions[r].height = max(26, 12.4 * (len(note) // 64 + 1))
         r += 1
-    r = total_row(ws, r, "Total expenditure",
-                  {3: (f"=SUM(C{first}:C{r-1})", "0.0%"),
-                   5: (f"=SUM(E{first}:E{r-1})", MONEY),
-                   6: (f"=SUM(F{first}:F{r-1})", EGP)})
-    spend_row = r - 1
+    r = total_row(ws, r, "Total cost of the wave",
+                  {3: (f"=SUM(C{first}:C{r-1})", MONEY),
+                   4: (f"=SUM(D{first}:D{r-1})", EGPF),
+                   5: (f"=SUM(E{first}:E{r-1})", "0.0%")})
+    cost_row = r - 1
     r += 1
 
-    put(ws, r, 2, "Surplus or deficit", bold=True)
-    put(ws, r, 5, f"=E{income_row}-E{spend_row}", MONEY, centre=True,
-        bold=True, fill=SUNK)
-    put(ws, r, 6, f"=F{income_row}-F{spend_row}", EGP, centre=True,
-        bold=True, fill=SUNK)
-    put(ws, r, 7, "Nil by design. StartPad takes no margin from "
-                  "sponsorship in wave one, and programme management is "
-                  "the balancing line.", wrap=True, size=9.5,
-        colour="3A4050")
+    ws.cell(row=r, column=2, value="WHERE IT COMES FROM").font = Font(
+        bold=True, size=11, color=ACCENT)
+    r += 1
+    r = row_head(ws, r, ["Tier", "Each", "Slots", "If full", "Who it is for"],
+                 [38, 14, 10, 16, 66])
+    first = r
+    for t in I.TIERS:
+        if not t["slots"]:
+            continue
+        put(ws, r, 2, t["name"], bold=True)
+        put(ws, r, 3, t["price"], MONEY, centre=True)
+        put(ws, r, 4, t["slots"], "#,##0", centre=True)
+        put(ws, r, 5, f"=C{r}*D{r}", MONEY, centre=True, colour=ACCENT,
+            bold=True)
+        put(ws, r, 6, t["gives"], wrap=True, size=9.5, colour="3A4050")
+        ws.row_dimensions[r].height = max(24,
+                                          12.4 * (len(t["gives"]) // 64 + 1))
+        r += 1
+    r = total_row(ws, r, "Coalition capacity",
+                  {5: (f"=SUM(E{first}:E{r-1})", MONEY)})
+    cap_row = r - 1
+    r += 1
+    put(ws, r, 2, "Headroom over what the wave needs", bold=True)
+    put(ws, r, 5, f"=E{cap_row}-C{cost_row}", MONEY, centre=True, bold=True,
+        fill=SUNK)
+    put(ws, r, 6, "The coalition can lose four or five conversations and "
+                  "still fund the wave. That headroom is the plan, not "
+                  "optimism.", wrap=True, size=9.5, colour="3A4050")
     ws.row_dimensions[r].height = 30
     r += 2
 
     ws.cell(row=r, column=2, value="WHAT IT WORKS OUT AT").font = Font(
         bold=True, size=11, color=ACCENT)
     r += 1
-    r = row_head(ws, r, ["Measure", "USD", "EGP", "", "", "Note"],
-                 [40, 12, 14, 2, 2, 78])
+    r = row_head(ws, r, ["Measure", "USD", "EGP", "", ""],
+                 [38, 14, 16, 10, 66])
     for label, value in I.unit_costs():
         put(ws, r, 2, label, bold=True)
-        put(ws, r, 3, round(value, 2), MONEY2, centre=True,
-            colour=ACCENT, bold=True)
+        put(ws, r, 3, round(value, 2), MONEY2, centre=True, colour=ACCENT,
+            bold=True)
         put(ws, r, 4, round(value * I.EGP_PER_USD, 2), "#,##0.00",
             centre=True)
+        put(ws, r, 5, "")
+        put(ws, r, 6, "")
         r += 1
     r += 1
-    note = ("The sponsored founder and the in-person seat are prices, not "
-            "averages: they are what a partner pays and what the wave "
-            "spends, and they are equal because the wave takes no margin. "
-            "The other four are the total budget divided by an outcome, "
-            "which is the form a partner's finance function asks for.")
-    c = ws.cell(row=r, column=2, value=note)
-    c.font = Font(size=9.5, italic=True, color="6B7A74")
-    c.alignment = Alignment(wrap_text=True, vertical="top")
-    ws.merge_cells(start_row=r, start_column=2, end_row=r, end_column=7)
-    ws.row_dimensions[r].height = 44
+    r = footnote(ws, r,
+                 f"Twenty cents a head is not a number a corporate "
+                 f"programme can reach on its own, and it is the whole "
+                 f"argument for a coalition. The cost per entrepreneur who "
+                 f"finishes all fifteen missions, "
+                 f"${I.budget_total() / f['All 15 missions completed']:,.2f}, "
+                 f"is the number to compare against anything else a partner "
+                 f"funds, because that is a person who took an idea to a "
+                 f"tested model, a prototype and a launch plan.", 6)
     return ws
 
 
-# --------------------------------------------------------- WHAT A SEAT BUYS
-def sheet_seat(wb):
-    ws = wb.create_sheet("WHAT A SEAT BUYS")
+# ------------------------------------------------- HOW THE MILLION HAPPENS
+def sheet_viral(wb):
+    ws = wb.create_sheet("HOW THE MILLION HAPPENS")
     ws.sheet_view.showGridLines = False
-    income, lines = I.budget()
-    founders, cohorts = I.bought()
-    banner(ws, f"The ${I.SEAT_PRICE:,.2f} a sponsored founder costs",
-           "Not a price somebody chose. The budget minus the cohorts, "
-           "divided by the founders sponsored.", 6)
+    banner(ws, "Seeded by partners, carried by the loop",
+           "A million is not bought. It is referred.", 7)
     ws.column_dimensions["A"].width = 3
+
     r = 4
-    r = row_head(ws, r, ["Budget line", "USD total", "Per founder",
-                         "EGP per founder", "Share"],
-                 [44, 16, 14, 16, 10])
-    first = r
-    delivery = cohorts * I.COHORT_PRICE
-    for label, value, _ in lines:
-        if label.startswith("Delivery"):
-            continue
-        put(ws, r, 2, label, bold=True, wrap=True)
-        put(ws, r, 3, value, MONEY, centre=True)
-        put(ws, r, 4, f"=C{r}/{founders}", MONEY2, centre=True,
-            colour=ACCENT, bold=True)
-        put(ws, r, 5, f"=D{r}*{I.EGP_PER_USD}", "#,##0.00", centre=True)
-        put(ws, r, 6, f"=C{r}/({income}-{delivery})", "0.0%", centre=True)
-        ws.row_dimensions[r].height = 24
-        r += 1
-    r = total_row(ws, r, f"Per sponsored founder",
-                  {3: (f"=SUM(C{first}:C{r-1})", MONEY),
-                   4: (f"=SUM(D{first}:D{r-1})", MONEY2),
-                   5: (f"=SUM(E{first}:E{r-1})", "#,##0.00"),
-                   6: (f"=SUM(F{first}:F{r-1})", "0.0%")})
-    r += 1
-    for text in [
-        f"The {founders:,.0f} sponsored founders are the ones the coalition "
-        f"pays to carry through all fifteen missions. The platform line "
-        f"covers hosting and inference for the whole registered base of "
-        f"198,000, not only for them, which is why the free tier costs the "
-        f"initiative almost nothing per head.",
-        f"At ${I.SEAT_PRICE:,.2f} a founder this is below the "
-        f"${I.PRICE_PRO:,.0f} a year a student pays for Pro. That is bulk "
-        f"provisioning, and it is the same logic the financial model "
-        f"already applies to a ministry buying tens of thousands of seats.",
-    ]:
-        c = ws.cell(row=r, column=2, value=text)
-        c.font = Font(size=9.5, italic=True, color="6B7A74")
-        c.alignment = Alignment(wrap_text=True, vertical="top")
-        ws.merge_cells(start_row=r, start_column=2, end_row=r, end_column=6)
-        ws.row_dimensions[r].height = 42
-        r += 1
-    return ws
-
-
-# ------------------------------------------------------ WHAT A COHORT COSTS
-def sheet_cohort(wb):
-    ws = wb.create_sheet("WHAT A COHORT COSTS")
-    ws.sheet_view.showGridLines = False
-    banner(ws, f"The ${I.COHORT_PRICE:,.0f} in-person cohort, line by line",
-           f"{I.COHORT_SEATS} seats, six delivery days, two certified "
-           f"facilitators and a coordinator, in a governorate that is not "
-           f"theirs.", 6)
-    ws.column_dimensions["A"].width = 3
-    r = 4
-    r = row_head(ws, r, ["Line", "USD", "EGP", "Per seat", "Field?",
-                         "Note"], [44, 12, 14, 12, 10, 56])
-    first = r
-    for label, value, note in I.COHORT_BREAKDOWN:
-        field = label in I.FIELD_LINES
-        put(ws, r, 2, label, bold=True, wrap=True)
-        put(ws, r, 3, value, MONEY, centre=True)
-        put(ws, r, 4, f"=C{r}*{I.EGP_PER_USD}", EGP, centre=True)
-        put(ws, r, 5, f"=C{r}/{I.COHORT_SEATS}", MONEY2, centre=True)
-        c = put(ws, r, 6, "Field" if field else "", centre=True)
-        if field:
-            c.fill = CONF_FILL["medium"]
-            c.font = CONF_FONT["medium"]
-        put(ws, r, 7, note, wrap=True, size=9.5, colour="3A4050")
-        ws.row_dimensions[r].height = max(22, 12.4 * (len(note) // 54 + 1))
-        r += 1
-    r = total_row(ws, r, "Total per cohort",
-                  {3: (f"=SUM(C{first}:C{r-1})", MONEY),
-                   4: (f"=SUM(D{first}:D{r-1})", EGP),
-                   5: (f"=SUM(E{first}:E{r-1})", MONEY2)})
-    r += 1
-
-    direct = sum(v for k, v, n in I.COHORT_BREAKDOWN
-                 if n.startswith("In the financial model"))
-    field = I.field_cost()
-    for label, value, note in [
-        ("Of which direct cost, in the financial model", direct,
-         "Facilitation, materials and the showcase. The same $1,770 the "
-         "business plan carries for a university cohort, unchanged."),
-        ("Of which field operations", field,
-         "Transport, accommodation, the daily allowance, local transport, "
-         "shipping and the venue where the host does not donate one. This "
-         "is the line that decides whether a governorate programme "
-         "happens."),
-        ("Of which everything else", I.COHORT_PRICE - direct - field,
-         "Certification and quality assurance, cohort reporting and "
-         "contingency."),
-    ]:
-        put(ws, r, 2, label, bold=True, wrap=True)
-        put(ws, r, 3, value, MONEY, centre=True, colour=ACCENT, bold=True)
-        put(ws, r, 4, round(I.egp(value)), EGP, centre=True)
-        put(ws, r, 5, f"={value}/{I.COHORT_PRICE}", "0.0%", centre=True)
-        put(ws, r, 7, note, wrap=True, size=9.5, colour="3A4050")
-        ws.row_dimensions[r].height = max(24, 12.4 * (len(note) // 54 + 1))
-        r += 1
-    r += 1
-
-    ws.cell(row=r, column=2, value="THE FIELD RULES").font = Font(
+    ws.cell(row=r, column=2, value="THE SEED").font = Font(
         bold=True, size=11, color=ACCENT)
     r += 1
-    for head, body in I.FIELD_POLICY:
+    r = row_head(ws, r, ["Channel", "How many", "Each", "Registrations",
+                         "Why"], [30, 11, 12, 15, 72])
+    first = r
+    for label, num, per, why in I.SEED:
+        put(ws, r, 2, label, bold=True, wrap=True)
+        put(ws, r, 3, num, "#,##0", centre=True)
+        put(ws, r, 4, per, "#,##0", centre=True)
+        put(ws, r, 5, f"=C{r}*D{r}", "#,##0", centre=True, colour=ACCENT,
+            bold=True)
+        put(ws, r, 6, why, wrap=True, size=9.5, colour="3A4050")
+        ws.row_dimensions[r].height = max(26, 12.4 * (len(why) // 70 + 1))
+        r += 1
+    r = total_row(ws, r, "Seed registrations",
+                  {5: (f"=SUM(E{first}:E{r-1})", "#,##0")})
+    seed_row = r - 1
+    r += 1
+
+    put(ws, r, 2, "Viral coefficient", bold=True)
+    put(ws, r, 5, I.VIRAL_K, "0.00", centre=True, colour=ACCENT, bold=True,
+        fill=SUNK, size=12)
+    put(ws, r, 6, "Each registered entrepreneur brings this many more "
+                  "across the wave, through the referral unlock on mission "
+                  "04 and the shareable card after every mission.",
+        wrap=True, size=9.5, colour="3A4050")
+    ws.row_dimensions[r].height = 32
+    k_row = r
+    r += 1
+    put(ws, r, 2, "Multiplier", bold=True)
+    put(ws, r, 5, f"=1/(1-E{k_row})", "0.00x", centre=True)
+    put(ws, r, 6, "The sum of the series, not a guess.", wrap=True,
+        size=9.5, colour="3A4050")
+    r += 1
+    put(ws, r, 2, "Registered entrepreneurs", bold=True, size=11)
+    put(ws, r, 5, f"=E{seed_row}/(1-E{k_row})", "#,##0", centre=True,
+        colour=ACCENT, bold=True, size=13, fill=SUNK)
+    put(ws, r, 6, "The million.", wrap=True, size=9.5, colour="3A4050")
+    ws.row_dimensions[r].height = 24
+    r += 2
+
+    ws.cell(row=r, column=2, value="THE NINE MECHANICS").font = Font(
+        bold=True, size=11, color=ACCENT)
+    r += 1
+    for head, body in I.VIRAL_LOOPS:
         put(ws, r, 2, head, bold=True, wrap=True, colour=ACCENT)
         c = ws.cell(row=r, column=3, value=body)
         c.font = Font(size=9.8)
         c.alignment = Alignment(wrap_text=True, vertical="top", indent=1)
-        ws.merge_cells(start_row=r, start_column=3, end_row=r, end_column=7)
-        ws.row_dimensions[r].height = max(24, 12.4 * (len(body) // 100 + 1))
+        ws.merge_cells(start_row=r, start_column=3, end_row=r, end_column=6)
+        ws.row_dimensions[r].height = max(26, 12.4 * (len(body) // 110 + 1))
         r += 1
     r += 1
-    note = (f"A commercial university cohort sells for "
-            f"${I.PRICE_UNI_COHORT:,.0f} in the financial model. A sponsored "
-            f"one costs ${I.COHORT_PRICE:,.0f} because there is no margin "
-            f"in it and no institutional reporting layer, and because the "
-            f"host is asked for the room. Where the room is donated, $260 "
-            f"goes back into founders sponsored rather than into a surplus.")
-    c = ws.cell(row=r, column=2, value=note)
-    c.font = Font(size=9.5, italic=True, color="6B7A74")
-    c.alignment = Alignment(wrap_text=True, vertical="top")
-    ws.merge_cells(start_row=r, start_column=2, end_row=r, end_column=7)
-    ws.row_dimensions[r].height = 44
+    r = footnote(ws, r,
+                 "The loop is in the product, not in a campaign. Mission 04 "
+                 "opens when a founder brings two others who finish mission "
+                 "01, and every mission finished generates a card in Arabic "
+                 "designed to be posted. A referral scheme bolted on at "
+                 "launch does not produce a coefficient like this; one "
+                 "built into the thing itself might.", 6)
     return ws
 
 
-# ------------------------------------------------------------------ EVENTS
-def sheet_events(wb):
-    ws = wb.create_sheet("EVENTS")
-    ws.sheet_view.showGridLines = False
-    banner(ws, "Every event the initiative runs",
-           "The cohorts are not here: they are the delivery line. These are "
-           "the events around them.", 7)
-    ws.column_dimensions["A"].width = 3
-    r = 4
-    r = row_head(ws, r, ["Event", "How many", "Each", "USD", "EGP", "When",
-                         "What it is for"],
-                 [34, 11, 12, 13, 15, 22, 48])
-    first = r
-    for label, count, cost, when, why in I.EVENTS:
-        put(ws, r, 2, label, bold=True, wrap=True)
-        put(ws, r, 3, count, "#,##0", centre=True)
-        put(ws, r, 4, cost, MONEY, centre=True)
-        put(ws, r, 5, f"=C{r}*D{r}", MONEY, centre=True, colour=ACCENT,
-            bold=True)
-        put(ws, r, 6, f"=E{r}*{I.EGP_PER_USD}", EGP, centre=True)
-        put(ws, r, 7, when, centre=True, size=9.5)
-        put(ws, r, 8, why, wrap=True, size=9.5, colour="3A4050")
-        ws.row_dimensions[r].height = max(26, 12.4 * (len(why) // 46 + 1))
-        r += 1
-    r = total_row(ws, r, "Total events and field activation",
-                  {5: (f"=SUM(E{first}:E{r-1})", MONEY),
-                   6: (f"=SUM(F{first}:F{r-1})", EGP)})
-    r += 1
-    f = dict((k, v) for k, v, _ in I.funnel())
-    for text in [
-        f"That is ${I.events_total() / f['Sponsored full journeys, all 15 missions']:,.2f} "
-        f"of every sponsored founder's ${I.SEAT_PRICE:,.2f}, and it is the "
-        f"second largest line in the whole budget after delivery. It is "
-        f"also the line most likely to be cut by somebody reading quickly, "
-        f"which would be a mistake: a chapter that has been visited "
-        f"activates and a chapter that has only been emailed does not.",
-        f"In addition to these, {f['Cohorts run']:,.0f} in-person cohorts "
-        f"each end with their own showcase for the participants and the "
-        f"host institution. Those sit inside the "
-        f"${I.COHORT_PRICE:,.0f} cohort cost, not here.",
-    ]:
-        c = ws.cell(row=r, column=2, value=text)
-        c.font = Font(size=9.5, italic=True, color="6B7A74")
-        c.alignment = Alignment(wrap_text=True, vertical="top")
-        ws.merge_cells(start_row=r, start_column=2, end_row=r, end_column=8)
-        ws.row_dimensions[r].height = 46
-        r += 1
-    return ws
-
-
-# -------------------------------------------------------------- THE FUNNEL
+# --------------------------------------------------------------- THE FUNNEL
 def sheet_funnel(wb):
     ws = wb.create_sheet("THE FUNNEL")
     ws.sheet_view.showGridLines = False
-    banner(ws, "Reach to registered to sponsored to trading",
-           "The free tier is driven by reach, because it costs almost "
-           "nothing a head. Everything below it is driven by the budget, "
-           "because it does not.", 6)
+    banner(ws, "Registered, finished, trading",
+           "Free and online, with no facilitator standing over anybody. "
+           "The rates reflect that.", 6)
     ws.column_dimensions["A"].width = 3
     r = 4
-    ws.cell(row=r, column=2, value="WHERE THE REACH COMES FROM").font = (
-        Font(bold=True, size=11, color=ACCENT))
-    r += 1
-    r = row_head(ws, r, ["Channel", "Partners", "Reach each", "Register",
-                         "Reached", "Why"],
-                 [30, 11, 13, 11, 14, 60])
-    first = r
-    for label, num, per, rate, why in I.CHANNELS:
-        put(ws, r, 2, label, bold=True, wrap=True)
-        put(ws, r, 3, num, "#,##0", centre=True)
-        put(ws, r, 4, per, "#,##0", centre=True)
-        put(ws, r, 5, rate, "0%", centre=True)
-        put(ws, r, 6, f"=C{r}*D{r}", "#,##0", centre=True, bold=True,
-            colour=ACCENT)
-        put(ws, r, 7, why, wrap=True, size=9.5, colour="3A4050")
-        ws.row_dimensions[r].height = max(24, 12.4 * (len(why) // 58 + 1))
-        r += 1
-    r = total_row(ws, r, "Total reached",
-                  {6: (f"=SUM(F{first}:F{r-1})", "#,##0")})
-    r += 1
-
-    ws.cell(row=r, column=2, value="THE FUNNEL").font = Font(
-        bold=True, size=11, color=ACCENT)
-    r += 1
-    r = row_head(ws, r, ["Stage", "Wave 1", "", "", "", "What it means"],
-                 [30, 14, 2, 2, 2, 86])
+    r = row_head(ws, r, ["Stage", "Wave 1", "What it means"],
+                 [34, 16, 92])
     for label, value, why in I.funnel():
         put(ws, r, 2, label, bold=True, wrap=True)
         put(ws, r, 3, round(value), "#,##0", centre=True, bold=True,
             colour=ACCENT, size=11)
-        put(ws, r, 7, why, wrap=True, size=9.5, colour="3A4050")
-        ws.row_dimensions[r].height = max(22, 12.4 * (len(why) // 84 + 1))
+        put(ws, r, 4, why, wrap=True, size=9.5, colour="3A4050")
+        ws.row_dimensions[r].height = max(24, 12.4 * (len(why) // 90 + 1))
         r += 1
     r += 1
-
     ws.cell(row=r, column=2, value="THE RATES, AND WHY EACH ONE").font = (
         Font(bold=True, size=11, color=ACCENT))
     r += 1
-    r = row_head(ws, r, ["Rate", "Assumed", "", "", "", "Why"],
-                 [30, 14, 2, 2, 2, 86])
+    r = row_head(ws, r, ["Rate", "Assumed", "Why"], [34, 16, 92])
     for label, value, why in I.RATES:
         put(ws, r, 2, label, bold=True, wrap=True)
         put(ws, r, 3, value, "0%", centre=True, bold=True, colour=ACCENT)
-        put(ws, r, 7, why, wrap=True, size=9.5, colour="3A4050")
-        ws.row_dimensions[r].height = max(22, 12.4 * (len(why) // 84 + 1))
+        put(ws, r, 4, why, wrap=True, size=9.5, colour="3A4050")
+        ws.row_dimensions[r].height = max(24, 12.4 * (len(why) // 90 + 1))
         r += 1
+    r += 1
+    r = footnote(ws, r,
+                 "Forty-five per cent finishing mission 01 is lower than a "
+                 "supported cohort would produce, and honestly so: nobody "
+                 "is holding anyone's hand. The headline the initiative "
+                 "publishes is the completion rate, not the registration "
+                 "number, because a million registrations with nothing "
+                 "behind them would be worth nothing to any partner on the "
+                 "list.", 4)
+    return ws
+
+
+# -------------------------------------------------------- EVENTS & WEBINARS
+def sheet_events(wb):
+    ws = wb.create_sheet("EVENTS AND WEBINARS")
+    ws.sheet_view.showGridLines = False
+    banner(ws, "Everything that happens live",
+           "There are no paid in-person cohorts in this wave. This is the "
+           "whole of what happens in a room or on a call.", 7)
+    ws.column_dimensions["A"].width = 3
+
+    r = 4
+    for title, items, line in [
+        ("EVENTS", I.EVENTS, "Events: launch, regional showcases, demo day"),
+        ("LIVE DELIVERY AND CONTENT", I.DELIVERY,
+         "Content, webinars and the info session kit"),
+    ]:
+        ws.cell(row=r, column=2, value=title).font = Font(
+            bold=True, size=11, color=ACCENT)
+        r += 1
+        r = row_head(ws, r, ["Item", "How many", "Each", "Total", "When",
+                             "What it is for"],
+                     [28, 11, 11, 13, 20, 60])
+        first = r
+        for label, count, cost, when, why in items:
+            put(ws, r, 2, label, bold=True, wrap=True)
+            put(ws, r, 3, count, "#,##0", centre=True)
+            put(ws, r, 4, cost, MONEY, centre=True)
+            put(ws, r, 5, f"=C{r}*D{r}", MONEY, centre=True, colour=ACCENT,
+                bold=True)
+            put(ws, r, 6, when, centre=True, size=9.5)
+            put(ws, r, 7, why, wrap=True, size=9.5, colour="3A4050")
+            ws.row_dimensions[r].height = max(26, 12.4 * (len(why) // 58 + 1))
+            r += 1
+        budget_line = dict((l, v) for l, v, _ in I.BUDGET)[line]
+        r = total_row(ws, r, f"Total, against a budget line of "
+                             f"${budget_line:,.0f}",
+                      {5: (f"=SUM(E{first}:E{r-1})", MONEY)})
+        r += 1
+
+    r = footnote(ws, r,
+                 "Offline info sessions are hosted by partners: their "
+                 "venue, their people, our kit and our training. The "
+                 "initiative pays $20 for a kit, not for a room, which is "
+                 "why 300 of them cost less than two in-person cohorts "
+                 "would. Where they happen, and how many, is a partner's "
+                 "call rather than ours.", 7)
     return ws
 
 
 # ----------------------------------------------------------- SPEND BY MONTH
-# When the money leaves. Front-loaded, because the launch, the content and
-# most of the chapter activation happen before a single cohort runs.
 SPEND_SHAPE = {
-    "Delivery": (0.05, 0.31, 0.07, 0.26, 0.31, 0.00),
-    "Events and field": (0.34, 0.18, 0.10, 0.08, 0.14, 0.16),
-    "Platform": (0.17, 0.17, 0.17, 0.17, 0.16, 0.16),
-    "Content": (0.45, 0.20, 0.10, 0.10, 0.10, 0.05),
-    "Measurement": (0.10, 0.05, 0.20, 0.05, 0.10, 0.50),
-    "Management": (0.17, 0.17, 0.17, 0.17, 0.16, 0.16),
+    "Platform, AI review and hosting": (0.10, 0.15, 0.18, 0.19, 0.20, 0.18),
+    "Content, webinars and the info session kit":
+        (0.30, 0.16, 0.14, 0.14, 0.14, 0.12),
+    "Community: ambassadors and chapters":
+        (0.30, 0.20, 0.14, 0.12, 0.12, 0.12),
+    "Events: launch, regional showcases, demo day":
+        (0.24, 0.03, 0.03, 0.09, 0.41, 0.20),
+    "Measurement, reporting and evaluation":
+        (0.10, 0.05, 0.20, 0.05, 0.10, 0.50),
+    "Programme coordination": (0.17, 0.17, 0.17, 0.17, 0.16, 0.16),
 }
 
 
 def sheet_months(wb):
     ws = wb.create_sheet("SPEND BY MONTH")
     ws.sheet_view.showGridLines = False
-    income, lines = I.budget()
-    banner(ws, "When the money actually leaves",
-           "Not evenly. The launch, the content and most of the chapter "
-           "activation happen before a single cohort runs, which is a "
-           "cash-flow problem as much as a budget one.", 9)
+    f = dict((k, v) for k, v, _ in I.funnel())
+    banner(ws, "When the money leaves, and where the million is by then",
+           "Not evenly. The launch, the content and most of the ambassador "
+           "recruitment happen before the loop has produced anybody.", 9)
     ws.column_dimensions["A"].width = 3
     heads = ["Line"] + [f"{m[0]}\n{m[1].split()[0]}" for m in I.MONTHS] \
         + ["Total"]
     r = 4
     r = row_head(ws, r, heads, [34] + [12] * 6 + [14])
     first = r
-    keys = list(SPEND_SHAPE)
-    for (label, value, _), key in zip(lines, keys):
+    for label, value, _ in I.BUDGET:
         put(ws, r, 2, label, bold=True, wrap=True)
         for i in range(6):
-            put(ws, r, 3 + i, value * SPEND_SHAPE[key][i], MONEY,
+            put(ws, r, 3 + i, value * SPEND_SHAPE[label][i], MONEY,
                 centre=True)
         put(ws, r, 9, f"=SUM(C{r}:H{r})", MONEY, centre=True, bold=True,
             colour=ACCENT)
@@ -539,24 +442,27 @@ def sheet_months(wb):
              for i in range(6)}
     cells[9] = (f"=SUM(I{first}:I{r-1})", MONEY)
     r = total_row(ws, r, "Total spend", cells)
-    put(ws, r, 2, "Cumulative", bold=True)
+    put(ws, r, 2, "Cumulative spend", bold=True)
     for i in range(6):
         col = get_column_letter(3 + i)
-        ref = f"=SUM($C${r-1}:{col}{r-1})"
-        put(ws, r, 3 + i, ref, MONEY, centre=True, fill=SUNK)
+        put(ws, r, 3 + i, f"=SUM($C${r-1}:{col}{r-1})", MONEY, centre=True,
+            fill=SUNK)
+    r += 1
+    put(ws, r, 2, "Registered by month end", bold=True)
+    for i, m in enumerate(I.MONTHS):
+        put(ws, r, 3 + i, round(f["Registered entrepreneurs"] * m[4]),
+            "#,##0", centre=True, colour=ACCENT, bold=True)
+    put(ws, r, 9, round(f["Registered entrepreneurs"]), "#,##0",
+        centre=True, bold=True)
     r += 2
-    note = (f"Sponsorship is invoiced on signature, not on delivery. With "
-            f"roughly a third of the events budget spent in month one and "
-            f"the content budget before that, the coalition has to be "
-            f"signed and at least half invoiced before the launch. That is "
-            f"why the pre-wave months in the framework run from October "
-            f"2026 and why nothing is announced until three Founding "
-            f"Partners have signed.")
-    c = ws.cell(row=r, column=2, value=note)
-    c.font = Font(size=9.5, italic=True, color="6B7A74")
-    c.alignment = Alignment(wrap_text=True, vertical="top")
-    ws.merge_cells(start_row=r, start_column=2, end_row=r, end_column=9)
-    ws.row_dimensions[r].height = 46
+    r = footnote(ws, r,
+                 "Roughly a third of the content and community budgets go "
+                 "before the launch, and the launch itself is in month one. "
+                 "Sponsorship is invoiced on signature rather than on "
+                 "delivery, so the coalition has to be signed and at least "
+                 "half invoiced before March. That is what the pre-wave "
+                 "months from October 2026 are for, and why nothing is "
+                 "announced until both Founding Partners have signed.", 9)
     return ws
 
 
@@ -564,74 +470,58 @@ def sheet_months(wb):
 def sheet_return(wb):
     ws = wb.create_sheet("RETURN ON STARTPAD")
     ws.sheet_view.showGridLines = False
-    inv = sum(v for _, v, _ in I.STARTPAD_INVESTMENT)
     ret = I.startpad_return()
     total = sum(v for _, v, _ in ret)
-    banner(ws, "What the company puts in, and what comes back",
-           "Wave 1 takes no margin from sponsorship. The return is "
-           "somewhere else, and it is priced at the financial model's own "
-           "prices.", 6)
+    banner(ws, "No cash in, and what comes back",
+           "StartPad funds none of this wave and takes no margin from it. "
+           "A partner is entitled to know what the company gets instead.",
+           6)
     ws.column_dimensions["A"].width = 3
 
     r = 4
     ws.cell(row=r, column=2,
-            value="WHAT STARTPAD PUTS IN, THAT THE BUDGET DOES NOT PAY "
-                  "FOR").font = Font(bold=True, size=11, color=ACCENT)
+            value="WHAT STARTPAD CONTRIBUTES, NONE OF IT CASH").font = (
+        Font(bold=True, size=11, color=ACCENT))
     r += 1
-    r = row_head(ws, r, ["Line", "USD", "EGP", "", "What it is"],
-                 [36, 13, 15, 2, 74])
-    first = r
-    for label, value, note in I.STARTPAD_INVESTMENT:
-        put(ws, r, 2, label, bold=True, wrap=True)
-        put(ws, r, 3, value, MONEY, centre=True)
-        put(ws, r, 4, f"=C{r}*{I.EGP_PER_USD}", EGP, centre=True)
-        put(ws, r, 6, note, wrap=True, size=9.5, colour="3A4050")
-        ws.row_dimensions[r].height = max(24, 12.4 * (len(note) // 72 + 1))
+    for head, body in I.STARTPAD_CONTRIBUTION:
+        put(ws, r, 2, head, bold=True, wrap=True, colour=ACCENT)
+        c = ws.cell(row=r, column=3, value=body)
+        c.font = Font(size=9.8)
+        c.alignment = Alignment(wrap_text=True, vertical="top", indent=1)
+        ws.merge_cells(start_row=r, start_column=3, end_row=r, end_column=6)
+        ws.row_dimensions[r].height = max(26, 12.4 * (len(body) // 108 + 1))
         r += 1
-    r = total_row(ws, r, "Total invested",
-                  {3: (f"=SUM(C{first}:C{r-1})", MONEY),
-                   4: (f"=SUM(D{first}:D{r-1})", EGP)})
-    inv_row = r - 1
     r += 1
 
     ws.cell(row=r, column=2,
-            value="WHAT COMES BACK IN THE TWELVE MONTHS AFTER THE "
-                  "WAVE").font = Font(bold=True, size=11, color=ACCENT)
+            value="WHAT COMES BACK IN THE TWELVE MONTHS AFTER").font = (
+        Font(bold=True, size=11, color=ACCENT))
     r += 1
-    r = row_head(ws, r, ["Line", "USD", "EGP", "", "How it is counted"],
-                 [36, 13, 15, 2, 74])
+    r = row_head(ws, r, ["Line", "USD", "EGP", "How it is counted"],
+                 [40, 14, 16, 60])
     first = r
     for label, value, note in ret:
         put(ws, r, 2, label, bold=True, wrap=True)
         put(ws, r, 3, value, MONEY, centre=True, colour=ACCENT, bold=True)
-        put(ws, r, 4, f"=C{r}*{I.EGP_PER_USD}", EGP, centre=True)
-        put(ws, r, 6, note, wrap=True, size=9.5, colour="3A4050")
-        ws.row_dimensions[r].height = max(24, 12.4 * (len(note) // 72 + 1))
+        put(ws, r, 4, f"=C{r}*{I.EGP_PER_USD}", EGPF, centre=True)
+        put(ws, r, 5, note, wrap=True, size=9.5, colour="3A4050")
+        ws.row_dimensions[r].height = max(24, 12.4 * (len(note) // 58 + 1))
         r += 1
-    r = total_row(ws, r, "Total return",
+    r = total_row(ws, r, "Total, twelve months after the wave",
                   {3: (f"=SUM(C{first}:C{r-1})", MONEY),
-                   4: (f"=SUM(D{first}:D{r-1})", EGP)})
-    ret_row = r - 1
+                   4: (f"=SUM(D{first}:D{r-1})", EGPF)})
     r += 1
-    put(ws, r, 2, "Return on what the company put in", bold=True)
-    put(ws, r, 3, f"=C{ret_row}/C{inv_row}", "0.0x", centre=True,
-        bold=True, colour=ACCENT, fill=SUNK, size=12)
-    put(ws, r, 6, "And this counts only what can be priced. The assets "
-                  "below are worth more and are not in the number.",
-        wrap=True, size=9.5, colour="3A4050")
-    ws.row_dimensions[r].height = 28
-    r += 2
 
     ws.cell(row=r, column=2, value="THE RATES BEHIND THOSE LINES").font = (
         Font(bold=True, size=11, color=ACCENT))
     r += 1
-    r = row_head(ws, r, ["Rate", "Assumed", "", "", "Why"],
-                 [36, 13, 2, 2, 89])
+    r = row_head(ws, r, ["Rate", "Assumed", "", "Why"], [40, 14, 16, 60])
     for label, value, why in I.RETURN_RATES:
         put(ws, r, 2, label, bold=True, wrap=True)
         put(ws, r, 3, value, "0%", centre=True, bold=True, colour=ACCENT)
-        put(ws, r, 6, why, wrap=True, size=9.5, colour="3A4050")
-        ws.row_dimensions[r].height = max(24, 12.4 * (len(why) // 87 + 1))
+        put(ws, r, 4, "")
+        put(ws, r, 5, why, wrap=True, size=9.5, colour="3A4050")
+        ws.row_dimensions[r].height = max(24, 12.4 * (len(why) // 58 + 1))
         r += 1
     r += 1
 
@@ -644,80 +534,108 @@ def sheet_return(wb):
         c.font = Font(size=9.8)
         c.alignment = Alignment(wrap_text=True, vertical="top", indent=1)
         ws.merge_cells(start_row=r, start_column=3, end_row=r, end_column=6)
-        ws.row_dimensions[r].height = max(26, 12.4 * (len(body) // 100 + 1))
+        ws.row_dimensions[r].height = max(26, 12.4 * (len(body) // 108 + 1))
         r += 1
     r += 1
-    note = (f"The honest summary: the initiative is cash neutral for "
-            f"StartPad in wave one by design, costs the company about "
-            f"${inv:,.0f} of time and engineering it does not recover, and "
-            f"returns about ${total:,.0f} of commercial revenue in the "
-            f"following twelve months plus a facilitator pool, a data asset "
-            f"and a delivery record that no amount of selling would have "
-            f"bought. If the return rates on this sheet are half right it "
-            f"is still worth doing.")
-    c = ws.cell(row=r, column=2, value=note)
-    c.font = Font(size=10, italic=True, color=INK)
-    c.alignment = Alignment(wrap_text=True, vertical="top")
-    ws.merge_cells(start_row=r, start_column=2, end_row=r, end_column=6)
-    ws.row_dimensions[r].height = 56
+    r = footnote(ws, r,
+                 f"The honest summary: the company spends no money on this "
+                 f"and makes none from it directly, and gets about "
+                 f"${total:,.0f} of commercial revenue in the following "
+                 f"year plus a million registered entrepreneurs, a data "
+                 f"asset nobody else in Egypt has, and a measured referral "
+                 f"coefficient. If these rates are half right it is still "
+                 f"the best twelve months of business development the "
+                 f"company could buy, and it is being funded by somebody "
+                 f"else.", 6, height=56)
     return ws
 
 
-# ------------------------------------------------------------- SENSITIVITY
+# -------------------------------------------------------------- SENSITIVITY
 def sheet_sensitivity(wb):
     ws = wb.create_sheet("SENSITIVITY")
     ws.sheet_view.showGridLines = False
-    banner(ws, "What happens if the coalition does not fill",
-           "The wave is planned at 50 per cent. This is what the other "
-           "outcomes look like.", 8)
+    banner(ws, "If the loop is weaker, or the coalition smaller",
+           "Two things can go wrong with this plan, and they go wrong "
+           "independently.", 7)
     ws.column_dimensions["A"].width = 3
+
     r = 4
-    r = row_head(ws, r, ["Coalition fill", "Raised USD", "Raised EGP",
-                         "Founders sponsored", "Cohorts", "Governorates",
-                         "Cost per founder", "What it means"],
-                 [13, 14, 16, 16, 10, 13, 14, 48])
-    for fill in (0.30, 0.50, 0.75, 1.00):
-        founders, cohorts = I.bought(fill)
-        income, _ = I.budget(fill)
-        govs = max(4, min(12, round(cohorts / 2.5)))
+    ws.cell(row=r, column=2, value="IF THE VIRAL COEFFICIENT IS WRONG").font = (
+        Font(bold=True, size=11, color=ACCENT))
+    r += 1
+    r = row_head(ws, r, ["Coefficient", "Multiplier", "Registered",
+                         "Cost per head", "What it means"],
+                 [14, 13, 16, 14, 72])
+    seed = I.seed_total()
+    for k in (0.25, 0.40, 0.50, 0.60):
+        reg = seed / (1 - k)
         meaning = {
-            0.30: "Thin but real. The governorate count drops, not the "
-                  "quality, and the wave still produces a closing report "
-                  "worth showing.",
-            0.50: "The plan. Twelve governorates, and the number every "
-                  "other sheet in this file is quoted at.",
-            0.75: "Comfortable. The extra buys governorates and "
-                  "facilitator certification rather than more Cairo.",
-            1.00: "The money outruns the funnel: the coalition could "
-                  "sponsor more founders than finish the free tier. That "
-                  "is a good problem, and the answer is to widen reach in "
-                  "wave two rather than to raise more.",
-        }[fill]
-        put(ws, r, 2, f"{fill:.0%}", centre=True, bold=True,
-            colour=ACCENT, size=12)
-        put(ws, r, 3, income, MONEY, centre=True)
-        put(ws, r, 4, round(I.egp(income)), EGP, centre=True)
-        put(ws, r, 5, round(founders), "#,##0", centre=True)
-        put(ws, r, 6, round(cohorts), "#,##0", centre=True)
-        put(ws, r, 7, govs, "#,##0", centre=True)
-        put(ws, r, 8, round(income / founders, 2), MONEY2, centre=True)
-        put(ws, r, 9, meaning, wrap=True, size=9.5, colour="3A4050")
-        ws.row_dimensions[r].height = max(34, 12.4 * (len(meaning) // 46 + 1))
-        if fill == I.TARGET_FILL:
-            for col in range(2, 10):
+            0.25: "The loop barely fires and the wave is carried by the "
+                  "partner channels alone. Still two thirds of a million, "
+                  "and still the largest entrepreneurship programme ever "
+                  "run in Egypt.",
+            0.40: "Below plan but comfortably viable. The headline becomes "
+                  "830,000 and the completion numbers barely move.",
+            0.50: "The plan. Every registered entrepreneur brings one more "
+                  "across six months.",
+            0.60: "Above plan. The constraint stops being reach and "
+                  "becomes inference cost, which is the good problem.",
+        }[k]
+        put(ws, r, 2, k, "0.00", centre=True, bold=True, colour=ACCENT,
+            size=12)
+        put(ws, r, 3, f"=1/(1-B{r})", "0.00x", centre=True)
+        put(ws, r, 4, round(reg), "#,##0", centre=True, bold=True)
+        put(ws, r, 5, round(I.budget_total() / reg, 2), MONEY2,
+            centre=True)
+        put(ws, r, 6, meaning, wrap=True, size=9.5, colour="3A4050")
+        ws.row_dimensions[r].height = max(30, 12.4 * (len(meaning) // 70 + 1))
+        if k == I.VIRAL_K:
+            for col in range(2, 7):
                 ws.cell(row=r, column=col).fill = CONF_FILL["high"]
         r += 1
     r += 1
-    note = ("Cost per founder rises as the coalition fills, because the "
-            "cohorts are the expensive part and the richer tiers buy more "
-            "of them. That is the right way round: a bigger coalition "
-            "should buy more in-person delivery in more governorates, not "
-            "more online seats in the same three cities.")
-    c = ws.cell(row=r, column=2, value=note)
-    c.font = Font(size=9.5, italic=True, color="6B7A74")
-    c.alignment = Alignment(wrap_text=True, vertical="top")
-    ws.merge_cells(start_row=r, start_column=2, end_row=r, end_column=9)
-    ws.row_dimensions[r].height = 44
+
+    ws.cell(row=r, column=2, value="IF THE COALITION DOES NOT FILL").font = (
+        Font(bold=True, size=11, color=ACCENT))
+    r += 1
+    r = row_head(ws, r, ["Fill", "Raised", "EGP", "Gap", "What gets cut"],
+                 [14, 13, 16, 14, 72])
+    for fill in (0.40, 0.60, 0.80, 1.00):
+        raised = I.raised(fill)
+        gap = I.budget_total() - raised
+        cut = {
+            0.40: "Below the floor. The wave is postponed rather than run "
+                  "badly, and the coalition is rebuilt for the autumn.",
+            0.60: "The regional showcases drop from six to two and the "
+                  "ambassador programme halves. Reach suffers, and so does "
+                  "the loop.",
+            0.80: "The plan. Everything in the budget runs.",
+            1.00: "The extra goes to ambassadors and to a second language "
+                  "pass, not to the surplus. There is no surplus.",
+        }[fill]
+        put(ws, r, 2, f"{fill:.0%}", centre=True, bold=True, colour=ACCENT,
+            size=12)
+        put(ws, r, 3, raised, MONEY, centre=True, bold=True)
+        put(ws, r, 4, round(I.egp(raised)), EGPF, centre=True)
+        c = put(ws, r, 5, gap, MONEY, centre=True)
+        if gap > 0:
+            c.fill = CONF_FILL["low"]
+            c.font = CONF_FONT["low"]
+        put(ws, r, 6, cut, wrap=True, size=9.5, colour="3A4050")
+        ws.row_dimensions[r].height = max(30, 12.4 * (len(cut) // 70 + 1))
+        if fill == I.TARGET_FILL:
+            for col in range(2, 7):
+                if col != 5:
+                    ws.cell(row=r, column=col).fill = CONF_FILL["high"]
+        r += 1
+    r += 1
+    r = footnote(ws, r,
+                 "The two risks are independent, which is the comfort in "
+                 "this plan. A weak loop with a full coalition still "
+                 "reaches two thirds of a million. A strong loop with a "
+                 "thin coalition still reaches a million, with fewer "
+                 "showcases. Both failing together is the case to watch, "
+                 "and the mid-wave report in May is the decision point.", 6)
     return ws
 
 
@@ -726,10 +644,9 @@ def build(path):
     wb.remove(wb.active)
     sheet_readme(wb)
     sheet_budget(wb)
-    sheet_seat(wb)
-    sheet_cohort(wb)
-    sheet_events(wb)
+    sheet_viral(wb)
     sheet_funnel(wb)
+    sheet_events(wb)
     sheet_months(wb)
     sheet_return(wb)
     sheet_sensitivity(wb)
@@ -749,6 +666,8 @@ if __name__ == "__main__":
                os.path.abspath(__file__))), "output",
                "StartPad_Initiative_Budget.xlsx"))
     build(out)
-    income, _ = I.budget()
+    f = dict((k, v) for k, v, _ in I.funnel())
     print(f"wrote {out}  ({os.path.getsize(out)/1024:,.0f} KB)")
-    print(f"wave budget ${income:,.0f}, EGP {I.egp(income):,.0f}")
+    print(f"${I.budget_total():,.0f} for "
+          f"{f['Registered entrepreneurs']:,.0f} entrepreneurs, "
+          f"${I.budget_total() / f['Registered entrepreneurs']:,.2f} a head")

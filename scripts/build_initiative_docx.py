@@ -408,10 +408,11 @@ def cover(doc):
 
     f = K.F
     kpi(doc, [
-        (K.n(f["Registered founders"]), "first-time founders in wave 1"),
-        (K.n(f["People reached"]), "people reached"),
-        (K.n(f["Ideas in the bank"]), "ideas in the bank"),
-        ("6", "months, March to August 2027"),
+        (K.n(f["Registered entrepreneurs"]), "entrepreneurs, in six months"),
+        (K.usd(I.budget_total()), "total cost"),
+        (K.usd(I.budget_total() / f["Registered entrepreneurs"], 2),
+         "per entrepreneur"),
+        ("$0", "of StartPad's own cash"),
     ])
     para(doc, "", size=8, after=10)
     deflist(doc, [

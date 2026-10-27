@@ -849,13 +849,16 @@ python3 scripts/build_initiative_budget_xlsx.py output/StartPad_Initiative_Budge
 python3 scripts/build_initiative_docx.py        output/StartPad_Initiative_Framework.docx
 ```
 
-`outreach/initiative.py` holds the roles, the tiers, the in-kind menu, the
-value each kind of partner gets, the events, the field operations, the
-six-month plan, the budget and what StartPad gets back.
-`outreach/framework.py` is the document's prose. All three builders read the
-same module, so no two files can disagree about a number.
+`outreach/initiative.py` holds the roles, the three tiers, the in-kind menu,
+the value each kind of partner gets, the viral mechanics, the events and
+webinars, the six-month plan, the six-line budget and what StartPad gets
+back. `outreach/framework.py` is the document's prose. All three builders
+read the same module, so no two files can disagree about a number.
 
-Both unit prices come from `finmodel/plan.py` rather than from these
-documents: $5 a sponsored founder is the national initiative seat price in
-the financial model, and the $3,000 in-person cohort is the model's own
-$1,770 direct cost plus the field cost of working outside Cairo.
+The wave is online, free to every participant, and funded entirely by the
+coalition: $200,000 for one million registered entrepreneurs, which is
+$0.20 a head. There are no paid in-person cohorts. Offline info sessions
+happen where a partner asks for one and hosts it. StartPad contributes the
+platform, the curriculum and its team's time, puts in no cash, and takes no
+margin; the return prices in `startpad_return()` come from
+`finmodel/plan.py` rather than from the documents.

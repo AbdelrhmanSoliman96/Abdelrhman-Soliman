@@ -27,8 +27,8 @@ STAGES = ["Not invited", "Invited", "Replied", "Meeting held",
           "Proposal sent", "Negotiating", "Signed", "Declined", "Parked"]
 
 
-def money(v):
-    return f"${v:,.0f}"
+def money(v, dp=0):
+    return f"${v:,.{dp}f}"
 
 
 # ------------------------------------------------------------------ READ ME
@@ -37,7 +37,6 @@ def sheet_readme(wb):
     ws.sheet_view.showGridLines = False
     rows = I.invitation_list()
     f = dict((k, v) for k, v, _ in I.funnel())
-    total, _ = I.budget()
     banner(ws, f"{I.NAME}: who to invite, and as what",
            f"{len(rows)} organisations in three roles. {I.WAVE}.", 5)
     ws.column_dimensions["B"].width = 30
@@ -73,36 +72,38 @@ def sheet_readme(wb):
     blocks += [
         ("", ""),
         ("THE NUMBER THIS LIST HAS TO PRODUCE", ""),
-        ("", f"Full coalition value if every capped slot sells: "
-             f"{money(I.target_money())}, which is EGP "
-             f"{I.egp(I.target_money()):,.0f}. The wave is planned at "
-             f"{I.TARGET_FILL:.0%} fill, which is {money(total)}."),
-        ("", f"At that budget the wave reaches {f['People reached']:,.0f} "
-             f"people, registers {f['Registered founders']:,.0f} first-time "
-             f"founders, puts {f['Sponsored full journeys, all 15 missions']:,.0f} "
-             f"of them through all fifteen missions at "
-             f"{money(I.SEAT_PRICE)} each, runs {f['Cohorts run']:,.0f} "
-             f"in-person cohorts at {money(I.COHORT_PRICE)} each, and "
-             f"leaves {f['Ideas in the bank']:,.0f} ideas in the bank."),
-        ("", "The full budget, the events, the field operations and what "
-             "StartPad gets back are in the companion workbook: "
-             "StartPad_Initiative_Budget.xlsx."),
-        ("", "The million is not a six-month number. The framework says so "
-             "in the arithmetic, and so should anyone using this list."),
+        ("", f"The wave costs {money(I.budget_total())}, which is EGP "
+             f"{I.egp(I.budget_total()):,.0f}, and it is funded entirely by "
+             f"the organisations on this list. StartPad puts in no cash at "
+             f"all and takes no margin."),
+        ("", f"The three cash tiers raise {money(I.target_money())} if "
+             f"every slot sells, so the coalition can lose four or five "
+             f"conversations and still fund the wave."),
+        ("", f"At that budget the initiative registers "
+             f"{f['Registered entrepreneurs']:,.0f} entrepreneurs at "
+             f"{money(I.budget_total() / f['Registered entrepreneurs'], 2)} "
+             f"a head, puts {f['All 15 missions completed']:,.0f} of them "
+             f"through all fifteen missions, and leaves "
+             f"{f['Ideas in the bank']:,.0f} ideas in the bank. Everything "
+             f"is online and free, there are no paid cohorts, and offline "
+             f"sessions happen only where a partner asks for one and hosts "
+             f"it."),
+        ("", "The full budget and what StartPad gets back are in the "
+             "companion workbook: StartPad_Initiative_Budget.xlsx."),
         ("", ""),
         ("HOW TO WORK IT", ""),
-        ("", "Founding Partners first, and do not announce until three have "
-             "signed. A coalition with nobody in it is a hard sell; a "
-             "coalition with three recognisable names in it sells itself to "
-             "the next twenty."),
+        ("", "Founding Partners first, and do not announce until both "
+             "have signed. A coalition with nobody in it is a hard sell; a "
+             "coalition with two recognisable names in it sells itself to "
+             "the next fifteen."),
         ("", "Community supporters second, and before the summer, because "
              "student leadership turns over in July and August. They cost "
-             "nothing and they are the highest converting reach in the "
-             "whole plan."),
-        ("", "NGO and development partners third. They bring reach and "
-             "governorates rather than money, and several of them will want "
-             "to co-apply for donor funding, which is a slower and larger "
-             "conversation than sponsorship."),
+             "nothing, they are the highest converting reach in the whole "
+             "plan, and the referral loop runs on them."),
+        ("", "NGO and development partners third. They bring reach, "
+             "governorates and the venues for offline info sessions rather "
+             "than money, and several will want to co-apply for donor "
+             "funding, which is a slower and larger conversation."),
         ("", ""),
         ("THE COLUMNS YOU FILL IN", ""),
         ("", "Stage, owner, pledged amount, next action, next date and "
