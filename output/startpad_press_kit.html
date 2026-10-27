@@ -1,0 +1,253 @@
+<title>StartPad Launch Newsroom</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Amiri:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground:#FCFCFB; --surface:#F2F4F2; --ink:#14211F; --body:#26332F;
+  --muted:#5F706B; --rule:#D8DEDA; --rule-soft:#E7ECE9;
+  --accent:#0F5C4B; --accent-ink:#0F5C4B; --accent-wash:#E8F1ED;
+  --bronze:#8A6E3C; --bronze-wash:#F5EFE3; --blue:#1D6FA3;
+  --shadow:0 1px 0 rgba(20,33,31,.04);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:#0E1513; --surface:#16201D; --ink:#EDF2EF; --body:#C9D4D0;
+    --muted:#8CA09A; --rule:#2A3733; --rule-soft:#1E2A27;
+    --accent:#5FBFA3; --accent-ink:#7FD3B9; --accent-wash:#15251F;
+    --bronze:#C8A468; --bronze-wash:#221B0F; --blue:#6FB4DE;
+    --shadow:none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground:#0E1513; --surface:#16201D; --ink:#EDF2EF; --body:#C9D4D0;
+  --muted:#8CA09A; --rule:#2A3733; --rule-soft:#1E2A27;
+  --accent:#5FBFA3; --accent-ink:#7FD3B9; --accent-wash:#15251F;
+  --bronze:#C8A468; --bronze-wash:#221B0F; --blue:#6FB4DE;
+  --shadow:none;
+}
+
+* { box-sizing:border-box; }
+body {
+  background:var(--ground); color:var(--body);
+  font-family:"IBM Plex Sans","IBM Plex Sans Arabic",system-ui,sans-serif;
+  font-size:16px; line-height:1.62; -webkit-font-smoothing:antialiased;
+}
+[dir="rtl"] { font-family:"IBM Plex Sans Arabic","IBM Plex Sans",system-ui,sans-serif; }
+
+/* ---- masthead ---- */
+.masthead {
+  position:sticky; top:0; z-index:10;
+  background:color-mix(in srgb, var(--ground) 88%, transparent);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rule);
+}
+.masthead-in {
+  max-width:64rem; margin:0 auto; padding:.85rem 1.5rem;
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+}
+.brand {
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--accent-ink); font-weight:500;
+}
+.brand b { color:var(--ink); font-weight:500; }
+.langs { display:flex; gap:.4rem; }
+.langbtn {
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
+  padding:.34rem .7rem; border-radius:2px; cursor:pointer;
+  border:1px solid var(--rule); background:transparent; color:var(--muted);
+}
+.langbtn[aria-pressed="true"] {
+  background:var(--accent); border-color:var(--accent);
+  color:var(--ground); font-weight:500;
+}
+.langbtn:focus-visible { outline:2px solid var(--blue); outline-offset:2px; }
+
+/* ---- document grid: a rail for press marks, a column for reading ---- */
+.doc { max-width:64rem; margin:0 auto; padding:2.6rem 1.5rem 4rem; }
+.row {
+  display:grid; grid-template-columns:4.5rem minmax(0,66ch);
+  gap:0 1.6rem; align-items:start;
+}
+.col { min-width:0; }
+.rail-mark {
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.8rem; color:var(--muted); padding-top:.42rem;
+  text-align:end; user-select:none;
+}
+.rail-num {
+  font-size:1.35rem; color:var(--accent-ink); font-weight:500;
+  padding-top:1.55rem; font-variant-numeric:tabular-nums;
+}
+[dir="rtl"] .rail-num { font-family:"IBM Plex Sans Arabic",sans-serif; }
+.rail-quote { font-size:2.4rem; color:var(--rule); line-height:1; padding-top:.3rem; }
+
+/* ---- release type ---- */
+.kicker {
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.7rem; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--bronze); margin:0 0 1.1rem;
+}
+[dir="rtl"] .kicker { font-family:"IBM Plex Sans Arabic",sans-serif; letter-spacing:0; }
+.headline {
+  font-family:"Newsreader",Georgia,serif; font-weight:600;
+  font-size:clamp(1.9rem,4.2vw,2.9rem); line-height:1.16; letter-spacing:-.01em;
+  color:var(--ink); margin:0 0 .9rem; text-wrap:balance;
+}
+[dir="rtl"] .headline {
+  font-family:"Amiri",serif; font-weight:700; line-height:1.45;
+  letter-spacing:0; font-size:clamp(1.75rem,3.9vw,2.6rem);
+}
+.subhead {
+  font-family:"Newsreader",Georgia,serif; font-style:italic;
+  font-size:1.16rem; line-height:1.5; color:var(--muted);
+  margin:0 0 1.6rem; text-wrap:pretty;
+}
+[dir="rtl"] .subhead { font-family:"Amiri",serif; font-size:1.24rem; line-height:1.75; }
+.dateline {
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.78rem; letter-spacing:.06em; color:var(--ink);
+  margin:0; padding:.55rem 0; border-top:2px solid var(--accent);
+  border-bottom:1px solid var(--rule);
+}
+[dir="rtl"] .dateline { font-family:"IBM Plex Sans Arabic",sans-serif; letter-spacing:0; }
+.lede .col { padding-bottom:1.4rem; }
+
+h2 {
+  font-family:"Newsreader",Georgia,serif; font-weight:600;
+  font-size:1.42rem; line-height:1.3; color:var(--ink);
+  margin:2.4rem 0 .7rem; padding-top:1.5rem;
+  border-top:1px solid var(--rule-soft); text-wrap:balance;
+}
+[dir="rtl"] h2 { font-family:"Amiri",serif; font-weight:700; line-height:1.5; }
+.doc p { margin:0 0 1rem; }
+[dir="rtl"] .doc p { line-height:1.95; }
+ul { margin:0 0 1.1rem; padding-inline-start:1.1rem; }
+li { margin-bottom:.55rem; }
+[dir="rtl"] li { line-height:1.9; }
+li::marker { color:var(--accent); }
+
+blockquote {
+  margin:.2rem 0 1.6rem; padding-inline-start:1.1rem;
+  border-inline-start:2px solid var(--accent);
+}
+blockquote p {
+  font-family:"Newsreader",Georgia,serif; font-size:1.14rem; font-style:italic;
+  line-height:1.6; color:var(--ink); margin:0 0 .6rem;
+}
+[dir="rtl"] blockquote p {
+  font-family:"IBM Plex Sans Arabic",sans-serif; font-style:normal;
+  font-size:1.05rem; line-height:1.95;
+}
+cite {
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-style:normal;
+  font-size:.74rem; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--accent-ink);
+}
+[dir="rtl"] cite {
+  font-family:"IBM Plex Sans Arabic",sans-serif; letter-spacing:0;
+  text-transform:none; font-size:.84rem;
+}
+blockquote.proposed {
+  border-inline-start-color:var(--bronze);
+  background:var(--bronze-wash); padding:.9rem 1.1rem; border-radius:0 3px 3px 0;
+}
+[dir="rtl"] blockquote.proposed { border-radius:3px 0 0 3px; }
+blockquote.proposed cite { color:var(--bronze); }
+
+.kvlist { margin:0 0 1.2rem; display:grid; gap:.45rem; }
+.kv { display:grid; grid-template-columns:9rem minmax(0,1fr); gap:.2rem .9rem; }
+.kv dt {
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.74rem;
+  letter-spacing:.06em; text-transform:uppercase; color:var(--muted);
+  padding-top:.22rem;
+}
+[dir="rtl"] .kv dt {
+  font-family:"IBM Plex Sans Arabic",sans-serif; letter-spacing:0;
+  text-transform:none; font-size:.9rem;
+}
+.kv dd { margin:0; color:var(--body); }
+
+.todo {
+  background:var(--bronze-wash); color:var(--bronze);
+  padding:.05em .35em; border-radius:2px;
+  border-bottom:1px dashed var(--bronze); font-weight:500;
+}
+
+.endmark {
+  font-family:"IBM Plex Mono",ui-monospace,monospace; color:var(--muted);
+  letter-spacing:.3em; margin:2.2rem 0 .5rem; font-size:.9rem;
+  display:flex; align-items:center; gap:.9rem;
+}
+.endmark span {
+  letter-spacing:.1em; font-size:.68rem; text-transform:uppercase;
+  color:var(--rule); }
+[dir="rtl"] .endmark span { font-family:"IBM Plex Sans Arabic",sans-serif; }
+
+.sources { margin-top:.5rem; }
+.sources .note { color:var(--muted); font-size:.92rem; }
+.srclist { list-style:none; padding:0; margin:1rem 0 0; display:grid; gap:.7rem; }
+.srclist li {
+  display:grid; gap:.15rem; padding-inline-start:.9rem;
+  border-inline-start:2px solid var(--rule-soft); margin:0;
+}
+.srclist span { font-size:.9rem; color:var(--ink); }
+.srclist a {
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.72rem;
+  color:var(--blue); word-break:break-all; text-decoration:none;
+  border-bottom:1px solid transparent; direction:ltr; display:inline-block;
+}
+.srclist a:hover { border-bottom-color:var(--blue); }
+.srclist a:focus-visible { outline:2px solid var(--blue); outline-offset:2px; }
+
+[data-lang-block][hidden] { display:none !important; }
+
+@media (max-width:720px) {
+  .row { grid-template-columns:minmax(0,1fr); }
+  .rail-mark { display:none; }
+  .rail-num { display:block; text-align:start; padding:1.6rem 0 0; }
+  .kv { grid-template-columns:minmax(0,1fr); }
+  .doc { padding:1.8rem 1.15rem 3rem; }
+}
+@media print {
+  .masthead { display:none; }
+  [data-lang-block] { display:block !important; }
+  .row { grid-template-columns:minmax(0,1fr); }
+  .rail-mark { display:none; }
+}
+@media (prefers-reduced-motion:reduce) { * { transition:none !important; } }
+</style>
+
+<header class="masthead">
+  <div class="masthead-in">
+    <span class="brand"><b>StartPad</b> &times; GrowthLabs &nbsp;/&nbsp; Press</span>
+    <div class="langs" role="group" aria-label="Language">
+      <button class="langbtn" type="button" data-set="ar" aria-pressed="true">العربية</button>
+      <button class="langbtn" type="button" data-set="en" aria-pressed="false">English</button>
+    </div>
+  </div>
+</header>
+
+<article class="doc" dir="rtl" lang="ar" data-lang-block="ar"><div class="row lede"><div class="rail-mark"></div><div class="col"><p class="kicker">للنشر الفوري</p><h1 class="headline">«ستارتباد» تنطلق من الرياض خلال LEAP… وGrowthLabs تتبنّى المنصة بالكامل في صفقة احتضان استراتيجي غير نقدية</h1><p class="subhead">منصة تحوّل فكرة رائد الأعمال إلى شركة جاهزة للاستثمار عبر 15 مهمة موجَّهة ومكتبة تضم أكثر من 120 أداة — والمؤسس عبدالرحمن سليمان يواصل قيادة المنتج داخل منظومة GrowthLabs</p><p class="dateline">الرياض، المملكة العربية السعودية — 8 سبتمبر 2026</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>أعلنت StartPad (ستارتباد) عن إطلاقها الرسمي من على منصة LEAP في الرياض، بوصفها منصة تأسيس الشركات الناشئة التي تنقل رائد الأعمال من الفكرة الأولى إلى شركة منظَّمة ومُتحقَّق من جدواها وجاهزة لدخول برامج الاحتضان والاستثمار، عبر مسار عملي من 15 مهمة موجَّهة.</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>وبالتزامن مع الإطلاق، أعلنت GrowthLabs — الشركة المتخصصة في بناء البنية الرقمية لمنظومات ريادة الأعمال في الشرق الأوسط وشمال أفريقيا — عن تبنّي StartPad بالكامل وضمّها إلى منظومتها، في صفقة احتضان استراتيجي غير نقدية يواصل بموجبها المؤسس عبدالرحمن سليمان قيادة المنتج.</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>ويأتي الإعلان من قلب أكبر تجمّع تقني في المنطقة؛ إذ استقطبت نسخة هذا العام من LEAP في مركز الرياض للمعارض والمؤتمرات بملهم أكثر من 1,800 شركة تقنية، وما يزيد على 600 شركة ناشئة، ونحو 1,900 مستثمر وممثل لصناديق رأس المال الجريء، إلى جانب أكثر من 1,000 متحدث.</p></div></div><div class="row sec"><div class="rail-mark rail-num">١</div><div class="col"><h2>أولًا: ما هي StartPad وماذا تقدّم</h2></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>تنطلق StartPad من ملاحظة تتكرر في كل منظومة ريادة أعمال بالمنطقة: الغالبية العظمى من الأفكار لا تُرفض من برامج الاحتضان لأنها أفكار رديئة، بل لأنها تصل غير مُختبَرة. يملك المؤسس رؤية واضحة وشغفًا حقيقيًا، لكنه لا يملك دليلًا واحدًا على أن المشكلة التي يحلّها موجودة فعلًا، ولا لغة مشتركة يتحدث بها إلى مستثمر.</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>تعالج StartPad هذه الفجوة بتحويل رحلة التأسيس إلى مسار من 15 مهمة متتابعة، تمتد من تحليل المشكلة وتعريفها، مرورًا باختيار الفكرة واختبار فرضية الحل وبناء نموذج العمل والنموذج الأولي، وصولًا إلى بناء المنتج الأدنى القابل للتطبيق واختبار ملاءمة المنتج للسوق ثم الانطلاق إلى السوق. ولا تُفتح المهمة التالية قبل أن يستوفي المؤسس شروط المهمة التي تسبقها.</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>وفي كل مهمة يجد المؤسس بين يديه:</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><ul><li>مكتبة أدوات تضم أكثر من 120 أداة تفاعلية — من مصفوفة الأهمية والتكرار وبطاقة تقييم الفكرة، إلى تحجيم السوق ونموذج العمل والقوائم المالية وجدول الملكية — كل أداة معروضة داخل المهمة التي تحتاجها، لا في قائمة منفصلة يبحث فيها.</li><li>تقييم بالذكاء الاصطناعي لكل إجابة وفق معايير معلنة: قوة الدليل، والوضوح، والعمق، وقابلية التنفيذ. الهدف أن يُقاس تقدّم المؤسس بما أثبته، لا بما يظنّه عن نفسه.</li><li>محتوى تعليمي مُنسَّق لكل مهمة — مواد مرئية ومقروءة مختارة تشرح الإطار الفكري وراء المهمة قبل الشروع فيها.</li><li>مخرجات جاهزة للاستخدام تتولّد من إجابات المؤسس نفسها: ملخص تنفيذي، وعرض تقديمي للمستثمرين، ونموذج مالي، وملف جاهزية استثمارية.</li><li>دعم كامل للغتين العربية والإنجليزية، بتصميم يراعي اتجاه الكتابة من اليمين إلى اليسار.</li></ul></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>ورؤية StartPad أن تصبح نقطة البداية الافتراضية لكل مؤسس في المنطقة: أن يكون لكل صاحب فكرة — في القاهرة أو الرياض أو عمّان أو الدوحة — مسار واضح ومجاني الدخول ينقله من «لديّ فكرة» إلى «لديّ أدلة»، فلا تموت فكرة جيدة لغياب الخريطة وحدها.</p></div></div><div class="row quote-row"><div class="rail-mark rail-quote">&ldquo;</div><div class="col"><blockquote class=""><p>بنينا StartPad لأننا رأينا العدد نفسه من الأفكار الجيدة يتعثّر عند النقطة نفسها: صاحب الفكرة يعرف إلى أين يريد الوصول، لكنه لا يملك خريطة لليوم التالي. المهمة الأولى في StartPad لا تسأل المؤسس عن حلمه، بل تسأله عمّن تحدّث معه هذا الأسبوع وماذا سمع منه. هذا الفارق الصغير هو ما يصنع شركات قابلة للاستثمار.</p><cite>عبدالرحمن سليمان، مؤسس StartPad</cite></blockquote></div></div><div class="row sec"><div class="rail-mark rail-num">٢</div><div class="col"><h2>ثانيًا: احتضان كامل للمشروع… بلا مقابل نقدي</h2></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>بموجب الاتفاق، انضمت StartPad بالكامل إلى منظومة GrowthLabs ضمن هيكل قائم على تبادل الحصص والدمج التشغيلي، دون أي مقابل نقدي مدفوع للمؤسس. ويصف الطرفان الصفقة بأنها تبنٍّ كامل للمشروع واحتضان له داخل منظومة قائمة، لا عملية بيع؛ إذ لم يخرج المؤسس من المنتج، بل دخل به إلى بنية تحتية أوسع.</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>ويواصل عبدالرحمن سليمان قيادة StartPad بوصفها خط منتج قائمًا بذاته داخل GrowthLabs، مع احتفاظ المنصة باسمها وهويتها وخارطة طريقها المستقلة.</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>وهذا الهيكل غير النقدي ليس استثناءً في سياسة GrowthLabs، بل امتداد لنهج معلن؛ فقد أتمّت الشركة في وقت سابق من هذا العام ضمّ منصة Startup Gate في صفقة بقيمة 35 مليون جنيه مصري (نحو 657 ألف دولار) قامت هي الأخرى على تبادل الحصص ومكافآت مرتبطة بالأداء بدلًا من الدفع النقدي.</p></div></div><div class="row quote-row"><div class="rail-mark rail-quote">&ldquo;</div><div class="col"><blockquote class=""><p>لم أتقاضَ مقابلًا نقديًا عن StartPad، وهذا كان اختيارًا لا اضطرارًا. ما احتاجته المنصة في هذه المرحلة ليس شيكًا، بل بنية تحتية وأسواقًا وفرقًا تعرف كيف تُدار برامج ريادة الأعمال على أرض الواقع. GrowthLabs قدّمت ذلك بالضبط، وجاء هيكل الصفقة معبّرًا عن الأولوية: احتضان المشروع وتبنّيه، لا شراؤه.</p><cite>عبدالرحمن سليمان، مؤسس StartPad</cite></blockquote></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>وبانضمام StartPad تكتمل سلسلة منتجات GrowthLabs الثلاث في رحلة واحدة متصلة: StartPad تُهيّئ المؤسس لأول مرة، وCatalystOS يُشغّل البرامج التي تُنمّيه، وStartup Gate يربطه بالسوق والمستثمرين — من الفكرة الأولى إلى التوسّع، بمسار واحد بدلًا من برامج متفرقة لا يجمعها رابط.</p></div></div><div class="row quote-row"><div class="rail-mark rail-quote">&ldquo;</div><div class="col"><blockquote class="proposed"><p><mark class="todo">[اقتباس مقترح — يحتاج اعتماد المتحدث]</mark> StartPad تُكمل الحلقة الأولى في منظومتنا. كنا نملك الأدوات التي تُدار بها البرامج والشبكة التي تربط المؤسسين بالسوق، وكان ينقصنا ما يسبق ذلك كله: المكان الذي يتعلّم فيه المؤسس كيف يبني شركة قبل أن يطرق باب أي برنامج. رأينا في StartPad وفي عبدالرحمن هذا المكان، فاخترنا أن نتبنّاه لا أن نشتريه.</p><cite>إسلام محمد، مؤسس GrowthLabs</cite></blockquote></div></div><div class="row sec"><div class="rail-mark rail-num">٣</div><div class="col"><h2>ثالثًا: عن GrowthLabs وماذا تقدّم</h2></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>تعمل GrowthLabs على بناء البنية الرقمية لمنظومات ريادة الأعمال؛ أي الطبقة البرمجية التي تُدار بها الحاضنات والمسرّعات والجامعات والجهات التنموية والمستثمرون في الشرق الأوسط وشمال أفريقيا. وبدلًا من أن تتعامل كل جهة مع أدوات متفرقة لإدارة المتقدمين وتقييم الشركات وقياس الأثر، تقدّم GrowthLabs هذه الوظائف في منظومة واحدة.</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>وتقوم المنظومة على ثلاثة منتجات:</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><ul><li>StartPad — تُهيّئ المؤسسين لأول مرة وتنقلهم من الفكرة إلى الجاهزية.</li><li>CatalystOS — نظام تشغيل الحاضنات والمسرّعات: إدارة الدفعات، وتقييم الشركات، ومطابقة المرشدين، وتتبّع الأداء وقياس الأثر.</li><li>Startup Gate — شبكة تربط المؤسسين بالمستثمرين والسوق.</li></ul></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>وتشمل مؤشرات الشركة المعلنة:</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><ul><li>أكثر من 5,000 شركة ناشئة مدعومة.</li><li>أكثر من 60 برنامجًا دوليًا شُغّلت عبر المنصة.</li><li>حضور في أسواق تشمل مصر والسعودية وقطر والأردن وباكستان وأمريكا الجنوبية.</li><li>خطة توسّع في خمس دول جديدة في الخليج وأفريقيا بحلول نهاية 2026.</li><li>سبعة برامج ابتكار مؤسسي مزمع إطلاقها ضمن استراتيجية 2026، إلى جانب أول مجتمع ريادي عابر للحدود في المنطقة.</li></ul></div></div><div class="row sec"><div class="rail-mark"></div><div class="col"><h2>التوافر</h2></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>StartPad متاحة الآن عبر startpad.me باللغتين العربية والإنجليزية. <mark class="todo">[يُستكمل: نموذج الاشتراك، وتفاصيل الطرح للجهات والشركاء، وأي عرض خاص مرتبط بالإطلاق.]</mark></p></div></div><div class="row sec"><div class="rail-mark"></div><div class="col"><h2>نبذة عن StartPad</h2></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>StartPad منصة لتأسيس الشركات الناشئة تنقل المؤسس من الفكرة إلى شركة جاهزة للاستثمار عبر 15 مهمة موجَّهة، مدعومة بمكتبة تضم أكثر من 120 أداة وتقييم بالذكاء الاصطناعي قائم على الأدلة. تأسست على يد عبدالرحمن سليمان، وهي اليوم جزء من منظومة GrowthLabs. للمزيد: startpad.me</p></div></div><div class="row sec"><div class="rail-mark"></div><div class="col"><h2>نبذة عن GrowthLabs</h2></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>GrowthLabs شركة تبني البنية الرقمية لمنظومات ريادة الأعمال، وتمكّن الحاضنات والمسرّعات والجامعات والجهات التنموية والمستثمرين عبر منتجاتها StartPad وCatalystOS وStartup Gate. أسسها إسلام محمد، وقد دعمت أكثر من 5,000 شركة ناشئة عبر أكثر من 60 برنامجًا دوليًا. للمزيد: growthlabs.app</p></div></div><div class="row sec"><div class="rail-mark"></div><div class="col"><h2>للتواصل الإعلامي</h2></div></div><div class="row "><div class="rail-mark"></div><div class="col"><dl class="kvlist"><div class="kv"><dt>StartPad</dt><dd>عبدالرحمن سليمان، المؤسس — <mark class="todo">[البريد الإلكتروني]</mark> — <mark class="todo">[الهاتف]</mark></dd></div><div class="kv"><dt>GrowthLabs</dt><dd><mark class="todo">[اسم مسؤول التواصل]</mark> — <mark class="todo">[البريد الإلكتروني]</mark> — <mark class="todo">[الهاتف]</mark></dd></div><div class="kv"><dt>الموقع</dt><dd>startpad.me · growthlabs.app</dd></div><div class="kv"><dt>لينكدإن</dt><dd>linkedin.com/in/abdelrhman-soliman96 · linkedin.com/company/growthlabs-vi</dd></div></dl></div></div><div class="row sec"><div class="rail-mark"></div><div class="col"><h2>ملاحظات للمحرّرين</h2></div></div><div class="row "><div class="rail-mark"></div><div class="col"><ul><li>الصفقة غير نقدية بالكامل: لم يُدفع أي مقابل نقدي للمؤسس، والهيكل قائم على تبادل الحصص والدمج التشغيلي.</li><li>يواصل المؤسس قيادة StartPad داخل GrowthLabs، وتحتفظ المنصة باسمها وهويتها.</li><li>أرقام LEAP الواردة أعلاه أرقام معلنة عن نسخة هذا العام من الحدث في مركز الرياض للمعارض والمؤتمرات بملهم.</li><li>الصور والشعارات ومواد الهوية متاحة عند الطلب.</li></ul></div></div><div class="row end-row"><div class="rail-mark"></div><div class="col"><div class="endmark">### <span>انتهى البيان</span></div></div></div><div class="row sec"><div class="rail-mark"></div><div class="col"><section class="sources"><h2>مصادر التحقّق من الأرقام</h2><p class="note">كل رقم في هذا البيان مأخوذ من المصادر التالية وقت الصياغة. يُرجى مراجعتها قبل التوزيع.</p><ul class="srclist"><li><span>LEAP attendance and exhibitor figures</span><a href="https://www.wamda.com/2026/08/leap-2026-opens-riyadh-fifth-edition" target="_blank" rel="noopener">https://www.wamda.com/2026/08/leap-2026-opens-riyadh-fifth-edition</a></li><li><span>LEAP venue and programme</span><a href="https://onegiantleap.com/" target="_blank" rel="noopener">https://onegiantleap.com/</a></li><li><span>GrowthLabs products and positioning</span><a href="https://growthlabs.app/" target="_blank" rel="noopener">https://growthlabs.app/</a></li><li><span>GrowthLabs / Startup Gate deal, structure and company figures</span><a href="https://www.wamda.com/2026/05/growthlabs-acquires-startup-gate-build-unified-startup-infrastructure-mena" target="_blank" rel="noopener">https://www.wamda.com/2026/05/growthlabs-acquires-startup-gate-build-unified-startup-infrastructure-mena</a></li><li><span>Startup Gate deal reported as a share swap, non-cash</span><a href="https://enterpriseam.com/egypt/2026/05/20/growthlabs-takes-over-startup-gate-via-share-swap/" target="_blank" rel="noopener">https://enterpriseam.com/egypt/2026/05/20/growthlabs-takes-over-startup-gate-via-share-swap/</a></li><li><span>Startup Gate deal value in EGP and USD</span><a href="https://www.zawya.com/en/economy/north-africa/egypt-growthlabs-acquires-startup-gate-in-deal-nearly-658-776-qrfdogp4" target="_blank" rel="noopener">https://www.zawya.com/en/economy/north-africa/egypt-growthlabs-acquires-startup-gate-in-deal-nearly-658-776-qrfdogp4</a></li><li><span>StartPad positioning within the GrowthLabs continuum</span><a href="https://startpad.me/" target="_blank" rel="noopener">https://startpad.me/</a></li></ul></section></div></div></article>
+<article class="doc" dir="ltr" lang="en" data-lang-block="en" hidden><div class="row lede"><div class="rail-mark"></div><div class="col"><p class="kicker">FOR IMMEDIATE RELEASE</p><h1 class="headline">StartPad launches at LEAP in Riyadh as GrowthLabs fully adopts the platform in a non-cash strategic incubation deal</h1><p class="subhead">A founder platform that turns an idea into an investable company across 15 guided missions and a library of 120+ tools — founder Abdelrhman Soliman continues to lead the product inside GrowthLabs</p><p class="dateline">RIYADH, SAUDI ARABIA — 8 September 2026</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>StartPad has officially launched from the LEAP stage in Riyadh as a company-formation platform that carries a founder from a first idea to a structured, evidence-backed company ready to enter incubation and raise capital — through a practical path of 15 guided missions.</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>Alongside the launch, GrowthLabs — the company building the digital infrastructure behind entrepreneurship ecosystems across MENA — announced that it has fully adopted StartPad into its ecosystem in a non-cash strategic incubation deal, under which founder Abdelrhman Soliman continues to lead the product.</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>The announcement comes from the region&#x27;s largest technology gathering. This year&#x27;s edition of LEAP, at the Riyadh Exhibition and Convention Centre in Malham, drew more than 1,800 technology companies, over 600 startups, some 1,900 investors and venture capital representatives, and more than 1,000 speakers.</p></div></div><div class="row sec"><div class="rail-mark rail-num">1</div><div class="col"><h2>1. What StartPad is, and what it offers</h2></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>StartPad begins from an observation that repeats across every entrepreneurship ecosystem in the region: the vast majority of ideas are not rejected by incubation programmes because they are bad ideas, but because they arrive untested. The founder has a clear vision and real conviction — and not a single piece of evidence that the problem they are solving actually exists, nor a shared language in which to speak to an investor.</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>StartPad closes that gap by turning company formation into a sequence of 15 missions, running from problem analysis and definition, through idea selection, solution-hypothesis testing, the business model and the prototype, to building an MVP, testing product-market fit and going to market. The next mission does not open until the one before it has been answered properly.</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>Inside every mission, a founder gets:</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><ul><li>A library of 120+ interactive tools — from the importance/frequency matrix and the idea scorecard to market sizing, the business model, financial statements and the cap table — each surfaced inside the mission that needs it, rather than buried in a separate menu.</li><li>AI evaluation of every answer against stated criteria: strength of evidence, clarity, depth and feasibility. Progress is measured by what a founder has proven, not by how they rate themselves.</li><li>Curated learning material for each mission — selected video and reading that teaches the thinking behind the mission before the founder starts it.</li><li>Ready-to-use outputs generated from the founder&#x27;s own answers: an executive summary, an investor deck, a financial model and an investment-readiness file.</li><li>Full Arabic and English support, designed for right-to-left reading.</li></ul></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>StartPad&#x27;s vision is to become the default starting point for every founder in the region: that anyone with an idea — in Cairo, Riyadh, Amman or Doha — has a clear, free-to-enter path from &quot;I have an idea&quot; to &quot;I have evidence&quot;, so that no good idea dies for want of a map alone.</p></div></div><div class="row quote-row"><div class="rail-mark rail-quote">&ldquo;</div><div class="col"><blockquote class=""><p>We built StartPad because we kept watching the same good ideas stall at the same point: the founder knows where they want to get to, but has no map for the next day. StartPad&#x27;s first mission does not ask a founder about their dream. It asks who they spoke to this week, and what they heard. That small difference is what produces investable companies.</p><cite>Abdelrhman Soliman, Founder of StartPad</cite></blockquote></div></div><div class="row sec"><div class="rail-mark rail-num">2</div><div class="col"><h2>2. A full adoption of the project — with no cash changing hands</h2></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>Under the agreement, StartPad has joined the GrowthLabs ecosystem in full, through a structure based on an equity swap and operational integration, with no cash consideration paid to the founder. Both sides describe the deal as an adoption and full incubation of the project inside an existing ecosystem rather than a sale: the founder has not exited the product, he has brought it into a larger infrastructure.</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>Abdelrhman Soliman continues to lead StartPad as a standalone product line within GrowthLabs, and the platform keeps its own name, identity and roadmap.</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>The non-cash structure is not an exception in GrowthLabs&#x27; approach but an extension of a stated one: earlier this year the company completed its acquisition of Startup Gate in a deal valued at EGP 35 million (approximately USD 657,000) that was likewise built on an equity swap and performance-linked earn-outs rather than a cash payment.</p></div></div><div class="row quote-row"><div class="rail-mark rail-quote">&ldquo;</div><div class="col"><blockquote class=""><p>I took no cash for StartPad, and that was a choice rather than a constraint. What the platform needed at this stage was not a cheque — it was infrastructure, markets, and teams who know how entrepreneurship programmes actually run on the ground. GrowthLabs offered exactly that, and the structure of the deal reflected the priority: to adopt and incubate the project, not to buy it.</p><cite>Abdelrhman Soliman, Founder of StartPad</cite></blockquote></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>With StartPad added, GrowthLabs&#x27; three products complete a single continuous journey: StartPad prepares first-time founders, CatalystOS runs the programmes that grow them, and Startup Gate connects them to the market and to investors — from first idea to scale, as one path rather than a set of disconnected programmes.</p></div></div><div class="row quote-row"><div class="rail-mark rail-quote">&ldquo;</div><div class="col"><blockquote class="proposed"><p><mark class="todo">[PROPOSED QUOTE — REQUIRES SPEAKER APPROVAL]</mark> StartPad completes the first link in our ecosystem. We had the tools that run programmes and the network that connects founders to the market. What we did not have was what comes before all of it: the place where a founder learns how to build a company before knocking on any programme&#x27;s door. We saw that place in StartPad and in Abdelrhman — so we chose to adopt it rather than buy it.</p><cite>Islam Mohamed, Founder of GrowthLabs</cite></blockquote></div></div><div class="row sec"><div class="rail-mark rail-num">3</div><div class="col"><h2>3. About GrowthLabs, and what it offers</h2></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>GrowthLabs builds the digital infrastructure of entrepreneurship ecosystems — the software layer that incubators, accelerators, universities, development institutions and investors across MENA run on. Instead of each organisation stitching together separate tools for applications, startup assessment and impact measurement, GrowthLabs delivers those functions as one system.</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>The ecosystem rests on three products:</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><ul><li>StartPad — prepares first-time founders and moves them from idea to readiness.</li><li>CatalystOS — the operating system for incubators and accelerators: cohort management, startup assessment, mentor matching, performance tracking and impact measurement.</li><li>Startup Gate — the network connecting founders to investors and to the market.</li></ul></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>The company&#x27;s stated figures include:</p></div></div><div class="row "><div class="rail-mark"></div><div class="col"><ul><li>More than 5,000 startups supported.</li><li>More than 60 international programmes run on the platform.</li><li>A presence in markets including Egypt, Saudi Arabia, Qatar, Jordan, Pakistan and South America.</li><li>Plans to expand into five new countries across the Gulf and Africa by the end of 2026.</li><li>Seven flagship corporate innovation programmes planned under its 2026 strategy, alongside the region&#x27;s first cross-border entrepreneurial community.</li></ul></div></div><div class="row sec"><div class="rail-mark"></div><div class="col"><h2>Availability</h2></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>StartPad is available now at startpad.me in Arabic and English. <mark class="todo">[TO COMPLETE: pricing model, institutional and partner availability, and any launch offer.]</mark></p></div></div><div class="row sec"><div class="rail-mark"></div><div class="col"><h2>About StartPad</h2></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>StartPad is a company-formation platform that moves a founder from idea to investable company across 15 guided missions, supported by a library of 120+ tools and evidence-based AI evaluation. Founded by Abdelrhman Soliman, it is now part of the GrowthLabs ecosystem. More: startpad.me</p></div></div><div class="row sec"><div class="rail-mark"></div><div class="col"><h2>About GrowthLabs</h2></div></div><div class="row "><div class="rail-mark"></div><div class="col"><p>GrowthLabs builds the digital infrastructure of entrepreneurship ecosystems, powering incubators, accelerators, universities, development institutions and investors through its StartPad, CatalystOS and Startup Gate products. Founded by Islam Mohamed, it has supported more than 5,000 startups across more than 60 international programmes. More: growthlabs.app</p></div></div><div class="row sec"><div class="rail-mark"></div><div class="col"><h2>Media contact</h2></div></div><div class="row "><div class="rail-mark"></div><div class="col"><dl class="kvlist"><div class="kv"><dt>StartPad</dt><dd>Abdelrhman Soliman, Founder — <mark class="todo">[EMAIL]</mark> — <mark class="todo">[PHONE]</mark></dd></div><div class="kv"><dt>GrowthLabs</dt><dd><mark class="todo">[COMMS CONTACT]</mark> — <mark class="todo">[EMAIL]</mark> — <mark class="todo">[PHONE]</mark></dd></div><div class="kv"><dt>Web</dt><dd>startpad.me · growthlabs.app</dd></div><div class="kv"><dt>LinkedIn</dt><dd>linkedin.com/in/abdelrhman-soliman96 · linkedin.com/company/growthlabs-vi</dd></div></dl></div></div><div class="row sec"><div class="rail-mark"></div><div class="col"><h2>Notes to editors</h2></div></div><div class="row "><div class="rail-mark"></div><div class="col"><ul><li>The transaction is entirely non-cash: no cash consideration was paid to the founder; the structure is an equity swap plus operational integration.</li><li>The founder continues to lead StartPad within GrowthLabs, and the platform retains its name and identity.</li><li>LEAP figures cited above are the published figures for this year&#x27;s edition at the Riyadh Exhibition and Convention Centre, Malham.</li><li>Images, logos and brand assets are available on request.</li></ul></div></div><div class="row end-row"><div class="rail-mark"></div><div class="col"><div class="endmark">### <span>end of release</span></div></div></div><div class="row sec"><div class="rail-mark"></div><div class="col"><section class="sources"><h2>Fact-check sources</h2><p class="note">Every figure in this release was taken from the pages below at drafting time. Re-check them before distribution.</p><ul class="srclist"><li><span>LEAP attendance and exhibitor figures</span><a href="https://www.wamda.com/2026/08/leap-2026-opens-riyadh-fifth-edition" target="_blank" rel="noopener">https://www.wamda.com/2026/08/leap-2026-opens-riyadh-fifth-edition</a></li><li><span>LEAP venue and programme</span><a href="https://onegiantleap.com/" target="_blank" rel="noopener">https://onegiantleap.com/</a></li><li><span>GrowthLabs products and positioning</span><a href="https://growthlabs.app/" target="_blank" rel="noopener">https://growthlabs.app/</a></li><li><span>GrowthLabs / Startup Gate deal, structure and company figures</span><a href="https://www.wamda.com/2026/05/growthlabs-acquires-startup-gate-build-unified-startup-infrastructure-mena" target="_blank" rel="noopener">https://www.wamda.com/2026/05/growthlabs-acquires-startup-gate-build-unified-startup-infrastructure-mena</a></li><li><span>Startup Gate deal reported as a share swap, non-cash</span><a href="https://enterpriseam.com/egypt/2026/05/20/growthlabs-takes-over-startup-gate-via-share-swap/" target="_blank" rel="noopener">https://enterpriseam.com/egypt/2026/05/20/growthlabs-takes-over-startup-gate-via-share-swap/</a></li><li><span>Startup Gate deal value in EGP and USD</span><a href="https://www.zawya.com/en/economy/north-africa/egypt-growthlabs-acquires-startup-gate-in-deal-nearly-658-776-qrfdogp4" target="_blank" rel="noopener">https://www.zawya.com/en/economy/north-africa/egypt-growthlabs-acquires-startup-gate-in-deal-nearly-658-776-qrfdogp4</a></li><li><span>StartPad positioning within the GrowthLabs continuum</span><a href="https://startpad.me/" target="_blank" rel="noopener">https://startpad.me/</a></li></ul></section></div></div></article>
+
+<script>
+(function () {
+  var blocks = document.querySelectorAll("[data-lang-block]");
+  var buttons = document.querySelectorAll(".langbtn");
+  function show(lang) {
+    blocks.forEach(function (b) { b.hidden = b.getAttribute("data-lang-block") !== lang; });
+    buttons.forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-set") === lang));
+    });
+    try { localStorage.setItem("startpad-press-lang", lang); } catch (e) {}
+  }
+  buttons.forEach(function (b) {
+    b.addEventListener("click", function () { show(b.getAttribute("data-set")); });
+  });
+  var saved = null;
+  try { saved = localStorage.getItem("startpad-press-lang"); } catch (e) {}
+  show(saved === "en" ? "en" : "ar");
+})();
+</script>
