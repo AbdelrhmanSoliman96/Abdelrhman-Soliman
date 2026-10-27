@@ -862,3 +862,19 @@ happen where a partner asks for one and hosts it. StartPad contributes the
 platform, the curriculum and its team's time, puts in no cash, and takes no
 margin; the return prices in `startpad_return()` come from
 `finmodel/plan.py` rather than from the documents.
+
+## Conversion playbook
+
+Why users do not finish mission 01 and do not convert to Pro, and the 28
+experiments to fix it, in the order to run them.
+
+```bash
+python3 scripts/build_conversion_xlsx.py output/StartPad_Conversion_Playbook.xlsx
+```
+
+`growth/conversion.py` holds the diagnosis, the instrumentation list, the
+experiment backlog, the replacement onboarding, the WhatsApp sequence, the
+funnel maths and the 90-day plan. The short version: mission 01 asks a new
+user for five written answers and says it takes two to three hours, and the
+checkout takes valU, Visa and Mastercard but not Fawry, Vodafone Cash,
+InstaPay or Meeza. Neither of those is a pricing problem.
