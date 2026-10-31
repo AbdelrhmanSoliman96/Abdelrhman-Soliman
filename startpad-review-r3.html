@@ -1,0 +1,639 @@
+<title>StartPad — Review R3</title>
+
+<style>
+  :root{--paper:#F2F3F8;--surface:#FFFFFF;--surface-2:#EAEBF3;--ink:#14131C;--ink-soft:#4E4C60;--ink-faint:#7B7990;
+  --rule:#D9DAE6;--rule-soft:#E7E8F0;--accent:#4530E8;--accent-ink:#2E1FB0;--accent-wash:#E9E6FE;
+  --crit:#C0234A;--crit-wash:#FCE7EC;--warn:#9C5B00;--warn-wash:#FBEEDA;--good:#0F7A68;--good-wash:#DDF2EE;--on-accent:#FFFFFF;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0F0E16;--surface:#191823;--surface-2:#221F30;
+  --ink:#ECEBF3;--ink-soft:#A9A7BC;--ink-faint:#7D7B92;--rule:#2E2B3D;--rule-soft:#24222F;--accent:#9A88FF;
+  --accent-ink:#C3B8FF;--accent-wash:#241F3D;--crit:#FF7D9C;--crit-wash:#381522;--warn:#E7A64A;--warn-wash:#33230D;
+  --good:#4FCFB6;--good-wash:#0D2E29;--on-accent:#14131C;}}
+  :root[data-theme="dark"]{--paper:#0F0E16;--surface:#191823;--surface-2:#221F30;--ink:#ECEBF3;--ink-soft:#A9A7BC;
+  --ink-faint:#7D7B92;--rule:#2E2B3D;--rule-soft:#24222F;--accent:#9A88FF;--accent-ink:#C3B8FF;--accent-wash:#241F3D;
+  --crit:#FF7D9C;--crit-wash:#381522;--warn:#E7A64A;--warn-wash:#33230D;--good:#4FCFB6;--good-wash:#0D2E29;--on-accent:#14131C;}
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+  body{margin:0;background:var(--paper);color:var(--ink);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Arabic",Arial,sans-serif}
+  .wrap{max-width:78rem;margin:0 auto;padding:0 1.25rem 6rem}
+  .col{max-width:46rem}.col-wide{max-width:62rem}
+  section{padding-block:3.25rem;border-top:1px solid var(--rule-soft)}
+  section:first-of-type{border-top:0}
+  .stack{display:flex;flex-direction:column;gap:1.1rem}
+  .stack-s{display:flex;flex-direction:column;gap:.6rem}
+  h1,h2,h3,h4{text-wrap:balance;margin:0;line-height:1.12;letter-spacing:-.025em}
+  h1{font-size:clamp(2.3rem,6vw,3.7rem);font-weight:800;letter-spacing:-.04em}
+  h2{font-size:clamp(1.55rem,3.2vw,2.1rem);font-weight:800}
+  h3{font-size:1.22rem;font-weight:700;letter-spacing:-.015em;line-height:1.3}
+  h4{font-size:1rem;font-weight:700}
+  p{margin:0}
+  a{color:var(--accent);text-underline-offset:2px}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+  .lede{font-size:1.16rem;line-height:1.55;color:var(--ink-soft)}
+  .small{font-size:.9rem;line-height:1.55;color:var(--ink-soft)}
+  .eyebrow{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-faint);margin:0 0 .85rem}
+  ul{margin:0;padding-inline-start:1.15rem}
+  li{margin-block:.3rem}
+  li::marker{color:var(--ink-faint)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em}
+  .masthead{padding-block:3.5rem 2.25rem}
+  .meta-strip{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;margin-top:1.75rem;padding-top:1.1rem;border-top:1px solid var(--rule);
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint)}
+  .meta-strip b{color:var(--ink-soft);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(10px);border-block:1px solid var(--rule);margin-bottom:.5rem}
+  nav.toc .inner{max-width:78rem;margin:0 auto;padding:.55rem 1.25rem;display:flex;gap:1.15rem;overflow-x:auto}
+  nav.toc a{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.73rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-soft);text-decoration:none;white-space:nowrap;padding-block:.2rem}
+  nav.toc a:hover{color:var(--accent)}
+  .callout{background:var(--surface);border:1px solid var(--rule);border-inline-start:3px solid var(--accent);
+  padding:1.15rem 1.3rem;border-radius:2px}
+  .callout.bug{border-inline-start-color:var(--crit)}
+  .callout.win{border-inline-start-color:var(--good)}
+  .callout.warn{border-inline-start-color:var(--warn)}
+  .finding{display:grid;grid-template-columns:8.5rem 1fr;gap:0 1.4rem;padding:1.2rem 0;border-top:1px solid var(--rule-soft)}
+  .finding:first-of-type{border-top:1px solid var(--rule)}
+  .finding .id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;letter-spacing:.08em;
+  color:var(--ink-faint);padding-top:.2rem;display:flex;flex-wrap:wrap;gap:.3rem;align-content:flex-start}
+  .finding .body{display:flex;flex-direction:column;gap:.5rem}
+  .finding .fix{color:var(--ink-soft);font-size:.95rem}
+  .finding .fix b{color:var(--ink);font-weight:650}
+  @media (max-width:44rem){.finding{grid-template-columns:1fr;gap:.5rem}}
+  .chip{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.64rem;letter-spacing:.1em;
+  text-transform:uppercase;font-weight:600;padding:.18rem .45rem;border-radius:2px;white-space:nowrap}
+  .chip.p0{background:var(--crit-wash);color:var(--crit)}
+  .chip.p1{background:var(--warn-wash);color:var(--warn)}
+  .chip.p2{background:var(--good-wash);color:var(--good)}
+  .chip.bug{background:var(--crit);color:var(--on-accent)}
+  .chip.legal{background:var(--accent);color:var(--on-accent)}
+  .chip.verify{background:var(--accent-wash);color:var(--accent-ink)}
+  .table-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:2px;background:var(--surface)}
+  table{border-collapse:collapse;width:100%;min-width:38rem;font-size:.92rem}
+  th,td{text-align:start;padding:.7rem .85rem;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+  th{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-faint);font-weight:600;background:var(--surface-2)}
+  tbody tr:last-child td{border-bottom:0}
+  .ok{color:var(--good);font-weight:650}
+  .no{color:var(--crit);font-weight:650}
+  .screenhead{display:flex;align-items:baseline;gap:.75rem;flex-wrap:wrap;padding-bottom:.35rem}
+  .screenhead .n{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.8rem;letter-spacing:.1em;
+  color:var(--accent);font-weight:600}
+  .verdict{display:inline-flex;align-items:center;gap:.5rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .6rem;border-radius:2px;
+  border:1px solid var(--rule);background:var(--surface);color:var(--ink-soft)}
+  footer.end{border-top:1px solid var(--rule);padding-top:1.5rem;margin-top:3rem}
+</style>
+
+<div class="wrap">
+  <header class="masthead col-wide">
+    <p class="eyebrow">Round 3 · 19 August 2026 · 17 screens</p>
+    <h1>You shipped most of Round 2. Now the gaps are legal, not visual.</h1>
+    <p class="lede">The mission runner is genuinely good — better than I expected from the earlier screens. Community mission-scoping, the interactive hero, the group-chats headline: all shipped. What's left is a self-contradicting landing page, one date bug now visible in three places, and a product collecting phone numbers without a privacy policy.</p>
+    <div class="meta-strip">
+      <span>Screens seen · <b>17</b></span>
+      <span>R1–R2 items shipped · <b>18</b></span>
+      <span>New findings · <b>31</b></span>
+      <span>Legal exposure · <b>3</b></span>
+    </div>
+  </header>
+</div>
+
+<nav class="toc" aria-label="Sections">
+  <div class="inner">
+    <a href="#fixed">Shipped</a>
+    <a href="#legal">Legal</a>
+    <a href="#auth">Auth bug</a>
+    <a href="#mission">Mission runner</a>
+    <a href="#aitools">AI Tools</a>
+    <a href="#journey">Journey</a>
+    <a href="#community">Community</a>
+    <a href="#resources">Resources</a>
+    <a href="#dash">Dashboard</a>
+    <a href="#landing">Landing</a>
+    <a href="#authui">Sign in/up</a>
+    <a href="#profile">Profile fields</a>
+    <a href="#order">Order</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<section id="fixed">
+  <div class="col stack">
+    <p class="eyebrow">Credit</p>
+    <h2>Eighteen things you shipped</h2>
+    <div class="callout win">
+      <ul class="small" style="margin:0;">
+        <li><b>Community is now scoped to missions</b> — My mission / My circle / All, a "Mission 1 · Discovery" chip on the author, and "Founders on your mission" with eight real avatars. This was R2 Set 3·C and it's the single highest-value change in the set.</li>
+        <li><b>"Translate to Arabic"</b> now runs in both directions, with the EN badge. R2 Set 3·B.</li>
+        <li><b>Intent-led composer is primary</b> — Ask a Question / Share an Idea / Showcase Project, generic "New Post" gone. R2 Set 3·C.</li>
+        <li><b>The landing hero now leads with "We grew up watching brilliant ideas die in group chats."</b> R2 Set 4·B, and it's the right call.</li>
+        <li><b>An interactive hero element exists</b> — "Describe your idea in one sentence" with instant AI feedback, no account needed. This was my top landing-page ask.</li>
+        <li><b>The 15 missions are visible pre-signup</b>, with phases, points and lock states.</li>
+        <li><b>Separate public and app navigation.</b></li>
+        <li><b>Knowledge Hub</b> — search, eight filters, featured slot, 13 real items.</li>
+        <li><b>Resource Library</b> — 32 resources, category and type filters, ratings, saved state, CSV export.</li>
+        <li><b>Founder Readiness Assessment</b> in the public nav.</li>
+        <li><b>Social channels fixed</b> — Instagram, TikTok, X, LinkedIn.</li>
+        <li><b>Mentoring sessions split into Upcoming and Past</b>, with 30-minute durations now shown.</li>
+        <li><b>Google and Apple sign-in.</b></li>
+        <li><b>The mission runner's AI evaluation is real</b> — per-criterion rubric, weighted bands, evidence quotes, and a concrete fix list.</li>
+        <li><b>AI Mentor carries mission context</b> — "Where you left off" with a dated recap, and answers that reference the current mission.</li>
+        <li><b>The survey generator ships real export paths</b> — Typeform, Google Forms, CSV, JSON, Excel.</li>
+        <li><b>Streaks, levels, XP and weekly goals</b> are implemented across the journey.</li>
+        <li><b>Per-question AI help</b> inside the mission, with thumbs up/down on each suggestion.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="legal">
+  <div class="col stack">
+    <p class="eyebrow">Do these first</p>
+    <h2>Three legal exposures</h2>
+
+    <div class="callout bug">
+      <div class="stack-s">
+        <h4>1 · Collecting personal data with no privacy policy</h4>
+        <p class="small">Sign-up takes first name, last name, <b>phone number</b>, email and password. There is no privacy policy, no terms, and <b>no consent checkbox</b>. The footer offers About and Contact only.</p>
+        <p class="small">Egypt's Personal Data Protection Law (151/2020), Saudi PDPL and the UAE federal law all require a privacy notice and a stated lawful basis before collection. Google and Apple both require a published privacy policy in their sign-in developer terms — your OAuth integrations are out of compliance today. App stores reject without one.</p>
+        <p class="small">You're also now storing AI conversation transcripts, uploaded files, screenshots and PDFs inside missions. That materially raises what the notice has to cover.</p>
+      </div>
+    </div>
+
+    <div class="callout bug">
+      <div class="stack-s">
+        <h4>2 · The Slack / Google / Amazon / HubSpot logo wall</h4>
+        <p class="small">Under <b>"BUILT ON THE GROWTH &amp; STARTUP FRAMEWORKS BEHIND"</b>, next to Reforge. A logo wall reads as customers, partners or investors — that is what the pattern means, and the qualifying phrase doesn't undo it. Using those marks in a way that implies affiliation is actionable, and all four enforce. It also fails with the audience you want: anyone who recognises Reforge knows you aren't affiliated with it.</p>
+        <p class="small"><b>Remove it.</b> Name the methodologies in text instead — jobs-to-be-done, lean validation, growth loops. True, defensible, free.</p>
+      </div>
+    </div>
+
+    <div class="callout bug">
+      <div class="stack-s">
+        <h4>3 · The landing page contradicts its own numbers</h4>
+        <p class="small"><b>"Founders 104+"</b> in the hero. <b>"Join thousands of entrepreneurs"</b> in the closing CTA. Same page. Plus <b>"founders from 50+ countries"</b> against 104 founders, and <b>"2,500+ successful startups"</b> unsourced.</p>
+        <p class="small">104 is a good number for an early product and it's the one you can prove. Every unsupportable claim beside it makes the provable one look invented.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="auth">
+  <div class="col-wide stack">
+    <div class="col stack-s">
+      <p class="eyebrow">Your explicit ask · now confirmed</p>
+      <h2>The logged-in user is still being served the marketing page</h2>
+    </div>
+
+    <div class="callout bug">
+      <div class="stack-s">
+        <h4>Proven, not suspected</h4>
+        <p class="small">One of your screenshots shows the full marketing homepage — hero, stat band, "Everything you need to launch", the 15-mission roadmap, "Why we built this", mission and vision, "Built different", "Why MENA? Why now?", closing CTA and footer — <b>wearing the logged-in navigation</b> (Dashboard · My Startup Journey · Resources · Loadout · AI Tools · More · Abdelrhman · Sign out).</p>
+        <p class="small">The page even knows you're signed in: the CTAs read "Go to dashboard" rather than "Start free". So the <em>components</em> are auth-aware, but the <em>route</em> isn't guarded. A signed-in founder still lands on roughly twelve screens of pitch for a product they already have.</p>
+        <p class="small">The two shells being different was necessary but not sufficient. What's missing is a redirect at the route level, in both directions, plus a no-flash guarantee while auth resolves. Set 1·A covers it with a route table you can check off.</p>
+      </div>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Requirement</th><th>Status</th><th>Evidence</th></tr></thead>
+        <tbody>
+          <tr><td>Public nav differs from app nav</td><td class="ok">Done</td><td>Confirmed across all screens.</td></tr>
+          <tr><td>CTAs adapt to auth state</td><td class="ok">Done</td><td>"Go to dashboard" when signed in.</td></tr>
+          <tr><td>Logged-in user visiting <code>/</code> is redirected</td><td class="no">Broken</td><td>Screenshot shows the full marketing page while authenticated.</td></tr>
+          <tr><td>Logged-out user visiting <code>/dashboard</code> is redirected</td><td class="no">Unverified</td><td>Must return them to their destination after sign-in.</td></tr>
+          <tr><td>Banner suppressed on public pages</td><td class="ok">Likely done</td><td>Absent from logged-out screens.</td></tr>
+          <tr><td>No flash of wrong shell</td><td class="no">Unverified</td><td>Common failure: public nav paints before auth resolves.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="mission">
+  <div class="col-wide stack">
+    <div class="col stack-s">
+      <div class="screenhead"><span class="n">MISSION RUNNER</span><h2>Mission 1: Problem Analysis</h2></div>
+      <span class="verdict">Verdict · The best thing you've built — and I'd been asking to see it for three rounds</span>
+      <p class="small">The AI evaluation is the real product. A founder typed <code>sda</code> and <code>dsad</code> into every field and got a 20% score, a named weakest criterion, per-criterion bands with weights, the actual evidence quotes used, and six specific blockers with inline Fix buttons. That is a genuinely rigorous assessment loop, and it's rare.</p>
+    </div>
+
+    <div>
+      <div class="finding">
+        <div class="id">M-01 <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>Three progress indicators disagree on the same screen</h4>
+          <p class="fix">"<b>5 of 5 tasks completed</b>" · "<b>Progress saved 100%</b>" · "<b>5 of 5 answered — almost done</b>" — all shown above a <b>20% score</b>, a "Needs Improvement (70% required)" verdict, and "<b>6 things to fix before you can submit</b>". The founder is told they're finished and blocked at the same time. <b>Fix:</b> separate <em>completeness</em> from <em>quality</em> explicitly. "5 of 5 answered · not yet passing (20% of 70% needed)". One status line, not three competing ones.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">M-02 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Level 2 here, Level 1 on the journey page</h4>
+          <p class="fix">The mission page shows <b>Level 2, 100 XP earned, 20 XP to next level</b>. My Startup Journey shows <b>Level 1, Beginner, 0 achievements</b>. Both are live at the same moment. <b>Fix:</b> one source of truth for level and XP, read by both.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">M-03 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>175 points with 0 of 15 missions complete, on three screens</h4>
+          <p class="fix">Dashboard, My Startup Journey and the mission page all show 175 total points against zero completed missions. <b>Fix:</b> make the number tappable to a breakdown of where each point came from. An unexplained score in a gamified product is worth less than no score.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">M-04 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>The failure state is punishing before it's helpful</h4>
+          <p class="fix">A first-time founder sees a red 20%, "Needs Improvement", a red rationale block, a red blocker list, and five criteria bars mostly at 0%. The feedback is <em>correct</em> — the input was keyboard mash — but the emotional shape is a rejection letter. <b>Fix:</b> lead with the one thing to fix next ("Start with Question 1 — replace 'sda' with your actual industry"), then offer the full breakdown behind "See the full assessment". Keep the rigour, stage the delivery.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">M-05 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Mission length is stated two different ways</h4>
+          <p class="fix">The mission header says <b>2–3 hours</b> in one place and the AI Tools guidance panel says <b>1–2 hours</b> for the same Mission 1. <b>Fix:</b> single source.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">M-06 <span class="chip p2">P2</span></div>
+        <div class="body">
+          <h4>Small wins available</h4>
+          <p class="fix">The 15-step mission stepper, auto-save with a timestamp, attempt numbering, file and image attachment with "we read the text inside images and PDFs", per-suggestion thumbs, and export to PDF/Markdown are all strong. Two additions: show <em>what changed</em> between attempt 1 and attempt 2, and let the founder see a worked example of a 70%+ answer for the question they're stuck on.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="aitools">
+  <div class="col-wide stack">
+    <div class="col stack-s">
+      <div class="screenhead"><span class="n">AI TOOLS</span><h2>Five tools, two navigation systems</h2></div>
+      <span class="verdict">Verdict · Capable tools wrapped in a confusing shell</span>
+    </div>
+
+    <div>
+      <div class="finding">
+        <div class="id">T-01 <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>The purple gradient breaks the design system outright</h4>
+          <p class="fix">A full-bleed green-to-purple gradient banner, then purple primary buttons — "Generate Template", "Generate Questions", "Read Guide", "Generate AI Questions". Nothing else in StartPad is purple. It reads as a different product bolted on, and it undoes the colour hierarchy work entirely. <b>Fix:</b> bring AI Tools into the navy/green system. If AI features need a signature, use a single accent on the AI badge — not a full gradient and a second primary colour.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">T-02 <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>"What this tool will use — 2 of 4 ready" is never explained</h4>
+          <p class="fix">The counter changes per tab (2 of 4, 2 of 3, 1 of 3), sits behind a collapsed accordion, and nothing tells the founder what's missing or how to fix it. It's the first thing on the screen and it reads as a warning. <b>Fix:</b> either name the gaps inline with a fix action ("Add your industry to improve results →") or remove the counter and degrade quietly.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">T-03 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Two navigation systems for the same five tools</h4>
+          <p class="fix">A six-item tab bar (Start Here · AI Mentor · Ask AI Coach · Create Your Survey · Publish &amp; Collect · My Next Steps) sits above a grid of five tool cards, each with a "Try Now" button that goes to the tab. The tabs and the cards are the same destinations. <b>Fix:</b> keep the cards as the entry point and drop the tab bar, or keep the tabs and make "Start Here" a genuine overview rather than a duplicate menu.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">T-04 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Test data in the survey generator's history</h4>
+          <p class="fix">Generation history shows four runs: <code>ds</code>, <code>ds</code>, <code>ds</code>, <code>Ghh</code>, with audience <code>wdsdsas</code>. Same class of problem as <code>projx</code> and <code>Master</code>. <b>Fix:</b> purge, and add the seed guard.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">T-05 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>"My Next Steps" is generic where everything else is specific</h4>
+          <p class="fix">"Complete the required fields · Review your responses · Get feedback from peers · Submit when ready", and Pro Tips reading "Take your time" and "Be specific". Meanwhile the AI Mentor two tabs away gives genuinely specific coaching. <b>Fix:</b> generate these from the founder's actual mission state and lowest-scoring criterion, or cut the panel — generic advice next to specific advice devalues both.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">T-06 <span class="chip p2">P2</span></div>
+        <div class="body">
+          <h4>The survey generator is genuinely strong</h4>
+          <p class="fix">Eight questions, each with a type chip, a "Why this question" rationale, and real export paths including Typeform, Google Forms and Excel. The Van Westendorp pricing question is a nice touch. This deserves better framing than it currently gets.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="journey">
+  <div class="col-wide stack">
+    <div class="col stack-s">
+      <div class="screenhead"><span class="n">JOURNEY</span><h2>My Startup Journey</h2></div>
+      <span class="verdict">Verdict · Well-structured roadmap, undermined by phase naming</span>
+    </div>
+
+    <div>
+      <div class="finding">
+        <div class="id">J-01 <span class="chip bug">bug</span> <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>Phase names repeat, and the count contradicts the landing page</h4>
+          <p class="fix">The roadmap lists Discovery · Analysis · Ideation · Validation · Business Model · Development · Strategy · Launch — eight phases. The landing page you sent earlier says <b>"15 missions. 5 phases."</b> The logged-in landing says <b>"15 missions. 8 phases"</b> and then lists twelve groups with <b>Validation appearing four times</b> and <b>Development twice</b>. <b>Fix:</b> one canonical phase list, one count, and no repeated names. A founder cannot build a mental model of a roadmap whose sections repeat.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">J-02 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>"Longest streak 4" with a current streak of 1 day and 0/15 missions</h4>
+          <p class="fix">The sidebar shows Mission Streak 1 day, Longest Streak 4, Rewards Unlocked 0, and a weekly goal of 0/3 missions. A four-day streak with zero missions completed suggests the streak counts logins rather than work. <b>Fix:</b> make streaks count meaningful progress — a submitted answer, a completed task — not a page view. A streak you can maintain by opening the tab teaches nothing.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">J-03 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Three empty analytics panels, again</h4>
+          <p class="fix">Streak trend, Progress over time and Mission activity all say "Not enough activity yet in this range" — the same pattern as the dashboard. That's six empty chart panels across two pages. <b>Fix:</b> hide analytics entirely until there's data, and show the roadmap larger in the space.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">J-04 <span class="chip p2">P2</span></div>
+        <div class="body">
+          <h4>Streak rewards are the strongest retention mechanic here</h4>
+          <p class="fix">Unlock mission templates at 3 days, expert tips at 5, bonus resources at 7, a mentor discount at 10. Concrete and well-laid-out. <b>Fix:</b> surface the next unlock on the dashboard too — "2 days to unlock expert tips" is a better reason to return than a streak number.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="community">
+  <div class="col-wide stack">
+    <div class="col stack-s">
+      <div class="screenhead"><span class="n">COMMUNITY &amp; COLLAB</span><h2>Community and the Collaboration Hub</h2></div>
+      <span class="verdict">Verdict · Community transformed. Collaboration Hub still ships a fake feature.</span>
+    </div>
+
+    <div>
+      <div class="finding">
+        <div class="id">C-01 <span class="chip p2">P2</span></div>
+        <div class="body">
+          <h4>Community is a different product from Round 2</h4>
+          <p class="fix">The four zero-stat cards are gone. My mission / My circle / All replaced the old tabs. The author carries a "Mission 1 · Discovery" chip. "Founders on your mission" shows eight real people with photos and their mission number. Translate now works EN→AR. This is exactly what I asked for and it does the job — the page now feels populated rather than abandoned.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">C-02 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>One member of "Founders on your mission" is a username, not a person</h4>
+          <p class="fix"><code>H7s2btr5r</code> sits alongside Mohamed El hefny, Mohamed Elsherif, Amr Hussain and others. On a page whose job is to make strangers feel like peers, a random string does the opposite. <b>Fix:</b> require a display name at sign-up, or fall back to initials plus country rather than showing the raw handle.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">C-03 <span class="chip bug">bug</span> <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>Team Chat ships with a "Local demo" badge and "coming next" in the footer</h4>
+          <p class="fix">The Collaboration Hub's Team Chat tab is labelled <b>Local demo</b>, shows one seeded "Welcome!" message, has a live-looking input box, and says underneath: "<em>Live realtime chat per project coming next.</em>" A founder can type into a box that goes nowhere. <b>Fix:</b> remove the tab until it's real. A visibly fake feature costs more trust than a missing one — and this is the third instance of shipped placeholder content.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">C-04 <span class="chip bug">bug</span> <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>The session date bug now appears in three places</h4>
+          <p class="fix">Dashboard "Past sessions", the Mentoring page, and now Collaboration Hub → My Sessions, which lists <b>"Your booked mentor sessions"</b>: Emily Rodriguez, May 27, badged <b>Upcoming</b>; Sarah Johnson, Jun 9, badged <b>Upcoming</b>; Sarah Johnson, Aug 13, badged <b>Pending</b>. Today is 19 August. All three are past. <b>Fix:</b> one shared session component reading one derived state — see Set 4·A. Fixing it in three places independently is how it stays broken.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resources">
+  <div class="col-wide stack">
+    <div class="col stack-s">
+      <div class="screenhead"><span class="n">RESOURCES</span><h2>Resource Library</h2></div>
+      <span class="verdict">Verdict · Substantial and well-filtered — two credibility problems</span>
+    </div>
+    <div>
+      <div class="finding">
+        <div class="id">R-01 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Half the resources aren't resources — they're search links</h4>
+          <p class="fix">Of 32 items, a large share have a <b>"Search Online"</b> button rather than "Open Resource" — including Customer Discovery Guide, Customer Interview Guide, Growth Hacking for Startups, Financial Projections Spreadsheet, UX Research Methods and Startup Legal Essentials. The page promises "32 curated resources"; a Google search is not a curated resource. <b>Fix:</b> either host or link the actual artefact, or drop the item. And "Download Complete Toolkit" must not export rows that are only search queries.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">R-02 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Ratings that are all 4.2–4.9 with no rater</h4>
+          <p class="fix">Every one of the 32 items carries a star rating in a suspiciously narrow band, with no review count and no way to rate. <b>Fix:</b> let founders rate them and show the count, or remove the stars. Unattributed ratings read as decoration.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">R-03 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Duplicated entries</h4>
+          <p class="fix">"Pitch Deck Template" appears three times (Sequoia, Fundraising, Growth), "Startup Legal Checklist" twice, "Lean Startup Methodology" twice, "Financial Planning/Projections Spreadsheet" twice. <b>Fix:</b> de-duplicate, or make the distinction explicit in the title.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">R-04 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Resources aren't tied to missions</h4>
+          <p class="fix">"Customer Discovery Guide" and "Problem-Solution Canvas Template" are precisely what Mission 1 needs, and nothing links them. Same gap as the Knowledge Hub. <b>Fix:</b> tag every resource to a mission or phase, surface the matching two or three inside the mission, and add a "Used in Mission 1" chip on the card.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="dash">
+  <div class="col-wide stack">
+    <div class="col stack-s">
+      <div class="screenhead"><span class="n">DASHBOARD</span><h2>Dashboard</h2></div>
+      <span class="verdict">Verdict · Right primary action, three data bugs, 60% empty</span>
+    </div>
+    <div>
+      <div class="finding">
+        <div class="id">D-01 <span class="chip bug">bug</span> <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>Progress bar 100% filled at "0 of 15 completed"</h4>
+          <p class="fix">The Current mission card shows a completely solid bar directly above the text "0 of 15 completed". <b>Fix:</b> width from <code>completed / total</code>; at zero show an empty track with a visible rail.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">D-02 <span class="chip bug">bug</span> <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>"Completed 3" with no completed session</h4>
+          <p class="fix">Upcoming 0 · Completed 3 · Mentors 2 · Invested 0, above three sessions badged Pending, upcoming, upcoming. The counter is counting rows in the Past section, not completed states. <b>Fix:</b> derive from the same state machine as the badges.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">D-03 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Analytics scoped "on this device"</h4>
+          <p class="fix">"Tools opened per day <b>on this device</b>" — a local-storage metric that dies when the founder moves from laptop to phone. <b>Fix:</b> server-side events keyed to the account, or remove the panel.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">D-04 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Three separate blocks say "you have no sessions"</h4>
+          <p class="fix">Session reminders, Upcoming sessions, and the Upcoming 0 stat — plus two empty analytics panels and an empty KPI panel. Roughly 60% of the page enumerates absences. <b>Fix:</b> collapse the three session blocks into one and hide empty panels behind a compact "Not started yet" row.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">D-05 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>A workspace called "Master"</h4>
+          <p class="fix">Test data, alongside <code>projx</code>, <code>dasd</code>, <code>ds</code> and <code>Ghh</code> elsewhere. <b>Fix:</b> purge and add a seed-data guard that fails the build.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">D-06 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>App nav unchanged since R2 — nine items, Sign out top-level</h4>
+          <p class="fix">The public nav got the treatment; the app nav didn't. Sign out still sits at the same weight as your core product, one target from the user's own name, on every screen. The profile banner is still on every app page too. <b>Fix:</b> R2 Set 5·A applies unchanged.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">D-07 <span class="chip verify">verify</span></div>
+        <div class="body">
+          <h4>Possible sticky-header overlap — worth a 30-second check</h4>
+          <p class="fix">On several full-page captures the nav bar appears partway down the page, overlapping headings ("Collaboration Hub", "Your Startup Journey") and content. This is the classic artefact of screenshotting a <code>position:sticky</code> header, so it is probably not a real defect. <b>Verify anyway:</b> scroll each page in a normal browser and confirm the nav doesn't overlap content at any scroll position, and that <code>scroll-margin-top</code> accounts for both the nav and the banner when jumping to anchors.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="landing">
+  <div class="col-wide stack">
+    <div class="col stack-s">
+      <div class="screenhead"><span class="n">LANDING</span><h2>Landing page</h2></div>
+      <span class="verdict">Verdict · Two different landing pages exist, and they disagree</span>
+    </div>
+    <div>
+      <div class="finding">
+        <div class="id">L-01 <span class="chip bug">bug</span> <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>Two versions in circulation with different headlines, phase counts and stats</h4>
+          <p class="fix">Version A: "Turn your idea into a launched startup in 15 guided missions", <b>5 phases</b>, stats 10+/3+/3+, a logo wall, testimonials. Version B: "We grew up watching brilliant ideas die in group chats", <b>8 phases</b>, stats 15/24-7/100%/104, an interactive idea box, mission/vision blocks. <b>Fix:</b> pick one. Version B's headline and interactive box are much stronger; Version A's traction section and testimonials are worth keeping. Merge deliberately rather than leaving both live.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">L-02 <span class="chip p2">P2</span></div>
+        <div class="body">
+          <h4>The interactive idea box is the best thing on either version</h4>
+          <p class="fix">"Describe your idea in one sentence", an example placeholder, and "Get instant feedback — one strength, one risk, and the mission you'd start with." No account needed. <b>Fix:</b> make it the centrepiece. It's a 30-second proof the AI is real, and it's worth more than the nine feature cards combined.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">L-03 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Still no pricing page behind "100% Free to Start"</h4>
+          <p class="fix">"To start" implies a paid tier; there's no pricing link in the nav or footer. <b>Fix:</b> commit to free, or ship <code>/pricing</code>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="authui">
+  <div class="col-wide stack">
+    <div class="col stack-s">
+      <div class="screenhead"><span class="n">AUTH</span><h2>Sign up &amp; Sign in</h2></div>
+      <span class="verdict">Verdict · Well-built form, weak policy</span>
+    </div>
+    <div>
+      <div class="finding">
+        <div class="id">A-01 <span class="chip legal">legal</span> <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>No terms or privacy consent in the flow</h4>
+          <p class="fix"><b>Fix:</b> an unticked consent checkbox above Create Account linking both documents. Implied consent is not sufficient under Egypt's PDPL.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">A-02 <span class="chip p0">P0</span></div>
+        <div class="body">
+          <h4>Six-character minimum password</h4>
+          <p class="fix">Below every current guideline; NIST recommends eight minimum with no forced composition. This product will hold business plans and financials. <b>Fix:</b> minimum eight, strength meter, breached-password check.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">A-03 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>The password hint appears twice, verbatim</h4>
+          <p class="fix">"Create a password (min 6 chars)" is both the placeholder and the helper text. <b>Fix:</b> one of them.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">A-04 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>Phone required, unexplained</h4>
+          <p class="fix">Five fields plus a phone number, for a free product, from the field this audience is most reluctant to give. <b>Fix:</b> optional at sign-up; collect at mentor booking where a reason exists.</p>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="id">A-05 <span class="chip p1">P1</span></div>
+        <div class="body">
+          <h4>The Sign In tab still says "Join StartPad"</h4>
+          <p class="fix">Both tabs share "Join StartPad" and "Start your entrepreneurial journey". <b>Fix:</b> "Welcome back" / "Pick up where you left off".</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="profile">
+  <div class="col stack">
+    <p class="eyebrow">Your ask · profile fields</p>
+    <h2>Age and current status</h2>
+    <p>Both are straightforward, but each carries a consequence cheaper to handle now than to retrofit.</p>
+
+    <div class="callout">
+      <div class="stack-s">
+        <h4>Store date of birth, not age</h4>
+        <p class="small">An age integer is wrong within a year and can't self-correct. Store DOB, derive age at read time.</p>
+        <p class="small"><b>The consequence:</b> once you know age, you know when a user is a minor — and a Gen Z founder platform will have 16- and 17-year-olds. Under Egypt's PDPL, Saudi PDPL and GDPR-equivalent regimes, processing a minor's data needs guardian consent, and public posting, mentor video calls and investor introductions carry real duty-of-care weight. Set a minimum age deliberately and enforce it at sign-up.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="stack-s">
+        <h4>Make status a product input, not a demographic field</h4>
+        <p class="small">Options, ordered for this audience: Student · Recent graduate · Employed full-time · Employed part-time · Freelancer / self-employed · Founder (full-time) · Founder (alongside another commitment) · Between roles · Other.</p>
+        <p class="small"><b>Why it earns its place:</b> paired with one more question — hours per week available — it's the strongest predictor you'll have of who finishes the journey, and it lets you pace missions realistically instead of giving a full-time founder and a student in exam season the same weekly goal. Your weekly goal is currently a flat 3 missions for everyone.</p>
+      </div>
+    </div>
+
+    <p class="small">Set 3 covers both, including minor handling and where the fields sit in the existing 63% completion banner — which should absorb them rather than growing a second nag.</p>
+  </div>
+</section>
+
+<section id="order">
+  <div class="col stack">
+    <p class="eyebrow">Sequencing</p>
+    <h2>Order of work</h2>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>#</th><th>Work</th><th>Why here</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Set 2·A — Privacy, Terms, Cookies + signup consent</td><td>Legal exposure, and required by your own Google/Apple sign-in terms.</td></tr>
+          <tr><td>2</td><td>Set 5·A — Remove the logo wall, fix the claims, merge the two landing pages</td><td>Trademark risk plus a page contradicting itself.</td></tr>
+          <tr><td>3</td><td>Set 4·A — One session component, one derived state</td><td>Same bug in three places. Fix once, centrally.</td></tr>
+          <tr><td>4</td><td>Set 1·A — Auth route guards</td><td>Your explicit ask, now confirmed broken.</td></tr>
+          <tr><td>5</td><td>Set 4·B — Purge placeholders, remove Team Chat demo</td><td>Five instances of visible fake content.</td></tr>
+          <tr><td>6</td><td>Set 2·B — FAQ and Help Centre</td><td>Deflects support before you have support staff.</td></tr>
+          <tr><td>7</td><td>Set 3·A — Profile fields</td><td>Your explicit ask; after the legal pages so consent covers the new data.</td></tr>
+          <tr><td>8</td><td>Set 6·A — Mission runner status + gamification consistency</td><td>Level, points and progress must agree across screens.</td></tr>
+          <tr><td>9</td><td>Set 7·A — AI Tools into the design system</td><td>Purple gradient, duplicate nav, readiness counter.</td></tr>
+          <tr><td>10</td><td>Set 6·B, Set 8·A</td><td>Auth screen polish; mission/resource cross-linking.</td></tr>
+          <tr><td>11</td><td>R2 Set 5·A, 7·A, 7·B</td><td>Still outstanding: app nav diet, Arabic audit, mobile audit.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small">Items 1–4 are all same-day. Item 1 shouldn't wait — you're collecting phone numbers and storing AI transcripts today.</p>
+  </div>
+</section>
+
+<footer class="end col">
+  <p class="small">Round 3 · 19 August 2026 · 31 new findings across 17 screens, 18 items confirmed shipped from rounds 1–2. Still unreviewed: Loadout, the Founder Readiness Assessment, notifications, and every screen on mobile — which remains the largest untested surface in the product.</p>
+</footer>
+
+</div>

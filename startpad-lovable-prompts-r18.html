@@ -1,0 +1,407 @@
+<title>StartPad — Community Page</title>
+<style>
+  :root{--paper:#F2F3F8;--surface:#FFFFFF;--surface-2:#EAEBF3;--ink:#14131C;--ink-soft:#4E4C60;--ink-faint:#7B7990;
+  --rule:#D9DAE6;--rule-soft:#E7E8F0;--accent:#4530E8;--accent-ink:#2E1FB0;--on-accent:#FFFFFF;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0F0E16;--surface:#191823;--surface-2:#221F30;
+  --ink:#ECEBF3;--ink-soft:#A9A7BC;--ink-faint:#7D7B92;--rule:#2E2B3D;--rule-soft:#24222F;--accent:#9A88FF;
+  --accent-ink:#C3B8FF;--on-accent:#14131C;}}
+  :root[data-theme="dark"]{--paper:#0F0E16;--surface:#191823;--surface-2:#221F30;--ink:#ECEBF3;--ink-soft:#A9A7BC;
+  --ink-faint:#7D7B92;--rule:#2E2B3D;--rule-soft:#24222F;--accent:#9A88FF;--accent-ink:#C3B8FF;--on-accent:#14131C;}
+  *{box-sizing:border-box}html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+  body{margin:0;background:var(--paper);color:var(--ink);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Arabic",Arial,sans-serif}
+  .wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem 6rem}
+  h1,h2,h3{text-wrap:balance;margin:0;line-height:1.15;letter-spacing:-.025em}
+  h1{font-size:clamp(2.1rem,5.5vw,3.2rem);font-weight:800;letter-spacing:-.04em;padding-block:3.25rem 1rem}
+  h2{font-size:clamp(1.5rem,3.2vw,2rem);font-weight:800;margin-top:3rem;padding-top:2.25rem;border-top:2px solid var(--ink)}
+  h3{font-size:1.12rem;font-weight:700;margin-top:2.5rem;color:var(--accent-ink);
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:-.01em}
+  h4{font-size:1rem;font-weight:700;margin:2rem 0 0}
+  p{margin:.85rem 0}
+  ul,ol{margin:.85rem 0;padding-inline-start:1.4rem}
+  li{margin:.35rem 0}
+  blockquote{margin:.9rem 0;padding:.2rem 0 .2rem 1rem;border-inline-start:3px solid var(--accent);color:var(--ink-soft)}
+  a{color:var(--accent);text-underline-offset:2px}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+  hr{border:0;border-top:1px solid var(--rule-soft);margin:2.5rem 0}
+  strong{font-weight:680}
+  em{color:var(--ink-soft)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--surface-2);
+  padding:.1em .35em;border-radius:2px}
+  .table-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:2px;background:var(--surface);margin:1.25rem 0}
+  table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+  th,td{text-align:start;padding:.6rem .8rem;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+  th{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-faint);font-weight:600;background:var(--surface-2)}
+  tbody tr:last-child td{border-bottom:0}
+  .prompt{border:1px solid var(--rule);border-radius:3px;background:var(--surface);overflow:hidden;margin:1rem 0 2rem}
+  .prompt>header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.6rem .9rem;
+  background:var(--surface-2);border-bottom:1px solid var(--rule)}
+  .prompt>header .label{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.7rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-faint);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .prompt>header .label b{color:var(--accent-ink);font-weight:700}
+  .copy{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+  background:transparent;border:1px solid var(--rule);color:var(--ink-soft);padding:.25rem .55rem;border-radius:2px;
+  cursor:pointer;white-space:nowrap;transition:background .15s ease,color .15s ease}
+  .copy:hover{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+  pre{margin:0;padding:1rem .9rem;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:.84rem;line-height:1.7;color:var(--ink);white-space:pre-wrap;word-wrap:break-word;background:var(--surface)}
+  pre code{background:none;padding:0;font-size:inherit}
+</style>
+<div class="wrap">
+<h1>StartPad — Community Post Card &amp; Feed (Round 18)</h1>
+<p>Four prompts rebuilding the community page, worked from the "Problem—Solution Fit" post.</p>
+<hr>
+<h2>What the screen shows</h2>
+<p>One post, and it fills the entire viewport. That single fact is most of the problem — but there are seven distinct issues in this one card, and three of them are rendering bugs rather than design choices.</p>
+<h3>1. The image pushes everything else off-screen</h3>
+<p>The illustration takes roughly <strong>three quarters of the visible card height</strong>, and it's letterboxed inside a grey band with wide empty gutters on both sides. Whatever engagement controls exist — replies, reactions, save, share — are below the fold, pushed there by an image with no height cap.</p>
+<p>A feed where one post fills one screen is not a feed. A founder scrolling for two minutes sees three posts.</p>
+<h3>2. The body text is truncated mid-sentence, with no way to expand</h3>
+<p>It ends on <strong>"Customers are willing to…"</strong> — cut in the middle of the fifth point, mid-word. There's no "Show more" control visible. The reader is left with an incomplete list and no way to finish it.</p>
+<h3>3. The author wrote a list. It renders as a run-on paragraph</h3>
+<p>Look at the body: <code>It means: → The problem is real, not assumed. → Your target customers experience it frequently. → The problem is painful enough to demand a solution. → Your solution addresses the problem better than existing alternatives. → Customers are willing to…</code></p>
+<p>Those arrows are line breaks that didn't survive. Someone typed five bullet points and the renderer stripped the newlines and ran them together. <strong>This is a content bug, not a styling preference</strong> — and it affects every post anyone writes with structure.</p>
+<h3>4. The text colour changes mid-sentence for no reason</h3>
+<p>Parts of the paragraph render in a teal/blue, parts in near-black, and the switches don't follow any semantic pattern — "one question every startup needs to answer" is coloured, "Problem—Solution Fit" is coloured, "a strong startup" is coloured, "The problem is real, not assumed" is coloured. None of them are links.</p>
+<p>This reads as a broken rich-text renderer or a keyword-highlighting feature misfiring. Either way it makes the post look like it was pasted from somewhere and half-styled.</p>
+<h3>5. No author, no time</h3>
+<p>Nothing on this card says <strong>who wrote it or when</strong>. A post without a face and a timestamp isn't a community post — it's a CMS article with a comment box. And it's the difference between "a founder like me wrote this" and "the platform is broadcasting at me."</p>
+<h3>6. "General" is the only piece of metadata</h3>
+<p>The single category on the post is the least informative label available. Meanwhile the post is <em>specifically</em> about problem–solution fit, which is <strong>Mission 6 — Value Proposition &amp; Assumptions</strong>, whose own description says "develop problem-solution canvas."</p>
+<p><strong>That connection is the entire point of StartPad's community and it isn't made.</strong> A founder currently on Mission 6 should see this post surfaced, badged, and linked to the mission they're stuck on.</p>
+<h3>7. The language controls sit in the middle of the content</h3>
+<p><code>EN</code> and <code>Translate to Arabic</code> are wedged between the body text and the image. They're utility controls placed in the reading flow, and the <code>EN</code> pill's purpose is ambiguous — is it a label saying "this post is in English", or a button that switches to English?</p>
+<p>The bilingual intent is right and worth keeping. The placement isn't.</p>
+<hr>
+<h2>The card, rebuilt</h2>
+<pre dir="auto"><code>┌────────────────────────────────────────────────────────────────┐
+│  ⬤  Ahmed K.  ·  Founder, Cairo                          ⋯     │
+│      Mission 6 · Value Proposition &amp; Assumptions  ·  2d        │
+├────────────────────────────────────────────────────────────────┤
+│  Problem—Solution Fit                             [ Insight ]  │
+│                                                                │
+│  Before you think about scaling, fundraising, or acquiring      │
+│  thousands of users, there's one question every startup needs   │
+│  to answer: are we actually solving a problem people care       │
+│  about?                                                         │
+│                                                                │
+│  Problem–Solution Fit means:                                    │
+│    •  The problem is real, not assumed                          │
+│    •  Your target customers experience it frequently            │
+│    •  The problem is painful enough to demand a solution        │
+│    •  Your solution beats the existing alternatives             │
+│    •  Customers are willing to pay for it                       │
+│                                                     Show more ⌄ │
+├────────────────────────────────────────────────────────────────┤
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │   [ diagram — capped at 320px, click to expand ]         │  │
+│  └──────────────────────────────────────────────────────────┘  │
+├────────────────────────────────────────────────────────────────┤
+│  ♥ 34    💬 12 replies    ↗ Share    ⌂ Save         عربي ⇄ EN  │
+├────────────────────────────────────────────────────────────────┤
+│  You're on Mission 6 right now — this is the canvas you're      │
+│  building.                                  Open Mission 6 →    │
+└────────────────────────────────────────────────────────────────┘</code></pre>
+<p>Three things moved, and each one earns its place:</p>
+<ul><li><strong>The author moved to the top</strong>, with their mission, so the post has a person and a stage attached before a word is read.</li><li><strong>The language toggle moved to the action row</strong>, where every other utility control lives.</li><li><strong>The mission strip is new</strong>, and it only appears when the post's mission matches the reader's current mission. That's the line that turns a feed into a workspace.</li></ul>
+<hr>
+<hr>
+<h1>The prompts</h1>
+<p>Four, in order. Paste one per message.</p>
+<h2>PROMPT A — Rebuild the Post Card</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT A</b> · Rebuild the Post Card</span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>PAGE: /community — the post card component, used in the feed and on the
+single-post page.
+
+THE PROBLEM
+
+One post fills the entire viewport. The image has no height cap and takes
+roughly three quarters of the visible card, letterboxed inside a grey band
+with wide empty gutters, which pushes every engagement control below the
+fold. A founder scrolling for two minutes sees three posts.
+
+The body text truncates mid-sentence — "Customers are willing to…" — cut in
+the middle of the fifth point, with no visible control to expand it.
+
+And nothing on the card says WHO wrote it or WHEN. A post without an author
+and a timestamp is not a community post; it is a CMS article.
+
+THE FIX
+
+1. CARD HEADER — add it, it does not currently exist:
+
+     ⬤  Ahmed K.  ·  Founder, Cairo                             ⋯
+         Mission 6 · Value Proposition &amp; Assumptions  ·  2d
+
+   - Avatar 40px, name, then role and city from the profile
+   - The author's CURRENT MISSION, because that is what tells a reader
+     whether this person is two steps ahead of them or two behind
+   - Relative time: "2d", "4h", "just now". Absolute date on hover
+   - Overflow menu on the right: Report · Copy link · Mute this author
+
+2. CAP THE IMAGE.
+
+     max-height: 320px desktop, 240px mobile
+     object-fit: contain, on a neutral surface — not the current grey band
+     border-radius matching the card, full card width, no side gutters
+
+   If the natural aspect ratio is taller than 4:5, show the top of the image
+   with a soft fade at the bottom and an "Expand" affordance.
+
+   CLICK OPENS A LIGHTBOX with pinch-zoom on mobile. These posts carry
+   diagrams with small labels — a capped thumbnail is unreadable, so the
+   zoom is not optional.
+
+3. TRUNCATE ON A LINE BOUNDARY, NEVER MID-WORD.
+
+     4 lines collapsed on mobile, 6 on desktop
+     "Show more ⌄" / "Show less ⌃" — always present when content is clipped
+     Expansion is inline. It does NOT navigate away.
+
+   Never cut inside a list item. If the clip point lands inside one, clip
+   before it and let the count speak: "Show more — 3 more points".
+
+4. ACTION ROW, below the image, always visible without scrolling on a
+   standard post:
+
+     ♥ 34    💬 12 replies    ↗ Share    ⌂ Save            عربي ⇄ EN
+
+   Counts are always shown, including zero — "0 replies" is an invitation,
+   a hidden control is not.
+
+5. MOVE THE LANGUAGE CONTROL OUT OF THE CONTENT FLOW. The "EN" pill and
+   "Translate to Arabic" button currently sit between the body text and the
+   image, interrupting the reading. They belong in the action row. See
+   PROMPT D for how the control itself should behave.
+
+6. CATEGORY PILL moves up beside the title and gets a real taxonomy. See
+   PROMPT B.
+
+7. CARD DENSITY TARGET: a post with a title, four lines of body and one
+   image fits in about 520px on desktop. Three posts should be reachable
+   without scrolling on a 1080px screen.</code></pre></div>
+<h2>PROMPT B — Fix the Body Rendering, and Scope the Feed to the Journey</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT B</b> · Fix the Body Rendering, and Scope the Feed to the Journey</span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>PAGE: /community — the post body renderer, the composer, and the feed filters.
+
+THE PROBLEM — PART ONE, A BUG
+
+The author of the "Problem—Solution Fit" post wrote a list. It renders as a
+run-on paragraph:
+
+  "It means: → The problem is real, not assumed. → Your target customers
+   experience it frequently. → The problem is painful enough to demand a
+   solution. → Your solution addresses the problem better than existing
+   alternatives. → Customers are willing to…"
+
+Those arrows are line breaks that did not survive storage or rendering. Every
+structured post anyone writes is being flattened this way.
+
+Second bug on the same paragraph: THE TEXT COLOUR CHANGES MID-SENTENCE with
+no semantic pattern. "one question every startup needs to answer",
+"Problem—Solution Fit", "a strong startup" and "The problem is real, not
+assumed" all render in a teal/blue while the surrounding text is near-black.
+None of them are links. Check the rich-text renderer and any
+keyword-highlighting pass — one of them is emitting spans it should not.
+
+THE FIX — PART ONE
+
+1. PRESERVE STRUCTURE END TO END. Store the body as restricted markdown —
+   paragraphs, unordered and ordered lists, bold, italic, inline code, links,
+   blockquote. Nothing else. Render it properly; do not strip newlines.
+
+2. MIGRATE WHAT IS ALREADY BROKEN. Write a one-off pass over existing posts:
+   a run of " → " or " - " or " • " inside a paragraph, three or more times,
+   becomes a real list. Log every post it changes so it can be reviewed.
+
+3. GIVE THE COMPOSER A LIST BUTTON, so authors stop typing arrows to get the
+   structure the editor should provide.
+
+4. ONE TEXT COLOUR FOR BODY COPY. Colour is reserved for links and for the
+   mission badge. Fix whatever is currently emitting coloured spans mid
+   paragraph.
+
+THE PROBLEM — PART TWO, THE BIGGER ONE
+
+This post's only metadata is a category reading "General" — the least
+informative label available. Meanwhile the post is specifically about
+problem–solution fit, which is MISSION 6, whose own description reads
+"develop problem-solution canvas".
+
+That connection is what the community is for, and it is not being made.
+
+THE FIX — PART TWO
+
+1. EVERY POST CARRIES AN OPTIONAL MISSION TAG. The composer asks once:
+   "Which mission is this about?" — a picker listing all 15 by name, plus
+   "Not about a specific mission". Default it to the author's current mission.
+
+2. REPLACE THE "GENERAL" CATEGORY with a small, real taxonomy. Six types,
+   each a different kind of contribution:
+
+     Question        I'm stuck and need help
+     Insight         something I learned that might help you
+     Win             something that worked
+     Feedback wanted here's my work, tell me what's wrong with it
+     Resource        a tool, template or link
+     Introduction    who I am and what I'm building
+
+   The "Problem—Solution Fit" post is an Insight. "General" tells a reader
+   nothing about whether to open it.
+
+3. FEED FILTERS, as chips across the top, in this order:
+
+     [ My mission ]  [ Everything ]  [ Questions ]  [ Wins ]  [ Feedback wanted ]
+
+   "MY MISSION" IS THE DEFAULT for a logged-in founder who has started the
+   journey. Everything else is one tap away. A founder stuck on Mission 6
+   should open the community and see Mission 6 conversations first — that is
+   the whole premise, and a chronological firehose buries it.
+
+4. MISSION CONTEXT STRIP on any post whose mission matches the reader's
+   current mission:
+
+     "You're on Mission 6 right now — this is the canvas you're building."
+                                                    [ Open Mission 6 → ]
+
+   Show it only on a match. Shown on every post it becomes furniture.
+
+5. THE REVERSE LINK. On each mission page, show the three most useful recent
+   community posts tagged to that mission. The community feeds the journey
+   and the journey feeds the community, or neither is worth opening.</code></pre></div>
+<h2>PROMPT C — Turn the Feed From a Broadcast Into a Conversation</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT C</b> · Turn the Feed From a Broadcast Into a Conversation</span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>PAGE: /community — the feed, the post card and the composer.
+
+THE PROBLEM
+
+The post reads as a lesson, not a discussion. It states five facts about
+problem–solution fit and ends. There is no question, nothing asked of the
+reader, and nothing to disagree with.
+
+A feed of well-written broadcasts gets read and not answered, and a community
+that is only read is a blog with avatars.
+
+THE FIX
+
+1. EVERY POST ENDS WITH SOMETHING TO ANSWER. In the composer, a required
+   field for Question, Insight and Feedback-wanted posts:
+
+     "What do you want from the community?"
+       · Tell me if this matches your experience
+       · Help me decide between two options
+       · Review my work
+       · Nothing — just sharing
+
+   It renders under the body as a quiet line: "Ahmed is asking: does this
+   match your experience?" and it is what the reply box is labelled with.
+
+2. THE REPLY BOX IS OPEN, NOT A BUTTON. On the single-post page the composer
+   is visible and focused-ready, pre-labelled with the ask above. A reply
+   behind a click is a reply that does not happen.
+
+3. SEED THE FIRST REPLY ON EVERY POST — genuinely, not artificially. When a
+   post has no replies after four hours, surface it to three founders on the
+   same mission:
+
+     "Ahmed asked something about the mission you're on. 2 min to answer."
+
+   Never fabricate replies, never auto-generate them. Prompt real people.
+
+4. SHOW WHO IS IN THE ROOM. Under the action row:
+
+     "8 founders on Mission 6 read this today"
+
+   Only when true, only with a real number. It is the single strongest
+   signal that anyone is out there.
+
+5. REPLIES FROM PEOPLE FURTHER ALONG GET A QUIET MARKER — "Mission 11" next
+   to their name. Not a rank, not a badge, not points. Just their stage, so
+   a reader knows the answer comes from someone two phases ahead.
+
+6. ONE PRIMARY BUTTON PER SCREEN. Reply is primary. Everything else — share,
+   save, follow — is a text link or an icon. This rule was broken on the
+   mission page and should not be re-broken here.
+
+7. WHAT NOT TO DO. No leaderboards, no post streaks, no "top contributor of
+   the week", no badges for volume. This audience reads that as gamified
+   noise faster than most, and it rewards posting over helping. The existing
+   XP system already covers motivation; the community does not need a second
+   one.</code></pre></div>
+<h2>PROMPT D — Bilingual, RTL and Brand</h2>
+<div class="prompt"><header><span class="label"><b>PROMPT D</b> · Bilingual, RTL and Brand</span><button class="copy" type="button">Copy</button></header><pre dir="auto"><code>PAGE: /community — all views.
+
+THE PROBLEM
+
+The "EN" pill and the "Translate to Arabic" button sit between the body text
+and the image, interrupting the reading. And the "EN" pill's purpose is
+ambiguous: is it a label saying the post is in English, or a button that
+switches to English?
+
+The bilingual intent is exactly right for this audience. The execution puts a
+utility control in the middle of the content.
+
+THE FIX
+
+1. ONE CONTROL, IN THE ACTION ROW, showing the destination not the state:
+
+     Post is in English, reader's locale is Arabic:   "عربي ⇄"
+     Post is in Arabic, reader's locale is English:   "English ⇄"
+     Post is already in the reader's language:        nothing at all
+
+   Remove the separate "EN" pill. The language of a post is evident from
+   reading it; a pill stating it is noise. If a language marker is genuinely
+   needed for scanning, put a small "AR" or "EN" in the card header beside
+   the timestamp, not below the body.
+
+2. TRANSLATE IN PLACE. The body is replaced, the button becomes "Show
+   original ⇄", and the choice persists for that reader across the session.
+   Do not open a modal and do not navigate away.
+
+3. MARK MACHINE TRANSLATION HONESTLY, in one quiet line under the translated
+   body:
+
+     "Translated automatically · Show original"
+
+   A founder reading a translated technical explanation needs to know it was
+   translated, because the mistakes will be in the vocabulary that matters.
+
+4. FULL RTL when the reader's locale is Arabic: card direction, avatar side,
+   action row order, the "Show more" chevron, and the mission strip arrow all
+   mirror. The post body takes dir="auto" per block, so an Arabic reply under
+   an English post renders correctly without mirroring the whole card.
+
+5. COMPOSE IN EITHER LANGUAGE, and the composer's direction follows what is
+   being typed, not the interface locale. A founder on the Arabic interface
+   writing an English post should not fight the text field.
+
+6. BRAND. Apply the current tokens throughout — the page background here is a
+   cream/yellow that belongs to neither palette:
+
+     page background   paper #F4F4F2
+     card surface      #FFFFFF with a 1px #E5E5E2 border
+     body text         ink #0B0D10
+     secondary text    #5B6068
+     primary action    indigo #3418E0 with white text
+     mission strip     lime #CBF24A background with ink text
+
+   NEVER lime text on white — it measures 1.29:1 and fails every contrast
+   threshold. Lime is a fill that carries near-black text. Indigo on white is
+   8.9:1 and is the accessible action colour.
+
+7. MINIMUM 44px TAP TARGETS on every action-row control, and the row must not
+   wrap to two lines at 390px width.</code></pre></div>
+<hr>
+<h2>Sequence</h2>
+<div class="table-scroll"><table><thead><tr><th>#</th><th>Prompt</th><th>Why here</th></tr></thead><tbody><tr><td>1</td><td><strong>A</strong> — the post card</td><td>The image cap and the header are what make the feed usable at all</td></tr><tr><td>2</td><td><strong>B</strong> — rendering and mission scoping</td><td>Two live bugs, plus the connection the community exists for</td></tr><tr><td>3</td><td><strong>C</strong> — conversation</td><td>Only worth doing once posts are readable and findable</td></tr><tr><td>4</td><td><strong>D</strong> — bilingual and brand</td><td>Cheapest, and safe to ship alongside any of the others</td></tr></tbody></table></div>
+<p>A and B are the ones that change whether the page works. C is the one that changes whether anyone comes back.</p>
+<hr>
+<h2>Two things worth checking before building</h2>
+<p><strong>The coloured text may not be a styling bug.</strong> If there's an AI pass that highlights key phrases in posts, then what I read as a broken renderer is a feature behaving badly — the highlights follow no pattern a reader can learn, so they land as noise. If that feature exists, either make the rule legible (highlight defined terms only, and make them tappable for a definition) or turn it off.</p>
+<p><strong>Check whether the post has an author at all.</strong> If these posts are seeded editorial content published under no name, then adding an author header needs a decision first: publish them under a real StartPad team member, or mark them clearly as "StartPad Editorial" with a distinct card treatment. What should not happen is editorial content sitting in the feed looking like a founder wrote it.</p>
+</div>
+<script>document.querySelectorAll(".prompt").forEach(function(b){var t=b.querySelector(".copy"),p=b.querySelector("pre");
+if(!t||!p)return;t.addEventListener("click",function(){var x=p.textContent,d=function(){t.textContent="Copied";
+setTimeout(function(){t.textContent="Copy"},1600)};if(navigator.clipboard&&navigator.clipboard.writeText){
+navigator.clipboard.writeText(x).then(d,function(){t.textContent="Press \u2318C"})}else{var a=document.createElement("textarea");
+a.value=x;document.body.appendChild(a);a.select();try{document.execCommand("copy");d()}catch(e){t.textContent="Press \u2318C"}
+document.body.removeChild(a)}})});</script>
