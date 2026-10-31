@@ -1,0 +1,198 @@
+<title>StartPad &amp; LEAP — Project Context</title>
+<style>
+  :root{--paper:#F2F3F8;--surface:#FFFFFF;--surface-2:#EAEBF3;--ink:#14131C;--ink-soft:#4E4C60;
+  --ink-faint:#7B7990;--rule:#D9DAE6;--rule-soft:#E7E8F0;--accent:#4530E8;--accent-ink:#2E1FB0;--on-accent:#FFF;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0F0E16;--surface:#191823;
+  --surface-2:#221F30;--ink:#ECEBF3;--ink-soft:#A9A7BC;--ink-faint:#7D7B92;--rule:#2E2B3D;--rule-soft:#24222F;
+  --accent:#9A88FF;--accent-ink:#C3B8FF;--on-accent:#14131C;}}
+  :root[data-theme="dark"]{--paper:#0F0E16;--surface:#191823;--surface-2:#221F30;--ink:#ECEBF3;
+  --ink-soft:#A9A7BC;--ink-faint:#7D7B92;--rule:#2E2B3D;--rule-soft:#24222F;--accent:#9A88FF;
+  --accent-ink:#C3B8FF;--on-accent:#14131C;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-size:17px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Arabic",Arial,sans-serif}
+  h1{font-size:clamp(2.1rem,5.5vw,3.2rem);font-weight:800;letter-spacing:-.04em;padding-block:3.25rem 1rem}
+  h2{font-size:clamp(1.5rem,3.2vw,2rem);font-weight:800;margin-top:3rem;padding-top:2.25rem;
+     border-top:2px solid var(--ink);letter-spacing:-.025em}
+  h3{font-size:1.12rem;font-weight:700;margin-top:2.5rem;color:var(--accent-ink);
+     font-family:ui-monospace,Menlo,monospace}
+  h4{font-size:1rem;font-weight:700;margin:2rem 0 0}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:.88em;background:var(--surface-2);
+     padding:.1em .35em;border-radius:2px}
+
+  *{box-sizing:border-box}html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+  .wrap{max-width:62rem;margin:0 auto;padding:0 1.25rem 6rem}
+  h1,h2,h3,h4{text-wrap:balance;margin:0;line-height:1.2}
+  p{margin:.85rem 0}ul,ol{margin:.85rem 0;padding-inline-start:1.4rem}li{margin:.35rem 0}
+  a{color:var(--accent);text-underline-offset:2px}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+  hr{border:0;border-top:1px solid var(--rule-soft);margin:2.5rem 0}
+  strong{font-weight:680}em{color:var(--ink-soft)}
+  blockquote{margin:.9rem 0;padding:.4rem 1rem;border-inline-start:3px solid var(--accent);color:var(--ink-soft)}
+  .table-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:3px;background:var(--surface);margin:1.25rem 0}
+  table{border-collapse:collapse;width:100%;min-width:28rem;font-size:.92rem}
+  th,td{text-align:start;padding:.6rem .8rem;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+  th{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);
+     font-weight:600;background:var(--surface-2)}
+  tbody tr:last-child td{border-bottom:0}
+  .prompt{border:1px solid var(--rule);border-radius:3px;background:var(--surface);overflow:hidden;margin:1rem 0 2rem}
+  .prompt>header{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+     padding:.6rem .9rem;background:var(--surface-2);border-bottom:1px solid var(--rule)}
+  .prompt>header .label{font-family:ui-monospace,Menlo,monospace;font-size:.7rem;letter-spacing:.08em;
+     text-transform:uppercase;color:var(--ink-faint);font-weight:600;overflow:hidden;
+     text-overflow:ellipsis;white-space:nowrap}
+  .prompt>header .label b{color:var(--accent-ink);font-weight:700}
+  .copy{font-family:ui-monospace,Menlo,monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+     background:transparent;border:1px solid var(--rule);color:var(--ink-soft);padding:.25rem .55rem;
+     border-radius:2px;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
+  .copy:hover{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+  pre{margin:0;padding:1rem .9rem;overflow-x:auto;font-family:ui-monospace,Menlo,Consolas,monospace;
+     font-size:.84rem;line-height:1.7;color:var(--ink);white-space:pre-wrap;word-wrap:break-word;background:var(--surface)}
+  pre code{background:none;padding:0;font-size:inherit}
+
+</style>
+<div class="wrap">
+<h1 dir="auto">CONTEXT — StartPad &amp; LEAP</h1>
+<p dir="auto"><strong>Hand-off file. Paste or attach this at the start of a new chat and work can continue without re-establishing anything.</strong></p>
+<p dir="auto">Last updated: 31 Oct 2026 · Repo <code>AbdelrhmanSoliman96/Abdelrhman-Soliman</code> · Branch <code>claude/startpad-ux-genz-review-wzg9vx</code></p>
+<hr>
+<h2 dir="auto">How to use this file</h2>
+<p dir="auto">Everything below is settled fact unless marked <strong>OPEN</strong>. Don't re-derive it, don't re-ask about it, and don't re-review screens already reviewed — check the round index first.</p>
+<p dir="auto">New work continues the numbering: the next round is <strong>R20</strong>.</p>
+<hr>
+<h2 dir="auto">Two separate workstreams</h2>
+<div class="table-scroll"><table><thead><tr><th dir="auto"></th><th dir="auto"><strong>StartPad</strong></th><th dir="auto"><strong>LEAP Consulting</strong></th></tr></thead><tbody><tr><td dir="auto">What</td><td dir="auto">Gamified platform guiding MENA founders through 15 missions, idea → launched startup</td><td dir="auto">Cairo consultancy, strategy + finance + data science</td></tr><tr><td dir="auto">Built on</td><td dir="auto">Lovable (React/TypeScript)</td><td dir="auto">—</td></tr><tr><td dir="auto">Deliverable</td><td dir="auto">Lovable prompts (R1–R19)</td><td dir="auto">Pricing methodology documents</td></tr><tr><td dir="auto">Language</td><td dir="auto">English</td><td dir="auto">Arabic</td></tr></tbody></table></div>
+<p dir="auto">They share a repo and nothing else.</p>
+<hr>
+<hr>
+<h1 dir="auto">PART 1 — StartPad</h1>
+<h2 dir="auto">The product</h2>
+<p dir="auto"><strong>Tagline:</strong> <em>Structure Today, Scale Tomorrow.</em> · <strong>Domain:</strong> startpad.me · <strong>Operator:</strong> GrowthLabs <strong>Audience:</strong> first-time founders in Egypt, Saudi, UAE and the wider Arab world — students, employed people, side-project builders. <strong>Scale as published:</strong> 124+ founders · 114 toolkit calculators · 2 mentors.</p>
+<h3 dir="auto">The 15 missions — NAMES AND PHASES ARE FIXED</h3>
+<p dir="auto">The user instructed explicitly: <strong>do not rename missions or phases, do not reorder, do not merge, do not add.</strong> Only the questions inside them change.</p>
+<div class="table-scroll"><table><thead><tr><th dir="auto">Phase</th><th dir="auto">#</th><th dir="auto">Mission</th><th dir="auto">XP</th></tr></thead><tbody><tr><td dir="auto"><strong>Discover</strong></td><td dir="auto">1</td><td dir="auto">Problem Analysis</td><td dir="auto">100</td></tr><tr><td dir="auto"></td><td dir="auto">2</td><td dir="auto">Problem Definition</td><td dir="auto">100</td></tr><tr><td dir="auto"></td><td dir="auto">3</td><td dir="auto">Opportunity Prioritisation</td><td dir="auto">150</td></tr><tr><td dir="auto"><strong>Shape</strong></td><td dir="auto">4</td><td dir="auto">Testable Problem Statement</td><td dir="auto">150</td></tr><tr><td dir="auto"></td><td dir="auto">5</td><td dir="auto">Solution Selection</td><td dir="auto">200</td></tr><tr><td dir="auto"></td><td dir="auto">6</td><td dir="auto">Value Proposition &amp; Assumptions</td><td dir="auto">200</td></tr><tr><td dir="auto"><strong>Test</strong></td><td dir="auto">7</td><td dir="auto">First Assumption Test</td><td dir="auto">250</td></tr><tr><td dir="auto"><strong>Model</strong></td><td dir="auto">8</td><td dir="auto">Business Model Canvas</td><td dir="auto">300</td></tr><tr><td dir="auto"></td><td dir="auto">9</td><td dir="auto">Build a Learning Prototype</td><td dir="auto">300</td></tr><tr><td dir="auto"></td><td dir="auto">10</td><td dir="auto">Prototype User Test</td><td dir="auto">300</td></tr><tr><td dir="auto"><strong>Readiness</strong></td><td dir="auto">11</td><td dir="auto">Go-to-Market Experiment</td><td dir="auto">300</td></tr><tr><td dir="auto"></td><td dir="auto">12</td><td dir="auto">Demand &amp; Market Validation</td><td dir="auto">350</td></tr><tr><td dir="auto"></td><td dir="auto">13</td><td dir="auto">MVP Scope &amp; Build</td><td dir="auto">400</td></tr><tr><td dir="auto"></td><td dir="auto">14</td><td dir="auto">Early Traction Review</td><td dir="auto">450</td></tr><tr><td dir="auto"></td><td dir="auto">15</td><td dir="auto">Launch &amp; Incubator Readiness</td><td dir="auto">500</td></tr></tbody></table></div>
+<p dir="auto"><strong>4,050 XP total.</strong> Five contiguous phases: 3 · 3 · 1 · 3 · 5.</p>
+<blockquote dir="auto">An older 8-phase structure (Discovery / Analysis / Ideation / Validation / Business Model / Development / Strategy / Launch) appears in some marketing copy. <strong>It is obsolete.</strong> Corrected in <code>brand/linkedin/overview-copy.md</code>; may still be live on LinkedIn and other pages.</blockquote>
+<h3 dir="auto">AI assessment</h3>
+<p dir="auto">Five criteria — <strong>specificity, depth, evidence, actionability, relevance</strong> — pass mark <strong>70%</strong>. Unlimited resubmission.</p>
+<p dir="auto"><strong>Measured fact worth keeping:</strong> submitted gibberish (<code>fdsfdsdsdfdfsdsadsds dad dad dada…</code>) scored <strong>20/100</strong>. So the usable scale runs 20–100, not 0–100, and the gap from nonsense to pass is 50 points instead of 70. R16 exists to fix this.</p>
+<h3 dir="auto">Pricing as published</h3>
+<div class="table-scroll"><table><thead><tr><th dir="auto">Plan</th><th dir="auto">Price</th><th dir="auto">Covers</th></tr></thead><tbody><tr><td dir="auto">Free Explorer</td><td dir="auto">EGP 0 / free forever</td><td dir="auto">Missions 1–3, community, dashboard</td></tr><tr><td dir="auto">Founder Sprint</td><td dir="auto"><strong>$15 USD</strong> one-time (shown as EGP 740) · 12 weeks · no renewal</td><td dir="auto">All 15 missions, AI tools, toolbox, PDF exports, resource library</td></tr><tr><td dir="auto"><strong>Team</strong></td><td dir="auto"><strong>does not exist yet</strong></td><td dir="auto">R19 specifies it</td></tr></tbody></table></div>
+<p dir="auto">Payment is taken <strong>in EGP for Egypt, USD everywhere else</strong>. Mentor sessions are paid per session and never gated — that line is published and should stay.</p>
+<h3 dir="auto">Brand system (R13)</h3>
+<div class="table-scroll"><table><thead><tr><th dir="auto">Token</th><th dir="auto">Hex</th><th dir="auto">Use</th></tr></thead><tbody><tr><td dir="auto">Lime</td><td dir="auto"><code>#CBF24A</code></td><td dir="auto"><strong>Fill only</strong>, carrying near-black text</td></tr><tr><td dir="auto">Ink</td><td dir="auto"><code>#0B0D10</code></td><td dir="auto">Text, dark surfaces</td></tr><tr><td dir="auto">Indigo</td><td dir="auto"><code>#3418E0</code></td><td dir="auto">The accessible action colour</td></tr><tr><td dir="auto">Paper</td><td dir="auto"><code>#F4F4F2</code></td><td dir="auto">Page background</td></tr><tr><td dir="auto">Surface</td><td dir="auto"><code>#EDEDEA</code></td><td dir="auto">Cards</td></tr><tr><td dir="auto">Cyan</td><td dir="auto"><code>#00D4F0</code></td><td dir="auto">Accent</td></tr><tr><td dir="auto">Greys</td><td dir="auto"><code>#8A8F98</code> <code>#A5A9AF</code> <code>#5B6068</code> <code>#3D424A</code></td><td dir="auto"></td></tr></tbody></table></div>
+<p dir="auto"><strong>Contrast measurements that govern usage:</strong></p>
+<ul><li dir="auto">lime on white = <strong>1.29:1</strong> → fails everything. Never lime text on white.</li><li dir="auto">lime on ink = <strong>15.1:1</strong> ✓</li><li dir="auto">indigo on white = <strong>8.9:1</strong> ✓</li></ul>
+<p dir="auto"><strong>Type:</strong> Satoshi (Latin) + Zain (Arabic), resolved by <code>unicode-range</code>. Weights <strong>300/400/700/900 only</strong> — Zain has no 500. Satoshi contains <strong>0% Arabic coverage</strong> (verified by parsing the binaries); the two-font stack is required.</p>
+<p dir="auto">Logo files in <code>brand/logo/</code>. Social covers in <code>brand/linkedin/</code> and <code>brand/facebook/</code>.</p>
+<hr>
+<h2 dir="auto">Round index</h2>
+<p dir="auto">Each round is <code>startpad-lovable-prompts-rN.md</code> + <code>.html</code> in the repo root.</p>
+<div class="table-scroll"><table><thead><tr><th dir="auto">R</th><th dir="auto">Subject</th><th dir="auto">Contents</th></tr></thead><tbody><tr><td dir="auto">1</td><td dir="auto">First UX review</td><td dir="auto"><code>startpad-lovable-prompts.md</code>, <code>startpad-ux-review.html</code></td></tr><tr><td dir="auto">2</td><td dir="auto">5 logged-in screens</td><td dir="auto">41 findings, 6 bugs, 15 prompts in 7 page-scoped sets</td></tr><tr><td dir="auto">3</td><td dir="auto">17 screens</td><td dir="auto">Privacy, FAQ, profile fields (age + status), <strong>public vs authenticated route split</strong>. Contains the canonical route table</td></tr><tr><td dir="auto">4</td><td dir="auto">About split + Knowledge Base</td><td dir="auto">AI content pipeline with editorial gate, first-party data layer, SEO</td></tr><tr><td dir="auto">5</td><td dir="auto">Dashboard rebuild</td><td dir="auto">12-column / 6-band grid</td></tr><tr><td dir="auto">6</td><td dir="auto">Contact page</td><td dir="auto">Email + form only, no location or phone</td></tr><tr><td dir="auto">7</td><td dir="auto">AI output quality</td><td dir="auto">Context layer, output contracts, banned-phrase list, eval harness</td></tr><tr><td dir="auto">8</td><td dir="auto">Authenticated verification</td><td dir="auto">Six-phase pass</td></tr><tr><td dir="auto">9</td><td dir="auto">Closing 6 failures</td><td dir="auto">Root-caused to one pattern: canonical implementation exists while a duplicate ships. Lint/hook/build guards</td></tr><tr><td dir="auto">10</td><td dir="auto">Referral rebuild</td><td dir="auto">"Bring a founder"</td></tr><tr><td dir="auto">11</td><td dir="auto">Submission gate + branded PDFs</td><td dir="auto">Gibberish detector, logo on every export</td></tr><tr><td dir="auto">12</td><td dir="auto">Free → paid sweep</td><td dir="auto">Pricing nav, grandfathering, billing page, legal updates</td></tr><tr><td dir="auto">13</td><td dir="auto">Rebrand</td><td dir="auto">Colours, type system, font pipeline</td></tr><tr><td dir="auto">14</td><td dir="auto">Missions redesign</td><td dir="auto">87 questions / 75 blank textareas diagnosed. <strong>Rebuilt against the live roadmap</strong></td></tr><tr><td dir="auto">15</td><td dir="auto">Resubmit loop</td><td dir="auto">Two duplicate submit buttons, stale scores, <code>scoredHash</code></td></tr><tr><td dir="auto">16</td><td dir="auto">Pass-mark calibration</td><td dir="auto">Gates before scoring, phase-weighted criteria, anchor ladders, calibration set</td></tr><tr><td dir="auto">17</td><td dir="auto"><strong>The question bank</strong></td><td dir="auto">All <strong>136 questions</strong> across 15 missions, 15 input types, finance thread</td></tr><tr><td dir="auto">18</td><td dir="auto">Community page</td><td dir="auto">Post card rebuild, two rendering bugs, mission scoping</td></tr><tr><td dir="auto">19</td><td dir="auto">Pricing page</td><td dir="auto">Currency control collision, Team plan, card layout</td></tr></tbody></table></div>
+<h3 dir="auto">Published artifacts (links the user has)</h3>
+<div class="table-scroll"><table><thead><tr><th dir="auto"></th><th dir="auto"></th></tr></thead><tbody><tr><td dir="auto">R14</td><td dir="auto"><a href="https://claude.ai/code/artifact/9f23d4b0-2be9-414a-bc42-6245f0ce82e5">https://claude.ai/code/artifact/9f23d4b0-2be9-414a-bc42-6245f0ce82e5</a></td></tr><tr><td dir="auto">R15</td><td dir="auto"><a href="https://claude.ai/artifact/Mo4JHtVuFMiE7W8VmLpTmV">https://claude.ai/artifact/Mo4JHtVuFMiE7W8VmLpTmV</a></td></tr><tr><td dir="auto">R16</td><td dir="auto"><a href="https://claude.ai/artifact/9s7xTCh4DmAbvxSCzzKtoG">https://claude.ai/artifact/9s7xTCh4DmAbvxSCzzKtoG</a></td></tr><tr><td dir="auto">R17</td><td dir="auto"><a href="https://claude.ai/artifact/CeSoQKo1GD9KLEGPkWCwQ8">https://claude.ai/artifact/CeSoQKo1GD9KLEGPkWCwQ8</a></td></tr><tr><td dir="auto">R18</td><td dir="auto"><a href="https://claude.ai/artifact/KTPE8PrcxuAiqNghoJe6A1">https://claude.ai/artifact/KTPE8PrcxuAiqNghoJe6A1</a></td></tr><tr><td dir="auto">R19</td><td dir="auto"><a href="https://claude.ai/artifact/4enEksR5JSbVvFTiVW1wUR">https://claude.ai/artifact/4enEksR5JSbVvFTiVW1wUR</a></td></tr><tr><td dir="auto">LEAP</td><td dir="auto"><a href="https://claude.ai/artifact/CmE9UT2fWD1ZMViEEeqBBh">https://claude.ai/artifact/CmE9UT2fWD1ZMViEEeqBBh</a></td></tr></tbody></table></div>
+<p dir="auto">R2–R13 were published too; those URLs aren't recorded here. The <code>.md</code> and <code>.html</code> files are all in the repo.</p>
+<hr>
+<h2 dir="auto">Decisions and principles that carry forward</h2>
+<p dir="auto"><strong>"Structure the scaffolding. Never the content."</strong> (R17) A list of industries doesn't tell a founder what their business is — it removes the burden of inventing a taxonomy. Never pre-fill an answer, never suggest a conclusion.</p>
+<p dir="auto"><strong>Multi-select is the default for categories.</strong> Fintech <em>and</em> healthtech is a real answer. Subscription <em>and</em> commission is a real answer. Every list ends in an open <strong>"Other →"</strong>.</p>
+<p dir="auto"><strong>Every question can carry an attachment</strong>, whatever its input type.</p>
+<p dir="auto"><strong>Never grade the business.</strong> The rubric measures whether the founder did the thinking, not whether the idea is good. A brilliant answer about a doomed business scores well.</p>
+<p dir="auto"><strong>"Not sure yet", "It's a hunch", "No revenue yet", "Inconclusive"</strong> must all be selectable without penalty. Punishing honesty teaches founders to invent numbers.</p>
+<p dir="auto"><strong>One primary button per screen.</strong> Broken on the mission page (three "Resubmit for Review"), flagged repeatedly.</p>
+<p dir="auto"><strong>No leaderboards, streaks-as-pressure, or "top contributor".</strong> The XP system covers motivation; a second one rewards volume over substance. This audience reads gamified noise faster than most.</p>
+<p dir="auto"><strong>Prompt format</strong> the user asked for and every round follows:</p>
+<pre dir="auto"><code>PAGE: &lt;route&gt;
+THE PROBLEM   — what's wrong, with observed evidence
+THE FIX       — numbered, with real copy strings and config objects</code></pre>
+<p dir="auto">Closing with a sequence table explaining the order.</p>
+<p dir="auto"><strong>Deliverable pattern per round:</strong> write <code>.md</code> → generate <code>.html</code> → publish artifact → <code>SendUserFile</code> the <code>.md</code> → summarise in chat. Commit and push each round.</p>
+<hr>
+<h2 dir="auto">OPEN — decisions waiting on the user</h2>
+<div class="table-scroll"><table><thead><tr><th dir="auto">From</th><th dir="auto">Decision</th></tr></thead><tbody><tr><td dir="auto"><strong>R15</strong></td><td dir="auto">When a founder passes (≥70), does the mission stay open for improvement? <em>Recommended: yes but quietly — primary becomes "Continue to Mission 2", "Improve my answers" stays a text link.</em></td></tr><tr><td dir="auto"><strong>R16</strong></td><td dir="auto">Mission 1 threshold — hold at 70, or drop to 60? <em>Recommended: hold at 70, let the phase weights do the work, lower it with evidence if the pass rate sits below 60% after ~100 founders.</em></td></tr><tr><td dir="auto"><strong>R16</strong></td><td dir="auto">What happens at 3 failed attempts? <em>Recommended: keep unlimited but route to the AI Mentor instead of a fourth blind attempt.</em></td></tr><tr><td dir="auto"><strong>R17</strong></td><td dir="auto">Mission 5's matrix is labelled <em>value/impact</em>. Those measure nearly the same thing, so ideas land on a diagonal. <em>Value × Effort</em> discriminates properly. <strong>Left unchanged per the no-renaming instruction</strong> — it's a one-line axis change whenever they want it.</td></tr><tr><td dir="auto"><strong>R19</strong></td><td dir="auto"><strong>Team or Cohort first?</strong> Team = 2–5 co-founders sharing ONE journey, self-serve. Cohort = university/incubator with MANY journeys, admin dashboard, invoicing. Different products.</td></tr><tr><td dir="auto"><strong>R19</strong></td><td dir="auto">Seat prices ($12 at 3+, $10.50 at 10+, off a $15 individual) are a recommendation in a config object, not validated against actual support cost.</td></tr><tr><td dir="auto"><strong>R18</strong></td><td dir="auto">Do community posts have an author at all? If they're seeded editorial, decide: publish under a real team member, or mark as "StartPad Editorial" with a distinct card.</td></tr><tr><td dir="auto"><strong>R18</strong></td><td dir="auto">Is the mid-paragraph coloured text a broken renderer, or an AI keyword-highlighting feature misfiring?</td></tr></tbody></table></div>
+<hr>
+<h2 dir="auto">OPEN — never done</h2>
+<ul><li dir="auto"><strong>R2 Set 5·A — app nav diet.</strong> Nav still carries 9 items with Sign out at top level.</li><li dir="auto"><strong>R2 Set 7·A — Arabic audit.</strong> Never run.</li><li dir="auto"><strong>R2 Set 7·B — mobile audit.</strong> <strong>No mobile screen has ever been reviewed.</strong> Every round has worked from desktop screenshots.</li><li dir="auto">Arabic variants of the LinkedIn covers (offered, not requested).</li><li dir="auto">Profile picture 1000×1000, lime mark on near-black, circular safe area (offered, not requested).</li></ul>
+<hr>
+<h2 dir="auto">Corrections made — don't reintroduce</h2>
+<ul><li dir="auto"><strong>Satoshi has no Arabic.</strong> An earlier claim that Zain could cover both and the second font could be dropped was wrong; parsing the binaries disproved it. R13 was corrected in place.</li><li dir="auto"><strong>Mission 10 was already renamed</strong> by the user to "Prototype User Test". An earlier prompt asked for the rename — retired.</li><li dir="auto"><strong>Phases are already contiguous.</strong> An earlier open question about re-cutting them is resolved by the live roadmap.</li><li dir="auto"><strong>The 8-phase marketing description is obsolete.</strong> It's 5.</li></ul>
+<hr>
+<hr>
+<h1 dir="auto">PART 2 — LEAP Consulting</h1>
+<p dir="auto">Separate client, Arabic deliverables.</p>
+<p dir="auto"><strong>Who:</strong> Cairo consultancy at the intersection of strategy, finance and data science. Serves founders, angels, VCs and family offices across Egypt, MENA and global markets. Two service lines:</p>
+<ol><li dir="auto"><strong>Real estate development</strong> — 32 services, existing fee methodology (GCC, SAR)</li><li dir="auto"><strong>Investment &amp; fundraising advisory</strong> — 24 services across 7 practice areas</li></ol>
+<h3 dir="auto">Delivered</h3>
+<p dir="auto"><code>LEAP-Investment-Advisory-Pricing-Methodology.{md,html,pdf,docx}</code> — a fee and duration methodology for the 24 investment services, built on the logic of their existing real-estate methodology.</p>
+<p dir="auto"><strong>Core formula:</strong> effort days × day rate × complexity × market × <strong>stage</strong> × timeline × language = professional fees, + direct expenses.</p>
+<p dir="auto"><strong>Day rates (USD):</strong> Partner 1,600 · Engagement Manager 1,000 · Senior Analyst 620 · Analyst 380. Cost/day 625 / 390 / 240 / 150. Margin ~61% per level, target realised margin <strong>50%</strong> (vs 45% in the real-estate line).</p>
+<p dir="auto"><strong>24 services · 278 effort days · 2–7 weeks · $6,500–21,100.</strong></p>
+<p dir="auto"><strong>Six deliberate departures from the real-estate methodology, each argued:</strong></p>
+<ol><li dir="auto">USD base, not SAR — EGP has lost <strong>70%+</strong> since 2022; a 3-month engagement priced in EGP transfers FX risk to LEAP</li><li dir="auto">Market coefficient widens to <strong>0.70–1.30</strong> (vs 0.95–1.05) — avg deal size: Saudi $23.7M, UAE $9.2M, Egypt $3.0M in 2025</li><li dir="auto">New <strong>stage</strong> coefficient (0.85 seed → 1.50 fund)</li><li dir="auto">Complexity narrowed to 0.80–1.75 so stage isn't double-counted</li><li dir="auto">Direct expenses 4% not 5% — desk work, not site visits</li><li dir="auto"><strong>Advance 50% not 40%</strong> — pre-revenue clients may not be able to pay if the round doesn't close; editable files withheld until settlement</li></ol>
+<p dir="auto"><strong>Success fees:</strong> tiered in tranches 6% → 2%. Seven rules including never standalone, 50% retainer credit, tied to funds arriving not term sheet, 9-month tail limited to a <strong>named written investor list</strong>, 8% overall cap.</p>
+<p dir="auto"><strong>Regulatory stop-rule:</strong> fundraising is a regulated activity — FRA licensing in Egypt, "arranging" is CMA-licensed in Saudi. Services are framed as advisory, with a mandatory legal review before any engagement approaches the arranging threshold.</p>
+<h3 dir="auto">OPEN — LEAP</h3>
+<ul><li dir="auto">Base market: Saudi 1.00 kept for consistency with their real-estate doc. Revisit if &gt;70% of engagements are Egyptian.</li><li dir="auto">Target margin 50% needs verification against their actual utilisation rate.</li><li dir="auto"><strong>Should success fees be activated at all?</strong> Recommended: defer a year, use monthly retainers for round management until the regulatory review settles in all three markets.</li><li dir="auto">Price benchmarks used are predominantly US/European — no published MENA advisory fee survey exists. Their own lost/won proposals are the better data.</li></ul>
+<hr>
+<hr>
+<h1 dir="auto">PART 3 — Working notes</h1>
+<h2 dir="auto">Repo</h2>
+<pre dir="auto"><code>startpad-lovable-prompts-r{1..19}.{md,html}   the rounds
+startpad-screen-review-r2.html                R2 review
+startpad-review-r3.html                       R3 review
+startpad-ux-review.html                       R1 review
+brand/logo/                                   extracted PNGs with alpha
+brand/linkedin/                               4 covers @1x/@2x, overview copy AR+EN
+brand/facebook/                               3 covers @1x/@2x
+LEAP-Investment-Advisory-Pricing-Methodology.{md,html,pdf,docx}
+build_leap_docx.js                            Arabic RTL docx generator
+build_finstreet_analysis.js                   competitive analysis docx
+Finstreet_Competitive_Analysis.docx
+tools/md-to-html.py                           md → styled HTML (LTR | --rtl | --print)
+tools/html-to-pdf.js                          print HTML → A4 PDF</code></pre>
+<h2 dir="auto">Commands</h2>
+<pre dir="auto"><code># English round document
+python3 tools/md-to-html.py startpad-lovable-prompts-r20.md \
+        startpad-lovable-prompts-r20.html "StartPad — &lt;subject&gt;"
+
+# Arabic document
+python3 tools/md-to-html.py doc.md doc.html "العنوان" --rtl
+
+# PDF (needs the print HTML + fonts + playwright — see below)
+python3 tools/md-to-html.py doc.md /tmp/print.html "t" --print
+node tools/html-to-pdf.js /tmp/print.html out.pdf "FOOTER TEXT"
+
+# Word, Arabic RTL
+node build_leap_docx.js doc.md out.docx</code></pre>
+<h2 dir="auto">Environment — this container resets</h2>
+<p dir="auto"><strong><code>node_modules</code> and the scratchpad are wiped on reset.</strong> Every one of these had to be redone mid-session at least once:</p>
+<pre dir="auto"><code># node packages — run node FROM the repo root or require() fails
+PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install playwright docx
+
+# PDF reading — pypdf is broken (_cffi_backend / cryptography panic). Use poppler:
+apt-get update -qq &amp;&amp; apt-get install -y -qq poppler-utils
+pdftotext -layout in.pdf out.txt     # handles Arabic correctly
+
+# Arabic fonts for PDF rendering (none installed by default):
+curl -sS -A "Mozilla/5.0" \
+  "https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700" -o /tmp/ar.css
+# then fetch each .ttf URL into ~/.fonts/NotoSansArabic-{400,500,600,700}.ttf &amp;&amp; fc-cache -f
+
+# LibreOffice, for verifying docx renders (installs fine):
+apt-get install -y -qq --no-install-recommends libreoffice-writer
+soffice --headless --convert-to pdf --outdir /tmp/check file.docx</code></pre>
+<ul><li dir="auto">Chromium: <code>/opt/pw-browsers/chromium-1194/chrome-linux/chrome</code></li><li dir="auto"><strong>Reachable:</strong> Google Fonts, npm, apt</li><li dir="auto"><strong>Blocked:</strong> GitHub raw, finstreet.ae, angelsta.net, wamda.com, adgm.com, semafor.com, tracxn.com</li><li dir="auto">A local checkout once reset to an old commit while the remote was ahead — <code>git fetch</code> + <code>git rebase origin/&lt;branch&gt;</code> recovered it.</li></ul>
+<h2 dir="auto">Git</h2>
+<p dir="auto">Branch <strong><code>claude/startpad-ux-genz-review-wzg9vx</code></strong> only. Commit messages end with:</p>
+<pre dir="auto"><code>Co-Authored-By: Claude Opus 5 &lt;noreply@anthropic.com&gt;
+Claude-Session: https://claude.ai/code/session_018m7f2Ed2N79SkUG5JbZd3z</code></pre>
+<p dir="auto">Never put a model identifier in commits, PRs, code comments or pushed artifacts.</p>
+<h2 dir="auto">Verify arithmetic before publishing</h2>
+<p dir="auto">Every pricing table, fee calculation and question count in this project has been checked with a script before shipping — and doing so caught real errors (prompt counts, day totals, DXA column sums). Keep doing it. <code>docx</code> column widths must sum to the content width exactly (9360 DXA for A4 with 0.9" margins; 9026 for 1").</p>
+</div>
+<script>document.querySelectorAll(".prompt").forEach(function(b){var t=b.querySelector(".copy"),p=b.querySelector("pre");
+if(!t||!p)return;t.addEventListener("click",function(){var x=p.textContent,d=function(){t.textContent="Copied";
+setTimeout(function(){t.textContent="Copy"},1600)};if(navigator.clipboard&&navigator.clipboard.writeText){
+navigator.clipboard.writeText(x).then(d,function(){t.textContent="Press \u2318C"})}else{var a=document.createElement("textarea");
+a.value=x;document.body.appendChild(a);a.select();try{document.execCommand("copy");d()}catch(e){t.textContent="Press \u2318C"}
+document.body.removeChild(a)}})});</script>
