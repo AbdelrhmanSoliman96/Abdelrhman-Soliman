@@ -9,11 +9,11 @@ body{width:${w}px;height:${h}px;background:#0F3330;position:relative;overflow:hi
 .word{font-weight:600;letter-spacing:.6em;font-size:${ws}px;color:#8CC2BB}
 h1{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:${hs}px;line-height:1.1}
 p{font-weight:300;font-size:${ss}px;letter-spacing:.04em;color:#D7DCDB}
-.r{direction:rtl;text-align:right;font-family:Cairo,sans-serif;font-weight:600;font-size:${ar}px;color:#8CC2BB;line-height:1.3;border-right:2px solid #8CC2BB;padding-right:${ar*0.5}px}
-.r small{display:block;font-weight:500;font-size:${ar*0.55}px;color:#D7DCDB;margin-top:6px}
+.r{text-align:right;font-family:Montserrat,sans-serif;font-weight:500;font-size:${ar*0.8}px;color:#8CC2BB;line-height:1.35;border-right:2px solid #8CC2BB;padding-right:${ar*0.5}px;letter-spacing:.02em}
+.r small{display:block;font-weight:500;font-size:${ar*0.45}px;color:#D7DCDB;margin-top:6px}
 </style><body><div class=rule style="top:${h*0.12}px"></div><div class=rule style="bottom:${h*0.12}px"></div>
-<div class=wrap><div class=l><div class=word>A N G E L S T A</div><h1>One record for every round.</h1><p>Cap tables · ESOP · Data rooms · Portfolio analytics</p></div>
-<div class=r>سجل واحد<br>لكل جولة تمويل<small>جداول الملكية · ESOP · غرف البيانات</small></div></div>`;
+<div class=wrap><div class=l><div class=word>A N G E L S T A</div><h1>One record for every round.</h1><p>System of record for founders and the investors who back them</p></div>
+<div class=r>Private capital<br>software for MENA<small>Cap tables · ESOP · Portfolio analytics</small></div></div>`;
 (async()=>{const b=await chromium.launch();
 const jobs={'linkedin-cover-1128x191':[1128,191,280,40,30,11,13,19],'x-header-1500x500':[1500,500,300,70,54,17,22,30]};
 for(const [n,[w,h,...a]] of Object.entries(jobs)){
