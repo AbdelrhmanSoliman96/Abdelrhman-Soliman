@@ -1,0 +1,55 @@
+{
+ "segs": [
+  {
+   "id": "s1",
+   "vo": "The same fund can be one point five times, and one point two times. Both numbers are correct.",
+   "cap": "The same fund can be 1.5x, and 1.2x. Both numbers are correct.",
+   "dur": 5.41,
+   "start": 0.35
+  },
+  {
+   "id": "s2",
+   "vo": "Say limited partners paid in ten million dollars. Eight million went into companies. Two million went to fees and expenses.",
+   "cap": "Say limited partners paid in $10M. $8M went into companies. $2M went to fees and expenses.",
+   "dur": 7.187,
+   "start": 6.18
+  },
+  {
+   "id": "s3",
+   "vo": "Those companies are now worth twelve million. Twelve over eight is one point five times. That's the M O I C on the investments.",
+   "cap": "Those companies are now worth $12M. $12M over $8M is 1.5x. That's the MOIC on the investments.",
+   "dur": 7.047,
+   "start": 13.787
+  },
+  {
+   "id": "s4",
+   "vo": "But T V P I divides by what limited partners paid in. Twelve over ten is one point two times, before carry.",
+   "cap": "But TVPI divides by what limited partners paid in. $12M over $10M is 1.2x, before carry.",
+   "dur": 6.467,
+   "start": 21.254
+  },
+  {
+   "id": "s5",
+   "vo": "No distributions yet, so D P I is zero. R V P I is one point two. T V P I is D P I plus R V P I.",
+   "cap": "No distributions yet, so DPI is zero. RVPI is 1.2x. TVPI is DPI plus RVPI.",
+   "dur": 7.93,
+   "start": 28.141
+  },
+  {
+   "id": "s6",
+   "vo": "Neither number is wrong. They answer different questions. How good are the deals? And what is the position worth against what was paid in?",
+   "cap": "Neither number is wrong. They answer different questions. How good are the deals? And what is the position worth against what was paid in?",
+   "dur": 6.525,
+   "start": 36.491
+  },
+  {
+   "id": "s7",
+   "vo": "So when you hear a multiple, ask which denominator.",
+   "cap": "So when you hear a multiple, ask which denominator.",
+   "dur": 2.763,
+   "start": 43.436
+  }
+ ],
+ "total": 49.8,
+ "end_voice": 46.199
+}
