@@ -14,16 +14,17 @@ ROLES = [
     ("Data Engineer", "Technology", 25, [0, 0, 1, 1, 2], "EGP", 60000),
     ("Product Manager", "Product", 4, [1, 1, 1, 2, 2], "EGP", 65000),
     ("UI and UX Product Designer", "Product", 1, [1, 1, 2, 2, 2], "EGP", 40000),
-    ("Head of Sales, Institutional, Riyadh", "Sales", 10, [1, 1, 1, 1, 1], "USD", 6500),
+    ("Head of Sales, Institutional, Doha then Riyadh", "Sales", 10, [1, 1, 1, 1, 1], "USD", 6500),
     ("Account Executive, Institutional, GCC", "Sales", 13, [0, 2, 3, 5, 6], "USD", 4000),
     ("Sales Development Representative", "Sales", 7, [1, 2, 3, 4, 5], "EGP", 25000),
     ("Growth Marketing Manager", "Marketing", 1, [1, 1, 1, 1, 1], "EGP", 50000),
     ("Performance Marketing Specialist", "Marketing", 13, [0, 1, 1, 2, 2], "EGP", 28000),
     ("Content and Research Analyst, Arabic and English", "Marketing", 4, [1, 1, 2, 2, 2], "EGP", 25000),
     ("Community Lead", "Community and Partnerships", 2, [1, 1, 1, 1, 1], "EGP", 35000),
+    ("Partnerships and Community Manager, Doha", "Community and Partnerships", 4, [1, 1, 1, 1, 1], "USD", 4500),
     ("Community Manager, Saudi Arabia", "Community and Partnerships", 13, [0, 1, 1, 1, 1], "USD", 3500),
     ("Partnerships Manager, accelerators and angel networks", "Community and Partnerships", 4, [1, 1, 2, 2, 2], "EGP", 40000),
-    ("Country Lead, UAE and the wider GCC", "Community and Partnerships", 25, [0, 0, 1, 1, 1], "USD", 6000),
+    ("Country Lead, UAE and the wider GCC", "Community and Partnerships", 19, [0, 1, 1, 1, 1], "USD", 6000),
     ("Customer Success Manager", "Customer", 4, [1, 2, 3, 4, 5], "EGP", 30000),
     ("Customer Support Agent, Arabic and English", "Customer", 13, [0, 1, 2, 3, 4], "EGP", 18000),
     ("Onboarding and Data Migration Specialist", "Customer", 16, [0, 1, 1, 2, 3], "EGP", 30000),
@@ -127,7 +128,7 @@ def build_payroll(ws, A, REG):
     t.line("ae_heads", "Account executives and head of sales", lambda m: f"{mcol(m)}{g['h12']}+{mcol(m)}{g['h13']}", NUM, total="end")
     t.line("sdr_heads", "Sales development reps", lambda m: f"{mcol(m)}{g['h14']}", NUM, total="end")
     t.line("cp_heads", "Community and partnerships heads", lambda m: f"{mcol(m)}{g['fh_Community and Partnerships']}", NUM, total="end")
-    t.line("cs_heads", "Customer success and onboarding heads", lambda m: f"{mcol(m)}{g['h22']}+{mcol(m)}{g['h24']}", NUM, total="end")
+    t.line("cs_heads", "Customer success and onboarding heads", lambda m: f"{mcol(m)}{g['h23']}+{mcol(m)}{g['h25']}", NUM, total="end")
     t.line("fd_heads", "Founders", lambda m: f"{mcol(m)}{g['fh_Leadership']}", NUM, total="end")
     return keys
 
@@ -147,9 +148,10 @@ def build_acquisitions(ws, A, REG):
     P = lambda key, m, opening="0": opening if m == 1 else f"{mcol(m - 1)}{tok(ws.title, key)}"
 
     t.section("1. ONLINE CHANNELS, SPEND TO REGISTRATIONS")
-    chans = ["ch1", "ch2", "ch3", "ch4", "ch5", "ch6"]
+    chans = ["ch1", "ch2", "ch3", "ch4", "ch5", "ch6", "ch7", "ch8"]
     names = ["LinkedIn Ads, founders", "Meta and Instagram, founders", "Google Search, cap table and data room intent",
-             "LinkedIn Ads, investors and fund managers", "Google Search, portfolio management intent", "SEO, newsletter and data reports"]
+             "LinkedIn Ads, investors and fund managers", "Google Search, portfolio management intent", "SEO, newsletter and data reports",
+             "Qatar founders, family offices and funds", "Global self serve, any country"]
     for ch, nm in zip(chans, names):
         t.line(f"{ch}_sp", nm, lambda m, ch=ch: A.y(ch, m), USD)
         t.line(f"{ch}_cl", "Paid clicks", lambda m, ch=ch: f"IFERROR({R(ch + '_sp', m)}/{A.c(ch, 'H')},0)", NUM, indent=1)
@@ -260,7 +262,7 @@ def build_acquisitions(ws, A, REG):
            lambda m: f"{R('free', m)}*{A.s('ai_free')}+{R('a_pro', m)}*{A.s('ai_pro')}+{R('a_team', m)}*{A.s('ai_team')}+{R('a_sc', m)}*{A.s('ai_sc')}+{R('a_ang', m)}*{A.s('ai_ang')}+{R('a_inst', m)}*{A.s('ai_inst')}+{R('a_ic', m)}*{A.s('ai_ic')}", NUM)
     t.line("cpr", "Marketing cost per registration", lambda m: f"IFERROR({R('mk_sp', m)}/{R('reg_new', m)},0)", USD2, total="avg")
     t.line("cpp", "Marketing cost per new paying account", lambda m: f"IFERROR({R('mk_sp', m)}/{R('newp', m)},0)", USD, total="avg")
-    t.line("mkts", "Markets live", lambda m: f"1+IF({m}>={A.s('o_ksa')},1,0)+IF({m}>={A.s('o_uae')},1,0)+IF({m}>={A.s('o_gcc')},1,0)", NUM, total="end")
+    t.line("mkts", "Home and GCC markets live, Egypt, Qatar, Saudi Arabia, UAE, rest of GCC", lambda m: "+".join(f"IF({m}>={A.c(k, 'I')},1,0)" for k in ["g_egy", "g_qat", "g_ksa", "g_uae", "g_gcc"]), NUM, total="end")
 
 
 # ---------------------------------------------------------------------------
@@ -297,9 +299,11 @@ def build_gtm(ws, A, REG):
     t.r += 2
     t.section("3. WHEN EACH ENGINE AND MARKET IS LIVE, 1 MEANS LIVE")
     for key, txt in [("o_pro", "Founder Pro"), ("o_team", "Founder Team"), ("o_sc", "Founder Custom"), ("o_ang", "Investor Angel"),
-                     ("o_inst", "Investor Institutional"), ("o_ic", "Investor Custom"), ("o_ksa", "Saudi Arabia"), ("o_uae", "United Arab Emirates"),
-                     ("o_gcc", "Qatar and the wider GCC")]:
+                     ("o_inst", "Investor Institutional"), ("o_ic", "Investor Custom")]:
         t.line(f"l_{key}", txt, lambda m, key=key: f"IF({m}>={A.s(key)},1,0)", NUM, total="end")
+    import params as P
+    for key, txt, *_ in P.GEO:
+        t.line(f"l_{key}", txt, lambda m, key=key: f"IF({m}>={A.c(key, 'I')},1,0)", NUM, total="end")
     t.blank()
     t.section("4. FROM SPEND TO A PAYING ACCOUNT")
     for k, txt, fmt, tot in [("mk_sp", "Marketing and community spend", USD, "sum"), ("reg_new", "New registrations", NUM, "sum"),
@@ -324,8 +328,9 @@ def build_revenue(ws, A, REG):
     t.blank()
 
     t.section("EFFECTIVE PRICE PER ACCOUNT PER MONTH, AFTER BILLING MIX, DISCOUNTS AND EGYPT PRICING",
-              "Monthly and annual list prices blended by the share on annual plans, then price realization, then the Egypt price list on the Egypt share of accounts.")
-    region = lambda m: f"({A.y('eg_share', m)}*{A.s('eg_idx')}+(1-{A.y('eg_share', m)}))"
+              "Monthly and annual list prices blended by the share on annual plans, then price realization, then each market's price index weighted by where accounts come from.")
+    import params as P
+    region = lambda m: "(" + "+".join(f"{A.y(k, m)}*{A.c(k, 'H')}" for k, *_ in P.GEO) + ")"
 
     def eff(tk, share, m):
         return f"({A.y(tk + '_m', m)}*(1-{A.y(share, m)})+{A.y(tk + '_a', m)}*{A.y(share, m)})*{A.y('realize', m)}*{region(m)}"
@@ -359,6 +364,9 @@ def build_revenue(ws, A, REG):
     t.line("r_plat", "Platform and partner", lambda m: f"{R('r_wl', m)}+{R('r_spv', m)}+{R('r_spon', m)}", USD)
     t.line("r_self", "Self serve subscription revenue, Pro, Team and Angel", lambda m: f"{R('r_pro', m)}+{R('r_team', m)}+{R('r_ang', m)}", USD)
     t.line("r_sales", "Sales led subscription revenue, Custom and Institutional", lambda m: f"{R('r_sc', m)}+{R('r_inst', m)}+{R('r_ix', m)}+{R('r_ic', m)}", USD)
+    t.line("geo_f", "Regional price factor, weighted across markets", lambda m: region(m), PCT, total="avg")
+    for k, txt, *_ in P.GEO:
+        t.line(f"rg_{k}", f"Subscription revenue, {txt}", lambda m, k=k: f"({R('r_fs', m)}+{R('r_is', m)})*{A.y(k, m)}*{A.c(k, 'H')}/{R('geo_f', m)}", USD)
     t.line("r_ann", "Revenue from accounts on annual prepaid plans",
            lambda m: f"{R('r_self', m)}*{A.y('ann_self', m)}+{R('r_sales', m)}*{A.y('ann_sales', m)}", USD)
 

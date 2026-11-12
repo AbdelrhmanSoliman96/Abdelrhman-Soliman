@@ -91,8 +91,9 @@ def MR(sheet, key, y=None):
 
 PPE = [("as_lap", "Laptop"), ("as_mon", "Monitor and peripherals"), ("as_ph", "Mobile handset and line set up"), ("as_desk", "Desk and chair")]
 SHARED = [("sa_prod", "Product already built, founder investment to date", "I"), ("sa_ip", "Trademark, entity, IP and app store accounts", "I"),
-          ("sa_ksa", "Saudi entity, MISA licence and registration", "I"), ("sa_cert", "SOC 2 and ISO 27001 initial certification", "I"),
-          ("sa_cai", "Cairo office fit out", "E"), ("sa_ruh", "Riyadh office set up", "E"), ("sa_av", "Event booth, studio and community kit", "E")]
+          ("sa_qat", "Qatar entity, QFC or QSTP licence", "I"), ("sa_ksa", "Saudi entity, MISA licence and registration", "I"),
+          ("sa_cert", "SOC 2 and ISO 27001 initial certification", "I"), ("sa_cai", "Cairo office fit out", "E"), ("sa_ruh", "Riyadh office set up", "E"),
+          ("sa_doh", "Doha co working set up and launch kit", "E"), ("sa_av", "Event booth, studio and community kit", "E")]
 
 
 def build_capex(ws, A, REG):
@@ -560,7 +561,8 @@ def build_funding(ws, A, REG):
     AQe = lambda k, y: TE("Acquisitions", k, y)
     a.kv("ms1", "Paid plans live, Pro, Team and Angel", "Month 2", "@")
     a.kv("ms2", "Institutional plan live, first demos converting", "Month 4", "@")
-    a.kv("ms3", "Saudi Arabia opened, Riyadh head of sales from month 10", "Month 7", "@")
+    a.kv("ms3", "Qatar opened, Doha partnerships manager and entity in place", "Month 4", "@")
+    a.kv("ms3b", "Saudi Arabia opened founder led; head of institutional sales hired in Doha", "Month 10", "@")
     a.kv("ms4", "Paying founder accounts at the end of year one", f"={AQe('f_paid', 1)}", NUM)
     a.kv("ms5", "Paying investor accounts at the end of year one", f"={AQe('i_paid', 1)}", NUM)
     a.kv("ms6", "Registered accounts at the end of year one, both sides", f"={AQe('reg', 1)}", NUM)

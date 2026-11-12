@@ -110,6 +110,8 @@ def build_inputs(ws):
         ("ch4", "LinkedIn Ads, angels, family offices and fund managers", [400, 1000, 1700, 2500, 3400], 5.5, 0.15, 0.04, 0.0),
         ("ch5", "Google Search, portfolio management intent", [200, 500, 800, 1200, 1700], 2.5, 0.10, 0.05, 0.0),
         ("ch6", "SEO, newsletter and MENA private markets data reports", [300, 600, 1000, 1400, 1800], 0.35, 0.50, 0.02, 0.7),
+        ("ch7", "LinkedIn and Google, Qatar founders, family offices and funds", [300, 600, 800, 900, 1000], 4.5, 0.15, 0.045, 0.5),
+        ("ch8", "Global self serve, product led search and app stores, any country", [250, 600, 1000, 1500, 2000], 1.2, 0.40, 0.03, 0.6),
     ]
     for key, name, bud, cpc, upl, conv, shf in channels:
         label(ws, A.r, name)
@@ -122,14 +124,14 @@ def build_inputs(ws):
         put(ws, f"K{A.r}", shf, PCT, kind="input")
         A.k[key] = A.r
         A.r += 1
-    note(ws, A.r, "Cost per click: LinkedIn B2B in the GCC runs USD 3 to 7, Meta in Egypt under USD 1. Conversion reflects a free sign up, not a purchase.")
+    note(ws, A.r, "Cost per click: LinkedIn B2B in the GCC and Qatar runs USD 3 to 7, Meta in Egypt under USD 1. Angelsta is SaaS: anyone in any country can sign up, so channel 8 buys global self serve demand from day one.")
     A.r += 1
 
     # 4 ------------------------------------------------------------------
     A.section("4. ACQUISITION, EVENTS, COMMUNITY AND PARTNERS",
               "This is the engine room. Angelsta's cheapest sign ups come from the ecosystem: events, its own community circles, accelerators and angel networks.")
     A.yhdr("Offline and partner activity")
-    A.yearly("ev_n", "Ecosystem events attended, Web Summit Qatar, LEAP, Biban, GITEX, RiseUp", "per month", [0.5, 0.75, 1, 1.25, 1.5], NUM2)
+    A.yearly("ev_n", "Ecosystem events attended, RiseUp Cairo, Web Summit Qatar, LEAP, Biban, GITEX, Step", "per month", [0.5, 0.75, 1, 1.25, 1.5], NUM2)
     A.single("ev_f", "Founder sign ups per event", "#", 30)
     A.single("ev_i", "Investor sign ups per event", "#", 10)
     A.yearly("ev_cost", "Cost per event attended, pass, booth share and travel", "USD", [1500, 1800, 2000, 2200, 2400], USD)
@@ -218,8 +220,25 @@ def build_inputs(ws):
     A.yearly("ann_self", "Share of self serve accounts on annual plans, Pro, Team and Angel", "%", P.ANNUAL_SHARE_SELF, PCT)
     A.yearly("ann_sales", "Share of sales led accounts on annual plans, Institutional and Custom", "%", P.ANNUAL_SHARE_SALES, PCT)
     A.yearly("realize", "Price realization after founding member and negotiated discounts", "%", P.PRICE_REALIZATION, PCT)
-    A.yearly("eg_share", "Egypt share of paying accounts", "%", P.EGYPT_SHARE, PCT)
-    A.single("eg_idx", "Egypt price list as a share of the GCC list", "%", P.EGYPT_PRICE_INDEX, PCT)
+    note(ws, A.r, "Where paying accounts come from. Egypt first, then Qatar, then the GCC; any country can subscribe self serve from day one. Each market bills at its own price index against the list.")
+    A.r += 1
+    hdr(ws, A.r, ["Market, share of paying accounts", "Unit", "2027 Y1", "2028 Y2", "2029 Y3", "2030 Y4", "2031 Y5", "Price index", "Opens, month"])
+    A.r += 1
+    g0 = A.r
+    for key, txt, mix, idx, om in P.GEO:
+        label(ws, A.r, txt)
+        label(ws, A.r, "%", col=2, size=8, color=GREY)
+        for i, v in enumerate(mix):
+            put(ws, f"{YC[i]}{A.r}", v, PCT, kind="input")
+        put(ws, f"H{A.r}", idx, PCT, kind="input")
+        put(ws, f"I{A.r}", om, NUM, kind="input")
+        A.k[key] = A.r
+        A.r += 1
+    label(ws, A.r, "Shares must total 100 per cent")
+    for i in range(5):
+        put(ws, f"{YC[i]}{A.r}", f"=SUM({YC[i]}{g0}:{YC[i]}{A.r - 1})", PCT, kind="check")
+    A.k["geo_chk"] = A.r
+    A.r += 1
     note(ws, A.r, "Add-ons below earn only when the switch in section 1 is set to 1.")
     A.r += 1
     A.single("ad_ai_att", "AI credit top up packs bought per paying account per month", "#", 0.04, NUM2)
@@ -241,8 +260,7 @@ def build_inputs(ws):
                         ("o_ang", "Investor Angel", 2), ("o_inst", "Investor Institutional", 4), ("o_ic", "Investor Custom", 10),
                         ("o_ai", "Add-on, AI credit top ups", 6), ("o_val", "Add-on, analyst reviewed valuation reports", 4),
                         ("o_wl", "Add-on, white label licences", 13), ("o_spv", "Add-on, syndicate and SPV administration", 25),
-                        ("o_spon", "Add-on, sponsorship", 13), ("o_ksa", "Market, Saudi Arabia", 7), ("o_uae", "Market, United Arab Emirates", 13),
-                        ("o_gcc", "Market, Qatar and the wider GCC", 25)]:
+                        ("o_spon", "Add-on, sponsorship", 13)]:
         A.single(key, txt, "month", m)
 
     # 10 -----------------------------------------------------------------
@@ -280,13 +298,13 @@ def build_inputs(ws):
     A.yhdr("Operating cost driver")
     rows = [
         ("ox_desk", "Co working desk and office services, per employee per month", "USD", [70, 20, 20, 20, 20]),
-        ("ox_rent", "Office rent, Cairo from year two and Riyadh from year three, per month", "USD", [0, 1500, 2500, 3500, 4500]),
+        ("ox_rent", "Office rent, Cairo from year two, Doha and Riyadh from year three, per month", "USD", [0, 1500, 3000, 4000, 5000]),
         ("ox_util", "Utilities, internet and communications, per employee per month", "USD", [25, 28, 30, 32, 34]),
         ("ox_soft", "Software and tooling, per employee per month", "USD", [70, 80, 90, 95, 100]),
         ("ox_cloud", "Cloud base platform and third party APIs, fixed per month", "USD", [600, 1200, 2000, 2800, 3600]),
         ("ox_crm", "CRM, product analytics and data tools, per month", "USD", [250, 450, 700, 950, 1200]),
         ("ox_pros", "Prospecting and private markets databases, per month", "USD", [300, 500, 750, 1000, 1200]),
-        ("ox_trav", "Travel, per commercial head per month, GCC coverage", "USD", [250, 300, 330, 360, 380]),
+        ("ox_trav", "Travel, per commercial head per month, Cairo, Doha and GCC coverage", "USD", [300, 330, 350, 370, 390]),
         ("ox_rec", "Recruitment cost per new hire", "USD", [350, 400, 450, 500, 550]),
         ("ox_train", "Training and enablement, per employee per year", "USD", [200, 250, 300, 350, 400]),
         ("ox_fin", "Outsourced finance, legal and audit, per month", "USD", [900, 1400, 2000, 2600, 3200]),
@@ -342,10 +360,12 @@ def build_inputs(ws):
     for key, txt, typ, m, cost, life in [
         ("sa_prod", "Product already built, founder investment to date", "Intangible", 1, f"={A.s('op_prod')}", 60),
         ("sa_ip", "Trademark, entity formation, IP and app store accounts", "Intangible", 1, 3000, 60),
+        ("sa_qat", "Qatar entity, QFC or QSTP licence and registration", "Intangible", 4, 8000, 60),
         ("sa_ksa", "Saudi entity, MISA licence and commercial registration", "Intangible", 13, 12000, 60),
         ("sa_cert", "SOC 2 Type I and ISO 27001 initial certification", "Intangible", 18, 15000, 36),
         ("sa_cai", "Cairo office fit out", "Equipment", 13, 10000, 60),
         ("sa_ruh", "Riyadh office set up", "Equipment", 25, 8000, 60),
+        ("sa_doh", "Doha co working set up and launch kit", "Equipment", 4, 3000, 36),
         ("sa_av", "Event booth, studio and community kit", "Equipment", 3, 2500, 36),
     ]:
         label(ws, A.r, txt)

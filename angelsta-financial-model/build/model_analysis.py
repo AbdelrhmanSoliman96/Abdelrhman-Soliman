@@ -296,7 +296,7 @@ def build_exit(ws, A, REG):
     a.kv("own1", "Ownership at exit", f"={R('own0')}*{R('ret')}", PCT, bold=True)
     a.blank()
     a.section("WHAT THE COMPANY IS WORTH AT EXIT", "Three ARR bases and an EBITDA cross check, because no single multiple is defensible on its own.", cols=("Multiple", "Year 5 metric", "Exit value"))
-    rows = [("e1", "Year five ARR multiple, conservative", 3), ("e2", "Year five ARR multiple, central", 5), ("e3", "Year five ARR multiple, strong", 8)]
+    rows = [("e1", "Year five ARR multiple, conservative, 2026 private SaaS M&A median", 3), ("e2", "Year five ARR multiple, central", 4), ("e3", "Year five ARR multiple, strong, vertical SaaS with network effects", 6)]
     for k, txt, mlt in rows:
         label(ws, a.r, txt)
         put(ws, f"C{a.r}", mlt, MULT, kind="input")
@@ -380,6 +380,7 @@ def build_summary(ws, A, REG):
     a.kv("c5", "Revenue families against revenue streams", f"=SUM('Total Revenue'!B{tok('Total Revenue', 'chk')}:BN{tok('Total Revenue', 'chk')})", USD, kind="check")
     a.kv("c6", "Pre-seed build up against the Expenses sheet", f"={fu('y1chk')}", USD, kind="check")
     a.kv("c7", "Months in which cash falls below zero", f"=COUNTIF({MR('Cash Flow Statement', 'c1')},\"<0\")", NUM, kind="check")
+    a.kv("c9", "Market shares of paying accounts, five years", f"=SUM('Assumption Setting'!C{A.k['geo_chk']}:G{A.k['geo_chk']})-5", PCT, kind="check")
     a.kv("c8", "Activity planned beyond team capacity, five year total", f"=SUM('GTM Capacity and Timing'!C{tok('GTM Capacity and Timing', 'over')}:BN{tok('GTM Capacity and Timing', 'over')})/2", NUM1, kind="check")
     a.blank()
     a.section("WHAT THIS MODEL OPENS ON", cols=("Value",))
@@ -391,57 +392,56 @@ def build_summary(ws, A, REG):
 
 
 def build_market(ws, A, REG):
-    title(ws, "Market Research", "The market the model sells into, who else is in it, and what they charge. No revenue in the model is attributed to any figure on this page.")
-    ws.column_dimensions["A"].width = 46
-    ws.column_dimensions["B"].width = 30
-    ws.column_dimensions["C"].width = 26
-    ws.column_dimensions["D"].width = 62
+    import competitors as C
+    title(ws, "Market Research", "Egypt first, then Qatar, then the GCC, with self serve from any country. Who else is in the market, and what they charge. No revenue in the model is attributed to any figure on this page.")
+    ws.column_dimensions["A"].width = 40
+    ws.column_dimensions["B"].width = 22
+    ws.column_dimensions["C"].width = 22
+    ws.column_dimensions["D"].width = 20
+    ws.column_dimensions["E"].width = 18
+    ws.column_dimensions["F"].width = 26
+    ws.column_dimensions["G"].width = 70
     r = 4
 
-    def tbl(r, ttl, head, rows):
-        section(ws, r, ttl, 4)
+    def tbl(r, ttl, head, rows, n=7):
+        section(ws, r, ttl, n)
         r += 1
         hdr(ws, r, head)
         r += 1
         for row in rows:
             for j, v in enumerate(row):
                 c = ws.cell(r, j + 1, v)
-                c.font = f(8.6 if j else 9, j == 0, color=INK if j < 3 else GREY)
+                c.font = f(8.6 if j else 9, j == 0, color=INK if j < len(row) - 1 else GREY)
                 c.alignment = Alignment(wrap_text=True, vertical="top")
             r += 1
         return r + 1
-    r = tbl(r, "THE MARKET, COUNTED", ["Measure", "Figure", "Basis", "Source"], [
-        ["MENA venture funding, 2025", "USD 3.8bn across 688 deals", "Counted", "MAGNiTT FY2025 MENA Venture Capital Report"],
-        ["MENA startups raising, 2025, broad definition", "647 startups, USD 7.5bn", "Counted", "Wamda 2025 year in review"],
-        ["Saudi Arabia venture funding, 2025", "USD 1.72bn, 257 deals, first by deal count", "Counted", "MAGNiTT via Arab News"],
-        ["UAE venture deals, 2025", "231 deals", "Counted", "MAGNiTT via Arab News"],
-        ["Saudi Arabia and UAE share of MENA funding", "86 per cent", "Counted", "MAGNiTT FY2025"],
-        ["AI share of MENA funding, 2025", "22 per cent of value, 29 per cent of deals", "Counted", "MAGNiTT FY2025 AI report"],
-        ["MENA family groups active in venture", "58 per cent; 70 per cent source deals through their own networks", "Counted", "Arab News, March 2025"],
-        ["VC firms, angel groups and accelerators headquartered in Saudi Arabia", "More than 65", "Counted, mixed entity types", "Entrepreneur Middle East"],
-        ["Largest Saudi angel network, OQAL", "100 to 200 members", "Self reported", "Entrepreneur Middle East"],
-    ])
-    r = tbl(r, "THE MARKET, DERIVED FOR THIS MODEL", ["Measure", "Figure", "Basis", "How it is built"], [
-        ["Active startups that run a cap table and raise, Egypt and GCC", "About 10,000", "Derived", "Around 690 funded a year, times a 12 to 15 times pipeline of companies preparing to raise or already funded"],
-        ["Institutional investors active in MENA private markets", "About 1,500", "Derived", "VC firms, family offices, CVCs, PE houses and organised angel networks across Egypt and the GCC"],
-        ["Active individual angels", "About 6,000", "Derived", "Members of regional angel networks and syndicate platforms, with overlap removed"],
-        ["Founder side serviceable revenue", "About USD 12m a year", "Derived", "10,000 startups at about USD 1,200 a year blended"],
-        ["Investor side serviceable revenue", "About USD 14m a year", "Derived", "1,500 institutions at about USD 7,200 plus 6,000 angels at about USD 600"],
-        ["Serviceable market, both sides", "About USD 26m a year", "Derived", "Before Turkey, Pakistan and the wider emerging market expansion"],
-        ["Share of that market in year five", "See Financial Indicators, ARR at year five", "Output", "The model reaches its ARR from the funnel, not from a share of market"],
-    ])
-    r = tbl(r, "WHO ELSE IS IN THIS MARKET, AND WHAT THEY CHARGE", ["Company", "Position", "Price", "What it means for Angelsta"], [
-        ["Carta", "Global equity management, cap tables and fund admin", "Launch free to 25 stakeholders; Build about USD 1,600 a year", "The global anchor; priced for US companies"],
-        ["Pulley", "Cap tables for startups", "About USD 1,200 a year; Growth about USD 3,500", "Close to Angelsta Team, without the data room or AI"],
-        ["Cake Equity", "Cap tables and ESOP", "About USD 1,000 to 2,750 a year", "Confirms the founder price band"],
-        ["Eqvista", "Cap tables and 409A valuations", "Free to 20 shareholders; valuation bundles USD 990 to 2,590", "Valuation is what founders pay for most clearly"],
-        ["Visible", "Investor updates and portfolio monitoring", "Founders USD 59 to 249 a month; investors quoted", "Updates alone sell for USD 59 a month and up"],
-        ["Affinity", "Relationship CRM for investors", "USD 2,000 to 2,700 per user per year", "One seat costs a third of an Angelsta Institutional team"],
-        ["Zapflow", "Deal flow and portfolio management", "USD 99 to 3,995 a month by seats", "The closest structural match to Angelsta Institutional"],
-        ["Standard Metrics, Vestberry, Allvue", "Portfolio monitoring for funds", "Enterprise, quoted", "Built for large funds outside the region"],
-        ["Fabeh, Thanawi, Finstreet, GetEquity", "MENA deal marketplaces", "Transaction based", "They list deals; Angelsta runs the company and the portfolio"],
-    ])
-    note(ws, r, "Sources: MAGNiTT, Wamda, Arab News, Entrepreneur Middle East, vendor pricing pages and CostBench, PricingSaaS, Capterra, G2. Vendor prices are indications; most enterprise plans are quoted on request.")
+    r = tbl(r, "THE MARKET, COUNTED, BY ROLL OUT ORDER", ["Market", "Figure", "Basis", "Source"], [
+        ["Egypt, venture funding 2025", "USD 304m across 69 VC deals", "Counted", "MAGNiTT 2025; Egypt planning ministry reports USD 614m including debt; Partech USD 604m"],
+        ["Egypt, angel networks", "Cairo Angels about 50 active angels; AUC Angels", "Counted", "Cairo Angels interview 2025; VC4A"],
+        ["Qatar, venture funding 2025", "QR 214m, about USD 59m, record, +81%", "Counted", "QDB and MAGNiTT joint report"],
+        ["Qatar, QIA Fund of Funds", "USD 3bn programme, over USD 1bn committed, 12 managers in Doha", "Counted", "QIA, QNA, Gulf Times 2026"],
+        ["Saudi Arabia, venture funding 2025", "USD 1.72bn, 257 deals, first in MENA by deals", "Counted", "MAGNiTT FY2025 with SVC"],
+        ["UAE, venture deals 2025", "USD 1.58bn, 231 deals", "Counted", "MAGNiTT via Arab News"],
+        ["GCC private debt to startups 2025", "USD 4.1bn, Saudi Arabia 95 per cent", "Counted", "Stride Ventures via Arab News"],
+        ["MENA venture funding 2025", "USD 3.8bn across 688 deals, +74%", "Counted", "MAGNiTT FY2025"],
+        ["Africa tech funding 2025", "USD 4.1bn, equity USD 2.4bn over 462 deals, debt USD 1.6bn", "Counted", "Partech Africa Tech VC Report 2025"],
+        ["Saudi angels, OQAL", "600+ registered angels", "Counted", "Supplied competitive analysis"],
+        ["MENA family groups active in venture", "58 per cent; 70 per cent source deals through networks", "Counted", "Arab News, March 2025"],
+    ], 4)
+    r = tbl(r, "THE SERVICEABLE MARKET, DERIVED FOR THIS MODEL", ["Market", "Startups that run a cap table and raise", "Institutional investors", "Active angels", "Serviceable revenue, USD m a year", "How it is built"], [
+        ["Egypt", "2,500", "250", "1,200", "3.1", "About 70 funded a year times a 30x pipeline; EGP price list at 60 per cent"],
+        ["Qatar", "600", "120", "500", "1.4", "QDB, QSTP and QIA programmes; GCC price list"],
+        ["Saudi Arabia", "3,500", "450", "2,000", "7.9", "257 deals a year; OQAL 600+ angels; 65+ VC firms and angel groups"],
+        ["UAE", "3,000", "450", "1,500", "7.0", "231 deals a year; DIFC and ADGM fund managers"],
+        ["Kuwait, Bahrain, Oman", "800", "150", "400", "1.9", "Smaller ecosystems with active family offices"],
+        ["Rest of MENA and Africa, self serve", "6,000", "400", "2,500", "6.0", "Africa 462 equity deals; Morocco, Jordan, Tunisia; 70 per cent price index"],
+        ["Total, home and regional", "16,400", "1,820", "8,100", "27.3", "Before any rest of world self serve demand"],
+    ], 6)
+    rows = []
+    for nm, reg, hq, side, cat, threat, price, notev in C.DIRECTORY:
+        rows.append([nm, reg, hq, side, cat, threat + ", " + price, notev])
+    r = tbl(r, "WHO ELSE IS IN THIS MARKET: STARTUP AND INVESTOR OPERATING SYSTEMS, MENA, AFRICA, REGIONAL AND GLOBAL", ["Company", "Region", "HQ", "Side", "Category", "Threat, pricing", "What it means for Angelsta"], rows)
+    note(ws, r, "Sources: Angelsta SaaS Marketing Competitive Analysis (research cut-off 19 August 2026), MAGNiTT, Partech, QDB, QIA, Arab News, vendor pricing pages. Vendor prices are indications; most institutional plans are quoted on request.")
     REG.setdefault(ws.title, {})
 
 
@@ -528,7 +528,7 @@ def build_cover(ws, A, REG):
     ws.cell(r, 2, "ABOUT THIS MODEL").font = f(9.5, True, color=BRAND)
     r += 1
     for k, v in [("Business name", "Angelsta"), ("Industry", "Private markets software: the operating system for founders and private investors"),
-                 ("Markets", "Egypt from month 1, Saudi Arabia from month 7, UAE from month 13, Qatar and the wider GCC from month 25"),
+                 ("Markets", "Egypt from month 1, Qatar from month 4, Saudi Arabia from month 10, UAE from month 13, Kuwait, Bahrain and Oman from month 19; self serve from any country from day one"),
                  ("Products", "Founder workspace (Free, Pro, Team, Custom) and investor portfolio OS (Free, Angel, Institutional, Custom)"),
                  ("Business model", "Freemium subscriptions on both sides, monthly or annual; add-ons modelled behind a switch, off in the base case"),
                  ("Model currency", "USD, with Egyptian pound salaries converted at the monthly rate on the Assumption sheet"),

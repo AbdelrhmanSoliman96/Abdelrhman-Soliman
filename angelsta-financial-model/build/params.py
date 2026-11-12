@@ -29,3 +29,14 @@ AI_ALLOW = {"S-Free": 25, "S-Pro": 300, "S-Team": 1500, "S-Custom": 4000,
 AI_USE = {"Free": 8, "S-Pro": 120, "S-Team": 500, "S-Custom": 1500,
           "I-Angel": 150, "I-Inst": 1200, "I-Custom": 3500}
 AI_COST_PER_CREDIT = [0.012, 0.010, 0.008, 0.007, 0.006]
+
+# Geography: key, label, share of paying accounts Y1..Y5, price index vs list, month the market opens
+GEO = [
+    ("g_egy", "Egypt, home market, EGP price list", [0.50, 0.32, 0.24, 0.20, 0.18], 0.60, 1),
+    ("g_qat", "Qatar, second market", [0.15, 0.14, 0.12, 0.11, 0.10], 1.00, 4),
+    ("g_ksa", "Saudi Arabia", [0.05, 0.16, 0.20, 0.21, 0.22], 1.00, 10),
+    ("g_uae", "United Arab Emirates", [0.00, 0.12, 0.15, 0.16, 0.16], 1.00, 13),
+    ("g_gcc", "Kuwait, Bahrain and Oman", [0.00, 0.04, 0.07, 0.08, 0.09], 1.00, 19),
+    ("g_mea", "Rest of MENA and Africa, self serve", [0.18, 0.12, 0.11, 0.12, 0.12], 0.70, 1),
+    ("g_row", "Rest of the world, self serve", [0.12, 0.10, 0.11, 0.12, 0.13], 1.00, 1),
+]
