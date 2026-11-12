@@ -168,6 +168,12 @@ class Doc:
                     elif zebra and i % 2 == 0:
                         shade(c, "EEF5F4")
         if widths:
+            tblPr = t._tbl.tblPr
+            lay = OxmlElement("w:tblLayout")
+            lay.set(qn("w:type"), "fixed")
+            tblPr.append(lay)
+            for gc, w in zip(t._tbl.tblGrid.gridCol_lst, widths):
+                gc.w = Cm(w)
             for row in t.rows:
                 for j, w in enumerate(widths):
                     row.cells[j].width = Cm(w)

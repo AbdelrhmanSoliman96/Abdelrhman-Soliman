@@ -24,7 +24,7 @@ d = Doc("ANGELSTA  |  PRICING STRATEGY, FOUNDERS AND INVESTORS")
 d.cover("Angelsta", "Pricing Strategy for Founders and Investors",
         "Freemium subscriptions, monthly or annual, for the operating system that founders and private investors share. Egypt first, then Qatar, then the GCC, open to any country",
         [["Item", "Detail"], ["Document", "Pricing strategy and the pricing inputs used by the 2027 to 2031 financial model"],
-         ["Company", "Angelsta: the operating system for founders and private investors. Cairo, Doha and the GCC"],
+         ["Company", "Angelsta: the operating system for founders and private investors. A Cairo team selling to Egypt, Qatar and the GCC"],
          ["Version", "v2.0, November 2026. Adds market focus, charts, regional price lists and the full MENA, Africa and global landscape"],
          ["Currency", "US dollar list price. Local billing in EGP, QAR, SAR, AED, KWD, BHD and OMR"],
          ["Companion files", "Angelsta Competitor and Comparables Analysis; Angelsta Financial Model 2027 to 2031 v2.0"]])
@@ -41,6 +41,8 @@ d.para("Angelsta sells two products on one shared record. Founders get a workspa
        "Paid plans unlock the AI layer (valuations, scenarios, diligence and portfolio agents, matching) and the controls a raising company or a fund needs (permissions, NDA gating, audit trail).")
 d.kpis([("$0", "free on both sides,\nforever"), ("$49", "founder Pro,\nannual, per month"), ("$65", "investor Angel,\nannual, per month"),
         ("$499", "Institutional,\n5 seats, 50 companies"), ("17%", "saved on every\nannual plan")])
+d.kpis([(m(N["ask"]), "pre-seed, built from\nyear one expenses"), (f"Month {N['be_month']}", "monthly break even,\ninside year two"), ("36%", "of funds go to\nmarketing and community"),
+        ("Cairo", "lean team, paid\nin EGP"), (m(N["arr"][4]), "ARR at the end\nof 2031")], fill="0E5A5F")
 d.figure(fig("p1_price_ladder.png"), "The price list: every plan can be paid monthly or annually")
 d.table([["Founders, priced per company", "Free", "Pro", "Team", "Custom"],
          ["Monthly plan, per month", "$0", usd(S["Pro"]["monthly"][0]), usd(S["Team"]["monthly"][0]), "From " + usd(S["Custom"]["monthly"][0])],
@@ -76,7 +78,7 @@ d.table([["Market", "Opens", "Why now", "Price list", "Share of paying accounts,
             "Web Summit Qatar network; QIA USD 3bn Fund of Funds with 12 managers in Doha; QDB and QSTP programmes",
             "Largest MENA market by deals, USD 1.72bn over 257 deals; OQAL 600+ angels",
             "USD 1.58bn over 231 deals; DIFC and ADGM fund managers",
-            "Active family offices, smaller ecosystems served from Doha and Dubai",
+            "Active family offices; served self serve and through partners",
             "Self serve from day one; Africa USD 4.1bn in 2025 incl. debt",
             "Self serve from day one; product-led, English and Arabic"])],
         widths=[2.8, 1.6, 6.6, 2.0, 4.0], font=7.8, first_bold=True, caption="Markets, timing and price lists")
@@ -113,7 +115,7 @@ for nm, reg, hq, side, cat, threat, price, notev in C.DIRECTORY:
         continue
     rows.append([nm, reg, side, cat, price, notev[:110]])
 d.table(rows, widths=[3.0, 2.2, 1.4, 2.6, 2.8, 5.2], font=7, first_bold=True, caption="Regional and emerging-market operating systems, networks and alternatives")
-d.figure(fig("c1_positioning.png"), "Positioning: founder-side against investor-side coverage", width=16)
+d.figure(fig("c1_positioning.png"), "Positioning: founder-side against investor-side coverage", width=16.5)
 
 # 5 ------------------------------------------------------------------------
 d.h1("5. Pricing principles")
@@ -180,8 +182,8 @@ d.h1("9. Trials, demos and the sales motion")
 d.table([["Plan", "Path to purchase", "Who sells it", "Cycle"],
          ["Founder Pro, Investor Angel", "14-day full trial, no card; in-product nudges at each limit; card checkout in local currency", "The product and growth marketing", "Same day to 30 days"],
          ["Founder Team", "Trial, or a booked 30-minute demo for funded companies", "Product and customer success", "2 to 4 weeks"],
-         ["Investor Institutional", "Demo, then a 30-day guided pilot importing up to 15 holdings, then an annual proposal", "SDR books, head of sales in Doha runs demo and pilot", "6 to 10 weeks; model uses 2 months"],
-         ["Custom, both sides", "Discovery, tailored demo, security review, proposal, contract", "Head of sales with a co-founder", "2 to 4 months"]],
+         ["Investor Institutional", "Demo, then a 30-day guided pilot importing up to 15 holdings, then an annual proposal", "SDR books, Cairo account executive runs demo and pilot, founder joins in Qatar and the GCC", "6 to 10 weeks; model uses 2 months"],
+         ["Custom, both sides", "Discovery, tailored demo, security review, proposal, contract", "Account executive with a co-founder; head of sales from 2029", "2 to 4 months"]],
         widths=[3.6, 6.4, 4.2, 3.0], first_bold=True, font=8)
 d.para("The demo opens on a pre-loaded sample portfolio, then imports the prospect's own top three holdings live. Pilots convert best when the investor's own data is in the product by day 7.")
 
@@ -212,9 +214,16 @@ d.figure(fig("p9_unit_economics.png"), "Price against cost to serve, 2027", widt
 d.para("Gross margins run from about 85 to 89 per cent per plan because AI inference is metered through credits and the data room storage is shared infrastructure. The model's blended gross margin rises from 82 per cent in 2027 to 90 per cent in 2031 as AI cost per credit falls from $0.012 to $0.006.")
 
 # 13 -----------------------------------------------------------------------
+d.page_break()
 d.h1("13. What the financial model projects from this pricing")
-d.kpis([(m(N["arr"][4]), "ARR at the end\nof 2031"), (f"{N['paid'][4]:,.0f}", "paying accounts,\n2031"), (m(N["ask"]), "pre-seed ask, built\nfrom year one cost"),
-        (m(N["pre"]), "pre-money\nvaluation"), (f"{N['own']:.1%}", "equity\noffered")])
+d.kpis([(m(N["ask"]), "pre-seed ask, built\nfrom year one cost"), (f"Month {N['be_month']}", "monthly break even,\ninside year two"), ("$0", "further capital\nneeded, base case"),
+        (m(N["arr"][4]), "ARR at the end\nof 2031"), (f"{N['own']:.1%}", f"equity offered at\n{m(N['pre'])} pre-money")])
+d.callout("Why the numbers work for an investor",
+          f"A {m(N['ask'])} pre-seed, built from year one expenses of {m(N['y1'])}, reaches monthly break even in month {N['be_month']} (inside year two) and needs no further capital in the base case. "
+          f"Marketing and community is the largest use of funds. The team is in Cairo and paid in Egyptian pounds, so each dollar of payroll goes three to four times further than in the Gulf. "
+          f"The round is priced at {m(N['pre'])} pre-money, a 20 per cent discount to the model's fair value, for {N['own']:.1%} of the company.")
+d.figure(fig("c13_break_even.png"), "Monthly revenue against monthly cash cost: break even in year two", width=16)
+d.figure(fig("c12_use_of_funds.png"), "Use of funds: marketing and community is the largest line", width=14)
 d.figure(fig("p7_revenue_by_plan.png"), "Revenue by plan, 2027 to 2031", width=15)
 d.figure(fig("p8_revenue_by_market.png"), "Subscription revenue by market", width=15)
 d.figure(fig("p11_funnel.png"), "The freemium funnel in 2029", width=14)

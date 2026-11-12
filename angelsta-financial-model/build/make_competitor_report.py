@@ -29,8 +29,8 @@ d.contents(["Executive summary", "Scope, method and evidence", "The market: Egyp
 
 # 1 -----------------------------------------------------------------------
 d.h1("1. Executive summary")
-d.kpis([(str(len(C.DIRECTORY)), "companies and\nalternatives mapped"), ("11 of 11", "modules Angelsta\ncovers"), ("8.5", "most modules by any\nglobal rival, Carta"),
-        ("3.4x", "public SaaS EV to\nrevenue, Q1 2026"), (m(N["pre"]), "Angelsta pre-money,\nfive methods")])
+d.kpis([(str(len(C.DIRECTORY)), "companies and\nalternatives mapped"), ("11 of 11", "modules Angelsta\ncovers"), ("9.5", "most by any rival,\nRasMal, Saudi Arabia"),
+        (m(N["ask"]), "Angelsta pre-seed,\nfrom year one cost"), (f"Month {N['be_month']}", "Angelsta break even,\ninside year two")])
 d.bullets([
     ("The workflow is fragmented. ", "No product in the region runs the whole chain from the founder's financial model and valuation, through the cap table, data room and fundraising, to the investor's diligence and portfolio monitoring. Most competitors cover two to five of the eleven modules. Angelsta's claim is the shared record across all of them."),
     ("The closest regional rival is RasMal and its investor arm Pentugram, in Saudi Arabia. ", "It covers about 9.5 of 11 modules, raised $4.8m pre-Series A at LEAP 2025 and has a Saudi Unicorns Programme seal. It is the competitor to plan against in the GCC, and it is not present in Egypt or Qatar."),
@@ -38,9 +38,10 @@ d.bullets([
     ("Investor-side tooling is crowded and quote-based. ", "Standard Metrics, Vestberry, Rundit and Dynamo are mature, but they are sold to funds outside the region and priced on request. That leaves room for a transparent Institutional plan at $499 to $599 a month."),
     ("Founder-side cap table tools are price-anchored low in the region. ", "Govy sells at $24.99 a month flat. Angelsta should not try to win on cap table price. It should lead with the valuation, the model and the investor network."),
     ("Egypt and Qatar have no local operating system. ", "Egypt has angel networks (Cairo Angels, AUC Angels) and deal marketplaces, but no founder or investor OS. Qatar has capital (QIA's $3bn Fund of Funds, a record QR214m VC year) but no tooling. Both are open ground for a first mover."),
-    ("Comparables support a disciplined valuation. ", "2026 multiples are low: public SaaS at 3.2 to 3.4 times revenue and private SaaS M&A at 3.1 to 4.0 times. The model uses 4 times ARR at exit. The pre-seed is priced at $2.4m pre-money for an ask of $550k, which is 18.6 per cent."),
+    ("Comparables support a disciplined valuation. ", f"2026 multiples are low: public SaaS at 3.2 to 3.4 times revenue and private SaaS M&A at 3.1 to 4.0 times. The model uses 4 times ARR at exit. The pre-seed is priced at {m(N['pre'])} pre-money for an ask of {m(N['ask'])}, which is {N['own']:.1%} and a 20 per cent discount to the model's fair value."),
+    ("Capital efficient by design. ", f"Year one expenses of {m(N['y1'])}, a Cairo team paid in Egyptian pounds and marketing as the largest use of funds take Angelsta to monthly break even in month {N['be_month']}, inside year two, with no further round required in the base case."),
 ])
-d.figure(fig("c1_positioning.png"), "Competitive positioning: Angelsta is the only product in the top right on both sides", width=16)
+d.figure(fig("c1_positioning.png"), "Competitive positioning: Angelsta is the only product in the top right on both sides", width=16.5)
 
 # 2 -----------------------------------------------------------------------
 d.h1("2. Scope, method and evidence")
@@ -59,7 +60,7 @@ d.table([["Market", "2025 capital", "Ecosystem facts", "What it means for Angels
          ["Qatar, month 4", "QR 214m, about USD 59m, a record, up 81 per cent", "QIA Fund of Funds raised to USD 3bn, more than USD 1bn committed, 12 managers in Doha; Rasmal Ventures; QDB, QSTP", "Institutional buyers arriving with no local tooling; Web Summit Qatar"],
          ["Saudi Arabia, month 10", "USD 1.72bn over 257 deals, 45 per cent of MENA funding", "OQAL 600+ angels; 65+ VC firms, angel groups and accelerators; RasMal and Govy local", "Biggest market and strongest local competition"],
          ["UAE, month 13", "USD 1.58bn over 231 deals", "DIFC and ADGM managers; MAGNiTT, Clara, Dynamo present", "Institutional and family office demand"],
-         ["Kuwait, Bahrain, Oman, month 19", "Small, family office led; Bahrain USD 22m startup private debt", "Served from Doha and Dubai", "Self serve plus country lead"],
+         ["Kuwait, Bahrain, Oman, month 19", "Small, family office led; Bahrain USD 22m startup private debt", "Self serve and partners", "Self serve plus country lead"],
          ["Africa, self serve", "USD 4.1bn, equity USD 2.4bn over 462 deals, debt USD 1.6bn", "Kenya USD 1.04bn, South Africa USD 715m, Egypt USD 604m, Nigeria USD 572m", "Trackify, Capital Connect Africa, Lemina are early local rivals"]],
         widths=[2.6, 4.0, 5.4, 5.2], font=7.6, first_bold=True, caption="Market context by roll-out order")
 d.figure(fig("c10_roadmap.png"), "Angelsta's market entry sequence")
@@ -170,19 +171,22 @@ d.table([["Gap in the market", "Evidence", "Angelsta's answer"],
         widths=[4.6, 6.6, 6.0], font=7.8, first_bold=True)
 d.para("Where Angelsta must prove itself:", bold=True)
 d.bullets(["AI extraction is now common (Standard Metrics, Vestberry, Rundit, Dynamo, Visible, Trackify), so 'AI-powered' is not a differentiator on its own. The agents must show time saved.",
-           "Security expectations are high. Standard Metrics and Papermark carry SOC 2 and ISO 27001, and the model funds certification in month 18.",
+           "Security expectations are high. Standard Metrics and Papermark carry SOC 2 and ISO 27001, and the model funds certification in month 20.",
            "Spreadsheet compatibility matters. Excel and Sheets import and export must be first-class.",
            "Pricing is split: transparent for founders, quote-based for institutions. Angelsta publishes both, and must hold that line in enterprise deals."])
 
 # 13 ----------------------------------------------------------------------
 d.h1("13. Strategic implications for the round")
-d.figure(fig("c12_use_of_funds.png"), "The pre-seed, sized from year one expenses", width=13)
+d.figure(fig("c13_break_even.png"), "Break even in year two on the pre-seed alone", width=16)
+d.figure(fig("c12_use_of_funds.png"), "The pre-seed, sized from year one expenses, and where it goes", width=14)
 d.bullets([
-    ("Win Egypt and Qatar before RasMal arrives. ", "The model spends the first nine months on Egypt and Qatar, with a Doha partnerships manager from month 4 and a head of institutional sales from month 10, before Saudi Arabia."),
+    ("Win Egypt and Qatar before RasMal arrives. ", "A lean Cairo team sells Egypt from month 1 and Qatar from month 4, with Cairo-based account executives and founders travelling to Doha, before Saudi Arabia in month 10."),
+    ("Be profitable before the competition scales. ", f"The model breaks even in month {N['be_month']} on a {m(N['ask'])} pre-seed and needs no further capital. RasMal raised $4.8m to reach its stage; Angelsta's capital efficiency is its edge."),
+    ("Spend the round on demand. ", "Marketing and community is 36 per cent of the use of funds, the largest line, because network effects reward the first platform to hold both founders and their investors."),
     ("Sell to the networks, not against them. ", "Cairo Angels, AUC Angels, OQAL, Rasmal Ventures and the QIA Fund of Funds managers are customers and channels."),
     ("Lead with valuation and the investor side. ", "That is where regional cap table tools are weakest and where Visible stops."),
     ("Partner with MAGNiTT for data. ", "Licensing benchmarks is cheaper than building them, and it removes a competitor from the investor-side pitch."),
-    ("Certify early. ", "SOC 2 and ISO 27001 by month 18 and KSA data residency before the Saudi institutional push."),
+    ("Certify early. ", "SOC 2 and ISO 27001 by month 20 and KSA data residency before the Saudi institutional push in 2029."),
 ])
 
 # 14 ----------------------------------------------------------------------

@@ -104,14 +104,14 @@ def build_inputs(ws):
                   "Cost per click", "Organic uplift", "Click to sign up", "Share founders"])
     A.r += 1
     channels = [
-        ("ch1", "LinkedIn Ads, founders and startup operators", [400, 900, 1500, 2200, 3000], 3.5, 0.15, 0.06, 1.0),
-        ("ch2", "Meta and Instagram, founders", [300, 600, 1000, 1500, 2000], 0.6, 0.20, 0.025, 1.0),
-        ("ch3", "Google Search, cap table and data room intent", [300, 700, 1100, 1600, 2200], 1.6, 0.10, 0.07, 1.0),
-        ("ch4", "LinkedIn Ads, angels, family offices and fund managers", [400, 1000, 1700, 2500, 3400], 5.5, 0.15, 0.04, 0.0),
-        ("ch5", "Google Search, portfolio management intent", [200, 500, 800, 1200, 1700], 2.5, 0.10, 0.05, 0.0),
-        ("ch6", "SEO, newsletter and MENA private markets data reports", [300, 600, 1000, 1400, 1800], 0.35, 0.50, 0.02, 0.7),
-        ("ch7", "LinkedIn and Google, Qatar founders, family offices and funds", [300, 600, 800, 900, 1000], 4.5, 0.15, 0.045, 0.5),
-        ("ch8", "Global self serve, product led search and app stores, any country", [250, 600, 1000, 1500, 2000], 1.2, 0.40, 0.03, 0.6),
+        ("ch1", "LinkedIn Ads, founders and startup operators", [600, 1000, 2000, 4000, 5500], 3.5, 0.15, 0.06, 1.0),
+        ("ch2", "Meta and Instagram, founders", [400, 700, 1500, 2500, 3500], 0.6, 0.20, 0.025, 1.0),
+        ("ch3", "Google Search, cap table and data room intent", [500, 900, 1800, 2800, 3800], 1.6, 0.10, 0.07, 1.0),
+        ("ch4", "LinkedIn Ads, angels, family offices and fund managers", [700, 1300, 2200, 4200, 5600], 5.5, 0.15, 0.04, 0.0),
+        ("ch5", "Google Search, portfolio management intent", [300, 600, 1400, 2200, 3000], 2.5, 0.10, 0.05, 0.0),
+        ("ch6", "SEO, newsletter and MENA private markets data reports", [400, 700, 1500, 2200, 3000], 0.35, 0.50, 0.02, 0.7),
+        ("ch7", "LinkedIn and Google, Qatar founders, family offices and funds", [400, 700, 1300, 1800, 2200], 4.5, 0.15, 0.045, 0.5),
+        ("ch8", "Global self serve, product led search and app stores, any country", [400, 800, 1600, 3200, 4500], 1.2, 0.40, 0.03, 0.6),
     ]
     for key, name, bud, cpc, upl, conv, shf in channels:
         label(ws, A.r, name)
@@ -131,19 +131,19 @@ def build_inputs(ws):
     A.section("4. ACQUISITION, EVENTS, COMMUNITY AND PARTNERS",
               "This is the engine room. Angelsta's cheapest sign ups come from the ecosystem: events, its own community circles, accelerators and angel networks.")
     A.yhdr("Offline and partner activity")
-    A.yearly("ev_n", "Ecosystem events attended, RiseUp Cairo, Web Summit Qatar, LEAP, Biban, GITEX, Step", "per month", [0.5, 0.75, 1, 1.25, 1.5], NUM2)
+    A.yearly("ev_n", "Ecosystem events attended, RiseUp Cairo, Web Summit Qatar, LEAP, Biban, GITEX, Step", "per month", [1, 1.25, 2, 2.5, 3], NUM2)
     A.single("ev_f", "Founder sign ups per event", "#", 30)
     A.single("ev_i", "Investor sign ups per event", "#", 10)
-    A.yearly("ev_cost", "Cost per event attended, pass, booth share and travel", "USD", [1500, 1800, 2000, 2200, 2400], USD)
-    A.yearly("mu_n", "Angelsta community meetups and founder investor circles hosted", "per month", [1, 2, 3, 4, 5], NUM1)
+    A.yearly("ev_cost", "Cost per event attended, pass, booth share and travel", "USD", [1200, 1500, 1800, 2000, 2200], USD)
+    A.yearly("mu_n", "Angelsta community meetups and founder investor circles hosted", "per month", [2, 3, 4, 5, 6], NUM1)
     A.single("mu_f", "Founder sign ups per meetup", "#", 10)
     A.single("mu_i", "Investor sign ups per meetup", "#", 5)
-    A.yearly("mu_cost", "Cost per meetup, venue and hospitality", "USD", [300, 350, 400, 450, 500], USD)
+    A.yearly("mu_cost", "Cost per meetup, venue and hospitality", "USD", [250, 300, 350, 400, 450], USD)
     A.yearly("acc_n", "Accelerator and incubator partners active at year end", "#", [6, 12, 18, 24, 30])
     A.single("acc_f", "Startups onboarded per accelerator partner per month", "#", 2.5, NUM1)
     A.yearly("net_n", "Angel networks and syndicates active at year end", "#", [3, 6, 9, 12, 15])
     A.single("net_i", "Investors onboarded per angel network per month", "#", 3, NUM1)
-    A.yearly("ob_n", "Outbound to institutions, contacts reached", "per month", [150, 350, 600, 850, 1100])
+    A.yearly("ob_n", "Outbound to institutions, contacts reached", "per month", [300, 600, 1200, 1800, 2400])
     A.single("inv_per_f", "Investors invited per newly activated founder, the cap table brings its investors", "#", 2.5, NUM1)
     A.yearly("inv_acc", "Share of invited investors who register", "%", [0.30, 0.32, 0.35, 0.38, 0.40], PCT)
     A.single("f_ref", "Founder referrals per active founder per month", "#", 0.01, NUM2)
@@ -155,7 +155,7 @@ def build_inputs(ws):
     A.yhdr("Founder funnel")
     A.yearly("f_act", "Registration to activated workspace", "%", [0.45, 0.48, 0.50, 0.52, 0.54], PCT)
     A.single("f_idle", "Monthly decay of the active free base, founders going quiet", "%", 0.03, PCT)
-    A.yearly("f_conv", "Monthly self serve conversion of active free founders to paid", "%", [0.012, 0.014, 0.016, 0.018, 0.020], PCT,
+    A.yearly("f_conv", "Monthly self serve conversion of active free founders to paid", "%", [0.012, 0.013, 0.012, 0.011, 0.010], PCT,
              "Freemium benchmark 2.6 to 3.7 per cent within the first months; this is applied monthly to the base")
     A.yearly("f_promix", "Share of self serve conversions choosing Pro, the rest Team", "%", [0.85, 0.80, 0.77, 0.74, 0.72], PCT)
     A.single("f_demo", "Activated founders who book a demo", "%", 0.04, PCT)
@@ -172,13 +172,13 @@ def build_inputs(ws):
     A.yhdr("Investor funnel")
     A.yearly("i_act", "Registration to activated, holdings added", "%", [0.40, 0.43, 0.46, 0.48, 0.50], PCT)
     A.single("i_idle", "Monthly decay of the active free base, investors going quiet", "%", 0.03, PCT)
-    A.yearly("i_conv", "Monthly self serve conversion of active free investors to Angel", "%", [0.015, 0.017, 0.019, 0.021, 0.023], PCT)
+    A.yearly("i_conv", "Monthly self serve conversion of active free investors to Angel", "%", [0.015, 0.016, 0.015, 0.014, 0.013], PCT)
     A.yearly("i_c2m", "Outbound contact to meeting", "%", [0.05, 0.055, 0.06, 0.065, 0.07], PCT)
     A.single("i_m2d", "Meeting to demo", "%", 0.65, PCT)
     A.single("i_inst", "Share of activated investors who are institutions", "%", 0.15, PCT)
     A.single("i_inb", "Activated institutions who request a demo", "%", 0.20, PCT)
     A.single("i_lag", "Sales cycle, demo to signed contract", "months", 2)
-    A.yearly("i_win", "Demo to signed contract, institutions", "%", [0.22, 0.25, 0.28, 0.30, 0.30], PCT)
+    A.yearly("i_win", "Demo to signed contract, institutions", "%", [0.22, 0.25, 0.24, 0.23, 0.22], PCT)
     A.single("i_cshare", "Share of institutional wins on Custom, once open", "%", 0.15, PCT)
     A.yearly("ch_ang", "Monthly churn, investor Angel", "%", [0.035, 0.030, 0.027, 0.025, 0.023], PCT)
     A.yearly("ch_inst", "Monthly churn, investor Institutional", "%", [0.015, 0.013, 0.011, 0.010, 0.009], PCT, "Mid market 1 to 3, enterprise 0.5 to 1 per cent a month")
@@ -194,8 +194,8 @@ def build_inputs(ws):
     A.r += 1
     for key, txt, a, b in [("cap_demo", "Institutional demos run, per account executive or head of sales", 25, 6),
                            ("cap_ob", "Outbound contacts reached, per sales development rep", 450, 100),
-                           ("cap_ev", "Events covered, per community and partnerships head", 1, 0.3),
-                           ("cap_mu", "Meetups hosted, per community and partnerships head", 4, 0.5),
+                           ("cap_ev", "Events covered, per community and partnerships head", 1, 0.4),
+                           ("cap_mu", "Meetups hosted, per community and partnerships head", 4, 0.7),
                            ("cap_cs", "New paying accounts onboarded, per customer success head", 60, 10)]:
         label(ws, A.r, txt)
         label(ws, A.r, "per month", col=2, size=8, color=GREY)
@@ -257,7 +257,7 @@ def build_inputs(ws):
     hdr(ws, A.r, ["Engine or market", "Unit", "First month"])
     A.r += 1
     for key, txt, m in [("o_pro", "Founder Pro", 2), ("o_team", "Founder Team", 2), ("o_sc", "Founder Custom", 7),
-                        ("o_ang", "Investor Angel", 2), ("o_inst", "Investor Institutional", 4), ("o_ic", "Investor Custom", 10),
+                        ("o_ang", "Investor Angel", 2), ("o_inst", "Investor Institutional", 3), ("o_ic", "Investor Custom", 10),
                         ("o_ai", "Add-on, AI credit top ups", 6), ("o_val", "Add-on, analyst reviewed valuation reports", 4),
                         ("o_wl", "Add-on, white label licences", 13), ("o_spv", "Add-on, syndicate and SPV administration", 25),
                         ("o_spon", "Add-on, sponsorship", 13)]:
@@ -297,27 +297,27 @@ def build_inputs(ws):
     A.section("12. EXPENSES, OPERATING COST DRIVERS", "Nothing here is a flat figure chosen to fit. Each line is per head, per account or a fixed monthly service.")
     A.yhdr("Operating cost driver")
     rows = [
-        ("ox_desk", "Co working desk and office services, per employee per month", "USD", [70, 20, 20, 20, 20]),
-        ("ox_rent", "Office rent, Cairo from year two, Doha and Riyadh from year three, per month", "USD", [0, 1500, 3000, 4000, 5000]),
-        ("ox_util", "Utilities, internet and communications, per employee per month", "USD", [25, 28, 30, 32, 34]),
-        ("ox_soft", "Software and tooling, per employee per month", "USD", [70, 80, 90, 95, 100]),
-        ("ox_cloud", "Cloud base platform and third party APIs, fixed per month", "USD", [600, 1200, 2000, 2800, 3600]),
-        ("ox_crm", "CRM, product analytics and data tools, per month", "USD", [250, 450, 700, 950, 1200]),
-        ("ox_pros", "Prospecting and private markets databases, per month", "USD", [300, 500, 750, 1000, 1200]),
-        ("ox_trav", "Travel, per commercial head per month, Cairo, Doha and GCC coverage", "USD", [300, 330, 350, 370, 390]),
-        ("ox_rec", "Recruitment cost per new hire", "USD", [350, 400, 450, 500, 550]),
-        ("ox_train", "Training and enablement, per employee per year", "USD", [200, 250, 300, 350, 400]),
-        ("ox_fin", "Outsourced finance, legal and audit, per month", "USD", [900, 1400, 2000, 2600, 3200]),
-        ("ox_reg", "Regulatory, licensing and data protection compliance, per month", "USD", [300, 1200, 2200, 3000, 3800]),
-        ("ox_sec", "Security testing and certification upkeep, SOC 2 and ISO 27001, per month", "USD", [0, 800, 1500, 2000, 2500]),
-        ("ox_ins", "Insurance, bank charges and sundries, per month", "USD", [150, 300, 450, 600, 750]),
-        ("ox_brand", "Brand, creative and content production, per month", "USD", [800, 1400, 2200, 3000, 3800]),
-        ("ox_inc", "Partner incentives and referral credits, per month", "USD", [300, 700, 1200, 1700, 2200]),
-        ("ox_onb", "Customer onboarding cost per new paying account", "USD", [10, 9, 8, 7, 6]),
+        ("ox_desk", "Co working desks in Cairo and office services, per employee per month", "USD", [50, 50, 40, 30, 30]),
+        ("ox_rent", "Office rent, Cairo office from year four, co working before, per month", "USD", [0, 0, 0, 6000, 10000]),
+        ("ox_util", "Utilities, internet and communications, per employee per month", "USD", [20, 22, 24, 26, 28]),
+        ("ox_soft", "Software and tooling, per employee per month", "USD", [50, 55, 60, 65, 70]),
+        ("ox_cloud", "Cloud base platform and third party APIs, fixed per month", "USD", [350, 800, 1400, 4000, 7000]),
+        ("ox_crm", "CRM, product analytics and data tools, per month", "USD", [150, 300, 500, 700, 900]),
+        ("ox_pros", "Prospecting and private markets databases, per month", "USD", [150, 350, 450, 900, 1200]),
+        ("ox_trav", "Travel from Cairo to Doha and the GCC, per commercial head per month", "USD", [250, 280, 300, 320, 340]),
+        ("ox_rec", "Recruitment cost per new hire", "USD", [150, 200, 250, 300, 350]),
+        ("ox_train", "Training and enablement, per employee per year", "USD", [100, 150, 200, 250, 300]),
+        ("ox_fin", "Outsourced finance, legal and audit, per month", "USD", [400, 800, 1200, 2200, 3000]),
+        ("ox_reg", "Regulatory, licensing and data protection compliance, per month", "USD", [150, 500, 1200, 2000, 2800]),
+        ("ox_sec", "Security testing and certification upkeep, SOC 2 and ISO 27001, per month", "USD", [0, 300, 800, 1200, 1500]),
+        ("ox_ins", "Insurance, bank charges and sundries, per month", "USD", [80, 200, 300, 600, 800]),
+        ("ox_brand", "Regional brand, PR, video, content and conference sponsorship, per month", "USD", [700, 1200, 1800, 15000, 35000]),
+        ("ox_inc", "Partner incentives, referral credits and ambassador programme, per month", "USD", [400, 900, 1600, 6000, 12000]),
+        ("ox_onb", "Customer onboarding cost per new paying account", "USD", [8, 7, 6, 6, 5]),
     ]
     for key, txt, unit, vals in rows:
         A.yearly(key, txt, unit, vals, USD)
-    A.yearly("ox_cont", "Contingency on operating cost", "%", [0.07, 0.06, 0.05, 0.05, 0.05], PCT)
+    A.yearly("ox_cont", "Contingency on operating cost", "%", [0.05, 0.05, 0.05, 0.05, 0.05], PCT)
 
     # 13 -----------------------------------------------------------------
     A.section("13. WORKING CAPITAL, FUNDING AND TAX",
@@ -328,7 +328,7 @@ def build_inputs(ws):
     A.single("dpo", "Days payable outstanding", "days", 30)
     A.single("dacc", "Accrued payroll, days outstanding", "days", 10)
     A.single("prepaid", "Average months still to deliver on an annual plan", "months", 5.5, NUM1)
-    A.single("ps_buf", "Pre-seed: months of year one cash cost held as a buffer on top of year one", "months", 3, NUM1)
+    A.single("ps_buf", "Pre-seed: months of year one cash cost held as a buffer on top of year one", "months", 0.5, NUM1)
     A.single("ps_round", "Pre-seed: round the ask up to the nearest", "USD", 25000, USD)
     A.single("ps_m", "Month the pre-seed lands, January 2027 is month 1", "month", 1)
     A.single("sd_m", "Month the seed round lands", "month", 15)
@@ -346,8 +346,8 @@ def build_inputs(ws):
     A.section("14. ASSETS, DRIVEN BY HEADCOUNT", "Platform development is expensed through payroll, not capitalized. Only the build to date is carried as an intangible.")
     hdr(ws, A.r, ["Per employee asset", "Unit", "Cost per unit", "Units per hire", "Life, months"])
     A.r += 1
-    for key, txt, cost, units, life in [("as_lap", "Laptop", 900, 1, 36), ("as_mon", "Monitor and peripherals", 180, 1, 48),
-                                        ("as_ph", "Mobile handset and line set up", 200, 1, 24), ("as_desk", "Desk and chair", 150, 1, 60)]:
+    for key, txt, cost, units, life in [("as_lap", "Laptop", 800, 1, 36), ("as_mon", "Monitor and peripherals", 180, 1, 48),
+                                        ("as_ph", "Mobile handset and line set up", 200, 1, 24), ("as_desk", "Desk and chair, co working provides them until the Cairo office in year four", 150, 0, 60)]:
         label(ws, A.r, txt)
         label(ws, A.r, "USD", col=2, size=8, color=GREY)
         put(ws, f"C{A.r}", cost, USD, kind="input")
@@ -360,13 +360,13 @@ def build_inputs(ws):
     for key, txt, typ, m, cost, life in [
         ("sa_prod", "Product already built, founder investment to date", "Intangible", 1, f"={A.s('op_prod')}", 60),
         ("sa_ip", "Trademark, entity formation, IP and app store accounts", "Intangible", 1, 3000, 60),
-        ("sa_qat", "Qatar entity, QFC or QSTP licence and registration", "Intangible", 4, 8000, 60),
-        ("sa_ksa", "Saudi entity, MISA licence and commercial registration", "Intangible", 13, 12000, 60),
-        ("sa_cert", "SOC 2 Type I and ISO 27001 initial certification", "Intangible", 18, 15000, 36),
-        ("sa_cai", "Cairo office fit out", "Equipment", 13, 10000, 60),
-        ("sa_ruh", "Riyadh office set up", "Equipment", 25, 8000, 60),
-        ("sa_doh", "Doha co working set up and launch kit", "Equipment", 4, 3000, 36),
-        ("sa_av", "Event booth, studio and community kit", "Equipment", 3, 2500, 36),
+        ("sa_qat", "Qatar entity, QFC or QSTP licence and registration", "Intangible", 13, 8000, 60),
+        ("sa_ksa", "Saudi entity, MISA licence and commercial registration", "Intangible", 25, 12000, 60),
+        ("sa_cert", "SOC 2 Type I and ISO 27001 initial certification", "Intangible", 20, 12000, 36),
+        ("sa_cai", "Cairo office fit out", "Equipment", 37, 8000, 60),
+        ("sa_ruh", "Regional sales kit, demo devices and event stand for Doha and Riyadh", "Equipment", 13, 3000, 36),
+        ("sa_doh", "Qatar launch kit, materials and event stand", "Equipment", 4, 1500, 36),
+        ("sa_av", "Event booth, studio and community kit", "Equipment", 3, 2000, 36),
     ]:
         label(ws, A.r, txt)
         label(ws, A.r, typ, col=2, size=8, color=GREY)

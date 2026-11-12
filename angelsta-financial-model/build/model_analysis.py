@@ -43,7 +43,7 @@ def build_bep(ws, A, REG):
         row = f"$C${tok(ws.title, w)}:$BN${tok(ws.title, w)}"
         a.kv(k, txt, f"=IF(MIN({row})=9999,\"beyond year five\",MIN({row}))", "General", bold=(k == "m_ebitda"))
     a.blank()
-    a.section("WHAT BREAK EVEN INSIDE YEAR THREE WOULD TAKE", cols=("Value",))
+    a.section("HOW MUCH HEADROOM THE YEAR TWO BREAK EVEN HAS", cols=("Value",))
     a.kv("g1", "EBITDA in month thirty six as the plan stands", f"=Expenses!{mcol(36)}{tok('Expenses', 'ebitda')}")
     a.kv("g2", "The gap to close", f"=-MIN(0,$C${tok(ws.title, 'g1')})")
     a.kv("g3", "Extra revenue in that month that would close it", f"=IFERROR($C${tok(ws.title, 'g2')}/$E${tok(ws.title, 'cmp')},0)")
@@ -274,7 +274,8 @@ def build_valuation(ws, A, REG):
     a.kv("hi", "Highest of the five methods", f"=MAX(C{f0}:C{f0 + 4})")
     a.blank()
     a.section("10. THE ROUND AT THIS VALUATION", cols=("Value",))
-    a.kv("pre", "Pre money valuation we are asking for, rounded", f"=ROUND({R('wpre')}/100000,0)*100000", bold=True)
+    a.kv("disc", "Discount to fair value offered to pre-seed investors, their entry upside", 0.20, PCT, kind="input")
+    a.kv("pre", "Pre money valuation we are asking for, rounded", f"=ROUND({R('wpre')}*(1-{R('disc')})/100000,0)*100000", bold=True)
     a.kv("ask", "The pre-seed ask, from Funding and Use of Funds", f"={fu('ps_amt')}")
     a.kv("post", "Post money valuation", f"={R('pre')}+{R('ask')}")
     a.kv("own", "Equity the pre-seed buys", f"=IFERROR({R('ask')}/{R('post')},0)", PCT, bold=True)
@@ -366,7 +367,7 @@ def build_summary(ws, A, REG):
     a.kv("be", "First month with positive EBITDA", f"='BEP Analysis'!$C${tok('BEP Analysis', 'm_ebitda')}", "General")
     a.blank()
     a.section("USE OF FUNDS", cols=("Of the ask", "Share"))
-    for k, txt in [("u_prod", "Product and AI engineering"), ("u_grow", "Community, growth and sales"), ("u_ai", "AI agents, cloud and delivery"), ("u_ops", "Leadership, operations, legal and set up")]:
+    for k, txt in [("u_mkt", "Marketing and community"), ("u_sales", "Sales and customer success"), ("u_prod", "Product and AI engineering"), ("u_ai", "AI agents, cloud and delivery"), ("u_ops", "Leadership, operations, legal and set up")]:
         label(ws, a.r, txt)
         put(ws, f"C{a.r}", f"='{FU}'!$E${tok(FU, k)}", USD)
         put(ws, f"D{a.r}", f"='{FU}'!$D${tok(FU, k)}", PCT)

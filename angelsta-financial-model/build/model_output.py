@@ -241,15 +241,17 @@ def build_expenses(ws, A, REG):
     t.line("cat_direct", "Direct cost of delivery", lambda m: R("direct", m), USD)
     t.line("cat_cont", "Contingency", lambda m: R("o_cont", m), USD)
     fp = lambda fn, m: T("Payroll", "fp_" + fn, m)
+    t.line("uf_mkt", "Marketing and community",
+           lambda m: f"{fp('Marketing', m)}+{fp('Community and Partnerships', m)}+{R('o_onl', m)}+{R('o_off', m)}+{R('o_brand', m)}+{R('o_inc', m)}", USD)
+    t.line("uf_sales", "Sales and customer success",
+           lambda m: f"{fp('Sales', m)}+{fp('Customer', m)}+{R('o_comm', m)}+{R('o_onb', m)}+{R('o_pros', m)}+{R('o_trav', m)}", USD)
     t.line("uf_prod", "Product and AI engineering",
            lambda m: f"{fp('Technology', m)}+{fp('Product', m)}+{R('o_soft', m)}+{R('o_sec', m)}", USD)
-    t.line("uf_grow", "Community, growth and sales",
-           lambda m: f"{fp('Sales', m)}+{fp('Marketing', m)}+{fp('Community and Partnerships', m)}+{fp('Customer', m)}+{R('cat_Sales and marketing', m)}", USD)
     t.line("uf_ai", "AI agents, cloud and delivery", lambda m: f"{R('direct', m)}+{R('o_cloud', m)}+{R('o_crm', m)}", USD)
     t.line("uf_ops", "Leadership, operations and legal",
            lambda m: f"{fp('Leadership', m)}+{fp('Operations', m)}+{fp('Finance and Legal', m)}+{R('cat_General and administrative', m)}+{R('o_rec', m)}+{R('o_train', m)}+{R('o_cont', m)}", USD)
     t.line("uf_chk", "Check, buckets against total cash cost",
-           lambda m: f"ROUND({R('uf_prod', m)}+{R('uf_grow', m)}+{R('uf_ai', m)}+{R('uf_ops', m)}-{R('cashcost', m)},2)", USD, kind="check")
+           lambda m: f"ROUND({R('uf_mkt', m)}+{R('uf_sales', m)}+{R('uf_prod', m)}+{R('uf_ai', m)}+{R('uf_ops', m)}-{R('cashcost', m)},2)", USD, kind="check")
     t.blank()
     # The first twelve months in full
     section(ws, t.r, "THE FIRST TWELVE MONTHS IN FULL, WHAT THE PRE-SEED HAS TO PAY FOR")
@@ -519,19 +521,20 @@ def build_funding(ws, A, REG):
     a.kv("y1rev", "Revenue collected in year one, not counted in the ask", f"='Total Revenue'!$B${tok('Total Revenue', 'rev')}")
     a.kv("y1burn", "Net cash consumed in year one, after that revenue", f"=-'Cash Flow Statement'!$B${tok('Cash Flow Statement', 'fcf')}")
     a.blank()
-    a.section("2. USE OF FUNDS", "The year one cash cost split four ways, and the ask allocated in the same proportions.", cols=("Year 1 cost", "Share", "Of the ask"))
+    a.section("2. USE OF FUNDS", "The year one cash cost split five ways, and the ask allocated in the same proportions. Marketing and community is the largest use.", cols=("Year 1 cost", "Share", "Of the ask"))
     ws.column_dimensions["E"].width = 15
-    uf = [("u_prod", "Product and AI engineering", "uf_prod"), ("u_grow", "Community, growth and sales", "uf_grow"),
-          ("u_ai", "AI agents, cloud and delivery", "uf_ai"), ("u_ops", "Leadership, operations, legal and set up", "uf_ops")]
+    uf = [("u_mkt", "Marketing and community", "uf_mkt"), ("u_sales", "Sales and customer success", "uf_sales"),
+          ("u_prod", "Product and AI engineering", "uf_prod"), ("u_ai", "AI agents, cloud and delivery", "uf_ai"),
+          ("u_ops", "Leadership, operations, legal and set up", "uf_ops")]
     f0 = a.r
     for k, txt, ek in uf:
         extra = f"+'Capital Expenditure'!$B${tok('Capital Expenditure', 'cash')}" if k == "u_ops" else ""
         a.kv(k, txt, f"={EXB(ek)}{extra}")
-        put(ws, f"D{a.r - 1}", f"=IFERROR(C{a.r - 1}/SUM($C${f0}:$C${f0 + 3}),0)", PCT)
+        put(ws, f"D{a.r - 1}", f"=IFERROR(C{a.r - 1}/SUM($C${f0}:$C${f0 + 4}),0)", PCT)
         put(ws, f"E{a.r - 1}", f"=D{a.r - 1}*{R('ps_amt')}", USD)
-    a.kv("u_tot", "Total", f"=SUM(C{f0}:C{f0 + 3})", bold=True)
-    put(ws, f"D{a.r - 1}", f"=SUM(D{f0}:D{f0 + 3})", PCT)
-    put(ws, f"E{a.r - 1}", f"=SUM(E{f0}:E{f0 + 3})", USD, bold=True)
+    a.kv("u_tot", "Total", f"=SUM(C{f0}:C{f0 + 4})", bold=True)
+    put(ws, f"D{a.r - 1}", f"=SUM(D{f0}:D{f0 + 4})", PCT)
+    put(ws, f"E{a.r - 1}", f"=SUM(E{f0}:E{f0 + 4})", USD, bold=True)
     a.blank()
     CF = "'Cash Flow Statement'"
     idx = f"{CF}!$C$3:$BN$3"
@@ -560,9 +563,9 @@ def build_funding(ws, A, REG):
     a.section("5. THE MILESTONES THE PRE-SEED IS SIZED AGAINST", cols=("Value",))
     AQe = lambda k, y: TE("Acquisitions", k, y)
     a.kv("ms1", "Paid plans live, Pro, Team and Angel", "Month 2", "@")
-    a.kv("ms2", "Institutional plan live, first demos converting", "Month 4", "@")
-    a.kv("ms3", "Qatar opened, Doha partnerships manager and entity in place", "Month 4", "@")
-    a.kv("ms3b", "Saudi Arabia opened founder led; head of institutional sales hired in Doha", "Month 10", "@")
+    a.kv("ms2", "Institutional plan live, first demos converting", "Month 3", "@")
+    a.kv("ms3", "Qatar opened from Cairo: community lead, events and Qatar channel", "Month 4", "@")
+    a.kv("ms3b", "Saudi Arabia opened, founder led, covered by the Cairo account executives", "Month 10", "@")
     a.kv("ms4", "Paying founder accounts at the end of year one", f"={AQe('f_paid', 1)}", NUM)
     a.kv("ms5", "Paying investor accounts at the end of year one", f"={AQe('i_paid', 1)}", NUM)
     a.kv("ms6", "Registered accounts at the end of year one, both sides", f"={AQe('reg', 1)}", NUM)

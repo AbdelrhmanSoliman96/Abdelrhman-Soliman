@@ -2,37 +2,30 @@
 from xl import *
 
 ROLES = [
-    ("Co-founder and Chief Executive Officer, investment", "Leadership", 1, [1, 1, 1, 1, 1], "EGP", 45000),
-    ("Managing Co-founder and Chief Operating Officer", "Leadership", 1, [1, 1, 1, 1, 1], "EGP", 45000),
-    ("Technical Co-founder and Chief Technology Officer", "Leadership", 1, [1, 1, 1, 1, 1], "EGP", 45000),
-    ("Senior AI and Machine Learning Engineer", "Technology", 3, [1, 2, 3, 3, 4], "EGP", 85000),
-    ("Senior Full Stack Engineer", "Technology", 1, [1, 2, 2, 3, 3], "EGP", 75000),
-    ("Full Stack Engineer", "Technology", 4, [1, 2, 3, 4, 5], "EGP", 45000),
-    ("Mobile Engineer", "Technology", 5, [1, 1, 2, 2, 2], "EGP", 50000),
-    ("DevOps and Security Engineer", "Technology", 13, [0, 1, 1, 2, 2], "EGP", 65000),
-    ("QA Engineer", "Technology", 13, [0, 1, 1, 2, 2], "EGP", 30000),
-    ("Data Engineer", "Technology", 25, [0, 0, 1, 1, 2], "EGP", 60000),
-    ("Product Manager", "Product", 4, [1, 1, 1, 2, 2], "EGP", 65000),
-    ("UI and UX Product Designer", "Product", 1, [1, 1, 2, 2, 2], "EGP", 40000),
-    ("Head of Sales, Institutional, Doha then Riyadh", "Sales", 10, [1, 1, 1, 1, 1], "USD", 6500),
-    ("Account Executive, Institutional, GCC", "Sales", 13, [0, 2, 3, 5, 6], "USD", 4000),
-    ("Sales Development Representative", "Sales", 7, [1, 2, 3, 4, 5], "EGP", 25000),
-    ("Growth Marketing Manager", "Marketing", 1, [1, 1, 1, 1, 1], "EGP", 50000),
-    ("Performance Marketing Specialist", "Marketing", 13, [0, 1, 1, 2, 2], "EGP", 28000),
-    ("Content and Research Analyst, Arabic and English", "Marketing", 4, [1, 1, 2, 2, 2], "EGP", 25000),
-    ("Community Lead", "Community and Partnerships", 2, [1, 1, 1, 1, 1], "EGP", 35000),
-    ("Partnerships and Community Manager, Doha", "Community and Partnerships", 4, [1, 1, 1, 1, 1], "USD", 4500),
-    ("Community Manager, Saudi Arabia", "Community and Partnerships", 13, [0, 1, 1, 1, 1], "USD", 3500),
-    ("Partnerships Manager, accelerators and angel networks", "Community and Partnerships", 4, [1, 1, 2, 2, 2], "EGP", 40000),
-    ("Country Lead, UAE and the wider GCC", "Community and Partnerships", 19, [0, 1, 1, 1, 1], "USD", 6000),
-    ("Customer Success Manager", "Customer", 4, [1, 2, 3, 4, 5], "EGP", 30000),
-    ("Customer Support Agent, Arabic and English", "Customer", 13, [0, 1, 2, 3, 4], "EGP", 18000),
-    ("Onboarding and Data Migration Specialist", "Customer", 16, [0, 1, 1, 2, 3], "EGP", 30000),
-    ("Operations and HR Officer", "Operations", 7, [1, 1, 1, 1, 1], "EGP", 25000),
-    ("Finance Manager", "Finance and Legal", 13, [0, 1, 1, 1, 1], "EGP", 45000),
-    ("Legal and Compliance Officer", "Finance and Legal", 19, [0, 1, 1, 1, 1], "EGP", 50000),
-    ("Head of Finance and Investor Relations", "Finance and Legal", 25, [0, 0, 1, 1, 1], "EGP", 90000),
-    ("Valuation Analyst", "Finance and Legal", 25, [0, 0, 1, 1, 2], "EGP", 35000),
+    ("Co-founder and Chief Executive Officer, investment", "Leadership", 1, [1, 1, 1, 1, 1], "EGP", 35000),
+    ("Managing Co-founder and Chief Operating Officer", "Leadership", 1, [1, 1, 1, 1, 1], "EGP", 35000),
+    ("Technical Co-founder and Chief Technology Officer", "Leadership", 1, [1, 1, 1, 1, 1], "EGP", 35000),
+    ("Senior Full Stack Engineer, lead", "Technology", 1, [1, 1, 2, 4, 6], "EGP", 75000),
+    ("Senior AI and Machine Learning Engineer", "Technology", 2, [1, 1, 2, 4, 6], "EGP", 85000),
+    ("Full Stack Engineer", "Technology", 6, [1, 2, 3, 7, 10], "EGP", 45000),
+    ("Mobile Engineer", "Technology", 13, [0, 1, 2, 3, 4], "EGP", 50000),
+    ("QA and DevOps Engineer", "Technology", 13, [0, 1, 1, 3, 4], "EGP", 40000),
+    ("Data Engineer", "Technology", 31, [0, 0, 1, 2, 3], "EGP", 60000),
+    ("Product Designer, UI and UX", "Product", 1, [1, 1, 2, 3, 4], "EGP", 35000),
+    ("Product Manager", "Product", 27, [0, 0, 1, 3, 4], "EGP", 65000),
+    ("Head of Sales, Institutional, Cairo based", "Sales", 30, [0, 0, 1, 1, 1], "EGP", 90000),
+    ("Account Executive, Institutional, Cairo based, covers Qatar and GCC", "Sales", 7, [1, 2, 4, 8, 12], "EGP", 50000),
+    ("Sales Development Representative, Arabic and English", "Sales", 5, [1, 2, 3, 6, 8], "EGP", 20000),
+    ("Head of Marketing", "Marketing", 28, [0, 0, 1, 1, 1], "EGP", 90000),
+    ("Growth Marketing Lead", "Marketing", 1, [1, 1, 1, 1, 1], "EGP", 50000),
+    ("Performance Marketing Specialist", "Marketing", 3, [1, 1, 2, 4, 6], "EGP", 25000),
+    ("Content and Research Analyst, Arabic and English", "Marketing", 7, [1, 1, 2, 4, 5], "EGP", 22000),
+    ("Community and Partnerships Lead, Egypt and Qatar", "Community and Partnerships", 2, [1, 1, 2, 4, 6], "EGP", 35000),
+    ("Customer Success Specialist", "Customer", 7, [1, 2, 4, 8, 12], "EGP", 25000),
+    ("Customer Support Agent, Arabic and English", "Customer", 13, [0, 1, 3, 6, 9], "EGP", 16000),
+    ("Operations, HR and Finance Officer", "Operations", 13, [0, 1, 2, 3, 4], "EGP", 25000),
+    ("Finance Manager", "Finance and Legal", 33, [0, 0, 1, 2, 3], "EGP", 45000),
+    ("Legal and Compliance Officer", "Finance and Legal", 34, [0, 0, 1, 1, 1], "EGP", 50000),
 ]
 FUNCS = ["Leadership", "Technology", "Product", "Sales", "Marketing", "Community and Partnerships", "Customer", "Operations", "Finance and Legal"]
 
@@ -43,7 +36,7 @@ def prevref(row, m, opening):
 
 # ---------------------------------------------------------------------------
 def build_payroll(ws, A, REG):
-    title(ws, "Payroll", "Thirty roles. Heads are set by year and ramp in month by month; salaries are gross monthly in the currency of the role, converted at the monthly rate.")
+    title(ws, "Payroll", "Twenty four roles, every one based in Cairo and paid in Egyptian pounds; Qatar and the GCC are covered by the founders, the account executives and travel. Heads are set by year and ramp in month by month; salaries are gross monthly in the currency of the role, converted at the monthly rate.")
     set_time_widths(ws, 54)
     ws.column_dimensions["B"].width = 26
     t = TS(ws, REG, 4)
@@ -77,7 +70,7 @@ def build_payroll(ws, A, REG):
         put(ws, f"C{t.r}", val, fmt, kind="input")
         keys[key] = f"$C${t.r}"
         t.r += 1
-    note(ws, t.r, "Salaries: Cairo market rates for 2026, mid level engineers EGP 30k to 60k and senior EGP 50k to 90k a month. Founders take a reduced salary until the seed round.")
+    note(ws, t.r, "Salaries: Cairo market rates for 2026, mid level engineers EGP 30k to 60k and senior EGP 50k to 90k a month. Founders take a reduced salary of EGP 35,000 a month until the business breaks even.")
     t.r += 2
 
     t.section("EXCHANGE RATE")
@@ -125,10 +118,11 @@ def build_payroll(ws, A, REG):
     t.line("comm_heads", "Commercial heads, sales and community, who travel",
            lambda m: f"{mcol(m)}{g['fh_Sales']}+{mcol(m)}{g['fh_Community and Partnerships']}", NUM, total="end")
     # specific roles used by the capacity sheet
-    t.line("ae_heads", "Account executives and head of sales", lambda m: f"{mcol(m)}{g['h12']}+{mcol(m)}{g['h13']}", NUM, total="end")
-    t.line("sdr_heads", "Sales development reps", lambda m: f"{mcol(m)}{g['h14']}", NUM, total="end")
+    idx = lambda pre: [i for i, rl in enumerate(ROLES) if rl[0].startswith(pre)]
+    t.line("ae_heads", "Account executives", lambda m: "+".join(f"{mcol(m)}{g[f'h{i}']}" for i in idx("Account Executive")), NUM, total="end")
+    t.line("sdr_heads", "Sales development reps", lambda m: "+".join(f"{mcol(m)}{g[f'h{i}']}" for i in idx("Sales Development")), NUM, total="end")
     t.line("cp_heads", "Community and partnerships heads", lambda m: f"{mcol(m)}{g['fh_Community and Partnerships']}", NUM, total="end")
-    t.line("cs_heads", "Customer success and onboarding heads", lambda m: f"{mcol(m)}{g['h23']}+{mcol(m)}{g['h25']}", NUM, total="end")
+    t.line("cs_heads", "Customer success heads", lambda m: "+".join(f"{mcol(m)}{g[f'h{i}']}" for i in idx("Customer Success")), NUM, total="end")
     t.line("fd_heads", "Founders", lambda m: f"{mcol(m)}{g['fh_Leadership']}", NUM, total="end")
     return keys
 

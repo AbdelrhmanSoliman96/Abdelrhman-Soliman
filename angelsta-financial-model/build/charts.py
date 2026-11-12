@@ -42,6 +42,49 @@ def fixlog(fig):
                 axis.set_minor_formatter(matplotlib.ticker.NullFormatter())
 
 
+def place_labels(ax, pts, fontsize=7.5, bold=(), colors=None):
+    """Greedy label placement. pts: list of (x, y, label, marker_size_pts). No overlaps between labels, markers or the frame."""
+    fig = ax.figure
+    fig.canvas.draw()
+    rend = fig.canvas.get_renderer()
+    trans = ax.transData
+    axbox = ax.get_window_extent(rend)
+    marker_boxes = []
+    for x, y, lab, s in pts:
+        px, py = trans.transform((x, y))
+        r = (s ** 0.5) / 2 * fig.dpi / 72 * 1.05
+        marker_boxes.append(matplotlib.transforms.Bbox([[px - r, py - r], [px + r, py + r]]))
+    placed = []
+    cands = [(7, 3, "left"), (7, -11, "left"), (-7, 3, "right"), (-7, -11, "right"), (0, 9, "center"), (0, -16, "center"),
+             (12, 12, "left"), (12, -20, "left"), (-12, 12, "right"), (-12, -20, "right"), (22, 2, "left"), (-22, 2, "right"),
+             (0, 22, "center"), (0, -28, "center"), (26, 22, "left"), (-26, 22, "right"), (26, -30, "left"), (-26, -30, "right"),
+             (40, 6, "left"), (-40, 6, "right"), (0, 36, "center"), (0, -40, "center")]
+    order = sorted(range(len(pts)), key=lambda i: (-pts[i][3], -pts[i][1]))
+    for i in order:
+        x, y, lab, s = pts[i]
+        best, best_score = None, None
+        for dx, dy, ha in cands:
+            t = ax.annotate(lab, (x, y), xytext=(dx, dy), textcoords="offset points", ha=ha, fontsize=fontsize,
+                            fontweight="bold" if lab in bold else "normal", color=(colors or {}).get(lab, DEEP), zorder=5)
+            bb = t.get_window_extent(rend).expanded(1.04, 1.12)
+            score = sum(bb.overlaps(p) for p in placed) * 10 + sum(bb.overlaps(mb) for j, mb in enumerate(marker_boxes) if j != i) * 3
+            if bb.x0 < axbox.x0 or bb.x1 > axbox.x1 or bb.y0 < axbox.y0 or bb.y1 > axbox.y1:
+                score += 50
+            if best_score is None or score < best_score:
+                if best is not None:
+                    best[0].remove()
+                best, best_score = (t, bb, dx, dy), score
+            else:
+                t.remove()
+            if score == 0:
+                break
+        t, bb, dx, dy = best
+        if abs(dx) > 14 or abs(dy) > 18:
+            t.arrow_patch = None
+            ax.annotate("", (x, y), xytext=(dx, dy + 3), textcoords="offset points", arrowprops=dict(arrowstyle="-", color=GREY, lw=0.5), zorder=4)
+        placed.append(bb)
+
+
 def save(fig, name):
     fixlog(fig)
     fig.savefig(os.path.join(OUT, name))
@@ -77,7 +120,7 @@ for r in fu.iter_rows():
         for key, txt in [("ask", "THE PRE-SEED ASK"), ("seed", "SEED ROUND, sized"), ("y1", "Total cash required in year one")]:
             if v.startswith(txt):
                 D[key] = fu.cell(r[0].row, 3).value
-        for key, txt in [("u_prod", "Product and AI engineering"), ("u_grow", "Community, growth and sales"), ("u_ai", "AI agents, cloud and delivery"), ("u_ops", "Leadership, operations, legal")]:
+        for key, txt in [("u_mkt", "Marketing and community"), ("u_sales", "Sales and customer success"), ("u_prod", "Product and AI engineering"), ("u_ai", "AI agents, cloud and delivery"), ("u_ops", "Leadership, operations, legal")]:
             if v.startswith(txt):
                 D[key] = fu.cell(r[0].row, 5).value
 va = wb["Valuation"]
@@ -146,19 +189,29 @@ price_bar("Founder", "p3_founder_prices.png", "Founder side: entry price of paid
 price_bar("Investor", "p4_investor_prices.png", "Investor side: entry price of paid plans, log scale, Angelsta in gold", log=True)
 
 # p5 value map
-fig, ax = plt.subplots(figsize=(8, 4.6))
+fig, ax = plt.subplots(figsize=(10, 5.6))
+pts, cols = [], {}
 for pname, cname in C.PRICE_COVER.items():
     price = C.PRICE[pname][0]
     tot = C.coverage_score(C.COVER[cname][6])[2]
     is_a = pname.startswith("Angelsta")
-    ax.scatter(tot, price, s=160 if is_a else 70, color=GOLD if is_a else (TEAL if C.PRICE[pname][1] == "Founder" else DEEP), edgecolor="white", zorder=3)
-    ax.annotate(pname, (tot, price), xytext=(5, 3), textcoords="offset points", fontsize=7.5, color=DEEP if not is_a else "#7a5c00", fontweight="bold" if is_a else "normal")
+    size = 190 if is_a else 80
+    ax.scatter(tot, price, s=size, color=GOLD if is_a else (TEAL if C.PRICE[pname][1] == "Founder" else DEEP), edgecolor="white", zorder=3)
+    pts.append((tot, price, pname, size))
+    if is_a:
+        cols[pname] = "#7a5c00"
+ax.set_yscale("log")
+ax.set_xlim(0.5, 12.2)
+ax.set_ylim(15, 3000)
+place_labels(ax, pts, fontsize=8, bold={"Angelsta Pro", "Angelsta Institutional"}, colors=cols)
 ax.set_yscale("log")
 ax.set_xlabel("Modules covered, of 11 (full = 1, partial = 0.5)")
 ax.set_ylabel("Entry price, USD per month, log scale")
 ax.set_title("Value map: more of the workflow for less, Angelsta sits bottom right")
 ax.axvline(5.5, color=GREY, lw=0.6, ls="--")
-ax.text(5.6, ax.get_ylim()[1] * 0.7, "covers both sides", fontsize=7.5, color=GREY)
+ax.text(5.6, 2200, "covers both sides", fontsize=8, color=GREY)
+ax.legend(handles=[plt.Line2D([], [], marker="o", ls="", color=TEAL, label="Founder side product"), plt.Line2D([], [], marker="o", ls="", color=DEEP, label="Investor side product"),
+                   plt.Line2D([], [], marker="o", ls="", color=GOLD, label="Angelsta")], frameon=False, fontsize=8, loc="upper right")
 save(fig, "p5_value_map.png")
 
 # p6 regional effective prices
@@ -271,7 +324,7 @@ fig, ax = plt.subplots(figsize=(8, 3.2))
 ax.axis("off")
 mx = stages[0][1]
 for i, (nm, v) in enumerate(stages):
-    w = 8 * max(v / mx, 0.18)
+    w = 8 * [1.0, 0.72, 0.5][i]
     ax.add_patch(FancyBboxPatch(((10 - w) / 2, 2.2 - i * 0.95), w, 0.75, boxstyle="round,pad=0.02", fc=[MINT, TEAL, DEEP][i], ec="none"))
     ax.text(5, 2.575 - i * 0.95, f"{nm}: {v:,.0f}", ha="center", va="center", color="white" if i else DEEP, fontsize=10, fontweight="bold")
 ax.set_xlim(0, 10)
@@ -282,25 +335,34 @@ save(fig, "p11_funnel.png")
 # ================================================================ COMPETITOR CHARTS
 REGCOL = {"Egypt and GCC": GOLD, "GCC": TEAL, "MENA serving": "#3E8E7E", "Global and GCC": MINT, "Africa": "#B5651D",
           "Emerging markets": "#5B7C99", "Global": DEEP}
-# c1 positioning scatter
-fig, ax = plt.subplots(figsize=(9, 6))
-rng = np.random.default_rng(7)
+# c1 positioning scatter, co-located competitors merged into one bubble
+fig, ax = plt.subplots(figsize=(9.6, 8.2))
+groups = {}
 for nm, (reg, hq, fd, side, cat, th, code, src) in C.COVER.items():
     fx, ix, tot = C.coverage_score(code)
-    jx, jy = (0, 0) if nm == "Angelsta" else rng.uniform(-0.12, 0.12, 2)
-    ax.scatter(fx + jx, ix + jy, s=60 + tot * 35, color=REGCOL.get(reg, GREY), alpha=0.85, edgecolor="white", zorder=3)
-    ax.annotate(nm, (fx + jx, ix + jy), xytext=(4, 3), textcoords="offset points", fontsize=7, fontweight="bold" if nm == "Angelsta" else "normal")
+    groups.setdefault((fx, ix), []).append((nm, reg, tot))
+pts, cols = [], {}
+for (fx, ix), items in groups.items():
+    tot = items[0][2]
+    reg = items[0][1]
+    size = 90 + tot * 45 + (len(items) - 1) * 40
+    ax.scatter(fx, ix, s=size, color=REGCOL.get(reg, GREY), alpha=0.9, edgecolor="white", lw=1.2, zorder=3)
+    lab = " / ".join(i[0] for i in items)
+    pts.append((fx, ix, lab, size))
+    if items[0][0] == "Angelsta":
+        cols[lab] = "#7a5c00"
 ax.axhline(2.5, color=GREY, lw=0.6, ls="--")
 ax.axvline(3, color=GREY, lw=0.6, ls="--")
-ax.set_xlim(-0.4, 6.6)
-ax.set_ylim(-0.4, 5.6)
-ax.set_xlabel("Founder side coverage: data room, cap table, ESOP, model and valuation, KPIs, deal pipeline (of 6)")
-ax.set_ylabel("Investor side coverage: portfolio, startup tracking, matching, investor cap table, exits (of 5)")
-for (x, y, t) in [(0.1, 5.35, "Investor tools"), (4.6, 5.35, "Two sided operating systems"), (0.1, -0.25, "Point solutions"), (4.6, -0.25, "Founder tools")]:
-    ax.text(x, y, t, fontsize=9, color=GREY, fontweight="bold")
+ax.set_xlim(-0.6, 6.8)
+ax.set_ylim(-0.6, 5.7)
+ax.set_xlabel("Founder side coverage, of 6: data room, cap table, ESOP, model and valuation, KPIs, deal pipeline", fontsize=9)
+ax.set_ylabel("Investor side coverage, of 5: portfolio, tracking, matching, investor cap table, exits", fontsize=9)
+for (x, y, t) in [(-0.5, 5.45, "INVESTOR TOOLS"), (3.15, 5.45, "TWO SIDED OPERATING SYSTEMS"), (-0.5, -0.5, "POINT SOLUTIONS"), (5.2, -0.5, "FOUNDER TOOLS")]:
+    ax.text(x, y, t, fontsize=9, color="#B0B7BE", fontweight="bold")
+place_labels(ax, pts, fontsize=9, bold={"Angelsta"}, colors=cols)
 handles = [plt.Line2D([], [], marker="o", ls="", color=c, label=r) for r, c in REGCOL.items()]
-ax.legend(handles=handles, frameon=False, fontsize=7.5, loc="center left", bbox_to_anchor=(1, 0.5), title="Region")
-ax.set_title("Competitive positioning: bubble size is total modules covered")
+ax.legend(handles=handles, frameon=False, fontsize=9, loc="upper center", bbox_to_anchor=(0.5, -0.09), ncol=4, title="Region")
+ax.set_title("Competitive positioning: founder side against investor side coverage\nBubble size is total modules covered; competitors with identical coverage share a bubble", fontsize=11)
 save(fig, "c1_positioning.png")
 
 # c2 heatmap
@@ -452,8 +514,8 @@ ax.text(5.5, 3.85, "The fragmented workflow today: a different product at every 
 save(fig, "c9_workflow.png")
 
 # c10 roadmap
-mk = [("Egypt", "Month 1", "Home market\nEGP list, 60%"), ("Qatar", "Month 4", "Doha manager,\nQFC or QSTP entity"), ("Saudi Arabia", "Month 10", "Founder led,\nentity month 13"),
-      ("UAE", "Month 13", "DIFC and ADGM\nfund managers"), ("Kuwait, Bahrain,\nOman", "Month 19", "Country lead\nUAE and GCC")]
+mk = [("Egypt", "Month 1", "Home market, Cairo team\nEGP list, 60%"), ("Qatar", "Month 4", "Sold from Cairo,\nQatar entity month 13"), ("Saudi Arabia", "Month 10", "Founder led,\nentity month 25"),
+      ("UAE", "Month 13", "Cairo account executives,\nDIFC and ADGM funds"), ("Kuwait, Bahrain,\nOman", "Month 19", "Self serve\nand partners")]
 fig, ax = plt.subplots(figsize=(11, 3.6))
 ax.axis("off")
 ax.set_xlim(0, 11)
@@ -490,12 +552,46 @@ ax.set_title("Threat level by region: the critical threats are regional equity p
 save(fig, "c11_threats.png")
 
 # c12 use of funds donut
-fig, ax = plt.subplots(figsize=(6, 4))
-vals = [D["u_prod"], D["u_grow"], D["u_ai"], D["u_ops"]]
-labs = ["Product and AI engineering", "Community, growth and sales", "AI agents, cloud and delivery", "Leadership, operations, legal"]
-w, _ = ax.pie(vals, colors=[TEAL, DEEP, MINT, SAND], startangle=90, wedgeprops=dict(width=0.38, edgecolor="white"))
-ax.text(0, 0, f"{money(D['ask'])}\npre-seed", ha="center", va="center", fontsize=12, fontweight="bold", color=DEEP)
-ax.legend(w, [f"{l}: {money(v)}" for l, v in zip(labs, vals)], frameon=False, fontsize=8, loc="center left", bbox_to_anchor=(1, 0.5))
-ax.set_title("The ask, built from year one expenses, and where it goes")
+fig, ax = plt.subplots(figsize=(8, 4.4))
+keys = ["u_mkt", "u_sales", "u_prod", "u_ai", "u_ops"]
+labs = ["Marketing and community", "Sales and customer success", "Product and AI engineering", "AI agents, cloud and delivery", "Leadership, operations, legal and set up"]
+vals = [D[k] for k in keys]
+w, _ = ax.pie(vals, colors=[GOLD, TEAL, DEEP, MINT, SAND], startangle=90, counterclock=False, wedgeprops=dict(width=0.38, edgecolor="white"))
+ax.text(0, 0, f"{money(D['ask'])}\npre-seed", ha="center", va="center", fontsize=13, fontweight="bold", color=DEEP)
+tot = sum(vals)
+ax.legend(w, [f"{l}: {money(v)}, {v / tot:.0%}" for l, v in zip(labs, vals)], frameon=False, fontsize=9, loc="center left", bbox_to_anchor=(1, 0.5))
+ax.set_title("Use of funds: marketing and community is the largest line")
 save(fig, "c12_use_of_funds.png")
+
+# c13 break even infographic: monthly revenue against monthly cost, first 36 months
+ws_ = wb["Total Revenue"]
+rev_row = next(r[0].row for r in ws_.iter_rows() if isinstance(r[0].value, str) and r[0].value.strip() == "Total revenue")
+ex = wb["Expenses"]
+cost_row = next(r[0].row for r in ex.iter_rows() if isinstance(r[0].value, str) and r[0].value.startswith("Total cash cost, direct and operating"))
+mcols = [3 + (k // 12) * 13 + k % 12 for k in range(36)]
+rv = [ws_.cell(rev_row, cc).value or 0 for cc in mcols]
+cs = [ex.cell(cost_row, cc).value or 0 for cc in mcols]
+be = next((k + 1 for k in range(36) if rv[k] > cs[k]), None)
+D["be_month"] = be
+fig, ax = plt.subplots(figsize=(10, 4))
+xs = np.arange(1, 37)
+ax.fill_between(xs, rv, cs, where=np.array(rv) < np.array(cs), color=RED, alpha=0.12, interpolate=True, label="Burn, funded by the pre-seed")
+ax.fill_between(xs, rv, cs, where=np.array(rv) >= np.array(cs), color=TEAL, alpha=0.15, interpolate=True, label="Profit")
+ax.plot(xs, rv, color=TEAL, lw=2.2, label="Monthly revenue")
+ax.plot(xs, cs, color=DEEP, lw=2.2, ls="--", label="Monthly cash cost")
+if be:
+    ax.axvline(be, color=GOLD, lw=1.5)
+    ax.text(be + 0.3, max(cs) * 0.95, f"Break even, month {be}\n{['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][(be - 1) % 12]} {2027 + (be - 1) // 12}", fontsize=9, fontweight="bold", color="#7a5c00")
+for k in (12, 24):
+    ax.axvline(k + 0.5, color="#D5DCDF", lw=0.8)
+ax.text(6.5, ax.get_ylim()[1] * 0.02, "2027", ha="center", color=GREY)
+ax.text(18.5, ax.get_ylim()[1] * 0.02, "2028", ha="center", color=GREY)
+ax.text(30.5, ax.get_ylim()[1] * 0.02, "2029", ha="center", color=GREY)
+ax.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: money(v)))
+ax.set_xlabel("Month from launch")
+ax.legend(frameon=False, fontsize=8, loc="upper left")
+ax.set_title("Break even inside year two: monthly revenue crosses monthly cost")
+save(fig, "c13_break_even.png")
+json.dump(D, open(os.path.join(OUT, "model_numbers.json"), "w"), indent=1, default=float)
+
 print("charts written to", OUT, json.dumps({k: D[k] for k in ["ask", "seed", "pre", "own"]}))
