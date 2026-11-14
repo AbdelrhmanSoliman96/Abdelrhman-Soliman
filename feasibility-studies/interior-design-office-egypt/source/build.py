@@ -8,12 +8,27 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = sys.argv[1]
 
 
-def assemble(pages):
-    core._fig[0] = 0; core._tab[0] = 0; core.TOC.clear()
-    body = [A.s_exec(), A.s_method(), A.s_macro(), A.s_market(), A.s_geo(), A.s_comp(), A.s_price(), B.s_strategy(),
-            B.s_marketing(), B.s_org(), B.s_ops(), B.s_tech(), B.s_fin(), B.s_risk(), B.s_decision(), B.s_sources()]
-    return render([A.cover(), A.front(), A.toc_page(pages)] + body)
+import part_c as P
+core.DIV[0] = P.divider
 
+
+def inj(html, extra, before=None):
+    if before and before in html:
+        i = html.index(before); return html[:i] + extra + html[i:]
+    i = html.rindex("</section>"); return html[:i] + extra + html[i:]
+
+
+def assemble(pages):
+    core._fig[0] = 0; core._tab[0] = 0; core._sec[0] = 0; core.TOC.clear()
+    body = [A.s_exec(), P.s_project(), A.s_method(), A.s_macro(),
+            inj(A.s_market(), P.market_extra(), "<h2>الشرائح المستهدفة</h2>"), A.s_geo(),
+            inj(A.s_comp(), P.comp_extra(), "<h2>الميزة التفاضلية المقترحة</h2>"), A.s_price(), B.s_strategy(),
+            inj(B.s_marketing(), P.marketing_extra(), "<h2>رحلة العميل</h2>"), B.s_org(),
+            inj(B.s_ops(), P.ops_extra(), "<h2>الجدول الزمني للتأسيس والافتتاح</h2>"),
+            inj(B.s_tech(), P.tech_extra(), "<h2>الأجهزة والتجهيزات</h2>"),
+            inj(B.s_fin(), P.fin_extra(), "<h2>مؤشرات الجدوى</h2>"), B.s_risk(), P.s_impact(),
+            inj(B.s_decision(), P.roadmap(), "<h2>الخطوات التالية</h2>"), B.s_sources()]
+    return render([A.cover(), P.letter(), A.front(), A.toc_page(pages)] + body)
 
 
 def pdf(html):

@@ -3,8 +3,8 @@ const { chromium } = require('playwright'); const fs = require('fs');
   const b = await chromium.launch();
   const p = await b.newPage({ viewport: { width: 680, height: 1000 }, deviceScaleFactor: 2.5 });
   await p.goto('file://' + process.argv[2]); await p.evaluate(() => document.fonts.ready);
-  await p.addStyleTag({ content: '.cover{height:900px;width:680px} .sec{break-before:auto} body{background:#fff}' });
-  const sels = ['.cover', 'figure .fig-body', '.kpis', '.grid', '.flow', '.org', '.verdict', 'table.gantt'];
+  await p.addStyleTag({ content: '.cover{height:962px;width:680px} .divider{height:900px;width:680px} .divider .dn{top:560px} .divider h1{top:640px} .divider p{top:710px} .divider .bar{top:520px} .sec{break-before:auto} body{background:#fff}' });
+  const sels = ['.cover', '.divider', '.prow', 'figure .fig-body', '.kpis', '.grid', '.flow', '.org', '.verdict', 'table.gantt'];
   const els = await p.$$(sels.join(','));
   let i = 0;
   for (const e of els) {
