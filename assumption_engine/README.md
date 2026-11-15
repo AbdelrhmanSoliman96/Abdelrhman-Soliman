@@ -14,3 +14,12 @@ python3 -I -m unittest discover -s tests                                     # 1
 
 Scope: the 20 countries in `data/countries_list.csv` and 28 industries in `data/industries_list.csv`. Gated countries
 (Libya, Iran, Syria, Sudan, Yemen) return `REVIEW_REQUIRED` and no numbers until compliance review.
+
+## v0.4 additions (research-driven flow)
+
+- **Business models** (8): each changes what a conversion is and shifts the funnel (`assume(..., business_model="MARKETPLACE")`).
+- **Researched ratings**: evidence from the agent's research replaces prior ratings (`rating_overrides={"c_fric": 5}`); label becomes `researched`.
+- **Event size and reliability**: `event_inputs={"attendees": 38000, "icp_share": 0.12}` and per-row `reliability`.
+- **Partner activation**: plan `signed_partners`; engine converts to active partners with ramp-up.
+- **Awareness (halo) effect**: `forecast_detail(plan, halo=True)` adds cross-channel lift (capped, credited to the source channel, no double counting).
+- 19 tests. Full description: `docs/Research_Driven_Channel_Assumptions_Flow.pdf`.

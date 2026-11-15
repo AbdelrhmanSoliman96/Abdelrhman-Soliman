@@ -54,12 +54,15 @@ def season(country, year, month, family):
         vol *= s["summer_volume"]; cyc *= s["summer_cycle"]
     return {"volume": vol, "cycle": cyc}
 
-def assume(country, industry, deal_type, channel, actuals=None, rng_seed=7, draws=4000):
+def assume(country, industry, deal_type, channel, actuals=None, rng_seed=7, draws=4000, business_model=None, rating_overrides=None, event_inputs=None):
     """Return base assumptions with P10/P90, drivers and provenance for one combination."""
     c, i = norm_country(country), norm_industry(industry)
     if deal_type not in DT: raise ValueError(f"Unknown deal type {deal_type!r}. Supported: {', '.join(DT)}")
     if channel not in CH: raise ValueError(f"Unknown channel {channel!r}. Supported: {', '.join(CH)}")
     out = dict(country=c, industry=i, deal_type=deal_type, channel=channel, channel_name=CH[channel]["name"], unit=CH[channel]["unit"], warnings=[])
+    if business_model is not None and business_model not in MODEL["business_models"]:
+        raise ValueError(f"Unknown business model {business_model!r}. Supported: {', '.join(MODEL['business_models'])}")
+    out["business_model"] = business_model
     allowed = DT[deal_type]["channels"]
     if allowed != "all" and channel not in allowed:
         out["status"] = "NOT_APPLICABLE"; out["warnings"].append(f"{deal_type} is not modelled for channel {channel}."); return out
@@ -70,16 +73,32 @@ def assume(country, industry, deal_type, channel, actuals=None, rng_seed=7, draw
         return out
     if gate == "elevated": out["warnings"].append(f"{c}: elevated operating risk; treat ranges as wide and confirm with local team.")
     z, ch, d = _z(c, i), CH[channel], DT[deal_type]
+    if rating_overrides:
+        for k, v in rating_overrides.items():
+            if k not in z or not (1 <= v <= 5): raise ValueError(f"Bad rating override {k!r}={v!r}")
+            z[k] = v - 3
+    bm = MODEL["business_models"][business_model] if business_model else dict(V=1.0, q=0.0, o=0.0, w=0.0, T=1.0)
     sh = {}; drivers = {}
     for st in "VQOWT":
         sh[st], drivers[st] = _shift(ch[st], z)
     if d["gov_v"]: sh["V"] += d["gov_v"]*z["c_gov"]
-    lead = ch["lead"]*d["V"]*math.exp(sh["V"])
-    q, o, w = (sigm(logit(ch[k]) + d[k] + sh[S]) for k, S in (("q", "Q"), ("o", "O"), ("w", "W")))
-    cyc = ch["cyc"]*d["T"]*math.exp(sh["T"])
+    lead = ch["lead"]*d["V"]*bm["V"]*math.exp(sh["V"])
+    q, o, w = (sigm(logit(ch[k]) + d[k] + bm[k] + sh[S]) for k, S in (("q", "Q"), ("o", "O"), ("w", "W")))
+    cyc = ch["cyc"]*d["T"]*bm["T"]*math.exp(sh["T"])
+    if event_inputs:
+        ep = MODEL["event_priors"]
+        if channel == "EVT_EXHIBIT":
+            e_ = ep["EVT_EXHIBIT"]; f = math.sqrt(event_inputs["attendees"]/e_["neutral_attendees"]) ** (e_["attendee_exponent"]/0.5) * min(e_["icp_max"], max(e_["icp_min"], event_inputs["icp_share"]/e_["neutral_icp_share"]))
+            lead *= f; out["event_lead_factor"] = round(f, 4)
+        elif channel == "EVT_HOSTED":
+            e_ = ep["EVT_HOSTED"]; f = min(e_["max"], max(e_["min"], event_inputs["attendees"]/e_["neutral_attendees"]))
+            lead *= f; out["event_lead_factor"] = round(f, 4)
+        else: out["warnings"].append("event_inputs ignored: channel is not an event.")
     # uncertainty
     sig = MODEL["uncertainty_sigma"]; s0 = math.sqrt(sig[COUNTRIES["countries"][c]["tier"]]**2 + sig["industry_add"]**2)
     prov = "prior"; n_eff = 0
+    if rating_overrides:
+        prov = "researched"; s0 *= 0.9
     pc = MODEL["blend_pseudocounts"]
     if actuals:
         for k, key in (("q", "qualified_rate"), ("o", "opportunity_rate"), ("w", "win_rate")):
@@ -102,7 +121,7 @@ def assume(country, industry, deal_type, channel, actuals=None, rng_seed=7, draw
     for _ in range(draws):
         ds.append(lead*math.exp(r.gauss(0, s0)) * sigm(logit(q)+r.gauss(0, s0)) * sigm(logit(o)+r.gauss(0, s0)) * sigm(logit(w)+r.gauss(0, s0)))
     ds.sort(); dpu = lead*q*o*w
-    out.update(status="OK", provenance=prov, sigma=round(s0, 3),
+    out.update(status="OK", provenance=prov, sigma=round(s0, 3), outcome=(bm.get("outcome") if business_model else "deal"),
                leads_per_unit=pos(lead), qualified_rate=rate(q), opportunity_rate=rate(o), win_rate=rate(w), cycle_days=pos(cyc),
                ramp_months=ch["ramp"],
                deals_per_unit=dict(base=dpu, p10=ds[int(.1*draws)], p90=ds[int(.9*draws)]),
@@ -113,35 +132,75 @@ def assume(country, industry, deal_type, channel, actuals=None, rng_seed=7, draw
 
 def blend(*a, **k): return assume(*a, **k)
 
-def forecast(plan, acv=None):
-    """plan: list of dict(country, industry, deal_type, channel, month 'YYYY-MM', units, partner_age_months optional).
-    Returns monthly leads/qualified/opps/deals (base, p10, p90) with deals lagged by cycle time."""
-    months = {}
-    def add(m, k, v):
-        months.setdefault(m, dict(leads=0, qualified=0, opps=0, deals=0, deals_p10=0, deals_p90=0))[k] += v
-    lagw = [(.6, .15), (.8, .25), (1.0, .30), (1.2, .20), (1.5, .10)]
+def activation_rate(country, industry, channel, rating_overrides=None):
+    """Share of signed partners that become active (produce leads). Logit shift by partner-ecosystem ratings."""
+    A = MODEL["activation"]
+    if channel not in A["base"]: return 1.0
+    c, i = norm_country(country), norm_industry(industry); z = _z(c, i)
+    for k, v in (rating_overrides or {}).items(): z[k] = v - 3
+    return sigm(logit(A["base"][channel]) + A["c_par"]*z["c_par"] + A["i_par"]*z["i_par"])
+
+def forecast_detail(plan, acv=None, halo=True):
+    """Monthly forecast with sales-cycle lag, seasonality, partner ramp/activation, event reliability and cross-channel awareness (halo).
+    plan rows: country, industry, deal_type, channel, month 'YYYY-MM', units  (or signed_partners for partnership channels),
+    optional: partner_age_months, business_model, rating_overrides, event_inputs, reliability.
+    Returns dict(months=[...], assists={source_channel: assisted_deals}, rows=[...])."""
+    H = MODEL["halo"]; lagw = [(.6, .15), (.8, .25), (1.0, .30), (1.2, .20), (1.5, .10)]
+    rows = []
     for row in plan:
-        a = assume(row["country"], row["industry"], row["deal_type"], row["channel"])
+        a = assume(row["country"], row["industry"], row["deal_type"], row["channel"], business_model=row.get("business_model"),
+                   rating_overrides=row.get("rating_overrides"), event_inputs=row.get("event_inputs"))
         if a["status"] != "OK": raise ValueError(f"{row['country']}/{row['channel']}: {a['status']} {a['warnings']}")
         y, m = map(int, row["month"].split("-")); s = season(a["country"], y, m, a["channel"])
         ramp = 1.0
         if a["ramp_months"] and row.get("partner_age_months") is not None: ramp = min(1.0, row["partner_age_months"]/a["ramp_months"])
-        u = row["units"]*ramp
-        lead = u*a["leads_per_unit"]["base"]*s["volume"]; qd = lead*a["qualified_rate"]["base"]; op = qd*a["opportunity_rate"]["base"]
-        dl = op*a["win_rate"]["base"]; cyc_m = a["cycle_days"]["base"]*s["cycle"]/30
-        k = dl/a["deals_per_unit"]["base"] if a["deals_per_unit"]["base"] else 0
-        key = row["month"]; add(key, "leads", lead); add(key, "qualified", qd); add(key, "opps", op)
+        if row.get("signed_partners") is not None and a["unit"] == "active_partner_month":
+            u = row["signed_partners"]*activation_rate(a["country"], a["industry"], a["channel"], row.get("rating_overrides"))*ramp
+        else: u = row["units"]*ramp
+        u *= row.get("reliability", 1.0)
+        z = _z(a["country"], a["industry"])
+        for k, v in (row.get("rating_overrides") or {}).items(): z[k] = v - 3
+        rows.append(dict(row=row, a=a, idx=y*12+m-1, y=y, m=m, s=s, u=u, z=z, up=0.0, credits={}))
+    if halo:
+        for t in rows:
+            tot, cr = 0.0, {}
+            for sr in rows:
+                sc, tc = sr["a"]["channel"], t["a"]["channel"]
+                if sc == tc or (sr["a"]["country"], sr["a"]["industry"]) != (t["a"]["country"], t["a"]["industry"]) or sr["idx"] > t["idx"]: continue
+                p = H["pulses"].get(sc, {}).get(tc)
+                if not p: continue
+                scale = math.exp(H["scale_coefficient"]*sum(sr["z"][k] for k in H["scale_by"][sc]))
+                v = sr["u"]*p*scale*0.5**((t["idx"]-sr["idx"])/H["half_life_months"][sc])
+                tot += v; cr[sc] = cr.get(sc, 0.0) + v
+            if tot > H["cap"]:
+                cr = {k: v*H["cap"]/tot for k, v in cr.items()}; tot = H["cap"]
+            t["up"], t["credits"] = tot, cr
+    months, assists = {}, {}
+    def add(mk, k, v): months.setdefault(mk, dict(leads=0, leads_halo=0, qualified=0, opps=0, deals=0, deals_halo=0, deals_p10=0, deals_p90=0))[k] += v
+    for r in rows:
+        a, s = r["a"], r["s"]; base = r["u"]*a["leads_per_unit"]["base"]*s["volume"]
+        lead_total = base*(1 + r["up"]); lead_halo = base*r["up"]
+        per = a["qualified_rate"]["base"]*a["opportunity_rate"]["base"]*a["win_rate"]["base"]
+        qd = lead_total*a["qualified_rate"]["base"]; op = qd*a["opportunity_rate"]["base"]; dl = op*a["win_rate"]["base"]; dl_h = lead_halo*per
+        mk = f"{r['y']:04d}-{r['m']:02d}"; add(mk, "leads", lead_total); add(mk, "leads_halo", lead_halo); add(mk, "qualified", qd); add(mk, "opps", op)
+        tot_c = sum(r["credits"].values())
+        for sc, v in r["credits"].items(): assists[sc] = assists.get(sc, 0.0) + dl_h*(v/tot_c if tot_c else 0)
+        cyc_m = a["cycle_days"]["base"]*s["cycle"]/30
+        p10 = r["u"]*s["volume"]*a["deals_per_unit"]["p10"]*(1 + r["up"]); p90 = r["u"]*s["volume"]*a["deals_per_unit"]["p90"]*(1 + r["up"])
         for mult, wt in lagw:
             lag = cyc_m*mult; lo = int(lag); fr = lag - lo
             for off, share in ((lo, 1-fr), (lo+1, fr)):
                 if share <= 0: continue
-                t = (y*12 + m - 1) + off; ky = f"{t//12:04d}-{t % 12 + 1:02d}"
-                add(ky, "deals", dl*wt*share)
-                add(ky, "deals_p10", u*s["volume"]*a["deals_per_unit"]["p10"]*wt*share); add(ky, "deals_p90", u*s["volume"]*a["deals_per_unit"]["p90"]*wt*share)
-    out = [dict(month=k, **{kk: round(v, 2) for kk, v in vv.items()}) for k, vv in sorted(months.items())]
+                t = r["idx"] + off; ky = f"{t//12:04d}-{t % 12 + 1:02d}"
+                add(ky, "deals", dl*wt*share); add(ky, "deals_halo", dl_h*wt*share); add(ky, "deals_p10", p10*wt*share); add(ky, "deals_p90", p90*wt*share)
+    out = [dict(month=k, **{kk: round(v, 3) for kk, v in vv.items()}) for k, vv in sorted(months.items())]
     if acv:
-        for r in out: r["revenue_base"] = round(r["deals"]*acv, 2)
-    return out
+        for r_ in out: r_["revenue_base"] = round(r_["deals"]*acv, 2)
+    return dict(months=out, assists={k: round(v, 3) for k, v in assists.items()}, rows=rows)
+
+def forecast(plan, acv=None):
+    """Backward-compatible monthly forecast without the cross-channel awareness effect."""
+    return forecast_detail(plan, acv, halo=False)["months"]
 
 def matrix_rows():
     for c in COUNTRIES["countries"]:

@@ -43,4 +43,38 @@ class T(unittest.TestCase):
         plan = [dict(country="UAE", industry="SaaS", deal_type="B2B_ENT", channel="BD_WARM", month="2027-04", units=20)]
         f = e.forecast(plan); a = e.assume("UAE", "SaaS", "B2B_ENT", "BD_WARM")
         self.assertAlmostEqual(sum(r["deals"] for r in f), 20*a["deals_per_unit"]["base"]*e.season("UAE", 2027, 4, "x")["volume"], delta=0.1)
+
+    def test_business_model_changes_numbers_and_outcome(self):
+        a = e.assume("Egypt", "E-Commerce", "B2B_SMB", "EVT_EXHIBIT"); b = e.assume("Egypt", "E-Commerce", "B2B_SMB", "EVT_EXHIBIT", business_model="MARKETPLACE")
+        self.assertNotEqual(a["leads_per_unit"]["base"], b["leads_per_unit"]["base"]); self.assertEqual(b["outcome"], "onboarded merchant or supplier")
+        with self.assertRaises(ValueError): e.assume("Egypt", "SaaS", "B2B_SMB", "BD_WARM", business_model="NOPE")
+    def test_rating_overrides_label_researched(self):
+        base = e.assume("KSA", "FinTech", "B2B_ENT", "EVT_EXHIBIT"); r = e.assume("KSA", "FinTech", "B2B_ENT", "EVT_EXHIBIT", rating_overrides={"c_evt": 3})
+        self.assertEqual(r["provenance"], "researched"); self.assertLess(r["leads_per_unit"]["base"], base["leads_per_unit"]["base"]); self.assertLess(r["sigma"], base["sigma"])
+        with self.assertRaises(ValueError): e.assume("KSA", "FinTech", "B2B_ENT", "EVT_EXHIBIT", rating_overrides={"c_evt": 9})
+    def test_event_inputs_scale_leads(self):
+        base = e.assume("KSA", "FinTech", "B2B_ENT", "EVT_EXHIBIT"); big = e.assume("KSA", "FinTech", "B2B_ENT", "EVT_EXHIBIT", event_inputs={"attendees": 100000, "icp_share": 0.10})
+        self.assertAlmostEqual(big["leads_per_unit"]["base"]/base["leads_per_unit"]["base"], 2.0, places=3)
+    def test_activation_between_0_and_1(self):
+        for ch in ("PAR_RESELLER", "PAR_STRATEGIC", "PAR_REFERRAL"): self.assertTrue(0 < e.activation_rate("UAE", "SaaS", ch) < 1)
+    def test_halo_adds_leads_capped_and_attributed(self):
+        plan = [dict(country="KSA", industry="FinTech", deal_type="B2B_ENT", channel="EVT_EXHIBIT", month="2027-03", units=2),
+                dict(country="KSA", industry="FinTech", deal_type="B2B_ENT", channel="BD_COLD", month="2027-03", units=20),
+                dict(country="KSA", industry="FinTech", deal_type="B2B_ENT", channel="BD_COLD", month="2027-04", units=20)]
+        off = e.forecast_detail(plan, halo=False); on = e.forecast_detail(plan, halo=True)
+        self.assertGreater(sum(r["deals"] for r in on["months"]), sum(r["deals"] for r in off["months"]))
+        self.assertAlmostEqual(sum(on["assists"].values()), sum(r["deals_halo"] for r in on["months"]), places=2)
+        for r in on["rows"]: self.assertLessEqual(r["up"], e.MODEL["halo"]["cap"] + 1e-9)
+        self.assertEqual(sum(r["leads_halo"] for r in off["months"]), 0)
+    def test_halo_is_within_same_country_and_industry_only(self):
+        plan = [dict(country="KSA", industry="FinTech", deal_type="B2B_ENT", channel="EVT_EXHIBIT", month="2027-03", units=2),
+                dict(country="Egypt", industry="FinTech", deal_type="B2B_ENT", channel="BD_COLD", month="2027-03", units=20)]
+        self.assertEqual(sum(r["leads_halo"] for r in e.forecast_detail(plan)["months"]), 0)
+    def test_reliability_scales_units(self):
+        p = dict(country="UAE", industry="SaaS", deal_type="B2B_ENT", channel="EVT_EXHIBIT", month="2027-04", units=2)
+        a = sum(r["deals"] for r in e.forecast([p])); b = sum(r["deals"] for r in e.forecast([dict(p, reliability=0.7)]))
+        self.assertAlmostEqual(b/a, 0.7, places=2)
+    def test_signed_partners_use_activation(self):
+        p = dict(country="UAE", industry="SaaS", deal_type="B2B_ENT", channel="PAR_RESELLER", month="2027-04", signed_partners=10, partner_age_months=6)
+        r = e.forecast_detail([p], halo=False)["rows"][0]; self.assertAlmostEqual(r["u"], 10*e.activation_rate("UAE", "SaaS", "PAR_RESELLER"), places=6)
 if __name__ == "__main__": unittest.main()
