@@ -23,3 +23,5 @@ Scope: the 20 countries in `data/countries_list.csv` and 28 industries in `data/
 - **Partner activation**: plan `signed_partners`; engine converts to active partners with ramp-up.
 - **Awareness (halo) effect**: `forecast_detail(plan, halo=True)` adds cross-channel lift (capped, credited to the source channel, no double counting).
 - 19 tests. Full description: `docs/Research_Driven_Channel_Assumptions_Flow.pdf`.
+
+- Per-industry worked examples (28 industries x KSA, UAE, Egypt): `docs/Industry_Examples_KSA_UAE_Egypt_Step_by_Step.pdf`.
