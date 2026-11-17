@@ -1,0 +1,261 @@
+{
+ "scale_note": "Ratings 1-5; 3 = neutral. Expert PRIORS v0.1.",
+ "factor_defs": {
+  "cyc": "Sales-cycle length",
+  "acv": "Typical ticket size",
+  "par": "Partner dependence",
+  "evt": "Event dependence",
+  "reg": "Regulation / approvals exposure",
+  "cmt": "Buying-committee size"
+ },
+ "industries": {
+  "Manufacturing": {
+   "cyc": 4,
+   "acv": 4,
+   "par": 4,
+   "evt": 5,
+   "reg": 3,
+   "cmt": 4
+  },
+  "CloudTech": {
+   "cyc": 4,
+   "acv": 4,
+   "par": 5,
+   "evt": 4,
+   "reg": 3,
+   "cmt": 4
+  },
+  "Cyber Security": {
+   "cyc": 4,
+   "acv": 4,
+   "par": 4,
+   "evt": 4,
+   "reg": 4,
+   "cmt": 4
+  },
+  "Entertainment": {
+   "cyc": 3,
+   "acv": 3,
+   "par": 3,
+   "evt": 4,
+   "reg": 3,
+   "cmt": 2
+  },
+  "AutoTech": {
+   "cyc": 5,
+   "acv": 4,
+   "par": 4,
+   "evt": 4,
+   "reg": 4,
+   "cmt": 4
+  },
+  "Logistics": {
+   "cyc": 3,
+   "acv": 3,
+   "par": 4,
+   "evt": 4,
+   "reg": 3,
+   "cmt": 3
+  },
+  "InvestTech": {
+   "cyc": 4,
+   "acv": 4,
+   "par": 3,
+   "evt": 3,
+   "reg": 5,
+   "cmt": 3
+  },
+  "Data and Analytics": {
+   "cyc": 4,
+   "acv": 3,
+   "par": 4,
+   "evt": 3,
+   "reg": 3,
+   "cmt": 4
+  },
+  "EdTech": {
+   "cyc": 4,
+   "acv": 3,
+   "par": 3,
+   "evt": 3,
+   "reg": 5,
+   "cmt": 4
+  },
+  "MediaTech": {
+   "cyc": 3,
+   "acv": 2,
+   "par": 3,
+   "evt": 4,
+   "reg": 3,
+   "cmt": 2
+  },
+  "E-Commerce": {
+   "cyc": 3,
+   "acv": 3,
+   "par": 4,
+   "evt": 4,
+   "reg": 2,
+   "cmt": 3
+  },
+  "Gaming": {
+   "cyc": 3,
+   "acv": 2,
+   "par": 3,
+   "evt": 4,
+   "reg": 3,
+   "cmt": 2
+  },
+  "FinTech": {
+   "cyc": 5,
+   "acv": 4,
+   "par": 4,
+   "evt": 4,
+   "reg": 5,
+   "cmt": 4
+  },
+  "Telecommunications": {
+   "cyc": 5,
+   "acv": 5,
+   "par": 4,
+   "evt": 3,
+   "reg": 5,
+   "cmt": 5
+  },
+  "SaaS": {
+   "cyc": 3,
+   "acv": 3,
+   "par": 4,
+   "evt": 4,
+   "reg": 2,
+   "cmt": 3
+  },
+  "TravelTech": {
+   "cyc": 3,
+   "acv": 3,
+   "par": 4,
+   "evt": 5,
+   "reg": 3,
+   "cmt": 3
+  },
+  "AdTech": {
+   "cyc": 2,
+   "acv": 2,
+   "par": 3,
+   "evt": 4,
+   "reg": 2,
+   "cmt": 2
+  },
+  "Blockchain": {
+   "cyc": 4,
+   "acv": 3,
+   "par": 3,
+   "evt": 4,
+   "reg": 5,
+   "cmt": 3
+  },
+  "AgriTech": {
+   "cyc": 4,
+   "acv": 3,
+   "par": 4,
+   "evt": 4,
+   "reg": 4,
+   "cmt": 3
+  },
+  "Hardware": {
+   "cyc": 4,
+   "acv": 4,
+   "par": 5,
+   "evt": 5,
+   "reg": 3,
+   "cmt": 3
+  },
+  "Biotechnology": {
+   "cyc": 5,
+   "acv": 5,
+   "par": 4,
+   "evt": 4,
+   "reg": 5,
+   "cmt": 5
+  },
+  "HealthTech": {
+   "cyc": 5,
+   "acv": 4,
+   "par": 4,
+   "evt": 4,
+   "reg": 5,
+   "cmt": 5
+  },
+  "Apparel": {
+   "cyc": 2,
+   "acv": 2,
+   "par": 4,
+   "evt": 5,
+   "reg": 2,
+   "cmt": 2
+  },
+  "AI": {
+   "cyc": 4,
+   "acv": 4,
+   "par": 4,
+   "evt": 5,
+   "reg": 4,
+   "cmt": 4
+  },
+  "PropTech & ConTech": {
+   "cyc": 4,
+   "acv": 4,
+   "par": 4,
+   "evt": 5,
+   "reg": 4,
+   "cmt": 4
+  },
+  "SportTech": {
+   "cyc": 3,
+   "acv": 3,
+   "par": 3,
+   "evt": 4,
+   "reg": 3,
+   "cmt": 3
+  },
+  "Sustainability": {
+   "cyc": 4,
+   "acv": 4,
+   "par": 4,
+   "evt": 4,
+   "reg": 5,
+   "cmt": 4
+  },
+  "FoodTech": {
+   "cyc": 3,
+   "acv": 3,
+   "par": 4,
+   "evt": 5,
+   "reg": 4,
+   "cmt": 3
+  }
+ },
+ "aliases": {
+  "ecommerce": "E-Commerce",
+  "e commerce": "E-Commerce",
+  "proptech": "PropTech & ConTech",
+  "contech": "PropTech & ConTech",
+  "cybersecurity": "Cyber Security",
+  "data & analytics": "Data and Analytics",
+  "data analytics": "Data and Analytics",
+  "artificial intelligence": "AI",
+  "cloud": "CloudTech",
+  "health tech": "HealthTech",
+  "ed tech": "EdTech",
+  "fin tech": "FinTech",
+  "agri tech": "AgriTech",
+  "food tech": "FoodTech",
+  "ad tech": "AdTech",
+  "media tech": "MediaTech",
+  "sport tech": "SportTech",
+  "auto tech": "AutoTech",
+  "travel tech": "TravelTech",
+  "invest tech": "InvestTech",
+  "telecom": "Telecommunications",
+  "biotech": "Biotechnology"
+ }
+}
