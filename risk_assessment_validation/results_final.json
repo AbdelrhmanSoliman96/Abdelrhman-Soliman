@@ -1,0 +1,212 @@
+{
+ "F-A": {
+  "value": 38.888888888888886,
+  "score": 45.67901234567901,
+  "flags": [],
+  "computable": true,
+  "nominal": 50.0
+ },
+ "F-A_lowbase": {
+  "value": 163.63636363636363,
+  "score": 33.33333333333333,
+  "flags": [
+   "LOW_BASE: midpoint growth used"
+  ],
+  "computable": true,
+  "nominal": 163.63636363636363
+ },
+ "F-B": {
+  "value": 60.0,
+  "score": 42.857142857142854,
+  "flags": [],
+  "computable": true,
+  "model": "software"
+ },
+ "F-C": {
+  "value": 0.8,
+  "score": 28.571428571428566,
+  "flags": [],
+  "computable": true,
+  "margin": -25.0
+ },
+ "F-D": {
+  "value": -21.666666666666668,
+  "score": 21.666666666666668,
+  "flags": [],
+  "computable": true
+ },
+ "F-E": {
+  "value": {
+   "debt_ratio": 21.05263157894737,
+   "near_term_cover": 3.0
+  },
+  "score": 7.894736842105264,
+  "flags": [],
+  "computable": true,
+  "s1": 15.789473684210527,
+  "s2": 0.0
+ },
+ "O-A": {
+  "value": 0.8686118698230859,
+  "score": 32.84703254422852,
+  "flags": [],
+  "computable": true,
+  "n": 4
+ },
+ "O-A_old": {
+  "value": 0.8660254037844387,
+  "score": 33.49364905389032,
+  "flags": [],
+  "computable": true,
+  "n": 2
+ },
+ "O-B": {
+  "value": 2.186909042251184,
+  "score": 13.551515962480268,
+  "flags": [],
+  "computable": true
+ },
+ "O-C": {
+  "value": 28.36070399999997,
+  "score": 45.901759999999925,
+  "flags": [],
+  "computable": true,
+  "monthly": 2.7411173781143994
+ },
+ "O-D": {
+  "value": 30.0,
+  "score": 59.62664542152352,
+  "flags": [],
+  "computable": true,
+  "lower": 18.074670915695297,
+  "upper": 45.4303106543204,
+  "n": 40
+ },
+ "O-E": {
+  "value": 1.2,
+  "score": 46.666666666666664,
+  "flags": [],
+  "computable": true
+ },
+ "O-F": {
+  "value": {
+   "miss_rate": 25.0,
+   "severity_weighted": 6.666666666666667,
+   "streak": 1
+  },
+  "score": 31.94444444444445,
+  "flags": [],
+  "computable": true
+ },
+ "R-A": {
+  "value": 16.0,
+  "score": 16.666666666666664,
+  "flags": [],
+  "computable": true,
+  "stressed20": 13.333333333333334,
+  "window_range": [
+   [
+    3,
+    11.25
+   ],
+   [
+    6,
+    13.42031686859273
+   ],
+   [
+    12,
+    15.559157212317666
+   ]
+  ],
+  "median_burn": 150.0
+ },
+ "R-A_3m": 11.25,
+ "R-B": {
+  "value": {
+   "cv": 0.04968836006450805,
+   "trend3m": 6.308411214953272
+  },
+  "score": 20.385514018691588,
+  "flags": [],
+  "computable": true
+ },
+ "R-C": {
+  "value": 3.3923428470047865,
+  "score": 28.973968366613484,
+  "flags": [],
+  "computable": true,
+  "months_to_need": 7.3923428470047865
+ },
+ "R-D": {
+  "value": 35.0,
+  "score": 50.0,
+  "flags": [],
+  "computable": true,
+  "strict_dependency": 60.0,
+  "committed_share": 25.0
+ },
+ "R-F": {
+  "value": 0.8571428571428571,
+  "score": 42.85714285714286,
+  "flags": [],
+  "computable": true
+ },
+ "M-A": {
+  "value": 10.339622641509427,
+  "score": 27.41398446170925,
+  "flags": [],
+  "computable": true
+ },
+ "M-B": {
+  "value": 48.25,
+  "score": 48.25,
+  "flags": [],
+  "computable": true,
+  "pd1": 0.048770575499285984
+ },
+ "M-C_A": {
+  "value": 49.99999999999999,
+  "score": 0.0,
+  "flags": [],
+  "computable": true,
+  "runway_before": 16.666666666666668,
+  "runway_after": 25.0
+ },
+ "M-C_B": {
+  "value": -33.333333333333336,
+  "score": 83.33333333333334,
+  "flags": [],
+  "computable": true,
+  "runway_before": 75.0,
+  "runway_after": 50.0
+ },
+ "pco": {
+  "0": 0.3504,
+  "6": 0.364,
+  "10": 0.4793,
+  "12": 0.68445
+ },
+ "groups": {
+  "Financial": [
+   32.256845818249325,
+   1.0
+  ],
+  "Operational": [
+   36.907521252892806,
+   1.0
+  ],
+  "Runway": [
+   33.17036094257546,
+   1.0
+  ],
+  "Market": [
+   27.8530937846837,
+   1.0
+  ]
+ },
+ "overall": [
+  32.62596079197905,
+  "Moderate",
+  []
+ ]
+}
